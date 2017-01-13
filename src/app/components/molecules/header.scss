@@ -1,0 +1,31 @@
+header {
+  display: flex;
+  align-items: center;
+  
+  a {
+    flex: 1;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+
+      &.logo {
+        max-height: 80px;
+      }
+    }
+
+    &.menu {
+      display: flex;
+      align-items: center;
+      max-width: 80px;
+      margin-left: 30px;
+
+      md-icon {
+        margin-left: 5px;
+      }
+
+    }
+  }
+
+
+}

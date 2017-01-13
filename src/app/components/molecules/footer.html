@@ -1,0 +1,50 @@
+<div class="footer">
+  <div class="notice">
+    <!-- TODO: Use CST / CDT depending on time of year. -->
+    Our live stream begins at 12pm CST on Saturday’s.
+  </div>
+  <div class="content">
+    <div class="icon">
+      <a [routerLink]="['/']">
+        <img class="icon" src="/assets/whitelogo.png" alt="Bolingbrook Church">
+      </a>
+    </div>
+
+    <section>
+      <h6>Saturday Times &amp; Location</h6>
+      <p>9:30am &amp; Noon</p>
+      <p>1251 Windham Pkwy, Romeoville IL 60446
+      (Meets on the campus of The Sanctuary Church)</p>
+    </section>
+
+    <section>
+      <h6>Office</h6>
+      301 E Boughton Rd, Bolingbrook IL 60440 <br/>
+      <a href="tel:630.739.1038">630.739.1038</a> <br/>
+      <a href="mailto:info@bolingbrook.church">info@bolingbrook.church</a>
+    </section>
+
+    <section>
+      <h6>Mid-week Times &amp; Location</h6>
+      301 E Boughton Rd, Bolingbrook IL 60440<br/>
+      <strong>Prayer</strong> - Wednesdays at 6pm<br/>
+      <strong>Bible Study</strong> - Wednesdays at 7pm
+    </section>
+
+    <section>
+      <h6>Resources</h6>
+      <a href="https://www.adventistgiving.org/?OrgID=ANF4BV">Tithes &amp; Offering</a><br/>
+      <a href="http://eepurl.com/ch0tF9">Newsletter Sign-up</a>
+    </section>
+
+    <section>
+      <h6>Follow us On</h6>
+
+      <a class="social"
+         *ngFor="let s of socials"
+         href="{{s.url}}">
+         <img src="{{s.img}}">
+      </a>
+    </section>
+  </div>
+</div>

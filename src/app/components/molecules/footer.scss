@@ -1,0 +1,58 @@
+div.footer {
+  margin-top: 40px;
+
+  .notice {
+    padding: 5px 10%;
+    background: #252525;
+    color: #6d6b6b;
+    font-size: 14px;
+  }
+
+  div.content {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    padding: 13px 10% 40px;
+    background: #1c1c1c;
+    margin-right: -17px;
+
+    div.icon {
+      flex: 100%;
+      padding-bottom: 17px;
+      img {
+        max-width: 171px;
+      }
+    }
+
+    section {
+      flex: 1;
+      min-width: 140px;
+      max-width: 220px;
+      padding-top: 10px;
+      font-size: 11px;
+      margin-right: 17px;
+
+      h6 {
+        font-size: 14px;
+        font-weight: bold;
+        margin: 1em 0;
+      }
+
+      p {
+        margin-bottom: 0px;
+      }
+
+      a {
+        color: #ffffff;
+
+        &.social {
+          text-decoration: none;
+          img {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+    }
+  }
+}
