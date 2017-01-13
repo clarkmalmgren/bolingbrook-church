@@ -3,7 +3,19 @@
     <img class="logo" src="/assets/whitelogo.png" alt="Home">
   </a>
 
-  <a class="menu">
-    Menu <md-icon>menu</md-icon>
-  </a>
+  <div class="dropdown">
+    <a class="menu" (click)="opened = !opened">
+      Menu <md-icon>menu</md-icon>
+    </a>
+    <div class="drop-content"
+         [class.open]="opened"
+         (click)="opened = false">
+      <a *ngFor="let link of links"
+         [routerLink]="[link.url]">
+         <md-icon>{{link.icon}}</md-icon>
+         {{link.name}}
+      </a>
+    </div>
+  </div>
+
 </header>
