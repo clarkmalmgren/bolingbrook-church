@@ -4,8 +4,7 @@ import { FormsModule }                                      from '@angular/forms
 import { HttpModule }                                       from '@angular/http';
 
 import { AppComponent }                                     from './app.component';
-import { AppRoutingModule, SCENES }                         from './app-routing.module';
-import { MOLECULES }                                        from './components/molecules';
+import * as Components                                      from './components';
 
 // import { MdButton, MdAnchor }                               from '@angular2-material/button';
 import { MdIcon, MdIconRegistry }                           from '@angular2-material/icon';
@@ -31,14 +30,14 @@ const MATERIAL = [
   declarations: [
     AppComponent,
     ...MATERIAL,
-    ...MOLECULES,
-    ...SCENES
+    ...Components.MOLECULES,
+    ...Components.ROUTE_COMPONENTS
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    Components.AppRoutingModule
   ],
   providers: [
     MdIconRegistry
