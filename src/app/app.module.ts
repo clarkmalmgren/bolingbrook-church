@@ -5,31 +5,12 @@ import { HttpModule }                                       from '@angular/http'
 
 import { AppComponent }                                     from './app.component';
 import * as Components                                      from './components';
-
-// import { MdButton, MdAnchor }                               from '@angular2-material/button';
-import { MdIcon, MdIconRegistry }                           from '@angular2-material/icon';
-// import { MdToolbar, MdToolbarRow }                          from '@angular2-material/toolbar';
-// import { MdInput, MdHint }                                  from '@angular2-material/input';
-// import { MdCard }                                           from '@angular2-material/card';
-// import { MdList, MdListAvatar, MdListDivider, MdListItem }  from '@angular2-material/list';
-// import { MdSlideToggle }                                    from '@angular2-material/slide-toggle';
-// import { MdCheckbox }                                       from '@angular2-material/checkbox';
-
-const MATERIAL = [
-  // MdButton, MdAnchor,
-  MdIcon,
-  // MdToolbar, MdToolbarRow,
-  // MdInput, MdHint,
-  // MdCard,
-  // MdList, MdListAvatar, MdListDivider, MdListItem,
-  // MdSlideToggle,
-  // MdCheckbox
-];
+import { SERVICES }                                         from './services';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ...MATERIAL,
+    ...Components.MATERIAL,
     ...Components.MOLECULES,
     ...Components.ROUTE_COMPONENTS
   ],
@@ -40,7 +21,8 @@ const MATERIAL = [
     Components.AppRoutingModule
   ],
   providers: [
-    MdIconRegistry
+    Components.MdIconRegistry,
+    ...SERVICES
   ],
   bootstrap: [ AppComponent ]
 })
