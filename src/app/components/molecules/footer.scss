@@ -1,9 +1,11 @@
+@import '../atoms/colors';
+
 div.footer {
 
   .notice {
     padding: 5px 10%;
-    background: #252525;
-    color: #6d6b6b;
+    background: $color-grey-100;
+    color: $color-grey-200;
     font-size: 14px;
   }
 
@@ -12,7 +14,7 @@ div.footer {
     flex-flow: row wrap;
     justify-content: space-between;
     padding: 13px 10% 40px;
-    background: #1c1c1c;
+    background: $color-grey-000;
 
     div.icon {
       flex: 100%;
@@ -41,7 +43,7 @@ div.footer {
       }
 
       a {
-        color: #ffffff;
+        color: $color-white;
 
         &.social {
           text-decoration: none;

@@ -1,13 +1,15 @@
+@import '../atoms/colors';
+
 div {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: $color-white;
+  color: $color-black;
   text-align: center;
   padding: 150px 0;
 
   h1 {
     font-weight: 600;
     font-size: 52px;
-    color: #ccc;
+    color: $color-grey-400;
   }
 
   img {
