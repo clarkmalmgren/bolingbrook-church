@@ -12,6 +12,7 @@ import { SERVICES }                                         from './services';
     AppComponent,
     ...Components.MATERIAL,
     ...Components.MOLECULES,
+    ...Components.ORGANISMS,
     ...Components.ROUTE_COMPONENTS
   ],
   imports: [
