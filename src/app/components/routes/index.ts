@@ -1,11 +1,14 @@
 import { NgModule }               from '@angular/core';
 import { RouterModule, Routes }   from '@angular/router';
+
+import { About }                  from './about';
 import { Home }                   from './home';
 import { NotFound }               from './not-found';
 
 const routes: Routes = [
-  { path: '',  component: Home },
-  { path: '**',  component: NotFound },
+  { path: '',         component: Home },
+  { path: 'about',    component: About },
+  { path: '**',       component: NotFound },
 ];
 
 @NgModule({
@@ -15,5 +18,5 @@ const routes: Routes = [
 export class AppRoutingModule {}
 
 export const ROUTE_COMPONENTS = [
-  Home, NotFound
+  About, Home, NotFound
 ];

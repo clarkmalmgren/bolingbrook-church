@@ -1,0 +1,66 @@
+@import '../atoms/colors';
+
+main {
+
+  section {
+    color: $color-grey-300;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    padding-bottom: 17px;
+    background-color: $color-grey-400;
+
+    &.mission {
+      background-color: $color-white;
+    }
+
+    h1, h4 {
+      flex: 100%;
+      color: $color-grey-100;
+      text-align: center;
+      margin: 0 35px;
+    }
+
+    h1 {
+      font-size: 65px;
+      font-weight: 600;
+      padding: .7em 0 .3em;
+    }
+
+    h4 {
+      font-size: 19px;
+      font-weight: normal;
+      padding: .2em;
+    }
+
+    hero {
+      flex: 100%;
+      margin-bottom: 35px;
+    }
+
+    p {
+      flex: 1;
+      min-width: 250px;
+      max-width: 500px;
+      font-size: 14px;
+      line-height: 24px;
+      padding: 15px 35px;
+      margin: 0;
+    }
+
+    a {
+      font-size: 18px;
+      margin-bottom: 30px;
+      padding: 4px 22px;
+      background-color: $color-blue;
+      color: $color-white;
+      transition: background-color 500ms linear;
+
+      &:hover {
+        background-color: $color-blue * 0.7;
+      }
+    }
+
+  }
+  
+}

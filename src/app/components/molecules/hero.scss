@@ -1,0 +1,17 @@
+@import '../atoms/colors';
+
+div {
+  width: 100%;
+  text-align: center;
+  background: center left no-repeat;
+  background-size: cover;
+
+  h2 {
+    color: $color-white;
+    text-shadow: 2px 1px $color-black;
+    font-size: 65px;
+    font-weight: 600;
+    margin: 0;
+    padding: 90px 30px;
+  }
+}

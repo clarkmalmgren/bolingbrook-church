@@ -1,4 +1,4 @@
-// import { MdButton, MdAnchor }                               from '@angular2-material/button';
+import { MdAnchor, MdButton }                               from '@angular2-material/button';
 import { MdIcon }                                           from '@angular2-material/icon';
 export { MdIconRegistry }                                   from '@angular2-material/icon';
 // import { MdToolbar, MdToolbarRow }                          from '@angular2-material/toolbar';
@@ -9,7 +9,8 @@ export { MdIconRegistry }                                   from '@angular2-mate
 // import { MdCheckbox }                                       from '@angular2-material/checkbox';
 
 export const MATERIAL = [
-  // MdButton, MdAnchor,
+  MdAnchor,
+  MdButton,
   MdIcon,
   // MdToolbar, MdToolbarRow,
   // MdInput, MdHint,
