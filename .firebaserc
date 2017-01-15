@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "bolingbrook-church-beta"
+    "beta": "bolingbrook-church-beta",
+    "prod": "bolingbrook-church"
   }
 }
