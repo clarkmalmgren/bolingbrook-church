@@ -1,0 +1,13 @@
+<main>
+  <section class="white">
+    <hero image="/assets/messages.png">
+      Messages
+    </hero>
+
+    <series-card *ngFor="let s of series"
+                 [image]="s.image_ref"
+                 [route]="s.id"
+                 [parts]="(s.services || []).length">
+    </series-card>
+  </section>
+</main>

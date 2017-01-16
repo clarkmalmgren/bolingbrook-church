@@ -1,0 +1,25 @@
+@import '../atoms/colors';
+
+a {
+  text-decoration: none;
+  font-style: italic;
+
+  div {
+    width: 280px;
+    text-align: center;
+    background-color: $color-grey-500;
+    padding: 10px;
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    p {
+      margin: 7px 5px 0px;
+      color: $color-grey-200;
+      text-decoration: none;
+      font-size: 14px;
+    }
+  }
+}

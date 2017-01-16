@@ -1,6 +1,14 @@
 {
   "rules": {
-    ".read": "auth != null",
-    ".write": "auth != null"
+    ".read": "false",
+    ".write": "false",
+
+    "data": {
+      ".read": "true"
+    },
+      
+    "requests": {
+      ".write": "!data.exists()"
+    }
   }
 }
