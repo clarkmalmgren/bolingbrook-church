@@ -1,0 +1,43 @@
+@import 'breaks';
+
+h1 {
+  font-size: 65px;
+  font-weight: 600;
+  padding: .7em 0 .3em;
+
+  @include break(medium)  { font-size: 55px; }
+  @include break(small)   { font-size: 45px; }
+  @include break(tiny)    { font-size: 38px; }
+}
+
+h2 {
+  font-size: 41px;
+  font-weight: 600;
+  padding: .2em;
+
+  @include break(small)   { font-size: 37px; }
+  @include break(tiny)    { font-size: 29px; }
+}
+
+h3 {
+  font-size: 27px;
+  font-weight: 600;
+  padding: .2em;
+
+  @include break(small)   { font-size: 23px; }
+  @include break(tiny)    { font-size: 23px; }
+}
+
+h4 {
+  font-size: 19px;
+  font-weight: normal;
+  padding: .2em;
+
+  @include break(small)   { font-size: 17px; }
+  @include break(tiny)    { font-size: 17px; }
+}
+
+h5 {
+  font-size: 17px;
+  font-weight: 600;
+}

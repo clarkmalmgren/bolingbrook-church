@@ -1,0 +1,86 @@
+@import '../atoms/colors';
+@import '../atoms/headers';
+
+main {
+
+  section {
+    color: $color-grey-300;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    padding-bottom: 17px;
+    background-color: $color-grey-400;
+
+    &.white {
+      background-color: $color-white;
+    }
+
+    h1, h3, h4, h5 {
+      flex: 100%;
+      color: $color-grey-100;
+      text-align: center;
+      margin: 0 35px;
+    }
+
+    h5 {
+      color: $color-grey-200;
+      text-align: left;
+      padding-top: 13px;
+    }
+
+    hero {
+      flex: 100%;
+      margin-bottom: 35px;
+    }
+
+    p {
+      flex: 1;
+      min-width: 250px;
+      max-width: 500px;
+      font-size: 14px;
+      line-height: 24px;
+      padding: 15px 35px;
+      margin: 0;
+
+      &.wide {
+        min-width: 0;
+        max-width: none;
+      }
+    }
+
+    div.row {
+      flex: 100%;
+      text-align: center;
+    }
+
+    div.col {
+      flex: 1;
+      min-width: 250px;
+      max-width: 500px;
+    }
+
+    a[md-raised-button] {
+      font-size: 18px;
+      margin-bottom: 30px;
+      padding: 4px 22px;
+      background-color: $color-blue;
+      color: $color-white;
+      transition: background-color 500ms linear;
+
+      &:hover {
+        background-color: $color-blue * 0.7;
+      }
+    }
+
+    a.tel {
+      color: $color-white;
+      transition: background-color 500ms linear;
+
+      &:hover {
+        background-color: $color-black;
+      }
+    }
+
+  }
+  
+}
