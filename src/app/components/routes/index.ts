@@ -5,13 +5,15 @@ import { About }                                    from './about';
 import { Giving }                                   from './giving';
 import { Home }                                     from './home';
 import { MESSAGE_COMPONENTS, MessageRoutingModule } from './messages/';
+import { Newsletter }                               from './newsletter';
 import { NotFound }                                 from './not-found';
 
 const routes: Routes = [
-  { path: '',         component: Home },
-  { path: 'about',    component: About },
-  { path: 'giving',   component: Giving },
-  { path: '**',       component: NotFound },
+  { path: '',           component: Home },
+  { path: 'about',      component: About },
+  { path: 'giving',     component: Giving },
+  { path: 'newsletter', component: Newsletter },
+  { path: '**',         component: NotFound }
 ];
 
 @NgModule({
@@ -24,6 +26,7 @@ export const ROUTE_COMPONENTS = [
   About,
   Giving,
   Home,
+  Newsletter,
   NotFound,
   ...MESSAGE_COMPONENTS
 ];
