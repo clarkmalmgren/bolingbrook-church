@@ -19,7 +19,7 @@ import { SERVICES }                                         from './services';
     BrowserModule,
     FormsModule,
     HttpModule,
-    Components.AppRoutingModule
+    ...Components.ROUTE_MODULES
   ],
   providers: [
     Components.MdIconRegistry,

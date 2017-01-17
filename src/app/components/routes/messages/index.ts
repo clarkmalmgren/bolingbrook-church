@@ -1,19 +1,35 @@
-import { Component, OnInit }        from '@angular/core';
-import { MessagesService, Series }  from '../../../services';
+import { Component, NgModule }  from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
+import { MessageList }          from './list';
 
 @Component({
-  templateUrl: './index.html',
-  styleUrls: [ './index.scss' ]
+  template: '<router-outlet></router-outlet>'
 })
-export class MessageList implements OnInit {
+export class MessageComponent {
 
-  series: Series[];
-
-  constructor(private service: MessagesService) {}
-
-  ngOnInit() {
-    this.service.all()
-      .subscribe(series => { this.series = series; });
-  }
 }
+
+const routes: Routes = [
+  {
+    path: 'messages',
+    component: MessageComponent,
+    children: [
+      {
+        path: '',
+        component: MessageList
+      }
+    ]
+  }
+];
+
+@NgModule({
+  imports: [ RouterModule.forChild(routes) ],
+  exports: [ RouterModule ]
+})
+export class MessageRoutingModule { }
+
+export const MESSAGE_COMPONENTS = [
+  MessageComponent,
+  MessageList
+];
