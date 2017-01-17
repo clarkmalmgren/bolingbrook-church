@@ -8,6 +8,7 @@ h1 {
   @include break(medium)  { font-size: 55px; }
   @include break(small)   { font-size: 45px; }
   @include break(tiny)    { font-size: 38px; }
+  @include break(micro)   { font-size: 36px; }
 }
 
 h2 {
@@ -17,6 +18,7 @@ h2 {
 
   @include break(small)   { font-size: 37px; }
   @include break(tiny)    { font-size: 29px; }
+  @include break(micro)   { font-size: 27px; }
 }
 
 h3 {
@@ -26,6 +28,7 @@ h3 {
 
   @include break(small)   { font-size: 23px; }
   @include break(tiny)    { font-size: 23px; }
+  @include break(micro)   { font-size: 21px; }
 }
 
 h4 {
@@ -35,6 +38,7 @@ h4 {
 
   @include break(small)   { font-size: 17px; }
   @include break(tiny)    { font-size: 17px; }
+  @include break(micro)   { font-size: 16px; }
 }
 
 h5 {

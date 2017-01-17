@@ -1,6 +1,8 @@
 export const environment = {
   production: true,
 
+  googleMapsApiKey : 'AIzaSyCKaQgqd0cxJQ932U57W74Bpe8CALxZEUw',
+
   firebaseConfig : {
     apiKey: "AIzaSyC_pmwFlv6YDOJHwdVFEdsl24Rv89xwmQI",
     authDomain: "bolingbrook-church.firebaseapp.com",

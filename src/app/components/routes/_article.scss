@@ -46,6 +46,11 @@ main {
         min-width: 0;
         max-width: none;
       }
+
+      &.address {
+        white-space: pre;
+        padding-top: 0;
+      }
     }
 
     div.row {
