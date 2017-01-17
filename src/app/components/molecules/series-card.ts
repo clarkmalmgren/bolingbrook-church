@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FirebaseService }          from '../../services';
+import { FirebaseService, Series }  from '../../services';
+
 
 @Component({
   selector: 'series-card',
@@ -7,16 +8,23 @@ import { FirebaseService }          from '../../services';
   styleUrls: [ './series-card.scss' ]
 })
 export class SeriesCard implements OnInit {
-  @Input() image: string;
-  @Input() route: string;
-  @Input() parts: number;
 
-  imageUrl: string;
+  @Input() series: Series;
+
+  image: string;
 
   constructor(private fbs: FirebaseService) {}
 
+  get route(): string {
+    return this.series.id;
+  }
+
+  get parts(): number {
+    return this.series.services ? this.series.services.length : 0;
+  }
+
   ngOnInit() {
-    this.fbs.getStorageUrl(this.image)
-      .subscribe(url => { this.imageUrl = url; });
+    this.fbs.getStorageUrl(this.series.image_ref)
+      .subscribe(url => { this.image = url; });
   }
 }
