@@ -67,6 +67,11 @@ main {
       color: $color-white;
       transition: background-color 500ms linear;
 
+      md-icon {
+        height: 28px;
+        vertical-align: middle;
+      }
+
       &:hover {
         background-color: $color-blue * 0.7;
       }

@@ -1,6 +1,7 @@
 $break-large: 1200px;
 $break-medium: 992px;
 $break-small: 768px;
+$break-tiny: 400px;
 
 @mixin break($media) {
   @if $media == large {
@@ -10,6 +11,8 @@ $break-small: 768px;
   } @else if $media == small {
     @media only screen and (min-width: $break-small) and (max-width: $break-medium - 1) { @content; }
   } @else if $media == tiny {
-    @media only screen and (max-width: $break-small - 1) { @content; }
+    @media only screen and (min-width: $break-tiny) and (max-width: $break-small - 1) { @content; }
+  } @else if $media == micro {
+    @media only screen and (max-width: $break-tiny - 1) { @content; }
   }
 }

@@ -9,10 +9,10 @@ export interface Series {
   date: Date;
   name: string;
   image_ref: string;
-  services?: Service[];
+  services?: Sermon[];
 }
 
-export interface Service {
+export interface Sermon {
   id: string;
   name: string;
   date: Date;
@@ -24,6 +24,18 @@ export interface Service {
 export class MessagesService {
 
   constructor(private fb: FirebaseService) {}
+
+  getSermon(id: string, index: number): Observable<Sermon> {
+    return this.getSeries(id)
+      .map(series => series.services[index]);
+  }
+
+  getSeries(id: string): Observable<Series> {
+    return this.fb.getDataOnce(`data/messages/${id}`)
+      .map((data: any) => {
+        return this.deserializeSeries(data);
+      });
+  }
 
   all(): Observable<Series[]> {
     return this.fb.getDataOnce('data/messages/')
@@ -44,16 +56,16 @@ export class MessagesService {
 
     if (data['services']) {
       series.services = this.fb.toArray(data['services'])
-        .map((sdata: map) => this.deserializeService(sdata));
+        .map((sdata: map) => this.deserializeSermon(sdata));
     }
 
     return series;
   }
 
-  deserializeService(data: map): Service {
+  deserializeSermon(data: map): Sermon {
     return {
       id: data['_id'],
-      name: data['name'],
+      name: data['name'] || data['title'],
       date: new Date(data['date']),
       vimeo_id: data['vimeo_id'],
       youtube_id: data['youtube_id']

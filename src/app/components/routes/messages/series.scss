@@ -1,0 +1,33 @@
+@import '../article';
+@import '../../atoms/colors';
+
+.left {
+  text-align: left !important;
+}
+
+a[md-raised-button] {
+  margin: 0 35px 30px;
+}
+
+div.inner {
+  flex: 2;
+  margin: 0 15px;
+  text-align: center;
+}
+
+md-nav-list {
+  flex: 1;
+  margin: 0 35px;
+
+  a {
+
+    md-icon {
+        background: $color-blue;
+        color: $color-white;
+        font-size: 32px;
+        text-align: center;
+        min-width: 40px;
+        line-height: 40px;
+    }
+  }
+}

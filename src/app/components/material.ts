@@ -4,7 +4,7 @@ export { MdIconRegistry }                                   from '@angular2-mate
 // import { MdToolbar, MdToolbarRow }                          from '@angular2-material/toolbar';
 // import { MdInput, MdHint }                                  from '@angular2-material/input';
 // import { MdCard }                                           from '@angular2-material/card';
-// import { MdList, MdListAvatar, MdListDivider, MdListItem }  from '@angular2-material/list';
+import { MdList, MdListAvatar, MdListDivider, MdListItem }  from '@angular2-material/list';
 // import { MdSlideToggle }                                    from '@angular2-material/slide-toggle';
 // import { MdCheckbox }                                       from '@angular2-material/checkbox';
 
@@ -15,7 +15,10 @@ export const MATERIAL = [
   // MdToolbar, MdToolbarRow,
   // MdInput, MdHint,
   // MdCard,
-  // MdList, MdListAvatar, MdListDivider, MdListItem,
+  MdList,
+  MdListAvatar,
+  MdListDivider,
+  MdListItem,
   // MdSlideToggle,
   // MdCheckbox
 ];

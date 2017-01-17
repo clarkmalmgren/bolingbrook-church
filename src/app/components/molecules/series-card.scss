@@ -5,14 +5,14 @@ a {
   font-style: italic;
 
   div {
-    max-width: 280px;
+    width: 280px;
     text-align: center;
     background-color: $color-grey-500;
     padding: 10px;
     margin: 9px;
 
     img {
-      max-width: 100%;
+      width: 100%;
       height: auto;
     }
 

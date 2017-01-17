@@ -1,6 +1,6 @@
 import { Env }                                from './env';
 import { FirebaseService }                    from './firebase.service';
-import { MessagesService, Series, Service }   from './messages.service';
+import { MessagesService, Series, Sermon }    from './messages.service';
 
 export const SERVICES = [
   Env,
@@ -13,5 +13,5 @@ export {
   FirebaseService,
   MessagesService,
   Series,
-  Service
+  Sermon
 };
