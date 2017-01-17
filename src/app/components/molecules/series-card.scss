@@ -5,10 +5,11 @@ a {
   font-style: italic;
 
   div {
-    width: 280px;
+    max-width: 280px;
     text-align: center;
     background-color: $color-grey-500;
     padding: 10px;
+    margin: 9px;
 
     img {
       max-width: 100%;
