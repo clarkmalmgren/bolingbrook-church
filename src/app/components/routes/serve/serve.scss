@@ -1,0 +1,21 @@
+@import '../article';
+
+main section {
+
+  p.subtitle {
+    color: $color-black;
+    flex: 100%;
+    min-width: 0;
+    max-width: none;
+    text-align: center;
+  }
+
+  div.row {
+    margin: 35px;
+  }
+
+  a[md-raised-button] {
+    margin: 6px;
+    min-width: 160px;
+  }
+}

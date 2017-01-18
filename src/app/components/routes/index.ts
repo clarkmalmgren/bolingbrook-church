@@ -8,6 +8,8 @@ import { Locations }                                from './locations';
 import { MESSAGE_COMPONENTS, MessageRoutingModule } from './messages/';
 import { Newsletter }                               from './newsletter';
 import { NotFound }                                 from './not-found';
+import { Serve }                                    from './serve/serve';
+import { ThankYou }                                 from './thank-you';
 
 const routes: Routes = [
   { path: '',           component: Home },
@@ -15,6 +17,8 @@ const routes: Routes = [
   { path: 'giving',     component: Giving },
   { path: 'locations',  component: Locations },
   { path: 'newsletter', component: Newsletter },
+  { path: 'serve',      component: Serve },
+  { path: 'thank-you',  component: ThankYou },
   { path: '**',         component: NotFound }
 ];
 
@@ -31,6 +35,8 @@ export const ROUTE_COMPONENTS = [
   Locations,
   Newsletter,
   NotFound,
+  Serve,
+  ThankYou,
   ...MESSAGE_COMPONENTS
 ];
 
