@@ -1,0 +1,104 @@
+<main>
+  <section class="white">
+    <hero image="/assets/serve/fusion.jpg">
+      &nbsp;<br/>&nbsp;
+    </hero>
+
+    <h1>Fusion Team Volunteers</h1>
+    <p class="subtitle">
+      Every Saturday is the first Saturday for someone at Bolingbrook. Our Fusion teams are who make that first experience special.
+    </p>
+
+    <p>
+      Our Fusion team works hard to create an environment where all guests feel safe and comfortable. Our teams have fun, care
+      for guests, share community with your team, and play a significant role in helping someone have a remarkable experience.
+      We are one large team that can be seen helping our guests in several areas.
+    </p>
+  </section>
+
+  <section class="types">
+    <dl>
+      <dd><h3>Greeters</h3></dd>
+      <dt>
+        These volunteers serve our guests at the doors, in the hallways, and in the auditoriums by making them feel valued with a
+        sincere greeting, a genuine smile, a friendly presence, a fond farewell, and by providing general assistance during
+        their visit.
+      </dt>
+
+      <dd><h3>Ushers</h3></dd>
+      <dt>
+        Our usher teams are who help find seating and make sure all who come can enjoy our program and not have to worry about if
+        or where they will sit.
+      </dt>
+
+      <dd><h3>F.I.T.</h3></dd>
+      <dt>
+        Our First Impressions Team (F.I.T) proactively provide a warm welcome, clear directions, and safe paths for guests entering
+        and exiting our Romeoville campus. Our F.I.T. is equal parts hotel concierge and security.
+      </dt>
+
+      <dd><h3>Sabbath Cafe</h3></dd>
+      <dt>
+        Come join our team who brings smiles to everyone. Nothing hits the spot on a warm day like a good smoothy or even some warm
+        apple cider on a cool day! This team makes that all possible.
+      </dt>
+    </dl>
+  </section>
+
+  <section class="white">
+    <form>
+
+      <h3>Sign Up</h3>
+
+      <md-input-container>
+        <input md-input
+               required
+               name="first_name"
+               [(ngModel)]="first_name"
+               placeholder="First Name" >
+      </md-input-container>
+
+      <md-input-container>
+        <input md-input
+               required
+               name="last_name"
+               [(ngModel)]="last_name"
+               placeholder="Last Name" >
+      </md-input-container>
+
+      <md-input-container>
+        <input md-input
+               required
+               name="phone"
+               type="tel"
+               [(ngModel)]="phone"
+               placeholder="Phone Number" >
+      </md-input-container>
+
+      <md-input-container>
+        <input md-input
+               required
+               name="email"
+               type="email"
+               [(ngModel)]="email"
+               placeholder="Email Address" >
+      </md-input-container>
+
+      <h4>Interests</h4>
+
+      <md-checkbox name="interests_greeter" [(ngModel)]="interests.greeter">Greeter</md-checkbox>
+      <md-checkbox name="interests_usher" [(ngModel)]="interests.user">Usher</md-checkbox>
+      <md-checkbox name="interests_fit" [(ngModel)]="interests.fit">F.I.T.</md-checkbox>
+      <md-checkbox name="interests_cafe" [(ngModel)]="interests.cafe">Cafe</md-checkbox>
+
+      <div class="submit-wrapper">
+        <button md-raised-button (click)="submit()" [disabled]="!valid">
+          Submit
+        </button>
+      </div>
+
+      
+
+    </form>
+  </section>
+</main>

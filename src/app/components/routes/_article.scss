@@ -64,7 +64,7 @@ main {
       max-width: 500px;
     }
 
-    a[md-raised-button] {
+    [md-raised-button] {
       font-size: 18px;
       margin-bottom: 30px;
       padding: 4px 22px;
@@ -77,7 +77,11 @@ main {
         vertical-align: middle;
       }
 
-      &:hover {
+      &[disabled] {
+        background-color: $color-grey-300;
+      }
+
+      &:hover:active {
         background-color: $color-blue * 0.7;
       }
     }

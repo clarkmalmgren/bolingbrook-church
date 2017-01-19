@@ -2,6 +2,7 @@ import { BrowserModule }                                    from '@angular/platf
 import { NgModule }                                         from '@angular/core';
 import { FormsModule }                                      from '@angular/forms';
 import { HttpModule }                                       from '@angular/http';
+import { MaterialModule }                                   from '@angular/material'; 
 
 import { AppComponent }                                     from './app.component';
 import * as Components                                      from './components';
@@ -10,7 +11,6 @@ import { SERVICES }                                         from './services';
 @NgModule({
   declarations: [
     AppComponent,
-    ...Components.MATERIAL,
     ...Components.MOLECULES,
     ...Components.ORGANISMS,
     ...Components.ROUTE_COMPONENTS
@@ -19,10 +19,10 @@ import { SERVICES }                                         from './services';
     BrowserModule,
     FormsModule,
     HttpModule,
+    MaterialModule.forRoot(),
     ...Components.ROUTE_MODULES
   ],
   providers: [
-    Components.MdIconRegistry,
     ...SERVICES
   ],
   bootstrap: [ AppComponent ]

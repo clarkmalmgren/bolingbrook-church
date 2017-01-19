@@ -1,0 +1,33 @@
+@import '../atoms/colors';
+@import '../atoms/breaks';
+
+form {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 30px;
+  background: $color-grey-500;
+
+  md-input-container {
+    flex: 1;
+    min-width: 350px;
+
+    @include break(tiny)  { min-width: 280px; }
+    @include break(micro) { min-width: 200px; }
+
+    &.wide {
+      flex: 100%;
+    }
+
+    input[md-input] {
+      color: $color-black;
+    }
+  }
+
+  md-checkbox {
+    flex: 1;
+    min-width: 350px;
+
+    @include break(tiny)  { min-width: 280px; }
+    @include break(micro) { min-width: 200px; }
+  }
+}
