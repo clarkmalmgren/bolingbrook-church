@@ -7,8 +7,10 @@
       ".read": "true"
     },
       
-    "requests": {
-      ".write": "!data.exists()"
+    "connections": {
+      "$type": {
+      	".write": "!data.exists()"
+      }
     }
   }
 }
