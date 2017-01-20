@@ -2,6 +2,7 @@ import { NgModule }                                 from '@angular/core';
 import { RouterModule, Routes }                     from '@angular/router';
 
 import { About }                                    from './about';
+import { Connect }                                  from './connect';
 import { Giving }                                   from './giving';
 import { Home }                                     from './home';
 import { Locations }                                from './locations';
@@ -14,6 +15,7 @@ import { ThankYou }                                 from './thank-you';
 const routes: Routes = [
   { path: '',           component: Home },
   { path: 'about',      component: About },
+  { path: 'connect',    component: Connect },
   { path: 'giving',     component: Giving },
   { path: 'locations',  component: Locations },
   { path: 'newsletter', component: Newsletter },
@@ -30,6 +32,7 @@ export class AppRoutingModule {}
 
 export const ROUTE_COMPONENTS = [
   About,
+  Connect,
   Giving,
   Home,
   Locations,

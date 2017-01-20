@@ -13,6 +13,12 @@ export class ConnectionRequest {
   phone: string;
   interests: string[];
 
+  address: string;
+  city: string;
+  state: string;
+  zipcode: number;
+  birthday: string;
+
   constructor(type: RequestType) {
     this.type = type;
   }

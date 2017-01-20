@@ -4,8 +4,8 @@ import { RouterLink, Router } from '@angular/router';
 class Link {
   constructor(
     public name: string,
-    public icon: string,
-    public url: string
+    public url: string,
+    public icon: string
   ) { }
 }
 
@@ -17,16 +17,16 @@ class Link {
 export class Header {
 
   links = [
-    new Link('Home', 'home', '/'),
-    new Link('About Us', 'accessibility', '/about'),
-    new Link('Giving', 'trending_up', '/giving'),
-    new Link('Messages', 'school', '/messages'),
-    new Link('Get Connected', 'power', '/get-connected'),
-    new Link('Serve', 'people', '/serve'),
-    new Link('Locations', 'public', '/locations'),
-    new Link('Missions', 'textsms', '/missions'),
-    new Link('Newsletter Sign-up', 'markunread_mailbox', 'newsletter'),
-    new Link('Events', 'event', '/events'),
+    new Link('Home',                '/',            'home'),
+    new Link('About Us',            '/about',       'accessibility'),
+    new Link('Giving',              '/giving',      'trending_up'),
+    new Link('Messages',            '/messages',    'school'),
+    new Link('Get Connected',       '/connect',     'power'),
+    new Link('Serve',               '/serve',       'people'),
+    new Link('Locations',           '/locations',   'public'),
+    new Link('Missions',            '/missions',    'textsms'),
+    new Link('Newsletter Sign-up',  '/newsletter',  'markunread_mailbox'),
+    // new Link('Events',              '/events',      'event'),
   ];
 
   opened = false;

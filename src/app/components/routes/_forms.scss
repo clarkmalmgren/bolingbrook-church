@@ -1,6 +1,14 @@
 @import '../atoms/colors';
 @import '../atoms/breaks';
 
+@mixin formPart() {
+  flex: 1;
+  min-width: 350px;
+
+  @include break(tiny)  { min-width: 280px; }
+  @include break(micro) { min-width: 200px; }
+}
+
 form {
   display: flex;
   flex-flow: row wrap;
@@ -9,11 +17,8 @@ form {
   max-width: 900px;
 
   md-input-container {
-    flex: 1;
-    min-width: 350px;
 
-    @include break(tiny)  { min-width: 280px; }
-    @include break(micro) { min-width: 200px; }
+    @include formPart();
 
     &.wide {
       flex: 100%;
@@ -25,10 +30,11 @@ form {
   }
 
   md-checkbox {
-    flex: 1;
-    min-width: 350px;
+    @include formPart();
+  }
 
-    @include break(tiny)  { min-width: 280px; }
-    @include break(micro) { min-width: 200px; }
+  md-select {
+    @include formPart();
+    margin: 5px 0;
   }
 }
