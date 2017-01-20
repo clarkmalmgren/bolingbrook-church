@@ -18,6 +18,7 @@ main section {
   dl {
     display: flex;
     flex-flow: row wrap;
+    margin: 0;
 
     dd {
       margin-left: 10%;
