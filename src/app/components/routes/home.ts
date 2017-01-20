@@ -1,5 +1,5 @@
 import { Component, OnInit }  from '@angular/core';
-import { FirebaseService }    from '../../services';
+import { Storage }            from '../../services';
 
 @Component({
   templateUrl: './home.html',
@@ -9,10 +9,10 @@ export class Home implements OnInit {
 
   coverArtUrl: string;
 
-  constructor(private fbs: FirebaseService) {}
+  constructor(private storage: Storage) {}
 
   ngOnInit() {
-    this.fbs.getStorageUrl('series/push.png')
+    this.storage.getUrl('series/push.png')
       .subscribe(url => { this.coverArtUrl = url; });
   }
 }

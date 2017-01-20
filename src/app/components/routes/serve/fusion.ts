@@ -1,4 +1,13 @@
-import { Component }    from '@angular/core';
+import { Component }                                        from '@angular/core';
+import { Router }                                           from '@angular/router';
+import { ConnectionRequest, ConnectionService, Observable } from '../../../services';
+
+const INTEREST_MAP = {
+  greeter: 'Greeter',
+  usher: 'Usher',
+  fit: 'F.I.T.',
+  cafe: 'Cafe'
+}
 
 @Component({
   templateUrl: './fusion.html',
@@ -8,21 +17,21 @@ export class Fusion {
 
   interests: { [key: string]: boolean } = {};
 
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone: string;
+  request: ConnectionRequest = new ConnectionRequest('serve');
 
-  submit(): void {
-    console.log('submitted!');
-  }
+  constructor(
+    private service: ConnectionService,
+    private router: Router
+  ) {}
 
-  get interests_list(): string[] {
-    return Object.keys(this.interests)
-      .filter(i => this.interests[i]);
-  }
+  submit(): Observable<any> {
+    this.request.interests = Object.keys(this.interests).map(i => INTEREST_MAP[i]);
+    let o = this.service.submit(this.request);
 
-  get valid(): boolean {
-    return !!this.first_name && !!this.last_name && !!this.email && !!this.phone && this.interests_list.length > 0;
+    o.subscribe(() => {
+      this.router.navigate([ '/thank-you' ]);
+    });
+
+    return o;
   }
 }

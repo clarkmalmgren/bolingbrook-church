@@ -54,7 +54,7 @@
         <input md-input
                required
                name="first_name"
-               [(ngModel)]="first_name"
+               [(ngModel)]="request.first_name"
                placeholder="First Name" >
       </md-input-container>
 
@@ -62,7 +62,7 @@
         <input md-input
                required
                name="last_name"
-               [(ngModel)]="last_name"
+               [(ngModel)]="request.last_name"
                placeholder="Last Name" >
       </md-input-container>
 
@@ -71,7 +71,7 @@
                required
                name="phone"
                type="tel"
-               [(ngModel)]="phone"
+               [(ngModel)]="request.phone"
                placeholder="Phone Number" >
       </md-input-container>
 
@@ -80,24 +80,22 @@
                required
                name="email"
                type="email"
-               [(ngModel)]="email"
+               [(ngModel)]="request.email"
                placeholder="Email Address" >
       </md-input-container>
 
       <h4>Interests</h4>
 
       <md-checkbox name="interests_greeter" [(ngModel)]="interests.greeter">Greeter</md-checkbox>
-      <md-checkbox name="interests_usher" [(ngModel)]="interests.user">Usher</md-checkbox>
+      <md-checkbox name="interests_usher" [(ngModel)]="interests.usher">Usher</md-checkbox>
       <md-checkbox name="interests_fit" [(ngModel)]="interests.fit">F.I.T.</md-checkbox>
       <md-checkbox name="interests_cafe" [(ngModel)]="interests.cafe">Cafe</md-checkbox>
 
       <div class="submit-wrapper">
-        <button md-raised-button (click)="submit()" [disabled]="!valid">
+        <observable-button (sda-click)="submit()" [disabled]="!request.valid">
           Submit
-        </button>
+        </observable-button>
       </div>
-
-      
 
     </form>
   </section>

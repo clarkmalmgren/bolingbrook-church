@@ -1,5 +1,5 @@
 import { Injectable }       from '@angular/core';
-import { FirebaseService }  from './firebase.service';
+import { Database }         from './firebase.service';
 import { Observable }       from './observable';
 
 type map = { [key: string]: any };
@@ -23,7 +23,7 @@ export interface Sermon {
 @Injectable()
 export class MessagesService {
 
-  constructor(private fb: FirebaseService) {}
+  constructor(private db: Database) {}
 
   getSermon(id: string, index: number): Observable<Sermon> {
     return this.getSeries(id)
@@ -31,16 +31,16 @@ export class MessagesService {
   }
 
   getSeries(id: string): Observable<Series> {
-    return this.fb.getDataOnce(`data/messages/${id}`)
+    return this.db.getOnce(`data/messages/${id}`)
       .map((data: any) => {
         return this.deserializeSeries(data);
       });
   }
 
   all(): Observable<Series[]> {
-    return this.fb.getDataOnce('data/messages/')
+    return this.db.getOnce('data/messages/')
       .map((data: any) => {
-        return this.fb.toArray(data)
+        return this.db.toArray(data)
           .map(it => this.deserializeSeries(it))
           .sort((a, b) => { return b.date.getTime() - a.date.getTime(); });
       });
@@ -55,7 +55,7 @@ export class MessagesService {
     } as Series;
 
     if (data['services']) {
-      series.services = this.fb.toArray(data['services'])
+      series.services = this.db.toArray(data['services'])
         .map((sdata: map) => this.deserializeSermon(sdata));
     }
 

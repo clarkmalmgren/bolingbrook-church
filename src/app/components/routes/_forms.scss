@@ -6,6 +6,7 @@ form {
   flex-flow: row wrap;
   padding: 30px;
   background: $color-grey-500;
+  max-width: 900px;
 
   md-input-container {
     flex: 1;

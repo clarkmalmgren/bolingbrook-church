@@ -1,0 +1,8 @@
+<button md-raised-button (click)="handleClick()" [disabled]="isDisabled">
+  <div class="content" [class.visible]="!loading">
+    <ng-content></ng-content>
+  </div>
+  <div class="content" [class.visible]="loading">
+    <md-icon>sync</md-icon>
+  </div>
+</button>

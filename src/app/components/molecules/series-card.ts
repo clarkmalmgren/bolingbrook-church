@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FirebaseService, Series }  from '../../services';
+import { Storage, Series }  from '../../services';
 
 
 @Component({
@@ -13,7 +13,7 @@ export class SeriesCard implements OnInit {
 
   image: string;
 
-  constructor(private fbs: FirebaseService) {}
+  constructor(private storage: Storage) {}
 
   get route(): string {
     return this.series.id;
@@ -24,7 +24,7 @@ export class SeriesCard implements OnInit {
   }
 
   ngOnInit() {
-    this.fbs.getStorageUrl(this.series.image_ref)
+    this.storage.getUrl(this.series.image_ref)
       .subscribe(url => { this.image = url; });
   }
 }

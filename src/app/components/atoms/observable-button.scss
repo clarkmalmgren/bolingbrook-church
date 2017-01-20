@@ -1,0 +1,40 @@
+@import './colors';
+
+@keyframes spinner {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+[md-raised-button] {
+  font-size: 18px;
+  margin-bottom: 30px;
+  padding: 4px 22px;
+  background-color: $color-blue;
+  color: $color-white;
+  transition: background-color 500ms linear;
+
+  md-icon {
+    animation: spinner 1s infinite;
+    position: relative;
+    top: 3px;
+  }
+
+  &[disabled] {
+    background-color: $color-grey-300;
+  }
+
+  &:hover:active {
+    background-color: $color-blue * 0.7;
+  }
+}
+
+button {
+  width: 100%;
+}
+
+.content {
+  display: none;
+  &.visible {
+    display: inherit;
+  }
+}

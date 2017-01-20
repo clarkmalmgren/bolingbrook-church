@@ -11,6 +11,7 @@ import { SERVICES }                                         from './services';
 @NgModule({
   declarations: [
     AppComponent,
+    ...Components.ATOMS,
     ...Components.MOLECULES,
     ...Components.ORGANISMS,
     ...Components.ROUTE_COMPONENTS
