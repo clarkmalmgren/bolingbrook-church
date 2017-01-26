@@ -1,0 +1,38 @@
+<main>
+  <section>
+    <hero image="/assets/messages.png">
+      Edit Messages
+    </hero>
+    
+    <p>
+      Click on any of the series cards to edit that series. Alternatively, you can add a new series below.
+    </p>
+  </section>
+
+  <section class="white">
+    <series-card *ngFor="let s of series"
+                 [series]="s">
+    </series-card>
+  </section>
+
+  <section class="white">
+    <form>
+      <h3>Add New Message Series</h3>
+
+      <md-input-container>
+        <input md-input
+               required
+               name="name"
+               [(ngModel)]="name"
+               placeholder="Message Series Name" >
+      </md-input-container>
+
+      <div class="submit-wrapper">
+        <observable-button (sda-click)="submit()" [disabled]="!valid">
+          Create
+        </observable-button>
+      </div>
+    </form>
+  </section>
+
+</main>

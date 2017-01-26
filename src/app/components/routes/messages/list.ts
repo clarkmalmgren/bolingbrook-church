@@ -13,7 +13,7 @@ export class MessageList implements OnInit {
   constructor(private service: MessagesService) {}
 
   ngOnInit() {
-    this.service.all()
+    this.service.allActive()
       .subscribe(series => { this.series = series; });
   }
 }

@@ -2,7 +2,7 @@ import { Injectable }           from '@angular/core';
 import { Database }             from './firebase.service';
 import { Observable }           from './observable';
 
-export type RequestType = ('serve' | 'connect');
+export type RequestType = ('serve' | 'connect' | 'mission');
 
 export class ConnectionRequest {
   type: RequestType;

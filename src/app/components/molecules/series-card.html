@@ -1,7 +1,9 @@
 <a class="card" [routerLink]="[ route ]">
   <div>
-    <img src="{{image}}">
-    <p>{{ series.date | date:'MMMM y' }}</p>
+    <img [src]="image" [alt]="series.name">
+    <p *ngIf="series.date">
+      {{ series.date | date:'MMMM y' }}
+    </p>
     <p>{{ parts }} part series</p>
   </div>
 </a>
