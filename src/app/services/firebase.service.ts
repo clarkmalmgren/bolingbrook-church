@@ -110,12 +110,14 @@ export class Database {
     return observe(this.fb.database.ref(path).remove());
   }
 
-  toArray<T>(data: { [key: string]: T }): T[] {
+  toArray<T>(data: { [key: string]: T }, idKey?: string): T[] {
     return Object.keys(data)
       .sort()
       .map((key) => {
         let d = data[key];
-        d['_id'] = key;
+        if (idKey) {
+          d[idKey] = key;
+        }
         return d;
       });
   }

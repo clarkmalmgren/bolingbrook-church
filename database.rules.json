@@ -4,7 +4,8 @@
     ".write": "false",
 
     "data": {
-      ".read": "true"
+      ".read": "true",
+      ".write": "root.child('users').child(auth.uid).val() == 'admin'"
     },
       
     "connections": {
