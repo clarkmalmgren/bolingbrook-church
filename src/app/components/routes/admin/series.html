@@ -29,6 +29,10 @@
                placeholder="Message Series Name" >
       </md-input-container>
 
+      <md-input-container>
+        <input md-input type="date" name="date" [(ngModel)]="series.date" placeholder="First Date of Series">
+      </md-input-container>
+
       <md-checkbox name="active" [(ngModel)]="series.active">Active</md-checkbox>
 
       <md-input-container>
