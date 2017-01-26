@@ -77,6 +77,11 @@ export class MessagesService {
     return this.db.delete(`data/messages/${series.id}`);
   }
 
+  latest(): Observable<Series> {
+    return this.allActive()
+      .map(series => series[0]);
+  }
+
   allActive(): Observable<Series[]> {
     return this.all()
       .map((series) => {
