@@ -9,6 +9,9 @@
     },
       
     "connections": {
+      ".read": "root.child('users').child(auth.uid).val() == 'admin'",
+      ".write": "root.child('users').child(auth.uid).val() == 'admin'",
+
       "$type": {
       	".write": "!data.exists()"
       }
