@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-  templateUrl: './newsletter.html',
-  styleUrls: [ './newsletter.scss' ]
+  template: `
+    <sda-frame src="http://church.us7.list-manage.com/subscribe?u=47fbf7f20e7641d78489b6636&id=9b074a79c5" height="800px">
+    </sda-frame>
+  `,
+  
 })
 export class Newsletter {
 }

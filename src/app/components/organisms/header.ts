@@ -17,15 +17,16 @@ class Link {
 export class Header {
 
   links = [
-    new Link('Home',                '/',            'home'),
-    new Link('About Us',            '/about',       'accessibility'),
-    new Link('Giving',              '/giving',      'trending_up'),
-    new Link('Messages',            '/messages',    'school'),
-    new Link('Get Connected',       '/connect',     'power'),
-    new Link('Serve',               '/serve',       'people'),
-    new Link('Locations',           '/locations',   'public'),
-    new Link('Missions',            '/missions',    'textsms'),
-    new Link('Newsletter Sign-up',  '/newsletter',  'markunread_mailbox'),
+    new Link('Home',                      '/',                        'home'),
+    new Link('About Us',                  '/about',                   'accessibility'),
+    new Link('Giving',                    '/giving',                  'trending_up'),
+    new Link('Messages',                  '/messages',                'school'),
+    new Link('Get Connected',             '/connect',                 'power'),
+    new Link('Serve',                     '/serve',                   'people'),
+    new Link('Locations',                 '/locations',               'public'),
+    new Link('Missions',                  '/missions',                'textsms'),
+    new Link('Newsletter Sign-up',        '/newsletter',              'markunread_mailbox'),
+    new Link('Friends & Family Sabbath',  '/friends-family-sabbath',  'directions_walk'),
     // new Link('Events',              '/events',      'event'),
   ];
 

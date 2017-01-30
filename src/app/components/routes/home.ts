@@ -8,7 +8,6 @@ import { Storage, Series, MessagesService } from '../../services';
 export class Home implements OnInit {
 
   coverArtUrl: string;
-  series: Series;
 
   constructor(
     private storage: Storage,
@@ -16,15 +15,10 @@ export class Home implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.messages.latest()
+    this.messages.all()
       .flatMap((series) => {
-        this.series = series;
-        return this.storage.getUrl(series.image_ref);
+        return this.storage.getUrl(series[0].image_ref);
       })
       .subscribe(url => { this.coverArtUrl = url; });
-  }
-
-  get link(): string[] {
-    return this.series ? [ 'messages', this.series.id ] : [];
   }
 }
