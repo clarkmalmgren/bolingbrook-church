@@ -1,4 +1,4 @@
-import { NgModule }                                 from '@angular/core';
+import { Component, NgModule }                      from '@angular/core';
 import { RouterModule, Routes }                     from '@angular/router';
 
 import { About }                                    from './about';
@@ -14,7 +14,7 @@ import { ThankYou }                                 from './thank-you';
 
 import { ADMIN_ROUTES, ADMIN_COMPONENTS }           from './admin/';
 import { CARE_ROUTES, CARE_COMPONENTS }             from './care/';
-import { MESSAGE_COMPONENTS, MessageRoutingModule } from './messages/';
+import { MESSAGE_COMPONENTS, MESSAGE_ROUTES }       from './messages/';
 import { SERVE_ROUTES, SERVE_COMPONENTS }           from './serve/';
 
 const routes: Routes = [
@@ -29,6 +29,7 @@ const routes: Routes = [
   { path: 'thank-you',              component: ThankYou },
   ...ADMIN_ROUTES,
   ...CARE_ROUTES,
+  ...MESSAGE_ROUTES,
   ...SERVE_ROUTES,
   { path: '**',         component: NotFound }
 ];
@@ -57,6 +58,5 @@ export const ROUTE_COMPONENTS = [
 ];
 
 export const ROUTE_MODULES = [
-  MessageRoutingModule,
   AppRoutingModule
 ];

@@ -1,10 +1,12 @@
-import { ConnectionRequest, ConnectionService } from './connection.service';
-import { Env }                                  from './env';
-import { FirebaseService, Database, Storage }   from './firebase.service';
-import { Observable }                           from './observable';
-import { MessagesService, Series, Sermon }      from './messages.service';
+import { BackgroundVideoService, BackgroundVideoSource }  from './background-video.service';
+import { ConnectionRequest, ConnectionService }           from './connection.service';
+import { Env }                                            from './env';
+import { FirebaseService, Database, Storage }             from './firebase.service';
+import { Observable }                                     from './observable';
+import { MessagesService, Series, Sermon }                from './messages.service';
 
 export const SERVICES = [
+  BackgroundVideoService,
   ConnectionService,
   Database,
   Env,
@@ -14,6 +16,8 @@ export const SERVICES = [
 ];
 
 export {
+  BackgroundVideoService,
+  BackgroundVideoSource,
   ConnectionRequest,
   ConnectionService,
   Database,

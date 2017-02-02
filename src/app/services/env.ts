@@ -9,4 +9,8 @@ export class Env {
   get firebaseConfig() {
     return this.env.firebaseConfig;
   }
+
+  get useBundledBackgroundVideo() {
+    return this.env.useBundledBackgroundVideo;
+  }
 }

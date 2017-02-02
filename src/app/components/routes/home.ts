@@ -1,5 +1,5 @@
-import { Component, OnInit }                from '@angular/core';
-import { Storage, Series, MessagesService } from '../../services';
+import { Component, OnInit, HostListener }                from '@angular/core';
+import { BackgroundVideoService, BackgroundVideoSource }  from '../../services';
 
 @Component({
   templateUrl: './home.html',
@@ -7,18 +7,31 @@ import { Storage, Series, MessagesService } from '../../services';
 })
 export class Home implements OnInit {
 
-  coverArtUrl: string;
-
+  _window = window;
+  mobile: boolean;
+  streaming: boolean = false;
+  sources: BackgroundVideoSource[];
+  
   constructor(
-    private storage: Storage,
-    private messages: MessagesService
+    private service: BackgroundVideoService
   ) {}
 
   ngOnInit() {
-    this.messages.all()
-      .flatMap((series) => {
-        return this.storage.getUrl(series[0].image_ref);
-      })
-      .subscribe(url => { this.coverArtUrl = url; });
+    this.updateMobile(this._window);
+
+    this.service.getSources()
+      .subscribe((sources) => {
+        this.sources = sources;
+      });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.updateMobile(event.target);
+  }
+
+  updateMobile(window: Window) {
+    this.mobile = (window.innerWidth < 450);
+    console.log(`mobile: ${this.mobile}`);
   }
 }

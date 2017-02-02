@@ -1,10 +1,76 @@
-div {
-  margin: 80px 40px;
-  text-align: center;
+main {
+  display: none;
 
-  img {
-    max-width: 100%;
-    max-height: 100%;
+  &.visible {
+    display: initial;
   }
 }
 
+
+div.overlay {
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  &.hidden {
+    display: none;
+  }
+
+  div.shadow {
+    display: flex;
+    flex-flow: row wrap;
+    align-content: center;
+    justify-content: center;
+
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(#000, 0.6);
+
+    h1 {
+      text-align: center;
+      flex: 100%;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 400;
+      font-size: 36px;
+      margin: 0 30px 15px;
+      text-shadow: 2px 2px 2px rgba(#fff, .4);
+    }
+
+    [md-button] {
+      font-size: 20px;
+      transition: background-color .2s linear;
+
+      &:hover {
+        background-color: rgba(#000, 0.6);
+      }
+    }
+  }
+
+  video {
+    position: absolute;
+    object-fit: cover;
+    z-index: -1;
+    min-width: 100%;
+    min-height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  div.mobile-bg {
+    position: absolute;
+    background-image: url('/assets/messages.png');
+    background-position: center;
+    background-size: cover;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+  }
+
+}

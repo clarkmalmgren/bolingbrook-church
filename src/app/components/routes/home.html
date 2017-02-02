@@ -1,9 +1,24 @@
-<main>
-  <ustream></ustream>
-
-  <div>
-    <a routerLink="messages">
-      <img src="{{coverArtUrl}}">
-    </a>
-  </div>
+<main [class.visible]="streaming">
+  <ustream (live)="streaming = true" (offline)="streaming = false"></ustream>
+  <sda-footer></sda-footer>
 </main>
+
+<div class="overlay" [class.hidden]="streaming">
+  <div class="shadow">
+    <h1>Creating Spaces for the People God Misses the Most</h1>
+
+    <a md-button routerLink="/about">About Us</a>
+    <a md-button routerLink="/connect">Connect</a>
+    <a md-button routerLink="/giving">Giving</a>
+    <a md-button routerLink="/messages">Messages</a>
+    <a md-button routerLink="/locations">Locations</a>
+  </div>
+  <video *ngIf="!mobile" autoplay loop>
+    <source *ngFor="let source of sources"
+            [src]="source.url"
+            [type]="source.type" />
+  </video>
+  <div *ngIf="mobile" class="mobile-bg">
+  </div>
+  
+</div>

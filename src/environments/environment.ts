@@ -8,6 +8,8 @@ export const environment = {
 
   googleMapsApiKey : 'AIzaSyBlefC4kQQvhmlinHFGFjHdy3XjfpgTRUs',
 
+  useBundledBackgroundVideo: true,
+
   firebaseConfig : {
     apiKey: "AIzaSyBq1DN3NMR_8SMdfEYqoMn0xsUbPZoGOuI",
     authDomain: "bolingbrook-church-beta.firebaseapp.com",

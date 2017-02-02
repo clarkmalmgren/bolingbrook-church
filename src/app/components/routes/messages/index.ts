@@ -5,49 +5,29 @@ import { MessageList }          from './list';
 import { SeriesComponent }      from './series';
 import { SermonComponent }      from './sermon';
 
-@Component({
-  template: '<router-outlet></router-outlet>'
-})
-export class MessageComponent {
-
-}
-
-const routes: Routes = [
+export const MESSAGE_ROUTES: Routes = [
   {
     path: 'messages',
-    component: MessageComponent,
+    component: MessageList
+  },
+  {
+    path: 'messages/:series', 
+    component: SeriesComponent,
     children: [
       {
         path: '',
-        component: MessageList
+        redirectTo: '0',
+        pathMatch: 'full'
       },
       {
-        path: ':series',
-        component: SeriesComponent,
-        children: [
-          {
-            path: '',
-            redirectTo: '0',
-            pathMatch: 'full'
-          },
-          {
-            path: ':sermon',
-            component: SermonComponent
-          }
-        ]
+        path: ':sermon',
+        component: SermonComponent
       }
     ]
   }
 ];
 
-@NgModule({
-  imports: [ RouterModule.forChild(routes) ],
-  exports: [ RouterModule ]
-})
-export class MessageRoutingModule { }
-
 export const MESSAGE_COMPONENTS = [
-  MessageComponent,
   MessageList,
   SeriesComponent,
   SermonComponent
