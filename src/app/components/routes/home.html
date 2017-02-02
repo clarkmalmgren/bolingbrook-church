@@ -7,11 +7,13 @@
   <div class="shadow">
     <h1>Creating Spaces for the People God Misses the Most</h1>
 
-    <a md-button routerLink="/about">About Us</a>
-    <a md-button routerLink="/connect">Connect</a>
-    <a md-button routerLink="/giving">Giving</a>
-    <a md-button routerLink="/messages">Messages</a>
-    <a md-button routerLink="/locations">Locations</a>
+    <div class="navs">
+      <a md-button routerLink="/about">About Us</a>
+      <a md-button routerLink="/connect">Connect</a>
+      <a md-button routerLink="/giving">Giving</a>
+      <a md-button routerLink="/messages">Messages</a>
+      <a md-button routerLink="/locations">Locations</a>
+    </div>
   </div>
   <video *ngIf="!mobile" autoplay loop>
     <source *ngFor="let source of sources"
