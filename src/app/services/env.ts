@@ -1,5 +1,6 @@
 import { Injectable }   from '@angular/core';
-import { environment } from '../../environments/environment';
+import { environment }  from '../../environments/environment';
+const pkg: any = require('../../../package.json');
 
 @Injectable()
 export class Env {
@@ -12,5 +13,9 @@ export class Env {
 
   get useBundledBackgroundVideo() {
     return this.env.useBundledBackgroundVideo;
+  }
+
+  get version() {
+    return pkg.version;
   }
 }

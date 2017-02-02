@@ -15,6 +15,7 @@ div.footer {
     justify-content: space-between;
     padding: 13px 10% 40px;
     background: $color-grey-000;
+    position: relative;
 
     div.icon {
       flex: 100%;
@@ -53,6 +54,15 @@ div.footer {
           }
         }
       }
+    }
+
+    .version {
+      position: absolute;
+      right: 5px;
+      bottom: 5px;
+      color: $color-grey-200;
+      font-size: 13px;
+      font-family: "Roboto Condensed";
     }
   }
 }
