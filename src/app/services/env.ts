@@ -11,11 +11,11 @@ export class Env {
     return this.env.firebaseConfig;
   }
 
-  get useBundledBackgroundVideo() {
+  get useBundledBackgroundVideo(): boolean {
     return this.env.useBundledBackgroundVideo;
   }
 
-  get version() {
+  get version(): string {
     return pkg.version;
   }
 }
