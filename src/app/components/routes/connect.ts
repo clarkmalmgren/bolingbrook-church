@@ -1,7 +1,7 @@
-import { Component }                                        from '@angular/core';
-import { Router }                                           from '@angular/router';
-import { ConnectionRequest, ConnectionService, Observable } from '../../services';
-import { STATES }                                           from './states';
+import { Component }                                                    from '@angular/core';
+import { Router }                                                       from '@angular/router';
+import { STATES }                                                       from './states';
+import { ConnectionRequest, ConnectionService, Observable, Analytics }  from '../../services';
 
 @Component({
   templateUrl: './connect.html',
@@ -25,14 +25,17 @@ export class Connect {
 
   constructor(
     private service: ConnectionService,
-    private router: Router
+    private router: Router,
+    private analytics: Analytics
   ) {
     this.typeKeys = Object.keys(this.types).sort();
   }
 
   submit(): Observable<any> {
     this.request.interests = Object.keys(this.interests).map(i => this.types[i]);
-    let o = this.service.submit(this.request);
+    let o = this.service.submit(this.request)
+      .flatMap(() => { return this.analytics.event('form', 'submit', 'connect'); })
+      .catch((err) => { return this.analytics.exception(err); });
 
     o.subscribe(() => {
       this.router.navigate([ '/thank-you' ]);

@@ -14,7 +14,6 @@ export const SERVICES = [
   Database,
   Env,
   FirebaseService,
-  GlobalErrorHandler,
   MessagesService,
   Storage
 ];

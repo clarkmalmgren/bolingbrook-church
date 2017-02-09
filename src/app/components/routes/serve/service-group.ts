@@ -1,5 +1,5 @@
-import { Router }                                           from '@angular/router';
-import { ConnectionRequest, ConnectionService, Observable } from '../../../services';
+import { Router }                                                       from '@angular/router';
+import { ConnectionRequest, ConnectionService, Observable, Analytics }  from '../../../services';
 
 
 export interface ServiceSubtype {
@@ -19,6 +19,7 @@ export abstract class ServiceGroup {
   constructor(
     private service: ConnectionService,
     private router: Router,
+    private analytics: Analytics,
 
     public hero_ref: string,
     public title: string,
@@ -32,7 +33,9 @@ export abstract class ServiceGroup {
 
   submit(): Observable<any> {
     this.request.interests = Object.keys(this.interests).map(i => this.types[i].name);
-    let o = this.service.submit(this.request);
+    let o = this.service.submit(this.request)
+      .flatMap(() => { return this.analytics.event('form', 'submit', 'title'); })
+      .catch((err) => { return this.analytics.exception(err); });
 
     o.subscribe(() => {
       this.router.navigate([ '/thank-you' ]);
