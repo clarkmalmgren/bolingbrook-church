@@ -34,7 +34,7 @@ main {
     }
 
     p {
-      flex: 1;
+      flex: 1 1 auto;
       min-width: 250px;
       max-width: 500px;
       font-size: 14px;
@@ -59,7 +59,7 @@ main {
     }
 
     div.col {
-      flex: 1;
+      flex: 1 1 auto;
       min-width: 250px;
       max-width: 500px;
     }

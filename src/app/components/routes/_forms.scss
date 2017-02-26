@@ -2,7 +2,7 @@
 @import '../atoms/breaks';
 
 @mixin formPart() {
-  flex: 1;
+  flex: 1 1 auto;
   min-width: 350px;
   margin: 11px;
 
