@@ -3,11 +3,11 @@ import { RouterModule, Routes }                     from '@angular/router';
 
 import { About }                                    from './about';
 import { Connect }                                  from './connect';
+import { Events }                                   from './events';
 import { FriendsAndFamily }                         from './friends-and-family';
 import { Giving }                                   from './giving';
 import { Home }                                     from './home';
 import { Locations }                                from './locations';
-import { Missions }                                 from './missions';
 import { Newsletter }                               from './newsletter';
 import { NotFound }                                 from './not-found';
 import { ThankYou }                                 from './thank-you';
@@ -21,11 +21,11 @@ const routes: Routes = [
   { path: '',                       component: Home },
   { path: 'about',                  component: About },
   { path: 'connect',                component: Connect },
+  { path: 'events',                 component: Events },
   { path: 'friends-family-sabbath', component: FriendsAndFamily },
   { path: 'giving',                 component: Giving },
   { path: 'locations',              component: Locations },
   { path: 'newsletter',             component: Newsletter },
-  { path: 'missions',               component: Missions },
   { path: 'thank-you',              component: ThankYou },
   ...ADMIN_ROUTES,
   ...CARE_ROUTES,
@@ -43,11 +43,11 @@ export class AppRoutingModule {}
 export const ROUTE_COMPONENTS = [
   About,
   Connect,
+  Events,
   FriendsAndFamily,
   Giving,
   Home,
   Locations,
-  Missions,
   Newsletter,
   NotFound,
   ThankYou,

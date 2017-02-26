@@ -1,6 +1,6 @@
 import { Component }                            from '@angular/core';
 import { Router }                               from '@angular/router';
-import { ConnectionService }                    from '../../../services';
+import { ConnectionService, Analytics }         from '../../../services';
 import { ServiceGroup, ServiceSubtype }         from './service-group';
 
 const TYPES: { [key: string]: ServiceSubtype } = {
@@ -43,11 +43,13 @@ export class Fusion extends ServiceGroup {
 
   constructor(
     service: ConnectionService,
-    router: Router
+    router: Router,
+    analytics: Analytics
   ) {
     super(
       service,
       router,
+      analytics,
       '/assets/serve/fusion.jpg',
       'Fusion Team Volunteers',
       'Every Saturday is the first Saturday for someone at Bolingbrook. Our Fusion teams are who make that first experience special.',

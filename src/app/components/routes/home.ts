@@ -32,6 +32,5 @@ export class Home implements OnInit {
 
   updateMobile(window: Window) {
     this.mobile = (window.innerWidth < 450);
-    console.log(`mobile: ${this.mobile}`);
   }
 }

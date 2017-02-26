@@ -27,7 +27,7 @@ export class Header {
     new Link('Missions',                  '/missions',                'textsms'),
     new Link('Newsletter Sign-up',        '/newsletter',              'markunread_mailbox'),
     new Link('Friends & Family Sabbath',  '/friends-family-sabbath',  'directions_walk'),
-    // new Link('Events',              '/events',      'event'),
+    new Link('Events',                    '/events',                  'event'),
   ];
 
   opened = false;

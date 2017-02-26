@@ -16,6 +16,7 @@ main section {
   }
 
   dl {
+    flex: 100%;
     display: flex;
     flex-flow: row wrap;
     margin: 0;
