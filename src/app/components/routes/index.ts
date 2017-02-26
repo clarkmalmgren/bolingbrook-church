@@ -8,7 +8,6 @@ import { FriendsAndFamily }                         from './friends-and-family';
 import { Giving }                                   from './giving';
 import { Home }                                     from './home';
 import { Locations }                                from './locations';
-import { Missions }                                 from './missions';
 import { Newsletter }                               from './newsletter';
 import { NotFound }                                 from './not-found';
 import { ThankYou }                                 from './thank-you';
@@ -27,7 +26,6 @@ const routes: Routes = [
   { path: 'giving',                 component: Giving },
   { path: 'locations',              component: Locations },
   { path: 'newsletter',             component: Newsletter },
-  { path: 'missions',               component: Missions },
   { path: 'thank-you',              component: ThankYou },
   ...ADMIN_ROUTES,
   ...CARE_ROUTES,
@@ -50,7 +48,6 @@ export const ROUTE_COMPONENTS = [
   Giving,
   Home,
   Locations,
-  Missions,
   Newsletter,
   NotFound,
   ThankYou,
