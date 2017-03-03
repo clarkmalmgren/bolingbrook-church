@@ -18,4 +18,41 @@ main section {
     margin: 6px;
     min-width: 160px;
   }
+
+  &.madness {
+    background-image: url("/assets/march-madness/chalkboard.jpg");
+    background-repeat: repeat;
+    color: white;
+
+    h1 {
+      color: white;
+      font-family: 'Chalkduster', sans-serif;
+    }
+
+    img.wide {
+      width: 100vw;
+      height: 55vw;
+      max-height: 300px;
+      object-fit: contain;
+    }
+
+    div.countdown {
+      margin-top: 32px;
+      h3, h4 {
+        color: white;
+      }
+    }
+
+    div.navmap {
+      margin-top: 32px;
+      img {
+        cursor: pointer;
+      }
+    }
+
+    div.classic {
+      height: 0;
+      overflow: hidden;
+    }
+  }
 }

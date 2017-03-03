@@ -39,6 +39,16 @@ div.overlay {
       font-weight: 400;
       font-size: 36px;
       margin: 0 30px 15px;
+
+      &.madness {
+        font-family: 'Chalkduster', sans-serif;
+
+        a {
+          text-decoration: none;
+          color: white;
+          font-size: 46px;
+        }
+      }
     }
 
     div.navs {
@@ -55,6 +65,11 @@ div.overlay {
         border-right: white solid 2px;
         margin: 16px -2px 0 0;
         width: 120px;
+
+        &.madness {
+          min-width: 120px;
+          width: inherit;
+        }
 
         &:hover {
           background-color: rgba(#fff, 0.4);

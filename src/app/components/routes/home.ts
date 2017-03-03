@@ -1,5 +1,5 @@
-import { Component, OnInit, HostListener }                from '@angular/core';
-import { BackgroundVideoService, BackgroundVideoSource }  from '../../services';
+import { Component, OnInit, HostListener }                    from '@angular/core';
+import { BackgroundVideoService, BackgroundVideoSource, Env } from '../../services';
 
 @Component({
   templateUrl: './home.html',
@@ -13,7 +13,8 @@ export class Home implements OnInit {
   sources: BackgroundVideoSource[];
   
   constructor(
-    private service: BackgroundVideoService
+    private service: BackgroundVideoService,
+    private env: Env
   ) {}
 
   ngOnInit() {
@@ -32,5 +33,9 @@ export class Home implements OnInit {
 
   updateMobile(window: Window) {
     this.mobile = (window.innerWidth < 450);
+  }
+
+  get marchMadnessActive(): boolean {
+    return this.env.marchMadnessActive;
   }
 }

@@ -1,36 +1,24 @@
 import { Component }                            from '@angular/core';
 import { Router }                               from '@angular/router';
-import { ConnectionService, Analytics }         from '../../../services';
+import { ConnectionService, Analytics, Env }    from '../../../services';
 import { ServiceGroup, ServiceSubtype }         from './service-group';
 
 const TYPES: { [key: string]: ServiceSubtype } = {
-  greeter: {
-    name:  'Greeter',
-    description: `
-      These volunteers serve our guests at the doors, in the hallways, and in the auditoriums by making them feel valued with a
-      sincere greeting, a genuine smile, a friendly presence, a fond farewell, and by providing general assistance during
-      their visit.
-    `
-  },
   usher: {
     name:  'Usher',
     description: `
-      Our usher teams are who help find seating and make sure all who come can enjoy our program and not have to worry about if
-      or where they will sit.
+      Ushers help guests make it from the streets to their seats without the burden of trying to find a
+      place for themselves and their friends or family. They provide the "we've got your back" for all
+      our guests. Guests never want to feel like they are out of place, ushers provide the feeling that
+      “we’ve been preparing just for you.
     `
   },
-  fit: {
-    name:  'F.I.T.',
+  greeter: {
+    name:  'Greeter',
     description: `
-      Our First Impressions Team (F.I.T) proactively provide a warm welcome, clear directions, and safe paths for guests entering
-      and exiting our Romeoville campus. Our F.I.T. is equal parts hotel concierge and security.
-    `
-  },
-  cafe: {
-    name:  'Cafe',
-    description: `
-      Come join our team who brings smiles to everyone. Nothing hits the spot on a warm day like a good smoothy or even some warm
-      apple cider on a cool day! This team makes that all possible.
+      Greeters welcome each guest "home" for the day with a grand smile & embracing attitude. They embrace
+      each guest with a friendly & inviting attitude that lets him or her know "we've been waiting for you."
+      Greeters are driven to make others feel the love that Jesus has for them the minute they walk through our doors.
     `
   }
 }
@@ -44,20 +32,43 @@ export class Fusion extends ServiceGroup {
   constructor(
     service: ConnectionService,
     router: Router,
-    analytics: Analytics
+    analytics: Analytics,
+    env: Env
   ) {
     super(
       service,
       router,
       analytics,
-      '/assets/serve/fusion.jpg',
-      'Fusion Team Volunteers',
-      'Every Saturday is the first Saturday for someone at Bolingbrook. Our Fusion teams are who make that first experience special.',
-      `
-        Our Fusion team works hard to create an environment where all guests feel safe and comfortable. Our teams have fun, care
-        for guests, share community with your team, and play a significant role in helping someone have a remarkable experience.
-        We are one large team that can be seen helping our guests in several areas.
-      `,
+      env.marchMadnessActive ? '/assets/march-madness/banners/FUSION.jpg' : '/assets/serve/fusion.jpg',
+      'FUSION',
+      null,
+      [
+        `
+          Every Saturday people from all walks of life enter our invite space when they arrive on our campus.
+          From the songs we sing to the messages we preach, we seek to create an environment where the people
+          God misses the most are invited to encounter a loving and awesome God. Our fusion team is a vital and
+          integral part of fulfilling that purpose, from greeting someone at our doors, to seating someone in
+          our auditorium; Our fusion team works hard to create a friendly and embracing experience for every 
+          guest who arrives on our campus. 
+        `,
+        `
+          We begin interacting with guests the minute they approach our doors to when they are seated in our
+          auditorium.
+        `,
+        `
+          Our volunteers can expect to have fun, share connection with a team, and play a significant role in
+          creating a welcoming and inviting space for all the people God will gift us with each Saturday who
+          walk through our doors.
+        `,
+        `
+          We'd love to tell you more about how you can become part of the team that keeps Saturdays going.
+          Every Saturday a new story is created about someone who was invited to encounter God in a fresh new
+          way, and as a result started a journey in becoming the person they always knew they could be. 
+        `,
+        `
+          Embrace the Madness and Register below to attend an upcoming orientation.
+        `
+      ],
       TYPES
     );
   }

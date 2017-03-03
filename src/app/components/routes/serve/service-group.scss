@@ -15,6 +15,13 @@ main section {
     text-align: center;
   }
 
+  p.details {
+    flex: 100%;
+    min-width: 0;
+    max-width: none;
+    padding: 10px 40px;
+  }
+
   dl {
     flex: 100%;
     display: flex;
