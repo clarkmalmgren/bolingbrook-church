@@ -1,16 +1,16 @@
 <main>
   <section class="white">
-    <hero [image]="hero_ref">
+    <hero [image]="hero_ref" [center]="true">
       &nbsp;<br/>&nbsp;
     </hero>
 
     <h1>{{ title }}</h1>
-    <p class="subtitle">
+    <p *ngIf="subtitle" class="subtitle">
       {{ subtitle }}
     </p>
 
-    <p>
-      {{ details }}
+    <p *ngFor="let detail of details" class="details">
+      {{ detail }}
     </p>
   </section>
 
@@ -23,10 +23,20 @@
     </dl>
   </section>
 
-  <section class="white">
+  <section class="white" *ngIf="secondaryDetails">
+    <p *ngFor="let detail of secondaryDetails" class="details">
+      {{ detail }}
+    </p>
+  </section>
+
+  <section class="white" *ngIf="signupLink">
+      <a md-raised-button [href]="signupLink" (click)="clickSignupLink()">Fill Out an Application</a>
+  </section>
+
+  <section class="white" *ngIf="!signupLink">
     <form>
 
-      <h3>Sign Up</h3>
+      <h3>Register Here</h3>
 
       <md-input-container>
         <input md-input
@@ -62,7 +72,7 @@
                placeholder="Email Address" >
       </md-input-container>
 
-      <h4>Interests</h4>
+      <h4>Choose a Team</h4>
 
       <md-checkbox *ngFor="let key of typeKeys"
                    [name]="'interests_' + key"

@@ -15,6 +15,13 @@ main section {
     text-align: center;
   }
 
+  p.details {
+    flex: 100%;
+    min-width: 0;
+    max-width: none;
+    padding: 10px 40px;
+  }
+
   dl {
     flex: 100%;
     display: flex;
@@ -23,7 +30,9 @@ main section {
 
     dd {
       margin-left: 10%;
-      flex: 20%;
+      flex: 1 1 auto;
+      min-width: 300px;
+      max-width: 300px;
 
       h3 {
         text-align: left;
@@ -32,12 +41,11 @@ main section {
       }
     }
     dt {
-      margin-left: 10%;
-      flex: 50%;
-      margin-right: 10%;
-      margin-bottom: 15px;
+      flex: 1 1 auto;
+      margin: 15px 10% 0;
 
       min-width: 300px;
+      max-width: 600px;
 
       @include break(micro) { min-width: 200px; }
     }

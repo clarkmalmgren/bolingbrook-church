@@ -26,3 +26,8 @@ $sda-app-theme:   md-light-theme($sda-app-primary, $sda-app-accent, $sda-app-war
 div.cdk-overlay-pane {
   color: black;
 }
+
+@font-face {
+  font-family: "Chalkduster";
+  src: url("assets/march-madness/Chalkduster.ttf") format("truetype");
+}
