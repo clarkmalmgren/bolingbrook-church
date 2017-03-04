@@ -30,10 +30,19 @@ main section {
     }
 
     img.wide {
-      width: 100vw;
+      width: 80vw;
       height: 55vw;
       max-height: 300px;
       object-fit: contain;
+
+      @media only screen and (min-width: $break-small) {
+        margin-top: 30px;
+      }
+    }
+
+    div.center-flex {
+      display: flex;
+      justify-content: center;
     }
 
     div.countdown {

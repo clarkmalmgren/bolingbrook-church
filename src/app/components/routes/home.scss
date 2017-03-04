@@ -1,3 +1,5 @@
+@import '../atoms/breaks';
+
 main {
   display: none;
 
@@ -43,10 +45,18 @@ div.overlay {
       &.madness {
         font-family: 'Chalkduster', sans-serif;
 
+        @include break(micro) {
+          font-size: 28px;
+        }
+
         a {
           text-decoration: none;
           color: white;
           font-size: 46px;
+
+          @include break(micro) {
+            font-size: 36px;
+          }
         }
       }
     }
@@ -69,6 +79,11 @@ div.overlay {
         &.madness {
           min-width: 120px;
           width: inherit;
+
+          @include break(micro) {
+            font-size: 14px;
+            min-width: inherit;
+          }
         }
 
         &:hover {
