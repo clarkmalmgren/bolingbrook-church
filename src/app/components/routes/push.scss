@@ -1,12 +1,17 @@
 @import 'article';
 
-a.push {
-  padding-top: 17px;
-  width: 80%;
+main section div.row {
+  display: flex;
 
-  img {  max-width: 100%; }
-}
+  a.push {
+    padding-top: 17px;
+    flex: 100%;
+    margin: 0 10%;
 
-main section a[md-raised-button].button {
-  margin: 0;
+    img {  max-width: 100%; }
+  }
+
+  a.button {
+    margin: 15px auto 0;
+  }
 }
