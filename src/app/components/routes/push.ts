@@ -1,4 +1,5 @@
-import { Component }                    from '@angular/core';
+import { Component }    from '@angular/core';
+import { Analytics }    from '../../services';
 
 @Component({
   templateUrl: './push.html',
@@ -6,4 +7,15 @@ import { Component }                    from '@angular/core';
 })
 export class Push {
 
+  constructor(
+    private analytics: Analytics
+  ) {}
+
+  takeSurvey(): boolean {
+    this.analytics.event('nav', 'leave', 'push_survey')
+      .subscribe(() => {
+        location.href = 'https://www.surveymonkey.com/r/JSVDZBS';
+      });
+    return false;
+  }
 }
