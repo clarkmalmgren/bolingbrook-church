@@ -1,16 +1,12 @@
 @import 'article';
 
-section {
-  padding-top: 17px;
-}
-
 a.push {
+  padding-top: 17px;
   width: 80%;
 
   img {  max-width: 100%; }
 }
 
 main section a[md-raised-button].button {
-  margin-top: 15px;
-  margin-bottom: 0;
+  margin: 0;
 }
