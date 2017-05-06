@@ -10,6 +10,7 @@ import { Home }                                     from './home';
 import { Locations }                                from './locations';
 import { Newsletter }                               from './newsletter';
 import { NotFound }                                 from './not-found';
+import { Push }                                     from './push';
 import { ThankYou }                                 from './thank-you';
 
 import { ADMIN_ROUTES, ADMIN_COMPONENTS }           from './admin/';
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'giving',                 component: Giving },
   { path: 'locations',              component: Locations },
   { path: 'newsletter',             component: Newsletter },
+  { path: 'push',                   component: Push },
   { path: 'thank-you',              component: ThankYou },
   ...ADMIN_ROUTES,
   ...CARE_ROUTES,
@@ -50,6 +52,7 @@ export const ROUTE_COMPONENTS = [
   Locations,
   Newsletter,
   NotFound,
+  Push,
   ThankYou,
   ...ADMIN_COMPONENTS,
   ...CARE_COMPONENTS,
