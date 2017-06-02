@@ -14,7 +14,7 @@ export class Push {
   takeSurvey(): boolean {
     this.analytics.event('nav', 'leave', 'push_survey')
       .subscribe(() => {
-        location.href = 'https://www.surveymonkey.com/r/JSVDZBS';
+        location.href = 'https://www.surveymonkey.com/r/DYBPXX2';
       });
     return false;
   }
