@@ -20,8 +20,6 @@ export class Analytics {
   ) { }
 
   init(): void {
-    ga('set', 'appVersion', this.env.version);
-    
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {
         this.navStartedAt = performance.now();
@@ -36,7 +34,8 @@ export class Analytics {
 
   pageview(route: string): void {
     if (this.currentRoute != route) {
-      ga('send', 'pageview', route);
+      ga('set', 'page', route);
+      ga('send', 'pageview');
 
       if (this.currentRoute == null) {
         this.timing('pageview', 'init', performance.now());
