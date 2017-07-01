@@ -1,9 +1,9 @@
 import { BrowserModule }                                    from '@angular/platform-browser';
+import { BrowserAnimationsModule }                          from '@angular/platform-browser/animations';
 import { NgModule, ErrorHandler }                           from '@angular/core';
 import { FormsModule }                                      from '@angular/forms';
 import { HttpModule }                                       from '@angular/http';
-import { MaterialModule }                                   from '@angular/material';
-
+import { MATERIAL_MODULES }                                 from './components/atoms/material';
 import { AppComponent }                                     from './app.component';
 import * as Components                                      from './components';
 import { SERVICES, GlobalErrorHandler }                     from './services';
@@ -18,9 +18,10 @@ import { SERVICES, GlobalErrorHandler }                     from './services';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpModule,
-    MaterialModule.forRoot(),
+    ...MATERIAL_MODULES,
     ...Components.ROUTE_MODULES
   ],
   providers: [
