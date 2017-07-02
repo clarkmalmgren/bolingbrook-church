@@ -12,6 +12,7 @@ export class Analytics {
 
   private navStartedAt: number = 0;
   private currentRoute: string;
+  private analytics;
 
   constructor(
     private router: Router,
@@ -19,7 +20,9 @@ export class Analytics {
     private env: Env
   ) { }
 
-  init(): void {
+  init(analytics: Function = ga): void {
+    this.analytics = analytics;
+
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {
         this.navStartedAt = performance.now();
@@ -34,8 +37,8 @@ export class Analytics {
 
   pageview(route: string): void {
     if (this.currentRoute != route) {
-      ga('set', 'page', route);
-      ga('send', 'pageview');
+      this.analytics('set', 'page', route);
+      this.analytics('send', 'pageview');
 
       if (this.currentRoute == null) {
         this.timing('pageview', 'init', performance.now());
@@ -77,7 +80,7 @@ export class Analytics {
         observer.next('');
         observer.complete();
       };
-      ga(method, type, data);
+      this.analytics(method, type, data);
     });
 
     /* It is important that at least someone subscribes or it won't actually fire */

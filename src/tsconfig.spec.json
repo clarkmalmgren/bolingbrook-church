@@ -15,6 +15,9 @@
     "baseUrl": "",
     "types": [
       "jasmine",
+      "sinon-chai",
+      "chai",
+      "sinon",
       "node"
     ]
   },
