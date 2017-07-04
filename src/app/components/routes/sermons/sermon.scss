@@ -1,0 +1,48 @@
+@import '../../atoms/breaks';
+@import '../article';
+
+@mixin sized($width) {
+  width: $width;
+  height: $width * 3 / 4;
+}
+
+div.flex-clear {
+  flex: 100%;
+  height: 0px;
+}
+
+main section.video {
+  background: black;
+  padding: 45px 0;
+
+  iframe {
+    @include sized(640px);
+
+    @include break(tiny)  { @include sized(360px); }
+    @include break(micro) { @include sized(300px); }
+  }
+
+  div.data {
+    width: 640px;
+
+    @include break(tiny)  { width: 270px; }
+    @include break(micro) { width: 225px; }
+
+    text-align: left;
+    color: white;
+
+    h2 {
+      margin: 0 0 5px;
+    }
+    h3 {
+      margin: 0;
+      color: white;
+      text-align: left;
+    }
+  }
+
+}
+
+main section.more {
+  padding-top: 45px;
+}

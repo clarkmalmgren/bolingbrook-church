@@ -1,0 +1,54 @@
+<main>
+  <section>
+    <hero image="/assets/messages.png">
+      Edit Series
+    </hero>
+    
+    <p>
+      Change the title of the series, upload an image, and modify sermons.
+    </p>
+  </section>
+
+  <section class="white">
+    <form *ngIf="sermons">
+      <h4>Sermons</h4>
+
+      <md-list>
+
+        <md-list-item *ngFor="let s of sermons; let i = index;">
+          <md-input-container>
+            <input mdInput type="date" [name]="'sermon_date_' + i" [(ngModel)]="s.date" placeholder="Date of Service">
+          </md-input-container>
+          <md-input-container>
+            <input mdInput [name]="'sermon_name_' + i" [(ngModel)]="s.name" placeholder="Sermon Name">
+          </md-input-container>
+          <md-input-container>
+            <input mdInput [name]="'sermon_series_' + i" [(ngModel)]="s.series" placeholder="Series">
+          </md-input-container>
+          <md-input-container>
+            <input mdInput [name]="'sermon_youtube_' + i" [(ngModel)]="s.youtube" placeholder="Youtube ID">
+          </md-input-container>
+          <button md-mini-fab class="add" (click)="saveSermon(s)">
+            <md-icon>save</md-icon>
+          </button>
+          <button md-mini-fab (click)="removeSermon(i)">
+            <md-icon>delete</md-icon>
+          </button>
+        </md-list-item>
+
+        <md-list-item class="new-sermon">
+          <button class="add" md-mini-fab (click)="addSermon()">
+            <md-icon>add</md-icon>
+          </button>
+        </md-list-item>
+      </md-list>
+
+      <div class="submit-wrapper">
+        <observable-button class="save" (sda-click)="save()" [disabled]="!valid">Save</observable-button>
+        <observable-button class="delete" (sda-click)="delete()">Delete</observable-button>
+      </div>
+    </form>
+  </section>
+
+</main>
+<sda-footer></sda-footer>
