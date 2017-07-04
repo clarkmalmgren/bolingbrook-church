@@ -1,7 +1,7 @@
 import { Hero }       from './hero';
-import { SeriesCard } from './series-card'
+import { SermonCard } from './sermon-card'
 
 export const MOLECULES = [
   Hero,
-  SeriesCard
+  SermonCard
 ];

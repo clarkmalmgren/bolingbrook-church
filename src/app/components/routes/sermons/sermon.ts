@@ -1,7 +1,7 @@
 import { Component, OnInit }                from '@angular/core';
 import { DomSanitizer, SafeResourceUrl }    from '@angular/platform-browser';
 import { ActivatedRoute }                   from '@angular/router';
-import { MessagesService, Sermon }          from '../../../services';
+import { SermonService, Sermon }            from '../../../services';
 
 
 @Component({
@@ -11,28 +11,23 @@ import { MessagesService, Sermon }          from '../../../services';
 export class SermonComponent implements OnInit {
 
   sermon: Sermon;
-  vimeo_url: SafeResourceUrl;
+  youtube_url: SafeResourceUrl;
 
   constructor(
-    private service: MessagesService,
+    private service: SermonService,
     private activatedRoute: ActivatedRoute,
     private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit() {
-    let series = '';
-    this.activatedRoute.parent.params
+    this.activatedRoute.params
       .flatMap((params) => {
-        series = params['series'];
-        return this.activatedRoute.params;
-      })
-      .flatMap((params) => {
-        return this.service.getSermon(series, +params['sermon']);
+        return this.service.getSermon(params['sermon']);
       })
       .subscribe(sermon => {
         this.sermon = sermon;
-        let url = `https://player.vimeo.com/video/${sermon.vimeo_id}`;
-        this.vimeo_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        let url = `https://www.youtube.com/embed/${sermon.youtube}`;
+        this.youtube_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
       });
   }
 }

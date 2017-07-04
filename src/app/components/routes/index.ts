@@ -15,7 +15,7 @@ import { ThankYou }                                 from './thank-you';
 
 import { ADMIN_ROUTES, ADMIN_COMPONENTS }           from './admin/';
 import { CARE_ROUTES, CARE_COMPONENTS }             from './care/';
-import { MESSAGE_COMPONENTS, MESSAGE_ROUTES }       from './messages/';
+import { SERMON_COMPONENTS, SERMON_ROUTES }         from './sermons/';
 import { SERVE_ROUTES, SERVE_COMPONENTS }           from './serve/';
 
 const routes: Routes = [
@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: 'thank-you',              component: ThankYou },
   ...ADMIN_ROUTES,
   ...CARE_ROUTES,
-  ...MESSAGE_ROUTES,
+  ...SERMON_ROUTES,
   ...SERVE_ROUTES,
   { path: '**',         component: NotFound }
 ];
@@ -57,7 +57,7 @@ export const ROUTE_COMPONENTS = [
   ...ADMIN_COMPONENTS,
   ...CARE_COMPONENTS,
   ...SERVE_COMPONENTS,
-  ...MESSAGE_COMPONENTS
+  ...SERMON_COMPONENTS
 ];
 
 export const ROUTE_MODULES = [
