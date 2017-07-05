@@ -4,7 +4,6 @@ import { Component } from '@angular/core';
   template: `
     <sda-frame src="https://form.jotform.com/70244135677154" height="800px">
     </sda-frame>
-    <sda-footer></sda-footer>
   `,
   
 })
