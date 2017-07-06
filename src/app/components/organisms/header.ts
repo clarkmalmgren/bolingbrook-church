@@ -1,13 +1,4 @@
 import { Component, Input, HostListener, OnInit } from '@angular/core';
-import { RouterLink, Router } from '@angular/router';
-
-class Link {
-  constructor(
-    public name: string,
-    public url: string,
-    public icon: string
-  ) { }
-}
 
 @Component({
   selector: 'sda-header',
@@ -37,21 +28,6 @@ export class Header implements OnInit {
   opened: boolean = false;
   assetHeight: string = 'auto';
 
-  links = [
-    new Link('Home',                      '/',                        'home'),
-    new Link('About Us',                  '/about',                   'accessibility'),
-    new Link('Giving',                    '/giving',                  'trending_up'),
-    new Link('Messages',                  '/messages',                'school'),
-    new Link('Get Connected',             '/connect',                 'power'),
-    new Link('Serve',                     '/serve',                   'people'),
-    new Link('Locations',                 '/locations',               'public'),
-    new Link('Missions',                  '/missions',                'textsms'),
-    new Link('Newsletter Sign-up',        '/newsletter',              'markunread_mailbox'),
-    new Link('Friends & Family Sabbath',  '/friends-family-sabbath',  'directions_walk'),
-    new Link('Events',                    '/events',                  'event'),
-  ];
-
-
   ngOnInit() {
     this.processScreenSize(this._window);
   }
@@ -68,7 +44,7 @@ export class Header implements OnInit {
       let px = window.innerHeight * this.relativeHeight + this.absoluteHeight;
       this.assetHeight = `${px}px`;
     } else {
-      this.assetHeight = 'auto';
+      this.assetHeight = '0px';
     } 
   }
 }

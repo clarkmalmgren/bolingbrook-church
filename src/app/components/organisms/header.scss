@@ -7,21 +7,49 @@ header {
   position: absolute;
   left: 0;
   right: 0;
+  height: 84px;
   top: 0;
   z-index: 900;
   
-  a {
-    flex: 1 1 auto;
+  a.logo {
+    flex: 1;
     color: $color-white;
+    display: flex;
+    align-items: center;
 
     img {
       max-width: 100%;
-      max-height: 100%;
+      max-height: 80px;
+      object-fit: contain;
 
-      &.logo {
-        max-height: 80px;
+      &.text {
+        margin-left: 12px;
+        max-height: 50px;
+
+        @media only screen and (max-width: 600px) {
+          display: none;
+        }
       }
     }
+  }
+
+  nav.quick-links {
+    display: flex;
+    flex: auto;
+    justify-content: center;
+
+    @media only screen and (max-width: 1100px) {
+      display: none;
+    }
+    
+    a {
+      padding: 0 8px;
+    }
+  }
+
+  div.full-menu {
+    text-align: right;
+    flex: 1;
   }
 }
 
@@ -54,8 +82,20 @@ nav.menu {
     a {
       color: white;
       text-decoration: none;
-      padding: 12px 20px;
+      padding: 10px 25px;
       transition: background-color 500ms linear;
+
+      &.bold {
+        font-size: 20px;
+      }
+
+      &.light {
+        color: $color-grey-500;
+        padding: 6px 25px;
+        font-size: 18px;
+        font-family: 'Roboto Condensed', sans-serif;
+        font-weight: 300;
+      }
 
       md-icon {
         margin-right: 11px;
@@ -65,6 +105,10 @@ nav.menu {
         background-color: $color-grey-200;
       }
     }
+
+    div.space {
+      height: 20px;
+    }
   }
 }
 
@@ -72,6 +116,7 @@ div.media-asset {
   width: 100%;
   overflow: hidden;
   min-height: 98px;
+  position: relative;
 
   video {
     width: 100%;
