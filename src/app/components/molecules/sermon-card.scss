@@ -36,12 +36,18 @@ a {
         );
       color: white;
 
-      h2 {
-        margin: 0 0 5px;
+      font-family: 'Roboto Condensed', sans-serif;
+      
+      span.title {
+        margin-bottom: 5px;
+        font-size: 24px;
       }
 
-      h3 {
+      span.series {
         margin: 0;
+        font-size: 18px;
+        font-style: italic;
+        font-weight: 300;
       }
     }
   }

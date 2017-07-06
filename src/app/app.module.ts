@@ -14,7 +14,8 @@ import { SERVICES, GlobalErrorHandler }                     from './services';
     ...Components.ATOMS,
     ...Components.MOLECULES,
     ...Components.ORGANISMS,
-    ...Components.ROUTE_COMPONENTS
+    ...Components.TEMPLATES,
+    ...Components.PAGE_COMPONENTS
   ],
   imports: [
     BrowserModule,
@@ -22,7 +23,7 @@ import { SERVICES, GlobalErrorHandler }                     from './services';
     FormsModule,
     HttpModule,
     ...MATERIAL_MODULES,
-    ...Components.ROUTE_MODULES
+    ...Components.PAGE_MODULES
   ],
   providers: [
     ...SERVICES,

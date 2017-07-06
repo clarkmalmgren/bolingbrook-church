@@ -1,0 +1,41 @@
+/* Included as Global Styling, do not import into individual components */
+@import '../atoms/colors';
+@import '../atoms/breaks';
+
+@mixin formPart() {
+  flex: 1 1 auto;
+  min-width: 350px;
+  margin: 11px;
+
+  @include break(tiny)  { min-width: 280px; }
+  @include break(micro) { min-width: 200px; }
+}
+
+form {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 30px;
+  background: $color-grey-500;
+  max-width: 900px;
+
+  md-input-container {
+    @include formPart();
+
+    &.wide {
+      flex: 100%;
+    }
+
+    input[md-input] {
+      color: $color-black;
+    }
+  }
+
+  md-checkbox {
+    @include formPart();
+  }
+
+  md-select {
+    @include formPart();
+    padding-top: 9px;
+  }
+}

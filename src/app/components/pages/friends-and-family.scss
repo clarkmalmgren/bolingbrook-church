@@ -1,0 +1,18 @@
+@import '../atoms/breaks';
+
+iframe {
+  flex: 100%;
+  margin: 0 30px;
+  height: 600px;
+
+  @include break(medium) { height: 450px; }
+  @include break(small) { height: 400px; }
+  @include break(tiny)  { height: 350px; }
+  @include break(micro) { height: 300px; }
+}
+
+main.friends-and-family section p {
+  flex: 100%;
+  min-width: 0;
+  max-width: none;
+}
