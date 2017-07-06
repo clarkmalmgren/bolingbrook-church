@@ -1,37 +1,36 @@
-<main [class.visible]="streaming">
-  <ustream (live)="streaming = true" (offline)="streaming = false"></ustream>
-  <sda-footer></sda-footer>
-</main>
+<sda-header [video]="sources" image="/assets/messages.png" shade="0.4">
 
-<div class="overlay" [class.hidden]="streaming">
-  <div class="shadow">
-    <h1 *ngIf="!marchMadnessActive">Creating Spaces for the People God Misses the Most</h1>
-    <h1 *ngIf="marchMadnessActive" class="madness">
-      <a routerLink="/madness">MARCH MADNESS</a><br />
-      Please Say Yes!
+  <h3 *ngIf="sermon">Latest Sermon</h3>
+  <button md-raised-button [routerLink]="['/sermons', sermon.date]" *ngIf="sermon">
+    {{sermon.name}}
+  </button>
+  <a md-button routerLink="/sermons">More Sermons</a>
+
+</sda-header>
+
+<main>
+  <section class="white" *ngIf="!streaming">
+    <h1>
+      Creating Spaces for the People God Misses the Most
     </h1>
 
-    <div *ngIf="!marchMadnessActive" class="navs">
-      <a md-button routerLink="/about">Our Story</a>
-      <a md-button routerLink="/connect">Connect</a>
-      <a md-button routerLink="/giving">Giving</a>
-      <a md-button routerLink="/messages">Messages</a>
-      <a md-button routerLink="/locations">Locations</a>
-    </div>
-    <div *ngIf="marchMadnessActive" class="navs">
-      <a md-button class="madness" routerLink="/serve/fusion">Fusion</a>
-      <a md-button class="madness" routerLink="/serve/ask">Ask Me Anything</a>
-      <a md-button class="madness" routerLink="/serve/media">Media</a>
-      <a md-button class="madness" routerLink="/serve/children">Children's Ministries</a>
-    </div>
+    <p>
+      The church we see goes far beyond the confines of church walls, but one that utilizes a multitude of spaces to create genuine
+      relationships and facilitate growth. When we say spaces, we mean just that: houses of worship, schools, community centers,
+      concert halls, art &amp; music centers you name it. We desire to create a multiplicity of spaces all over the world
+      that make it possible for us to reach the ones God misses the most! For us, the people God misses the most are those
+      who are far from having their own personal relationship with God.
+    </p>
+    <p>
+      Whether that means they gave up on church, or have never really explored God for themselves, we believe that those are the
+      people God misses so deeply. So, we seek to provide an embracing multicultural community where the people God misses
+      the most can freely inquire of God, and explore what Jesus teaches as they walk at their own pace nearer to Him. We
+      believe that once people feel they belong, they can become inspired to believe Jesus’ plan for their life and begin
+      engaging the world as Jesus sees it.
+    </p>
+  </section>
 
-  </div>
-  <video *ngIf="!mobile" autoplay loop>
-    <source *ngFor="let source of sources"
-            [src]="source.url"
-            [type]="source.type" />
-  </video>
-  <div *ngIf="mobile" class="mobile-bg">
-  </div>
-  
-</div>
+  <section class="white" *ngIf="streaming">
+    <ustream (live)="streaming = true" (offline)="streaming = false"></ustream>
+  </section>
+</main>

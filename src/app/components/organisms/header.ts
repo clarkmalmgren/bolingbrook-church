@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, HostListener, OnInit } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 
 class Link {
@@ -14,7 +14,28 @@ class Link {
   templateUrl: './header.html',
   styleUrls: ['./header.scss']
 })
-export class Header {
+export class Header implements OnInit {
+
+  _window: Window = window;
+
+  @Input()
+  video: any;
+
+  @Input()
+  image: string;
+
+  @Input()
+  shade: number = 0.0;
+
+  @Input()
+  relativeHeight: number = 1.0;
+
+  @Input()
+  absoluteHeight: number = 0;
+
+  mobile: boolean = false;
+  opened: boolean = false;
+  assetHeight: string = 'auto';
 
   links = [
     new Link('Home',                      '/',                        'home'),
@@ -30,5 +51,24 @@ export class Header {
     new Link('Events',                    '/events',                  'event'),
   ];
 
-  opened = false;
+
+  ngOnInit() {
+    this.processScreenSize(this._window);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.processScreenSize(event.target);
+  }
+
+  processScreenSize(window: Window) {
+    this.mobile = (window.innerWidth < 450);
+
+    if (this.video || this.image) {
+      let px = window.innerHeight * this.relativeHeight + this.absoluteHeight;
+      this.assetHeight = `${px}px`;
+    } else {
+      this.assetHeight = 'auto';
+    } 
+  }
 }

@@ -39,16 +39,19 @@ export class SermonService {
     return this.db.delete(`data/sermons/${date}`);
   }
 
+  latest(): Observable<Sermon> {
+    return this.all()
+      .map((sermons) => {
+        return sermons[0];
+      });
+  }
+
   all(): Observable<Sermon[]> {
     return this.db.getOnce('data/sermons')
       .map((data: any) => {
         return this.db.toArray(data, 'date')
           .map(it => (it as Sermon))
           .sort((a, b) => {
-            if (!a.date && !b.date) { return 0; }
-            if (!a.date)            { return -1; }
-            if (!b.date)            { return 1; }
-
             return b.date.localeCompare(a.date);
           });
       });

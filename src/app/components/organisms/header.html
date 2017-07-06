@@ -2,20 +2,22 @@
   <a [routerLink]="['/']">
     <img class="logo" src="/assets/whitelogo.png" alt="Home">
   </a>
-
-  <div class="dropdown">
-    <a class="menu" (click)="opened = !opened">
-      Menu <md-icon>menu</md-icon>
-    </a>
-    <div class="drop-content"
-         [class.open]="opened"
-         (click)="opened = false">
-      <a *ngFor="let link of links"
-         [routerLink]="[link.url]">
-         <!--<md-icon>{{link.icon}}</md-icon>-->
-         {{link.name}}
-      </a>
-    </div>
-  </div>
-
+  <hamburger [(active)]="opened"></hamburger>
 </header>
+
+<nav class="menu" [class.open]="opened" (click)="opened = false">
+  <div class="drop-content">
+    <a *ngFor="let link of links" [routerLink]="[link.url]">{{link.name}}</a>
+  </div>
+</nav>
+
+<div class="media-asset" [style.height]="assetHeight">
+  <video *ngIf="!mobile && video" autoplay loop>
+    <source *ngFor="let source of video" [src]="source.url" [type]="source.type" />
+  </video>
+  <div *ngIf="mobile && image" class="mobile-bg" [style.background-image]="'url('+image+')'"></div>
+
+  <div class="content" [style.background-color]="'rgba(0,0,0,' + shade + ')'">
+    <ng-content></ng-content>
+  </div>
+</div>

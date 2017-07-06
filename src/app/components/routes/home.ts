@@ -1,5 +1,5 @@
-import { Component, OnInit, HostListener }                    from '@angular/core';
-import { BackgroundVideoService, BackgroundVideoSource, Env } from '../../services';
+import { Component, OnInit, HostListener }                                      from '@angular/core';
+import { BackgroundVideoService, BackgroundVideoSource, SermonService, Sermon } from '../../services';
 
 @Component({
   templateUrl: './home.html',
@@ -7,35 +7,23 @@ import { BackgroundVideoService, BackgroundVideoSource, Env } from '../../servic
 })
 export class Home implements OnInit {
 
-  _window = window;
-  mobile: boolean;
   streaming: boolean = false;
   sources: BackgroundVideoSource[];
+  sermon: Sermon;
   
   constructor(
     private service: BackgroundVideoService,
-    private env: Env
+    private sermons: SermonService
   ) {}
 
   ngOnInit() {
-    this.updateMobile(this._window);
-
     this.service.getSources()
       .subscribe((sources) => {
         this.sources = sources;
       });
+    
+    this.sermons.latest()
+      .subscribe((sermon) => { this.sermon = sermon });
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.updateMobile(event.target);
-  }
-
-  updateMobile(window: Window) {
-    this.mobile = (window.innerWidth < 450);
-  }
-
-  get marchMadnessActive(): boolean {
-    return this.env.marchMadnessActive;
-  }
 }
