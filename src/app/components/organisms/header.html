@@ -1,21 +1,45 @@
 <header>
-  <a [routerLink]="['/']">
-    <img class="logo" src="/assets/whitelogo.png" alt="Home">
+  <a class="logo" [routerLink]="['/']">
+    <img src="/assets/logo-white-large.png" alt="Home">
+    <img class="text" src="/assets/logo-white-large-text.png">
   </a>
-
-  <div class="dropdown">
-    <a class="menu" (click)="opened = !opened">
-      Menu <md-icon>menu</md-icon>
-    </a>
-    <div class="drop-content"
-         [class.open]="opened"
-         (click)="opened = false">
-      <a *ngFor="let link of links"
-         [routerLink]="[link.url]">
-         <!--<md-icon>{{link.icon}}</md-icon>-->
-         {{link.name}}
-      </a>
-    </div>
+  <nav class="quick-links">
+    <a md-button routerLink="/about">Our Story</a>
+    <a md-button routerLink="/connect">Connect</a>
+    <a md-button routerLink="/giving">Giving</a>
+    <a md-button routerLink="/messages">Messages</a>
+    <a md-button routerLink="/locations">Locations</a>
+  </nav>
+  <div class="full-menu">
+    <hamburger [(active)]="opened"></hamburger>
   </div>
-
 </header>
+
+<nav class="menu" [class.open]="opened" (click)="opened = false">
+  <div class="drop-content">
+    <a class="bold" routerLink="/">Home</a>
+    <a class="bold" routerLink="/about">Our Story</a>
+    <a class="bold" routerLink="/connect">Get Connected</a>
+    <a class="bold" routerLink="/sermons">Sermons</a>
+    <a class="bold" routerLink="/giving">Giving</a>
+    <a class="bold" routerLink="/locations">Locations</a>
+
+    <div class="space"></div>
+
+    <a class="light" routerLink="/serve">Serve</a>
+    <a class="light" routerLink="/newsletter">Newsletter Sign-up</a>
+    <a class="light" routerLink="/friends-family-sabbath">Friends &amp; Family Sabbath</a>
+    <a class="light" routerLink="/events">Events</a>
+  </div>
+</nav>
+
+<div class="media-asset" [style.height]="assetHeight">
+  <video *ngIf="!mobile && video" autoplay loop>
+    <source *ngFor="let source of video" [src]="source.url" [type]="source.type" />
+  </video>
+  <div *ngIf="mobile && image" class="mobile-bg" [style.background-image]="'url('+image+')'"></div>
+
+  <div class="content" [style.background-color]="'rgba(0,0,0,' + shade + ')'">
+    <ng-content></ng-content>
+  </div>
+</div>

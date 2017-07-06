@@ -1,117 +1,13 @@
-@import '../atoms/breaks';
+@import './article';
 
-main {
-  display: none;
-
-  &.visible {
-    display: initial;
-  }
-}
-
-
-div.overlay {
-  position: fixed;
-  z-index: -1;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-
-  &.hidden {
-    display: none;
+sda-header {
+  h3 {
+    margin: 0 0 6px;
   }
 
-  div.shadow {
-    display: flex;
-    flex-flow: row wrap;
-    align-content: center;
-    justify-content: center;
-
-    position: absolute;
-    right: 0;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    background: rgba(#000, 0.6);
-
-    h1 {
-      text-align: center;
-      flex: 100%;
-      font-family: 'Roboto Condensed', sans-serif;
-      font-weight: 400;
-      font-size: 36px;
-      margin: 0 30px 15px;
-
-      &.madness {
-        font-family: 'Chalkduster', sans-serif;
-
-        @include break(micro) {
-          font-size: 28px;
-        }
-
-        a {
-          text-decoration: none;
-          color: white;
-          font-size: 46px;
-
-          @include break(micro) {
-            font-size: 36px;
-          }
-        }
-      }
-    }
-
-    div.navs {
-      flex: 100%;
-      display: flex;
-      flex-flow: row wrap;
-      justify-content: center;
-      margin: 0 20px;
-
-      [md-button] {
-        font-size: 20px;
-        transition: background-color .2s linear;
-        border-left: white solid 2px;
-        border-right: white solid 2px;
-        margin: 16px -2px 0 0;
-        width: 120px;
-
-        &.madness {
-          min-width: 120px;
-          width: inherit;
-
-          @include break(micro) {
-            font-size: 14px;
-            min-width: inherit;
-          }
-        }
-
-        &:hover {
-          background-color: rgba(#fff, 0.4);
-        }
-      }
-    }
+  button {
+    color: black;
+    font-size: 18px;
+    padding: 8px 14px;
   }
-
-  video {
-    position: absolute;
-    object-fit: cover;
-    z-index: -1;
-    min-width: 100%;
-    min-height: 100%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  div.mobile-bg {
-    position: absolute;
-    background-image: url('/assets/messages.png');
-    background-position: center;
-    background-size: cover;
-    min-width: 100%;
-    min-height: 100%;
-    z-index: -1;
-  }
-
 }
