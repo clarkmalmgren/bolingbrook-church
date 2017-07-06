@@ -50,7 +50,7 @@ export class Media extends ServiceGroup {
       service,
       router,
       analytics,
-      '/assets/march-madness/banners/MEDIA.jpg',
+      '/assets/serve/production.jpg',
       'Media',
       undefined,
       [

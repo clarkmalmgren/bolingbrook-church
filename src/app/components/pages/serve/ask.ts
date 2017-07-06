@@ -40,7 +40,7 @@ export class Ask extends ServiceGroup {
       service,
       router,
       analytics,
-      '/assets/march-madness/banners/ASKMEANYTHING.jpg',
+      '/assets/serve/setup.jpg',
       'Ask Me Anything Team',
       null,
       [

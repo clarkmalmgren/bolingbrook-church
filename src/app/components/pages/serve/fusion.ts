@@ -38,7 +38,7 @@ export class Fusion extends ServiceGroup {
       service,
       router,
       analytics,
-      env.marchMadnessActive ? '/assets/march-madness/banners/FUSION.jpg' : '/assets/serve/fusion.jpg',
+      '/assets/serve/fusion.jpg',
       'FUSION',
       null,
       [

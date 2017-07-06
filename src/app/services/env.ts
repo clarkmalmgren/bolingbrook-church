@@ -18,12 +18,4 @@ export class Env {
   get version(): string {
     return pkg.version;
   }
-
-  get marchMadnessActive(): boolean {
-    return new Date().getTime() < this.endOfMarch;
-  }
-
-  get endOfMarch(): number {
-    return 1491022800000;
-  }
 }

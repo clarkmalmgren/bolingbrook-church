@@ -1,11 +1,8 @@
-<sda-header></sda-header>
+<sda-header [image]="hero_ref" shade="0.4" relativeHeight="0.4">
+  <h1>{{ title }}</h1>
+</sda-header>
 <main>
   <section class="white">
-    <hero [image]="hero_ref" [center]="true">
-      &nbsp;<br/>&nbsp;
-    </hero>
-
-    <h1>{{ title }}</h1>
     <p *ngIf="subtitle" class="subtitle">
       {{ subtitle }}
     </p>

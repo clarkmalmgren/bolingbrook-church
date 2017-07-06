@@ -3,13 +3,11 @@ import { SermonService, Sermon }    from '../../../services';
 
 @Component({
   template: `
-    <sda-header></sda-header>
+    <sda-header image="/assets/messages.png" relativeHeight="0.4" shade="0.4">
+      <h2>Sermons</h2>
+    </sda-header>
     <main>
       <section class="white">
-        <hero image="/assets/messages.png">
-          Messages
-        </hero>
-
         <sermon-list></sermon-list>
       </section>
     </main>

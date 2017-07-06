@@ -1,62 +1,8 @@
-<sda-header></sda-header>
+<sda-header image="/assets/serve/serve.jpg" relativeHeight="0.4" shade="0.4">
+</sda-header>
 <main>
-  <section *ngIf="marchMadnessActive" class="madness">
-    <img class="wide" src="/assets/march-madness/logo-no-bg.png">
-
-    <div class="countdown">
-      <h3>Time Remaining</h3>
-      <h4>
-        {{countdown}}
-      </h4>
-    </div>
-
-    <h1>Join the Madness</h1>
-    <div class="row center-flex">
-      <p>
-        During the month of March we have our annual volunteer push to involve members in what we do here at Bolingbrook Church.
-        You can’t blame us for enjoying the process and having some fun while we fulfill the mission and vision that God gave us.
-        So "join the madness" and volunteer today.
-      </p>
-    </div>
-
-    <div *ngIf="!mobile" class="navmap">
-      <img src="/assets/march-madness/brackets-800.png" usemap="#bracket-map">
-      <map name="bracket-map">
-        <area routerLink="/serve/media"     shape="rect" coords="0,0,330,260" style="outline:none;" target="_self" />
-        <area routerLink="/serve/fusion"    shape="rect" coords="460,40,785,260" style="outline:none;" target="_self" />
-        <area routerLink="/serve/children"  shape="rect" coords="20,270,335,450" style="outline:none;" target="_self" />
-        <area routerLink="/serve/ask"       shape="rect" coords="475,275,785,450" style="outline:none;" target="_self" />
-      </map>
-    </div>
-    <div *ngIf="mobile" class="navmap">
-      <img src="/assets/march-madness/brackets-300.png" usemap="#bracket-map">
-      <map name="bracket-map">
-        <area routerLink="/serve/media"     shape="rect" coords="0,0,150,100" style="outline:none;" target="_self" />
-        <area routerLink="/serve/fusion"    shape="rect" coords="150,0,300,100" style="outline:none;" target="_self" />
-        <area routerLink="/serve/children"  shape="rect" coords="0,100,150,200" style="outline:none;" target="_self" />
-        <area routerLink="/serve/ask"       shape="rect" coords="150,100,300,200" style="outline:none;" target="_self" />
-      </map>
-    </div>
-    <div class="row">
-      <i>Click on the brackets to navigate to the service groups.</i>
-    </div>
-
-    <div class="row classic">
-      <a md-raised-button routerLink="./fusion">Fusion</a>
-      <a md-raised-button routerLink="./setup">The Setup</a>
-      <a md-raised-button routerLink="./media">Media</a>
-      <a md-raised-button routerLink="./production">Production</a>
-    </div>
-
-
-  </section>
-
-  <section *ngIf="!marchMadnessActive" class="white">
-    <hero image="/assets/serve/serve.jpg">
-      &nbsp;
-    </hero>
-
-    <h1>Serve</h1>
+  <section class="white">
+      <h1>Serve</h1>
     <p class="subtitle">
       &ldquo;&hellip; just as the Son of Man did not come to be served, but to serve, and to give his life as a ransom to many.&rdquo;
       Matthew 20:28
@@ -69,10 +15,9 @@
     </p>
 
     <div class="row">
+      <a md-raised-button routerLink="./ask">Ask Me Anything</a>
       <a md-raised-button routerLink="./fusion">Fusion</a>
-      <a md-raised-button routerLink="./setup">The Setup</a>
       <a md-raised-button routerLink="./media">Media</a>
-      <a md-raised-button routerLink="./production">Production</a>
     </div>
   </section>
 </main>
