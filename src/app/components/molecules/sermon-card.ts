@@ -17,8 +17,8 @@ export class SermonCard {
     return `https://i.ytimg.com/vi/${this.sermon.youtube}/hqdefault.jpg`
   }
 
-  get route(): string {
-    return this.sermon.date;
+  get route(): string[] {
+    return [ '/sermons', this.sermon.date];
   }
 
 }
