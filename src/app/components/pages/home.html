@@ -4,8 +4,8 @@
     <md-icon>live_tv</md-icon> WATCH LIVE SERMON
   </button>
 
-  <h3     *ngIf="!live && sermon">Latest Sermon</h3>
-  <button *ngIf="!live && sermon" md-raised-button [routerLink]="['/sermons', sermon.date]">
+  <h3     *ngIf="!live && !!sermon">Latest Sermon</h3>
+  <button *ngIf="!live && !!sermon" md-raised-button [routerLink]="['/sermons', sermon.date]">
     {{sermon.name}}
   </button>
 
