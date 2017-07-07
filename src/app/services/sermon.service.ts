@@ -1,6 +1,8 @@
 import { Injectable }         from '@angular/core';
 import { Database, Storage }  from './firebase.service';
 import { Observable }         from './observable';
+import * as moment            from 'moment';
+import                             'moment-timezone';
 
 type map = { [key: string]: any };
 
@@ -8,7 +10,7 @@ export class Sermon {
   date: string;
   name: string;
   series: string;
-  youtube: string;
+  youtube?: string;
 }
 
 @Injectable()
@@ -39,10 +41,36 @@ export class SermonService {
     return this.db.delete(`data/sermons/${date}`);
   }
 
+  next(): Observable<Sermon> {
+    return this.filter(false)
+      .map(sermons => {
+        if (sermons.length == 0) {
+          throw new Error("No Sermons Found");
+        }
+        
+        return sermons[sermons.length - 1];
+      });
+  }
+
   latest(): Observable<Sermon> {
-    return this.all()
+    return this.complete()
       .map((sermons) => {
         return sermons[0];
+      });
+  }
+
+  complete(): Observable<Sermon[]> {
+    return this.filter(true);
+  }
+
+  filter(past: boolean): Observable<Sermon[]> {
+    let threshold = this.liveThreshold();
+    return this.all()
+      .map((sermons) => {
+        return sermons.filter(s => {
+          let date = moment.tz(s.date, "America/Chicago").add(12, 'hours')
+          return (date.isBefore(threshold) == past);
+        })
       });
   }
 
@@ -55,5 +83,9 @@ export class SermonService {
             return b.date.localeCompare(a.date);
           });
       });
+  }
+
+  private liveThreshold(): moment.Moment {
+    return moment().subtract(2, 'hours');
   }
 }

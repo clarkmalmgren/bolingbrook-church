@@ -1,6 +1,6 @@
 {
   "name": "bolingbrook-church",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
@@ -24,12 +24,15 @@
     "@angular/platform-browser": "^4.2.5",
     "@angular/platform-browser-dynamic": "^4.2.5",
     "@angular/router": "^4.2.5",
+    "@types/moment": "^2.13.0",
+    "@types/moment-timezone": "^0.2.34",
     "@types/node": "^6.0.79",
     "core-js": "^2.4.1",
     "firebase": "^3.6.5",
     "hamburgers": "^0.8.1",
+    "moment": "^2.18.1",
+    "moment-timezone": "^0.5.13",
     "rxjs": "^5.1.0",
-    "ustream-embedapi": "^1.0.0",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
