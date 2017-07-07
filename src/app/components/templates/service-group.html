@@ -3,32 +3,40 @@
 </sda-header>
 <main>
   <section class="white">
-    <p *ngIf="subtitle" class="subtitle">
-      {{ subtitle }}
-    </p>
-
-    <p *ngFor="let detail of details" class="details">
-      {{ detail }}
-    </p>
+    <div class="content">
+      <p *ngIf="subtitle" class="subtitle">
+        {{ subtitle }}
+      </p>
+      
+      <p *ngFor="let detail of details">
+        {{ detail }}
+      </p>
+    </div>
   </section>
 
   <section class="types">
-    <dl *ngFor="let type of typesArray">
-      <dd><h3>{{ type.name }}</h3></dd>
-      <dt>
-        {{ type.description }}
-      </dt>
-    </dl>
+    <div class="content">
+      <div *ngFor="let type of typesArray">
+        <h3>{{ type.name }}</h3>
+        <p>
+          {{ type.description }}
+        </p>
+      </div>
+    </div>
   </section>
 
   <section class="white" *ngIf="secondaryDetails">
-    <p *ngFor="let detail of secondaryDetails" class="details">
-      {{ detail }}
-    </p>
+    <div class="content">
+      <p *ngFor="let detail of secondaryDetails" class="details">
+        {{ detail }}
+      </p>
+    </div>
   </section>
 
   <section class="white" *ngIf="signupLink">
-      <a md-raised-button [href]="signupLink" (click)="clickSignupLink()">Fill Out an Application</a>
+    <div class="content">
+      <a md-raised-button class="center" [href]="signupLink" (click)="clickSignupLink()">Fill Out an Application</a>
+    </div>
   </section>
 
   <section class="white" *ngIf="!signupLink">

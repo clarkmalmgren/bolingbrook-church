@@ -4,7 +4,7 @@
 h1 {
   font-size: 65px;
   font-weight: 600;
-  padding: .7em 0 .3em;
+  margin: 1em 0 .5em;
 
   @include break(medium)  { font-size: 55px; }
   @include break(small)   { font-size: 45px; }
@@ -15,7 +15,7 @@ h1 {
 h2 {
   font-size: 41px;
   font-weight: 600;
-  padding: .2em;
+  margin: 1em 0 .5em;
 
   @include break(small)   { font-size: 37px; }
   @include break(tiny)    { font-size: 29px; }
@@ -25,7 +25,7 @@ h2 {
 h3 {
   font-size: 27px;
   font-weight: 600;
-  padding: .2em;
+  margin: 1em 0 .5em;
 
   @include break(small)   { font-size: 23px; }
   @include break(tiny)    { font-size: 23px; }
@@ -35,7 +35,7 @@ h3 {
 h4 {
   font-size: 19px;
   font-weight: normal;
-  padding: .2em;
+  margin: 1em 0 .5em;
 
   @include break(small)   { font-size: 17px; }
   @include break(tiny)    { font-size: 17px; }
@@ -45,4 +45,6 @@ h4 {
 h5 {
   font-size: 17px;
   font-weight: 600;
+
+  margin: 1em 0 .5em;
 }

@@ -3,8 +3,8 @@
 
 main section {
 
-  &.types {
-    padding: 27px 0;
+  &.types h3 {
+    margin-top: 1em;
   }
 
   p.subtitle {
@@ -15,18 +15,11 @@ main section {
     text-align: center;
   }
 
-  p.details {
-    flex: 100%;
-    min-width: 0;
-    max-width: none;
-    padding: 10px 40px;
-  }
-
   dl {
     flex: 100%;
     display: flex;
     flex-flow: row wrap;
-    margin: 0;
+    margin: 5px 0;
 
     dd {
       margin-left: 10%;

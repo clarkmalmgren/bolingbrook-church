@@ -7,62 +7,68 @@ main {
   section {
     color: $color-grey-300;
     display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    padding-bottom: 17px;
+    flex-flow: column;
+    align-items: center;
     background-color: $color-grey-400;
+
+    div.content {
+      padding: 30px 0;
+      max-width: 800px;
+      margin: 0 30px;
+
+      display: flex;
+      flex-flow: column;
+
+      > .center {
+        width: auto;
+        align-self: center;
+      }
+
+      > div.row {
+        width: 100%;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+      }
+
+      ul {
+        list-style: none;
+        border-left: solid 2px $color-grey-200;
+        padding-left: 20px;
+
+        li {
+          padding: 9px 0;
+        }
+      }
+    }
 
     &.white {
       background-color: $color-white;
     }
 
     h1, h3, h4, h5 {
-      flex: 100%;
       color: $color-grey-100;
-      text-align: center;
-      margin: 0 35px;
     }
 
     h5 {
       color: $color-grey-200;
       text-align: left;
-      padding-top: 13px;
     }
 
     hero {
       flex: 100%;
-      margin-bottom: 35px;
+      width: 100%;
+      max-width: none;
     }
 
     p {
-      flex: 1 1 auto;
-      min-width: 250px;
-      max-width: 500px;
       font-size: 14px;
       line-height: 24px;
-      padding: 15px 35px;
-      margin: 0;
-
-      &.wide {
-        min-width: 0;
-        max-width: none;
-      }
 
       &.address {
         white-space: pre;
         padding-top: 0;
       }
-    }
-
-    div.row {
-      flex: 100%;
-      text-align: center;
-    }
-
-    div.col {
-      flex: 1 1 auto;
-      min-width: 250px;
-      max-width: 500px;
     }
 
     [md-raised-button] {

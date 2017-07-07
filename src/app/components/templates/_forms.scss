@@ -15,8 +15,13 @@ form {
   display: flex;
   flex-flow: row wrap;
   padding: 30px;
+  margin-bottom: 30px;
   background: $color-grey-500;
   max-width: 900px;
+
+  h1, h2, h3, h4, h5, h6 {
+    flex: 100%;
+  }
 
   md-input-container {
     @include formPart();

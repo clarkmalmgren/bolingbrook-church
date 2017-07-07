@@ -1,8 +1,7 @@
 import { Component }    from '@angular/core';
 
 @Component({
-  templateUrl: './friends-and-family.html',
-  styleUrls: [ './friends-and-family.scss' ]
+  templateUrl: './friends-and-family.html'
 })
 export class FriendsAndFamily {
 }
