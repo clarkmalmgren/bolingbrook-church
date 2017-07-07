@@ -9,12 +9,17 @@
             allowfullscreen="">
     </iframe>
 
-    <div class="flex-clear"></div>
-
     <div class="data" *ngIf="sermon">
       <h2>{{ sermon.name }}</h2>
       <h3>{{ sermon.series }}</h3>
       <h3>{{ sermon.date | date: 'MMMM d, yyyy' }}</h3>
+    </div>
+
+    <div class="error" *ngIf="error">
+      <h2>Not Found</h2>
+      <p>
+        We could not find that sermon, please try again from the list below.
+      </p>
     </div>
 
 

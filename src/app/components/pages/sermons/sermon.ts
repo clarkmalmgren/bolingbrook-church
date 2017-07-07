@@ -11,6 +11,7 @@ import { SermonService, Sermon }            from '../../../services';
 export class SermonComponent implements OnInit {
 
   sermon: Sermon;
+  error: boolean = false;
   youtube_url: SafeResourceUrl;
 
   constructor(
@@ -22,12 +23,15 @@ export class SermonComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.params
       .flatMap((params) => {
-        return this.service.getSermon(params['sermon']);
+        let id = params['sermon'];
+        return id == 'live' ? this.service.next() : this.service.getSermon(id);
       })
       .subscribe(sermon => {
         this.sermon = sermon;
         let url = `https://www.youtube.com/embed/${sermon.youtube}`;
         this.youtube_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+      }, (err) => {
+        this.error = true;
       });
   }
 }

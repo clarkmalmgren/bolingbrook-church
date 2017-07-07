@@ -20,7 +20,7 @@ export class SermonList implements OnInit {
   constructor(private service: SermonService) {}
 
   ngOnInit() {
-    this.service.all()
+    this.service.complete()
       .subscribe(sermons => { this.sermons = sermons; });
   }
 }

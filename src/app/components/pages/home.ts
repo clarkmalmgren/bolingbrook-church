@@ -1,5 +1,8 @@
 import { Component, OnInit, HostListener }                                      from '@angular/core';
 import { BackgroundVideoService, BackgroundVideoSource, SermonService, Sermon } from '../../services';
+import * as moment                                                              from 'moment';
+import                                                                               'moment-timezone';
+
 
 @Component({
   templateUrl: './home.html',
@@ -24,6 +27,11 @@ export class Home implements OnInit {
     
     this.sermons.latest()
       .subscribe((sermon) => { this.sermon = sermon });
+  }
+
+  get live(): boolean {
+    let now = moment.tz('America/Chicago');
+    return (now.day() == 6 && now.hour() >= 11 &&  now.hour() < 14);
   }
 
 }

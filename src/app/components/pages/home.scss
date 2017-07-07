@@ -7,5 +7,15 @@ sda-header {
     color: black;
     font-size: 18px;
     padding: 8px 14px;
+
+    &.live {
+      background: #ce3535;
+      color: white;
+
+      md-icon {
+        line-height: 18px;
+        margin-right: 8px;
+      }
+    }
   }
 }

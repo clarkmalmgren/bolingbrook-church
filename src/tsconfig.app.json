@@ -13,9 +13,7 @@
     "outDir": "../out-tsc/app",
     "module": "es2015",
     "baseUrl": "",
-    "types": [
-      "node"
-    ]
+    "types": [ "node", "moment", "moment-timezone" ]
   },
   "exclude": [
     "test.ts",
