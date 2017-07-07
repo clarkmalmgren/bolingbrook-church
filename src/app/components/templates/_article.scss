@@ -1,0 +1,107 @@
+/* Included as Global Styling, do not import into individual components */
+@import '../atoms/colors';
+@import '../atoms/headers';
+
+main {
+
+  section {
+    color: $color-grey-300;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    background-color: $color-grey-400;
+
+    div.content {
+      padding: 30px 0;
+      max-width: 800px;
+      margin: 0 30px;
+
+      display: flex;
+      flex-flow: column;
+
+      > .center {
+        width: auto;
+        align-self: center;
+      }
+
+      > div.row {
+        width: 100%;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+      }
+
+      ul {
+        list-style: none;
+        border-left: solid 2px $color-grey-200;
+        padding-left: 20px;
+
+        li {
+          padding: 9px 0;
+        }
+      }
+    }
+
+    &.white {
+      background-color: $color-white;
+    }
+
+    h1, h3, h4, h5 {
+      color: $color-grey-100;
+    }
+
+    h5 {
+      color: $color-grey-200;
+      text-align: left;
+    }
+
+    hero {
+      flex: 100%;
+      width: 100%;
+      max-width: none;
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 24px;
+
+      &.address {
+        white-space: pre;
+        padding-top: 0;
+      }
+    }
+
+    [md-raised-button] {
+      font-size: 18px;
+      margin-bottom: 30px;
+      padding: 4px 22px;
+      background-color: $color-blue;
+      color: $color-white;
+      transition: background-color 500ms linear;
+
+      md-icon {
+        height: 28px;
+        vertical-align: middle;
+      }
+
+      &[disabled] {
+        background-color: $color-grey-300;
+      }
+
+      &:hover:active {
+        background-color: $color-blue * 0.7;
+      }
+    }
+
+    a.tel {
+      color: $color-white;
+      transition: background-color 500ms linear;
+
+      &:hover {
+        background-color: $color-black;
+      }
+    }
+
+  }
+  
+}

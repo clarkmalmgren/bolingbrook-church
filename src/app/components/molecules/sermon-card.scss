@@ -5,8 +5,6 @@ a {
 
   div.wrapper {
     position: relative;
-    height: 360px;
-    width: 480px;
     margin: 20px;
 
     img { 
@@ -20,7 +18,7 @@ a {
       left: 0;
       top: 0;
       right: 0;
-      bottom: 0;
+      bottom: 4px;
 
       display: flex;
       flex-direction: column;
@@ -36,12 +34,18 @@ a {
         );
       color: white;
 
-      h2 {
-        margin: 0 0 5px;
+      font-family: 'Roboto Condensed', sans-serif;
+      
+      span.title {
+        margin-bottom: 5px;
+        font-size: 24px;
       }
 
-      h3 {
+      span.series {
         margin: 0;
+        font-size: 18px;
+        font-style: italic;
+        font-weight: 300;
       }
     }
   }

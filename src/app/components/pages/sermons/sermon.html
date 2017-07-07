@@ -1,0 +1,28 @@
+<sda-header></sda-header>
+<main>
+  <section class="video">
+    <iframe *ngIf="sermon && sermon.youtube"
+            [src]="youtube_url"
+            frameborder="0"
+            webkitallowfullscreen=""
+            mozallowfullscreen=""
+            allowfullscreen="">
+    </iframe>
+
+    <div class="flex-clear"></div>
+
+    <div class="data" *ngIf="sermon">
+      <h2>{{ sermon.name }}</h2>
+      <h3>{{ sermon.series }}</h3>
+      <h3>{{ sermon.date | date: 'MMMM d, yyyy' }}</h3>
+    </div>
+
+
+  </section>    
+
+  <section class="more">
+    <h3>More Sermons</h3>
+
+    <sermon-list></sermon-list>
+  </section>
+</main>

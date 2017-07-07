@@ -1,6 +1,6 @@
 {
   "name": "bolingbrook-church",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
@@ -20,7 +20,7 @@
     "@angular/core": "^4.2.5",
     "@angular/forms": "^4.2.5",
     "@angular/http": "^4.2.5",
-    "@angular/material": "^2.0.0-beta.7",
+    "@angular/material": "2.0.0-beta.7",
     "@angular/platform-browser": "^4.2.5",
     "@angular/platform-browser-dynamic": "^4.2.5",
     "@angular/router": "^4.2.5",
