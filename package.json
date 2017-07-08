@@ -7,7 +7,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "test": "ng test --browsers=PhantomJS --single-run --code-coverage",
+    "test": "ng build -prod; ng test --browsers=PhantomJS --single-run --code-coverage",
     "posttest": "./node_modules/coveralls/bin/coveralls.js < coverage/lcov.info",
     "lint": "ng lint",
     "e2e": "ng e2e"
