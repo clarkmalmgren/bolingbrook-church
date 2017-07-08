@@ -1,13 +1,15 @@
 <sda-header></sda-header>
 <main>
   <section class="video">
-    <iframe *ngIf="sermon && sermon.youtube"
+    <iframe *ngIf="sermon && sermon.youtube && !ustream"
             [src]="youtube_url"
             frameborder="0"
             webkitallowfullscreen=""
             mozallowfullscreen=""
             allowfullscreen="">
     </iframe>
+
+    <ustream *ngIf="ustream"></ustream>
 
     <div class="data" *ngIf="sermon">
       <h2>{{ sermon.name }}</h2>
