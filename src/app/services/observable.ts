@@ -6,6 +6,7 @@ import                     'rxjs/add/observable/fromPromise';
 import                     'rxjs/add/observable/empty';
 import                     'rxjs/add/observable/merge';
 import                     'rxjs/add/observable/throw';
+import                     'rxjs/add/observable/timer';
 
 /* Include operators */
 import                     'rxjs/add/operator/catch';

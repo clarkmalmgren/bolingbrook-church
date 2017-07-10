@@ -15,6 +15,11 @@ export class Giving {
     this.analytics.event('nav', 'leave', 'donate')
       .subscribe(() => {
         location.href = 'http://www.easytithe.com/dl/?uid=boli301244t7';
+        debugger;
+      }, (err) => {
+        debugger;
+      }, () => {
+        debugger;
       });
     return false;
   }

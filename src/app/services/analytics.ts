@@ -83,6 +83,10 @@ export class Analytics {
       this.analytics(method, type, data);
     });
 
+    /* Issue #49 - In some cases, we don't get analytics callbacks fire after 250ms ALWAYS */
+    let timer = Observable.timer(250);
+    o = Observable.merge(o, timer);
+
     /* It is important that at least someone subscribes or it won't actually fire */
     o.subscribe();
 
