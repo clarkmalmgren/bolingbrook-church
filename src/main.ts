@@ -1,7 +1,10 @@
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { enableProdMode } from '@angular/core';
-import { environment } from './environments/environment';
-import { AppModule } from './app/app.module';
+import { enableProdMode }         from '@angular/core';
+import { environment }            from './environments/environment';
+import { AppModule }              from './app/app.module';
+import * as SmoothscrollPolyfill  from 'smoothscroll-polyfill';
+
+SmoothscrollPolyfill.polyfill();
 
 if (environment.production) {
   enableProdMode();
