@@ -1,9 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit }  from '@angular/core';
+import { Meta }               from '@angular/platform-browser';
 
 @Component({
-  templateUrl: './not-found.html',
-  styleUrls: [ './not-found.scss' ]
+  templateUrl: './not-found.html'
 })
-export class NotFound {
+export class NotFound implements OnInit {
 
+  constructor(private meta: Meta) {}
+
+  ngOnInit() {
+    this.meta.addTag({
+      name: 'prerender-status-code',
+      content: '404'
+    });
+  }
 }
