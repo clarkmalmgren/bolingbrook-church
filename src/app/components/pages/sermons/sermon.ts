@@ -1,5 +1,5 @@
 import { Component, OnInit }                                      from '@angular/core';
-import { DomSanitizer, SafeResourceUrl }                          from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl, Meta }                    from '@angular/platform-browser';
 import { ActivatedRoute }                                         from '@angular/router';
 import { SermonService, Sermon, FeatureToggles, TogglesService }  from '../../../services';
 
@@ -18,7 +18,8 @@ export class SermonComponent implements OnInit {
     private service: SermonService,
     private activatedRoute: ActivatedRoute,
     private sanitizer: DomSanitizer,
-    private featureToggles: TogglesService
+    private featureToggles: TogglesService,
+    private meta: Meta
   ) {}
 
   ngOnInit() {
@@ -45,6 +46,10 @@ export class SermonComponent implements OnInit {
       }, (err) => {
         console.error(err);
         this.error = true;
+        this.meta.addTag({
+          name: 'prerender-status-code',
+          content: '404'
+        });
       });
   }
 }

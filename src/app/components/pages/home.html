@@ -4,7 +4,7 @@
     <md-icon>live_tv</md-icon> WATCH LIVE SERMON
   </button>
 
-  <h3     *ngIf="!live && !!sermon">Latest Sermon</h3>
+  <h2     *ngIf="!live && !!sermon">Latest Sermon</h2>
   <button *ngIf="!live && !!sermon" md-raised-button [routerLink]="['/sermons', sermon.date]">
     {{sermon.name}}
   </button>
@@ -14,11 +14,30 @@
 </sda-header>
 
 <main>
-  <section class="white" *ngIf="!streaming">
+  <section class="join">
     <div class="content">
-      <h1>
+      <h3>Join Us</h3>
+
+      <h4>Sabbath Worship Service</h4>
+      <div class="time">Every Saturday at 12:00 PM</div>
+      <div class="location">1251 Windham Pkwy, Romeoville, IL 60446</div>
+
+      <h4>Prayer Group</h4>
+      <div class="time">Every Wednesday at 6:00 PM</div>
+      <div class="location">301 E Boughton Rd, Bolingbrook, IL 60440</div>
+
+      <h4>Bible Study</h4>
+      <div class="time">Every Wednesday at 6:00 PM</div>
+      <div class="location">301 E Boughton Rd, Bolingbrook, IL 60440</div>
+
+    </div>
+  </section>
+
+  <section class="white">
+    <div class="content">
+      <h3>
         Creating Spaces for the People God Misses the Most
-      </h1>
+      </h3>
       
       <p>
         The church we see goes far beyond the confines of church walls, but one that utilizes a multitude of spaces to create genuine

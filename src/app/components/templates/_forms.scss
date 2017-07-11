@@ -5,7 +5,7 @@
 @mixin formPart() {
   flex: 1 1 auto;
   min-width: 350px;
-  margin: 11px;
+  margin: 5px;
 
   @include break(tiny)  { min-width: 280px; }
   @include break(micro) { min-width: 200px; }
@@ -39,8 +39,10 @@ form {
     @include formPart();
   }
 
-  md-select {
+  md-select.mat-select {
     @include formPart();
     padding-top: 9px;
+    height: 45px;
+    font-family: 'Comfortaa', cursive !important;
   }
 }

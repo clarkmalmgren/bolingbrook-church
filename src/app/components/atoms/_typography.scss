@@ -1,9 +1,30 @@
 /* Included as Global Styling, do not import into individual components */
-@import 'breaks';
+@import url('https://fonts.googleapis.com/css?family=Comfortaa:300|Khand|Roboto+Condensed:300:400');
+@import './breaks';
+@import './socicon';
+
+html, body {
+  font-family: 'Comfortaa', cursive;
+}
+
+/* Call to Action */
+a[href], button, .mat-button, .mat-raised-button, .mat-icon-button {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: 400;
+
+  &.light {
+    font-weight: 300;
+  }
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Khand', sans-serif;
+  font-weight: 400;
+}
 
 h1 {
   font-size: 65px;
-  font-weight: 600;
   margin: 1em 0 .5em;
 
   @include break(medium)  { font-size: 55px; }
@@ -14,7 +35,6 @@ h1 {
 
 h2 {
   font-size: 41px;
-  font-weight: 600;
   margin: 1em 0 .5em;
 
   @include break(small)   { font-size: 37px; }
@@ -24,7 +44,6 @@ h2 {
 
 h3 {
   font-size: 27px;
-  font-weight: 600;
   margin: 1em 0 .5em;
 
   @include break(small)   { font-size: 23px; }
@@ -34,7 +53,6 @@ h3 {
 
 h4 {
   font-size: 19px;
-  font-weight: normal;
   margin: 1em 0 .5em;
 
   @include break(small)   { font-size: 17px; }
@@ -43,8 +61,6 @@ h4 {
 }
 
 h5 {
-  font-size: 17px;
-  font-weight: 600;
-
+  font-size: 16px;
   margin: 1em 0 .5em;
 }

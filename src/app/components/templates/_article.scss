@@ -1,6 +1,6 @@
 /* Included as Global Styling, do not import into individual components */
 @import '../atoms/colors';
-@import '../atoms/headers';
+@import '../atoms/typography';
 
 main {
 
@@ -55,9 +55,10 @@ main {
       text-align: left;
     }
 
-    hero {
+    banner {
       flex: 100%;
       width: 100%;
+      height: 220px;
       max-width: none;
     }
 

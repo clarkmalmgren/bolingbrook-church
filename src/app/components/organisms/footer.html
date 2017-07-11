@@ -1,54 +1,46 @@
 <div class="footer">
   <div class="notice">
-    <!-- TODO: Use CST / CDT depending on time of year. -->
-    Our live stream begins at 12pm CST on Saturday’s.
+    Our live stream begins at 12pm Central Time on Saturday’s.
   </div>
   <div class="content">
-    <div class="icon">
-      <a [routerLink]="['/']">
-        <img class="icon" src="/assets/whitelogo.png" alt="Bolingbrook Church">
-      </a>
-    </div>
 
-    <section>
-      <h6>Saturday Times &amp; Location</h6>
-      <p>9:30am &amp; Noon</p>
-      <p>1251 Windham Pkwy, Romeoville IL 60446
-      (Meets on the campus of The Sanctuary Church)</p>
+    <section class="social">
+      <a href="http://www.twitter.com/bolingbrooksda"><span class="socicon-twitter"></span></a>
+      <a href="http://instagram.com/bolingbrookchurch"><span class="socicon-instagram"></span></a>
+      <a href="https://www.facebook.com/bolingbrooksda"><span class="socicon-facebook"></span></a>
+      <a href="https://vimeo.com/bolingbrookchurch"><span class="socicon-youtube"></span></a>
     </section>
 
-    <section>
-      <h6>Office</h6>
-      301 E Boughton Rd, Bolingbrook IL 60440 <br/>
-      <a href="tel:630.739.1038">630.739.1038</a> <br/>
-      <a href="mailto:info@bolingbrook.church">info@bolingbrook.church</a>
+    <section class="links">
+      <h3>About</h3>
+
+      <ul>
+        <li><a md-button href="/about">Our Story</a></li>
+        <li><a md-button href="/locations">Locations</a></li>
+        <li><a md-button href="/sermons">Sermons</a></li>
+        <li><a md-button href="/connect">Get Connected</a></li>
+      </ul>
     </section>
 
-    <section>
-      <h6>Mid-week Times &amp; Location</h6>
-      301 E Boughton Rd, Bolingbrook IL 60440<br/>
-      <strong>Prayer</strong> - Wednesdays at 6pm<br/>
-      <strong>Bible Study</strong> - Wednesdays at 7pm
+    <section class="links">
+      <h3>Get Involved</h3>
+
+      <ul>
+        <li><a md-button href="/giving">Giving</a></li>
+        <li><a md-button href="/events">Events</a></li>
+        <li><a md-button href="/serve">Serve</a></li>
+        <li><a md-button href="/newsletter">Newsletter</a></li>
+      </ul>
     </section>
+  </div>
 
-    <section>
-      <h6>Resources</h6>
-      <a href="https://www.adventistgiving.org/?OrgID=ANF4BV">Tithes &amp; Offering</a><br/>
-      <a href="http://eepurl.com/ch0tF9">Newsletter Sign-up</a>
-    </section>
+  <div class="contact">
+    <p><md-icon>pin_drop</md-icon> 301 E Boughton Rd, Bolingbrook IL, 60440</p>
+    <p><a href="tel:630.739.1038"><md-icon>local_phone</md-icon> 630.739.1038</a></p>
+    <p class="copyright">&copy; Bolingbrook Church 2017</p>
+  </div>
 
-    <section>
-      <h6>Follow us On</h6>
-
-      <a class="social"
-         *ngFor="let s of socials"
-         href="{{s.url}}">
-         <img src="{{s.img}}">
-      </a>
-    </section>
-
-    <div class="version">
-      v{{version}}
-    </div>
+  <div class="version">
+    v{{version}}
   </div>
 </div>

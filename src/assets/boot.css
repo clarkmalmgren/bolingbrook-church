@@ -2,7 +2,7 @@ body {
   margin: 0;
   background-color: #000;
   color: #fff;
-  font-family: Roboto, sans-serif;
+  font-family: Comfortaa, sans-serif;
 }
 
 /* fallback */
@@ -12,8 +12,20 @@ body {
   font-weight: 400;
   src: local('Material Icons'),
        local('MaterialIcons-Regular'),
-       url(google-material-icons.woff2) format('woff2'),
-       url(google-material-icons.ttf) format('truetype');;
+       url(fonts/google-material-icons.woff2) format('woff2'),
+       url(fonts/google-material-icons.ttf) format('truetype');;
+}
+
+@font-face {
+  font-family: 'Socicon';
+  src: url('fonts/Socicon.eot');
+  src: url('fonts/Socicon.eot#iefix') format('embedded-opentype'),
+       url('fonts/Socicon.woff2?xvgs9q') format('woff2'),
+       url('fonts/Socicon.ttf?xvgs9q') format('truetype'),
+       url('fonts/Socicon.woff?xvgs9q') format('woff'),
+       url('fonts/Socicon.svg?xvgs9q#Socicon') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
 
 .material-icons {

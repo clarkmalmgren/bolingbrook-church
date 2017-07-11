@@ -1,68 +1,99 @@
 @import '../atoms/colors';
 
 div.footer {
+  position: relative;
 
   .notice {
-    padding: 5px 10%;
+    padding: 10px 10%;
     background: $color-grey-100;
-    color: $color-grey-200;
+    color: $color-grey-500;
     font-size: 14px;
   }
 
   div.content {
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-between;
+    justify-content: center;
     padding: 13px 10% 40px;
-    background: $color-grey-000;
-    position: relative;
+    background: $color-grey-400;
+    color: $color-grey-100;
 
-    div.icon {
+    section.social {
       flex: 100%;
-      padding-bottom: 17px;
-      img {
-        max-width: 171px;
-      }
-    }
-
-    section {
-      flex: 1 1 auto;
-      min-width: 140px;
-      max-width: 220px;
-      padding-top: 10px;
-      font-size: 11px;
-      margin-right: 17px;
-
-      h6 {
-        font-size: 14px;
-        font-weight: bold;
-        margin: 1em 0;
-      }
-
-      p {
-        margin-bottom: 0px;
-      }
+      text-align: center;
+      margin: 35px 0 0;
 
       a {
-        color: $color-white;
-
-        &.social {
-          text-decoration: none;
-          img {
-            width: 20px;
-            height: 20px;
-          }
-        }
+        margin: 0 10px;
+        font-size: 28px;
+        line-height: 40px;
+        text-decoration: none;
+        color: $color-grey-100;
       }
     }
 
-    .version {
-      position: absolute;
-      right: 5px;
-      bottom: 5px;
-      color: $color-grey-200;
-      font-size: 13px;
-      font-family: "Roboto Condensed";
+    section.links {
+      flex: 1 1 auto;
+      min-width: 200px;
+      max-width: 200px;
+      margin: 10px;
+      margin-right: 17px;
+      color: $color-grey-100;
+
+
+      h3 {
+        padding: 0 16px;
+      }
+
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      a.mat-button {
+        font-size: 20px;
+        line-height: 40px;
+        width: 100%;
+        text-align: left;
+        text-decoration: none;
+        color: $color-grey-100;
+      }
     }
+
+  }
+
+  div.contact {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    padding: 20px;
+    background: $color-grey-100;
+    color: $color-grey-500;
+    font-size: 16px;
+    line-height: 23px;
+
+    md-icon.mat-icon {
+      font-size: 16px;
+      height: 16px;
+    }
+
+    p {
+      margin: 0 0 5px;
+      text-align: center;
+    }
+
+    a {
+      text-decoration: none;
+      color: $color-grey-500;
+    }
+  }
+
+  div.version {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    color: $color-grey-500;
+    font-size: 13px;
   }
 }

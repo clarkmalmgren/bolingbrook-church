@@ -1,7 +1,7 @@
-import { Hero }       from './hero';
+import { Banner }     from './banner';
 import { SermonCard } from './sermon-card'
 
 export const MOLECULES = [
-  Hero,
+  Banner,
   SermonCard
 ];
