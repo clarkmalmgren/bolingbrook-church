@@ -86,6 +86,10 @@ export class Storage {
 
     return observe(this.fb.storage.ref(path).put(file));
   }
+
+  delete(path: string): Observable<any> {
+    return observe(this.fb.storage.ref(path).delete());
+  }
 }
 
 @Injectable()

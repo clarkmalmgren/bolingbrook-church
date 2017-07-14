@@ -1,0 +1,47 @@
+<sda-header image="/assets/messages.png" shade="0.4" relativeHeight="0.4">
+  <h2>Edit Series</h2>
+</sda-header>
+<main>
+  <section>
+    <div class="content">
+      <p>
+        Change the title and image of the series.
+      </p>
+    </div>
+  </section>
+
+  <section class="white">
+    <form>
+      <h4>Series</h4>
+
+      <md-list>
+
+        <md-list-item *ngFor="let s of series; let i = index;">
+          <md-input-container>
+            <input mdInput [name]="'series_name_' + i" [(ngModel)]="s.name" placeholder="Series Name">
+          </md-input-container>
+          <md-input-container>
+            <input mdInput [name]="'series_image_' + i" [(ngModel)]="s.image" disabled placeholder="Image">
+          </md-input-container>
+
+          <button type="button" md-raised-button (click)="imgFileInput.click()">Upload Image</button>
+          <input hidden type="file" #imgFileInput (change)="attachFile($event, s)">
+          
+          <button md-mini-fab class="add" (click)="saveSeries(s)">
+            <md-icon>save</md-icon>
+          </button>
+          <button md-mini-fab (click)="removeSeries(s)">
+            <md-icon>delete</md-icon>
+          </button>
+        </md-list-item>
+
+        <md-list-item class="new-series">
+          <button class="add" md-mini-fab (click)="addSeries()">
+            <md-icon>add</md-icon>
+          </button>
+        </md-list-item>
+      </md-list>
+    </form>
+  </section>
+
+</main>

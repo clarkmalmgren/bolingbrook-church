@@ -19,14 +19,14 @@ export abstract class Secured implements OnInit {
       .flatMap((authd) => {
         if (!authd) {
           this.router.navigate(['/admin/login']);
-          return Observable.empty();
+          return Observable.of('');
         } else {
           return Observable.of('');
         }
       })
       .catch((err) => {
         this.router.navigate(['/admin/login']);
-        return Observable.empty();
+        return Observable.of('');
       });
   }
 }

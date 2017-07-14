@@ -5,6 +5,7 @@ import { Env }                                            from './env';
 import { GlobalErrorHandler }                             from './error.handler';
 import { FirebaseService, Database, Storage }             from './firebase.service';
 import { Observable }                                     from './observable';
+import { Series, SeriesForm, SeriesService }              from './series.service';
 import { SermonService, Sermon }                          from './sermon.service';
 import { FeatureToggles, TogglesService }                 from './toggles.service';
 
@@ -15,6 +16,7 @@ export const SERVICES = [
   Database,
   Env,
   FirebaseService,
+  SeriesService,
   SermonService,
   TogglesService,
   Storage
@@ -32,6 +34,9 @@ export {
   GlobalErrorHandler,
   SermonService,
   Observable,
+  Series,
+  SeriesForm,
+  SeriesService,
   Sermon,
   Storage,
   FeatureToggles,
