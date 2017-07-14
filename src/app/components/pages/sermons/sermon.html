@@ -9,7 +9,7 @@
             allowfullscreen="">
     </iframe>
 
-    <ustream *ngIf="ustream"></ustream>
+    <ustream *ngIf="ustream && live"></ustream>
 
     <div class="data" *ngIf="sermon">
       <h2>{{ sermon.name }}</h2>

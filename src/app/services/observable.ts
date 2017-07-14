@@ -1,5 +1,6 @@
-export { Observable } from 'rxjs/Observable';
-export { Observer }   from 'rxjs/Observer';
+export { Observable }   from 'rxjs/Observable';
+export { Observer }     from 'rxjs/Observer';
+export { Subscription } from 'rxjs/Subscription';
 
 /* Explicitly include the ways we might generate an observable */
 import                     'rxjs/add/observable/fromPromise';

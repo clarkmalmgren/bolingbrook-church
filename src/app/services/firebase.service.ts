@@ -101,6 +101,15 @@ export class Database {
     return observe(this.fb.database.ref(path).once('value'))
       .map((snap: firebase.database.DataSnapshot) => snap.val());
   }
+  
+  watch(path: string): Observable<any> {
+    return Observable
+      .create((observer: Observer<any>) => {
+        this.fb.database.ref(path).on('value', (snap) => {
+          observer.next(snap.val());
+        });
+      });
+  }
 
   put(path: string, value: any): Observable<any> {
     return observe(this.fb.database.ref(path).set(value));
