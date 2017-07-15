@@ -1,10 +1,6 @@
 form {
   margin-top: 10px;
 
-  md-input-container {
-    flex: 100%;
-  }
-
   label.file-label {
     margin: 0 11px;
   }
@@ -13,11 +9,17 @@ form {
     margin-top: 23px !important;
   }
 
+
   md-list {
     flex: 100%;
     margin-bottom: 25px;
 
-    md-input-container {
+    md-list-item {
+      margin-bottom: 12px;
+    }
+
+    md-input-container, md-select {
+      flex: 1;
       min-width: 0;
     }
 
@@ -42,4 +44,13 @@ form {
 
 md-list-item.new-sermon /deep/ div.md-list-item {
   justify-content: flex-end;
+}
+
+div.icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 31px;
+  height: 31px;
+  background-size: cover;
+  background-position: center center;
 }

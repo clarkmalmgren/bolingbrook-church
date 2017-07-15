@@ -1,87 +1,71 @@
-import { Injectable }         from '@angular/core';
-import { Database, Storage }  from './firebase.service';
-import { Observable }         from './observable';
+import { Injectable }                               from '@angular/core';
+import { DomSanitizer, SafeResourceUrl, SafeStyle } from '@angular/platform-browser';
+import { Database, Storage }                        from './firebase.service';
+import { Observable }                               from './observable';
 
 type map = { [key: string]: any };
 
-export interface Series {
-  id: string;
+export interface SeriesImageForm {
   name: string;
-  image: string;
-}
-
-export interface SeriesForm extends Series {
+  url?: SafeResourceUrl;
+  style?: SafeStyle;
   file?: File;
 }
 
 @Injectable()
-export class SeriesService {
+export class SeriesImageService {
 
   constructor(
     private db: Database,
-    private store: Storage
+    private store: Storage,
+    private sanatizer: DomSanitizer
   ) {}
 
-  private clean(series: Series): Series {
-    return {
-      name: series.name,
-      image: series.image
-    } as Series;
+  isValid(name: string): boolean {
+    return name && /^[A-Za-z_-]+$/.test(name);
   }
 
-  private newId(length: number): string {
-    let id = '';
-    for (let i = 0; i < length; i++) {
-      id += Math.floor(Math.random() * 36).toString(36);
-    }
-    return id;
-  } 
-
-  getSeries(id: string): Observable<Series> {
-    return this.db.getOnce(`data/series/${id}`)
-      .map((series: Series) => {
-        series.id = id;
-        return series;
-      });
+  getSeriesImage(name: string): Observable<string> {
+    return this.store.getUrl(`/series/${name}`);
   }
 
-
-  saveSeries(series: SeriesForm): Observable<any> {
-    /* Add a series ID if one doesn't exist */
-    if (!series.id) {
-      series.id = this.newId(12);
-    }
-
-    if (series.file) {
-      let type = series.file.name.match(/\.[^\.]*/)[0];
-      let path = `/series/${series.id}.${type}`;
-      return this.store.upload(path, series.file)
-        .flatMap(() => {
-          series.image = path;
-          return this.db.put(`data/series/${series.id}`, this.clean(series));
-        }).map(() => {
-          series.file = undefined;
-        });
-    } else {
-      return this.db.put(`data/series/${series.id}`, this.clean(series));
-    }
+  getSeriesImageStyle(name: string): Observable<SafeStyle> {
+    return this.getSeriesImage(name)
+      .map(url => this.sanatizer.bypassSecurityTrustStyle(`url(${url})`));
   }
 
-  deleteSeries(series: Series): Observable<any> {
-    return this.db.delete(`data/series/${series.id}`)
+  saveSeriesImage(form: SeriesImageForm): Observable<any> {
+    if (!this.isValid(form.name)) {
+      throw new Error("Invalid Resource Name");
+    }
+
+    let path = `/series/${form.name}`;
+    return this.store.upload(path, form.file)
       .flatMap(() => {
-        return series.image ? this.store.delete(series.image) : Observable.of('');
+        return this.db.put(`/data/series/${form.name}`, '0');
       });
   }
 
-  listSeries(): Observable<Series[]> {
-    return this.db.getOnce('data/series')
-      .map((data: any) => {
-        return this.db.toArray(data, 'id')
-          .map(it => (it as Series))
-          .sort((a, b) => {
-            return a.name.localeCompare(b.name);
-          });
+  deleteSeries(form: SeriesImageForm): Observable<any> {
+    return this.db.delete(`/data/series/${form.name}`)
+      .flatMap(() => {
+        return this.store.delete(`/series/${name}`);
       });
+  }
+
+  listSeries(): Observable<SeriesImageForm[]> {
+    return this.db.getOnce('data/series')
+      .flatMap((data: any) => {
+        return Observable.from(Object.keys(data));
+      })
+      .flatMap((name) => {
+        return this.getSeriesImage(`${name}`)
+          .map((url) => { return {
+            name: name,
+            url: this.sanatizer.bypassSecurityTrustResourceUrl(url),
+            style: this.sanatizer.bypassSecurityTrustStyle(`url(${url})`)
+          } as SeriesImageForm });
+      })
+      .toArray();
   }
 }

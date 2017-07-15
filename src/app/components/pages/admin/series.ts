@@ -1,7 +1,7 @@
-import { OnInit, Component }                                              from '@angular/core';
-import { Router }                                                         from '@angular/router';
-import { FirebaseService, Series, SeriesForm, SeriesService, Observable } from '../../../services';
-import { Secured }                                                        from './secured';
+import { OnInit, Component }                                                from '@angular/core';
+import { Router }                                                           from '@angular/router';
+import { FirebaseService, SeriesImageForm, SeriesImageService, Observable } from '../../../services';
+import { Secured }                                                          from './secured';
 
 @Component({
   templateUrl: './series.html',
@@ -9,12 +9,12 @@ import { Secured }                                                        from '
 })
 export class SeriesComponent extends Secured {
 
-  series: SeriesForm[] = [];
+  series: SeriesImageForm[] = [];
 
   constructor(
     router: Router,
     firebase: FirebaseService,
-    private service: SeriesService
+    private service: SeriesImageService
   ) {
     super(router, firebase);
   }
@@ -30,11 +30,17 @@ export class SeriesComponent extends Secured {
       });
   }
 
-  attachFile(event: any, series: SeriesForm): void {
-    series.file = event.dataTransfer ? event.dataTransfer.files[0] : event.target.files[0];
+  valid(series: SeriesImageForm): boolean {
+    return this.service.isValid(series.name);
   }
 
-  removeSeries(series: SeriesForm): void {
+  attachFile(event: any, series: SeriesImageForm): void {
+    series.file = event.dataTransfer ? event.dataTransfer.files[0] : event.target.files[0];
+    this.service.saveSeriesImage(series)
+      .subscribe();
+  }
+
+  removeSeries(series: SeriesImageForm): void {
     this.service.deleteSeries(series)
       .subscribe(() => {
         this.update();
@@ -42,12 +48,7 @@ export class SeriesComponent extends Secured {
   }
 
   addSeries(): void {
-    this.series.push({} as SeriesForm);
-  }
-
-  saveSeries(series: Series): void {
-    this.service.saveSeries(series)
-      .subscribe();
+    this.series.push({} as SeriesImageForm);
   }
 
 }

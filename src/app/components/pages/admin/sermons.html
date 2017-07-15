@@ -21,11 +21,19 @@
             <input mdInput type="date" [name]="'sermon_date_' + i" [(ngModel)]="s.date" placeholder="Date of Service">
           </md-input-container>
           <md-input-container>
-            <input mdInput [name]="'sermon_name_' + i" [(ngModel)]="s.name" placeholder="Sermon Name">
-          </md-input-container>
-          <md-input-container>
             <input mdInput [name]="'sermon_series_' + i" [(ngModel)]="s.series" placeholder="Series">
           </md-input-container>
+          <md-input-container>
+            <input mdInput [name]="'sermon_speaker_' + i" [(ngModel)]="s.speaker" placeholder="Speaker">
+          </md-input-container>
+
+          <md-select placeholder="Series Image" [name]="'image_' + i" [(ngModel)]="s.image">
+            <md-option>None</md-option>
+            <md-option *ngFor="let i of images" [value]="i.name">
+              <div class="icon" [style.background-image]="i.style"></div> {{ i.name }}
+            </md-option>
+          </md-select>
+
           <md-input-container>
             <input mdInput [name]="'sermon_youtube_' + i" [(ngModel)]="s.youtube" placeholder="Youtube ID">
           </md-input-container>

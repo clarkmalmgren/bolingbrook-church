@@ -4,7 +4,8 @@ import {
   MdCheckboxModule,
   MdIconModule,
   MdInputModule,
-  MdSelectModule
+  MdSelectModule,
+  MdListModule,
 } from '@angular/material';
 
 export const MATERIAL_MODULES = [
@@ -12,5 +13,6 @@ export const MATERIAL_MODULES = [
   MdCheckboxModule,
   MdIconModule,
   MdInputModule,
-  MdSelectModule
+  MdSelectModule,
+  MdListModule
 ];

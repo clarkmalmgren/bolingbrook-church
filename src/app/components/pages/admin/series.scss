@@ -17,6 +17,10 @@ form {
     flex: 100%;
     margin-bottom: 25px;
 
+    img {
+      max-width: 45px;
+    }
+
     md-input-container {
       min-width: 0;
     }

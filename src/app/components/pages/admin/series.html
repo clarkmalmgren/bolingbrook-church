@@ -18,18 +18,16 @@
 
         <md-list-item *ngFor="let s of series; let i = index;">
           <md-input-container>
-            <input mdInput [name]="'series_name_' + i" [(ngModel)]="s.name" placeholder="Series Name">
-          </md-input-container>
-          <md-input-container>
-            <input mdInput [name]="'series_image_' + i" [(ngModel)]="s.image" disabled placeholder="Image">
+            <input mdInput [name]="'series_name_' + i" [(ngModel)]="s.name" placeholder="Name" [disabled]="s.url">
           </md-input-container>
 
-          <button type="button" md-raised-button (click)="imgFileInput.click()">Upload Image</button>
+          <img *ngIf="s.url" [src]="s.url" />
+
+          <button *ngIf="!s.url" md-mini-fab class="add" (click)="imgFileInput.click()" [disabled]="!valid(s)">
+            <md-icon>file_upload</md-icon>
+          </button>
           <input hidden type="file" #imgFileInput (change)="attachFile($event, s)">
           
-          <button md-mini-fab class="add" (click)="saveSeries(s)">
-            <md-icon>save</md-icon>
-          </button>
           <button md-mini-fab (click)="removeSeries(s)">
             <md-icon>delete</md-icon>
           </button>

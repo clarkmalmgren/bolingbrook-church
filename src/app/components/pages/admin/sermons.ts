@@ -1,7 +1,15 @@
-import { OnInit, Component }                                            from '@angular/core';
-import { Router, ActivatedRoute }                                       from '@angular/router';
-import { FirebaseService, Sermon, SermonService, Observable }           from '../../../services';
-import { Secured }                                                      from './secured';
+import { OnInit, Component }  from '@angular/core';
+import { Router }             from '@angular/router';
+import { Secured }            from './secured';
+
+import { 
+  FirebaseService,
+  Observable,
+  SeriesImageForm,
+  SeriesImageService,
+  Sermon,
+  SermonService,
+} from '../../../services';
 
 @Component({
   templateUrl: './sermons.html',
@@ -10,12 +18,13 @@ import { Secured }                                                      from './
 export class Sermons extends Secured {
 
   sermons: Sermon[];
+  images: SeriesImageForm[];
 
   constructor(
     router: Router,
     firebase: FirebaseService,
     private service: SermonService,
-    private activatedRoute: ActivatedRoute
+    private imageService: SeriesImageService
   ) {
     super(router, firebase);
   }
@@ -27,6 +36,11 @@ export class Sermons extends Secured {
         .subscribe(sermons => {
           this.sermons = sermons;
         });
+
+      this.imageService.listSeries()
+        .subscribe(images => {
+          this.images = images;
+        })
     });
   }
 

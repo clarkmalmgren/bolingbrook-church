@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Storage, Sermon }  from '../../services';
+import { Component, Input, OnInit }   from '@angular/core';
+import { SafeStyle }                  from '@angular/platform-browser';
+import { Sermon, SeriesImageService } from '../../services';
 
 
 @Component({
@@ -7,11 +8,23 @@ import { Storage, Sermon }  from '../../services';
   templateUrl: './sermon-card.html',
   styleUrls: [ './sermon-card.scss' ]
 })
-export class SermonCard {
+export class SermonCard implements OnInit {
 
-  @Input() sermon: Sermon;
+  @Input()
+  sermon: Sermon;
 
-  constructor(private storage: Storage) {}
+  icon: SafeStyle;
+
+  constructor(
+    private service: SeriesImageService
+  ) {}
+
+  ngOnInit() {
+    if (this.sermon.image) {
+      this.service.getSeriesImageStyle(this.sermon.image)
+        .subscribe(style => { this.icon = style });
+    }
+  }
   
   get image(): string {
     return `https://i.ytimg.com/vi/${this.sermon.youtube}/hqdefault.jpg`
