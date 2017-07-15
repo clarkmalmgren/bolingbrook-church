@@ -11,10 +11,10 @@ export class SermonComponent implements OnInit, OnDestroy {
 
   error: boolean = false;
   sermon: Sermon;
-  ustream: boolean = false;
   live: boolean = false;
   youtube_url: SafeResourceUrl;
 
+  youtube_live: boolean = false;
   subscription: Subscription;
 
   constructor(
@@ -25,10 +25,22 @@ export class SermonComponent implements OnInit, OnDestroy {
     private meta: Meta
   ) {}
 
+  get showYoutube() {
+    if (this.live) {
+      return this.youtube_live;
+    } else {
+      return this.sermon && this.youtube_url;
+    }
+  }
+
+  get showUstream(): boolean {
+    return this.live && !this.youtube_live;
+  }
+
   ngOnInit() {
     this.subscription = this.featureToggles.getToggles()
       .subscribe((toggles) => {
-        this.ustream = !toggles.youtube_live;
+        this.youtube_live = toggles.youtube_live;
       });
 
     this.activatedRoute.params

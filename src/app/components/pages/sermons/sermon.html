@@ -1,7 +1,7 @@
 <sda-header></sda-header>
 <main>
   <section class="video">
-    <iframe *ngIf="(sermon && sermon.youtube) || (!ustream && live)"
+    <iframe *ngIf="showYoutube"
             [src]="youtube_url"
             frameborder="0"
             webkitallowfullscreen=""
@@ -9,7 +9,7 @@
             allowfullscreen="">
     </iframe>
 
-    <ustream *ngIf="ustream && live"></ustream>
+    <ustream *ngIf="showUstream"></ustream>
 
     <div class="data" *ngIf="sermon">
       <h2>{{ sermon.name }}</h2>
