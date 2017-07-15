@@ -1,4 +1,5 @@
 @import '../atoms/colors';
+@import '../atoms/breaks';
 
 a {
   color: white;
@@ -13,6 +14,7 @@ a {
       object-fit: cover;
     }
 
+
     div.data {
       position: absolute;
       left: 0;
@@ -21,8 +23,8 @@ a {
       bottom: 4px;
 
       display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
+      flex-direction: row;
+      align-items: flex-end;
       
       padding: 10px 20px;
       background: linear-gradient(
@@ -35,17 +37,36 @@ a {
       color: white;
 
       font-family: 'Roboto Condensed', sans-serif;
-      
-      span.title {
-        margin-bottom: 5px;
-        font-size: 24px;
+
+      div.icon {
+        width: 45px;
+        height: 45px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        margin: 0 12px 4px 0;
+
+        @media only screen and (max-width: 415px) {
+          display: none;
+        }
       }
 
-      span.series {
-        margin: 0;
+      div.text {
+        flex: auto;
         font-size: 18px;
-        font-style: italic;
-        font-weight: 300;
+
+        .title {
+          font-size: 24px;
+        }
+
+        .speaker {
+          font-style: italic;
+        }
+      }
+
+      div.date {
+        flex: 1;
+        font-size: 18px;
       }
     }
   }

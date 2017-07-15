@@ -6,11 +6,15 @@ import                             'moment-timezone';
 
 type map = { [key: string]: any };
 
-export class Sermon {
+export interface Sermon {
   date: string;
-  name: string;
   series: string;
+  speaker: string;
+  image?: string;
   youtube?: string;
+
+  // deprecated
+  name?: string;
 }
 
 @Injectable()
@@ -21,6 +25,19 @@ export class SermonService {
     private store: Storage
   ) {}
 
+  private clean<T>(source: T): T {
+    let cleaned = {} as T;
+
+    Object.keys(source)
+      .forEach(k => {
+        if (typeof source[k] != 'undefined') {
+          cleaned[k] = source[k];
+        }
+      });
+
+    return cleaned;
+  }
+
   getSermon(date: string): Observable<Sermon> {
     return this.db.getOnce(`data/sermons/${date}`)
       .map((sermon: Sermon) => {
@@ -30,11 +47,7 @@ export class SermonService {
   }
 
   saveSermon(sermon: Sermon): Observable<any> {
-    return this.db.put(`data/sermons/${sermon.date}`, {
-      name: sermon.name,
-      series: sermon.series,
-      youtube: sermon.youtube
-    } as Sermon);
+    return this.db.put(`data/sermons/${sermon.date}`, this.clean(sermon));
   }
 
   deleteSermon(date: string): Observable<any> {

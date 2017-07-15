@@ -1,18 +1,21 @@
-import { Component, OnInit }                                      from '@angular/core';
-import { DomSanitizer, SafeResourceUrl, Meta }                    from '@angular/platform-browser';
-import { ActivatedRoute }                                         from '@angular/router';
-import { SermonService, Sermon, FeatureToggles, TogglesService }  from '../../../services';
+import { Component, OnInit, OnDestroy }                                         from '@angular/core';
+import { DomSanitizer, SafeResourceUrl, Meta }                                  from '@angular/platform-browser';
+import { ActivatedRoute }                                                       from '@angular/router';
+import { SermonService, Sermon, FeatureToggles, TogglesService, Subscription }  from '../../../services';
 
 @Component({
   templateUrl: './sermon.html',
   styleUrls: [ './sermon.scss' ]
 })
-export class SermonComponent implements OnInit {
+export class SermonComponent implements OnInit, OnDestroy {
 
   error: boolean = false;
   sermon: Sermon;
   ustream: boolean = false;
+  live: boolean = false;
   youtube_url: SafeResourceUrl;
+
+  subscription: Subscription;
 
   constructor(
     private service: SermonService,
@@ -23,18 +26,21 @@ export class SermonComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.subscription = this.featureToggles.getToggles()
+      .subscribe((toggles) => {
+        this.ustream = !toggles.youtube_live;
+        console.log("TOGGLE'D");
+      });
+
     this.activatedRoute.params
       .flatMap((params) => {
         let id = params['sermon'];
 
         if (id == 'live') {
-          return this.featureToggles.getToggles()
-            .flatMap((toggles) => {
-              this.ustream = !toggles.youtube_live;
-              return this.service.next();
-            })
+          this.live = true;
+          return this.service.next();
         } else {
-          this.ustream = false;
+          this.live = false;
           return this.service.getSermon(id);
         }
       })
@@ -51,5 +57,9 @@ export class SermonComponent implements OnInit {
           content: '404'
         });
       });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

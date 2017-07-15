@@ -86,6 +86,10 @@ export class Storage {
 
     return observe(this.fb.storage.ref(path).put(file));
   }
+
+  delete(path: string): Observable<any> {
+    return observe(this.fb.storage.ref(path).delete());
+  }
 }
 
 @Injectable()
@@ -96,6 +100,15 @@ export class Database {
   getOnce(path: string): Observable<any> {
     return observe(this.fb.database.ref(path).once('value'))
       .map((snap: firebase.database.DataSnapshot) => snap.val());
+  }
+  
+  watch(path: string): Observable<any> {
+    return Observable
+      .create((observer: Observer<any>) => {
+        this.fb.database.ref(path).on('value', (snap) => {
+          observer.next(snap.val());
+        });
+      });
   }
 
   put(path: string, value: any): Observable<any> {
