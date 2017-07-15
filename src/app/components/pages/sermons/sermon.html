@@ -1,7 +1,7 @@
 <sda-header></sda-header>
 <main>
   <section class="video">
-    <iframe *ngIf="sermon && sermon.youtube && !ustream"
+    <iframe *ngIf="showYoutube"
             [src]="youtube_url"
             frameborder="0"
             webkitallowfullscreen=""
@@ -9,12 +9,15 @@
             allowfullscreen="">
     </iframe>
 
-    <ustream *ngIf="ustream && live"></ustream>
+    <ustream *ngIf="showUstream"></ustream>
 
     <div class="data" *ngIf="sermon">
-      <h2>{{ sermon.name }}</h2>
-      <h3>{{ sermon.series }}</h3>
-      <h3>{{ sermon.date | date: 'MMMM d, yyyy' }}</h3>
+      <div *ngIf="sermon.image" class="icon" [style.background-image]="icon"></div>
+      <div class="text">
+        <div class="title">{{ sermon.series }}</div>
+        <div class="speaker">{{ sermon.speaker }}</div>
+      </div>
+      <span class="date">{{ sermon.date | date:'longDate' }}</span>
     </div>
 
     <div class="error" *ngIf="error">

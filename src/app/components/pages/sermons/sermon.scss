@@ -24,19 +24,47 @@ main section.video {
   div.data {
     width: 640px;
 
-    @include break(tiny)  { width: 270px; }
-    @include break(micro) { width: 225px; }
+    @include break(tiny)  { width: 360px; }
+    @include break(micro) { width: 300px; }
 
     text-align: left;
     color: white;
 
-    h2 {
-      margin: 0 0 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+
+    margin: 10px 0;
+
+    div.icon {
+      width: 45px;
+      height: 45px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+      margin: 0 12px 4px 0;
+
+      @media only screen and (max-width: 415px) {
+        display: none;
+      }
     }
-    h3 {
-      margin: 0;
-      color: white;
-      text-align: left;
+
+    div.text {
+      flex: auto;
+      font-size: 18px;
+
+      .title {
+        font-size: 24px;
+      }
+
+      .speaker {
+        font-style: italic;
+      }
+    }
+
+    div.date {
+      flex: 1;
+      font-size: 18px;
     }
   }
 

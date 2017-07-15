@@ -1,7 +1,15 @@
-import { Component, OnInit, OnDestroy }                                         from '@angular/core';
-import { DomSanitizer, SafeResourceUrl, Meta }                                  from '@angular/platform-browser';
-import { ActivatedRoute }                                                       from '@angular/router';
-import { SermonService, Sermon, FeatureToggles, TogglesService, Subscription }  from '../../../services';
+import { Component, OnInit, OnDestroy }                     from '@angular/core';
+import { DomSanitizer, SafeResourceUrl, SafeStyle, Meta }   from '@angular/platform-browser';
+import { ActivatedRoute }                                   from '@angular/router';
+
+import {
+  SermonService,
+  Sermon,
+  FeatureToggles,
+  TogglesService,
+  Subscription,
+  SeriesImageService,
+} from '../../../services';
 
 @Component({
   templateUrl: './sermon.html',
@@ -11,10 +19,11 @@ export class SermonComponent implements OnInit, OnDestroy {
 
   error: boolean = false;
   sermon: Sermon;
-  ustream: boolean = false;
   live: boolean = false;
   youtube_url: SafeResourceUrl;
+  icon: SafeStyle;
 
+  youtube_live: boolean = false;
   subscription: Subscription;
 
   constructor(
@@ -22,14 +31,26 @@ export class SermonComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private featureToggles: TogglesService,
+    private imageService: SeriesImageService,
     private meta: Meta
   ) {}
+
+  get showYoutube() {
+    if (this.live) {
+      return this.youtube_live;
+    } else {
+      return this.sermon && this.youtube_url;
+    }
+  }
+
+  get showUstream(): boolean {
+    return this.live && !this.youtube_live;
+  }
 
   ngOnInit() {
     this.subscription = this.featureToggles.getToggles()
       .subscribe((toggles) => {
-        this.ustream = !toggles.youtube_live;
-        console.log("TOGGLE'D");
+        this.youtube_live = toggles.youtube_live;
       });
 
     this.activatedRoute.params
@@ -49,6 +70,11 @@ export class SermonComponent implements OnInit, OnDestroy {
         let url = `https://www.youtube.com/embed/${sermon.youtube}`;
         this.youtube_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
         this.error = false;
+
+        if (sermon.image) {
+          this.imageService.getSeriesImageStyle(sermon.image)
+            .subscribe(style => { this.icon = style });
+        }
       }, (err) => {
         console.error(err);
         this.error = true;
