@@ -29,7 +29,6 @@ export class SermonComponent implements OnInit, OnDestroy {
     this.subscription = this.featureToggles.getToggles()
       .subscribe((toggles) => {
         this.ustream = !toggles.youtube_live;
-        console.log("TOGGLE'D");
       });
 
     this.activatedRoute.params
