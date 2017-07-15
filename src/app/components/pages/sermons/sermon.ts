@@ -1,7 +1,15 @@
-import { Component, OnInit, OnDestroy }                                         from '@angular/core';
-import { DomSanitizer, SafeResourceUrl, Meta }                                  from '@angular/platform-browser';
-import { ActivatedRoute }                                                       from '@angular/router';
-import { SermonService, Sermon, FeatureToggles, TogglesService, Subscription }  from '../../../services';
+import { Component, OnInit, OnDestroy }                     from '@angular/core';
+import { DomSanitizer, SafeResourceUrl, SafeStyle, Meta }   from '@angular/platform-browser';
+import { ActivatedRoute }                                   from '@angular/router';
+
+import {
+  SermonService,
+  Sermon,
+  FeatureToggles,
+  TogglesService,
+  Subscription,
+  SeriesImageService,
+} from '../../../services';
 
 @Component({
   templateUrl: './sermon.html',
@@ -13,6 +21,7 @@ export class SermonComponent implements OnInit, OnDestroy {
   sermon: Sermon;
   live: boolean = false;
   youtube_url: SafeResourceUrl;
+  icon: SafeStyle;
 
   youtube_live: boolean = false;
   subscription: Subscription;
@@ -22,6 +31,7 @@ export class SermonComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private featureToggles: TogglesService,
+    private imageService: SeriesImageService,
     private meta: Meta
   ) {}
 
@@ -60,6 +70,11 @@ export class SermonComponent implements OnInit, OnDestroy {
         let url = `https://www.youtube.com/embed/${sermon.youtube}`;
         this.youtube_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
         this.error = false;
+
+        if (sermon.image) {
+          this.imageService.getSeriesImageStyle(sermon.image)
+            .subscribe(style => { this.icon = style });
+        }
       }, (err) => {
         console.error(err);
         this.error = true;
