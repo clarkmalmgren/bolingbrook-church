@@ -1,21 +1,25 @@
-import { Component, OnInit, OnDestroy }                     from '@angular/core';
+import { Component, OnInit }                                from '@angular/core';
 import { DomSanitizer, SafeResourceUrl, SafeStyle, Meta }   from '@angular/platform-browser';
 import { ActivatedRoute }                                   from '@angular/router';
+import { Autoclean }                                        from '../../templates/autoclean';
 
 import {
-  SermonService,
-  Sermon,
+  Analytics,
   FeatureToggles,
-  TogglesService,
-  Subscription,
+  Observable,
   SeriesImageService,
+  Sermon,
+  SermonService,
+  TogglesService,
+  VideoState,
+  YoutubeService
 } from '../../../services';
 
 @Component({
   templateUrl: './sermon.html',
   styleUrls: [ './sermon.scss' ]
 })
-export class SermonComponent implements OnInit, OnDestroy {
+export class SermonComponent extends Autoclean implements OnInit {
 
   error: boolean = false;
   sermon: Sermon;
@@ -24,16 +28,20 @@ export class SermonComponent implements OnInit, OnDestroy {
   icon: SafeStyle;
 
   youtube_live: boolean = false;
-  subscription: Subscription;
+  videoState: VideoState = VideoState.UNSTARTED;
 
   constructor(
-    private service: SermonService,
     private activatedRoute: ActivatedRoute,
-    private sanitizer: DomSanitizer,
+    private analytics: Analytics,
     private featureToggles: TogglesService,
     private imageService: SeriesImageService,
-    private meta: Meta
-  ) {}
+    private meta: Meta,
+    private sanitizer: DomSanitizer,
+    private service: SermonService,
+    private youtubeService: YoutubeService
+  ) {
+    super()
+  }
 
   get showYoutube() {
     if (this.live) {
@@ -48,10 +56,30 @@ export class SermonComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscription = this.featureToggles.getToggles()
-      .subscribe((toggles) => {
-        this.youtube_live = toggles.youtube_live;
-      });
+    /* Subscribe to Toggles */
+    this.autoclean(
+      this.featureToggles
+        .getToggles()
+        .subscribe((toggles) => {
+          this.youtube_live = toggles.youtube_live;
+        }));
+
+    /* Subscribe to Video State Change Events */
+    this.autoclean(
+      this.youtubeService
+        .videoState('sermonVideo')
+        .subscribe((state) => {
+          this.videoState = state;
+        }));
+
+    /* Record Analytics when Playing */
+    this.autoclean(
+      Observable.interval(15000)
+        .subscribe(() => {
+          if (this.videoState == VideoState.PLAYING) {
+            this.analytics.event(this.live ? 'Live Sermon' : 'Sermon', 'Playing', this.sermon.youtube);
+          }
+        }));
 
     this.activatedRoute.params
       .flatMap((params) => {
@@ -67,7 +95,7 @@ export class SermonComponent implements OnInit, OnDestroy {
       })
       .subscribe(sermon => {
         this.sermon = sermon;
-        let url = `https://www.youtube.com/embed/${sermon.youtube}`;
+        let url = `https://www.youtube.com/embed/${sermon.youtube}?enablejsapi=1`;
         this.youtube_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
         this.error = false;
 
@@ -83,9 +111,5 @@ export class SermonComponent implements OnInit, OnDestroy {
           content: '404'
         });
       });
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 }

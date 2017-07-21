@@ -1,5 +1,19 @@
 language: node_js
 node_js:
-  - "6"
+  - '6'
 before_script:
   - npm install -g @angular/cli
+before_deploy:
+  - node pre-deploy.js
+deploy:
+  provider: s3
+  access_key_id: AKIAIZDDX4H2KE25SXLA
+  secret_access_key:
+    secure: u7AUJrJR0vBOfXOzVi37sLDDkbNqJBusMN673qFX2b/A65g+gG0YTslpK/4mi4oc4WsnKIJ/36Chb479EWIVC6OluN0z/rGxHRSqybiRUl3HHnu9nVOoOsS3j/r+Dk0WCMo8nhsRB503yAbQOiahgP17rzWPTiFtH9N22FpySw1wAz3sXA4GK6q2q0/pkKnhusVBbnEV/vVzpdinZr6lKaNOy31f29lIYP/XDLGb0nk0Du1JEQDlTGiMVTbmaHSep72Iq+WyjP9mC+oHKTWbLQGvnRKsqXC3qTTehWzKRaS8SkhenreT4WufPpo110xJcpRHfIHdzuP3NyT/3qZm1B1m1Qt13QYXIxjcr1kHZiPsjk53plnH9GSIBZONM4RaZbMFs/NuiSnIMrG+WWopAz/LgCYoFUc3xu9R5U7PfyJbNZtwzPZIZjDi7c0MdjUMN/+GV8urG1CgNlmfNzeJ/LCJNppvobC4IghESlzPdg612+2M1gmhjNJPnwbCd0CAb4GdNfSep+TqcK6fgi7Ajf2YgDeaPHKNKe+53DfiQx8FTyr8w5KngwEaLRaLapojNxm74FCLDH5pq22g9XBgpolO4J8PlOyV9N+r5eXenQVb0AoqIfOeVpm3Yr/C01J1lZ+ArQTgx37xO9LE+sKv2AfIQ69WWqbhBrUvn21A3qs=
+  bucket: bolingbrook-church-dev
+  skip_cleanup: true
+  acl: public_read
+  local_dir: deploy
+  upload-dir: deployments
+  on:
+    tags: true

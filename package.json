@@ -1,6 +1,6 @@
 {
   "name": "bolingbrook-church",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
@@ -32,7 +32,7 @@
     "hamburgers": "^0.8.1",
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
-    "rxjs": "^5.1.0",
+    "rxjs": "^5.4.1",
     "smoothscroll-polyfill": "^0.3.5",
     "zone.js": "^0.8.4"
   },
@@ -54,8 +54,8 @@
     "karma-jasmine": "^1.1.0",
     "karma-nyan-reporter": "^0.2.5",
     "karma-phantomjs-launcher": "^1.0.4",
+    "ncp": "^2.0.0",
     "protractor": "~5.1.0",
-    "rxjs": "^5.4.1",
     "sinon": "^2.3.6",
     "sinon-chai": "^2.11.0",
     "ts-node": "~2.0.0",

@@ -6,6 +6,7 @@ const pkg: any = require('../../../package.json');
 export class Env {
 
   env = environment;
+  nodePackage = pkg;
 
   get firebaseConfig() {
     return this.env.firebaseConfig;
@@ -16,6 +17,6 @@ export class Env {
   }
 
   get version(): string {
-    return pkg.version;
+    return this.nodePackage.version;
   }
 }

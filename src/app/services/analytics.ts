@@ -7,20 +7,26 @@ import { Observable, Observer }                           from './observable';
 /* Make ga typesafe, sortof */
 declare var ga: Function;
 
+export class GoogleAnalyticsWrapper {
+  get call(): Function {
+    return ga;
+  }
+}
+
 @Injectable()
 export class Analytics {
 
   private navStartedAt: number = 0;
   private currentRoute: string;
-  private analytics;
+  private analytics: GoogleAnalyticsWrapper;
 
   constructor(
-    private router: Router,
+    private env: Env,
     private location: Location,
-    private env: Env
+    private router: Router
   ) { }
 
-  init(analytics: Function = ga): void {
+  init(analytics: GoogleAnalyticsWrapper = new GoogleAnalyticsWrapper()): void {
     this.analytics = analytics;
 
     this.router.events.subscribe((event: Event) => {
@@ -33,12 +39,13 @@ export class Analytics {
     });
 
     this.timing('angular', 'init', performance.now());
+    this.analytics.call('set', 'dimension1', this.env.version);
   }
 
   pageview(route: string): void {
     if (this.currentRoute != route) {
-      this.analytics('set', 'page', route);
-      this.analytics('send', 'pageview');
+      this.analytics.call('set', 'page', route);
+      this.analytics.call('send', 'pageview');
 
       if (this.currentRoute == null) {
         this.timing('pageview', 'init', performance.now());
@@ -75,21 +82,32 @@ export class Analytics {
   }
 
   private submit(method: string, type: string, data: Object): Observable<any> {
-    let o = Observable.create((observer: Observer<any>) => {
-      data['hitCallback'] = () => {
-        observer.next('');
-        observer.complete();
-      };
-      this.analytics(method, type, data);
+    let o: Observable<any> = Observable.create((observer: Observer<any>) => {
+      /* Common methodology for closing out */
+      let done = false;
+      let complete = (val) => {
+        if (!done) {
+          done = true;
+          observer.next(val);
+          observer.complete();
+        }
+      }
+
+      /* Create the correct callback channel */
+      data['hitCallback'] = ((val = '') => complete(val));
+
+      /* Backup callback channel (Issue #49) */
+      setTimeout(() => complete(''), 250);
+
+      /* Invoke the Analytics Call! */
+      this.analytics.call(method, type, data);
     });
 
-    /* Issue #49 - In some cases, we don't get analytics callbacks fire after 250ms ALWAYS */
-    let timer = Observable.timer(250);
-    o = Observable.merge(o, timer);
-
-    /* It is important that at least someone subscribes or it won't actually fire */
+    /* At least one subscriber must subscribe, but we don't want to fire more than once.
+     * Enter fancy share replay for just this purpose! */
+    o = o.shareReplay();
     o.subscribe();
-
+    
     return o;
   }
 
