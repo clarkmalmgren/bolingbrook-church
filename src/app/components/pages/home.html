@@ -6,7 +6,7 @@
 
   <h2     *ngIf="!live && !!sermon">Latest Sermon</h2>
   <button *ngIf="!live && !!sermon" md-raised-button [routerLink]="['/sermons', sermon.date]">
-    {{sermon.name}}
+    {{sermon.series}}
   </button>
 
   <a *ngIf="!live" md-button routerLink="/sermons">More Sermons</a>
