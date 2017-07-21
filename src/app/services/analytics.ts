@@ -1,6 +1,7 @@
 import { Injectable }                                     from '@angular/core';
 import { Location }                                       from '@angular/common';
 import { Router, NavigationEnd, NavigationStart, Event }  from '@angular/router';
+import { Env }                                            from './env';
 import { Observable, Observer }                           from './observable';
 
 /* Make ga typesafe, sortof */
@@ -20,8 +21,9 @@ export class Analytics {
   private analytics: GoogleAnalyticsWrapper;
 
   constructor(
-    private router: Router,
-    private location: Location
+    private env: Env,
+    private location: Location,
+    private router: Router
   ) { }
 
   init(analytics: GoogleAnalyticsWrapper = new GoogleAnalyticsWrapper()): void {
@@ -37,6 +39,7 @@ export class Analytics {
     });
 
     this.timing('angular', 'init', performance.now());
+    this.analytics.call('set', 'dimension1', this.env.version);
   }
 
   pageview(route: string): void {
