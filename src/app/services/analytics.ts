@@ -7,12 +7,18 @@ import { Observable, Observer }                           from './observable';
 /* Make ga typesafe, sortof */
 declare var ga: Function;
 
+export class GoogleAnalyticsWrapper {
+  get call(): Function {
+    return ga;
+  }
+}
+
 @Injectable()
 export class Analytics {
 
   private navStartedAt: number = 0;
   private currentRoute: string;
-  private analytics;
+  private analytics: GoogleAnalyticsWrapper;
 
   constructor(
     private router: Router,
@@ -20,7 +26,7 @@ export class Analytics {
     private env: Env
   ) { }
 
-  init(analytics: Function = ga): void {
+  init(analytics: GoogleAnalyticsWrapper = new GoogleAnalyticsWrapper()): void {
     this.analytics = analytics;
 
     this.router.events.subscribe((event: Event) => {
@@ -37,8 +43,8 @@ export class Analytics {
 
   pageview(route: string): void {
     if (this.currentRoute != route) {
-      this.analytics('set', 'page', route);
-      this.analytics('send', 'pageview');
+      this.analytics.call('set', 'page', route);
+      this.analytics.call('send', 'pageview');
 
       if (this.currentRoute == null) {
         this.timing('pageview', 'init', performance.now());
@@ -76,16 +82,25 @@ export class Analytics {
 
   private submit(method: string, type: string, data: Object): Observable<any> {
     let o = Observable.create((observer: Observer<any>) => {
-      data['hitCallback'] = () => {
-        observer.next('');
-        observer.complete();
-      };
-      this.analytics(method, type, data);
-    });
+      /* Common methodology for closing out */
+      let done = false;
+      let complete = () => {
+        if (!done) {
+          done = true;
+          observer.next('');
+          observer.complete();
+        }
+      }
 
-    /* Issue #49 - In some cases, we don't get analytics callbacks fire after 250ms ALWAYS */
-    let timer = Observable.timer(250);
-    o = Observable.merge(o, timer);
+      /* Create the correct callback channel */
+      data['hitCallback'] = (() => complete());
+
+      /* Backup callback channel (Issue #49) */
+      setTimeout(() => complete(), 250);
+
+      /* Invoke the Analytics Call! */
+      this.analytics.call(method, type, data);
+    });
 
     /* It is important that at least someone subscribes or it won't actually fire */
     o.subscribe();

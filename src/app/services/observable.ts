@@ -6,6 +6,7 @@ export { Subscription } from 'rxjs/Subscription';
 import                     'rxjs/add/observable/empty';
 import                     'rxjs/add/observable/from';
 import                     'rxjs/add/observable/fromPromise';
+import                     'rxjs/add/observable/interval';
 import                     'rxjs/add/observable/merge';
 import                     'rxjs/add/observable/throw';
 import                     'rxjs/add/observable/timer';

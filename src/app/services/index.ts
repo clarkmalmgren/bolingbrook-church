@@ -8,6 +8,7 @@ import { Observable, Subscription }                       from './observable';
 import { SeriesImageForm, SeriesImageService }            from './series.service';
 import { SermonService, Sermon }                          from './sermon.service';
 import { FeatureToggles, TogglesService }                 from './toggles.service';
+import { YoutubeService, VideoState }                     from './youtube.service';
 
 export const SERVICES = [
   Analytics,
@@ -18,8 +19,9 @@ export const SERVICES = [
   FirebaseService,
   SeriesImageService,
   SermonService,
+  Storage,
   TogglesService,
-  Storage
+  YoutubeService
 ];
 
 export {
@@ -30,15 +32,17 @@ export {
   ConnectionService,
   Database,
   Env,
+  FeatureToggles,
   FirebaseService,
   GlobalErrorHandler,
-  SermonService,
   Observable,
-  Subscription,
   SeriesImageForm,
   SeriesImageService,
   Sermon,
+  SermonService,
   Storage,
-  FeatureToggles,
-  TogglesService
+  Subscription,
+  TogglesService,
+  VideoState,
+  YoutubeService
 };
