@@ -1,7 +1,6 @@
 import { Injectable }                                     from '@angular/core';
 import { Location }                                       from '@angular/common';
 import { Router, NavigationEnd, NavigationStart, Event }  from '@angular/router';
-import { Env }                                            from './env';
 import { Observable, Observer }                           from './observable';
 
 /* Make ga typesafe, sortof */
@@ -22,8 +21,7 @@ export class Analytics {
 
   constructor(
     private router: Router,
-    private location: Location,
-    private env: Env
+    private location: Location
   ) { }
 
   init(analytics: GoogleAnalyticsWrapper = new GoogleAnalyticsWrapper()): void {
@@ -81,30 +79,32 @@ export class Analytics {
   }
 
   private submit(method: string, type: string, data: Object): Observable<any> {
-    let o = Observable.create((observer: Observer<any>) => {
+    let o: Observable<any> = Observable.create((observer: Observer<any>) => {
       /* Common methodology for closing out */
       let done = false;
-      let complete = () => {
+      let complete = (val) => {
         if (!done) {
           done = true;
-          observer.next('');
+          observer.next(val);
           observer.complete();
         }
       }
 
       /* Create the correct callback channel */
-      data['hitCallback'] = (() => complete());
+      data['hitCallback'] = ((val = '') => complete(val));
 
       /* Backup callback channel (Issue #49) */
-      setTimeout(() => complete(), 250);
+      setTimeout(() => complete(''), 250);
 
       /* Invoke the Analytics Call! */
       this.analytics.call(method, type, data);
     });
 
-    /* It is important that at least someone subscribes or it won't actually fire */
+    /* At least one subscriber must subscribe, but we don't want to fire more than once.
+     * Enter fancy share replay for just this purpose! */
+    o = o.shareReplay();
     o.subscribe();
-
+    
     return o;
   }
 
