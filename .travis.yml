@@ -1,19 +1,16 @@
 language: node_js
 node_js:
-  - '6'
+  - 'node'
 before_script:
   - npm install -g @angular/cli
 before_deploy:
   - node pre-deploy.js
 deploy:
-  provider: s3
-  access_key_id: AKIAIZDDX4H2KE25SXLA
-  secret_access_key:
-    secure: u7AUJrJR0vBOfXOzVi37sLDDkbNqJBusMN673qFX2b/A65g+gG0YTslpK/4mi4oc4WsnKIJ/36Chb479EWIVC6OluN0z/rGxHRSqybiRUl3HHnu9nVOoOsS3j/r+Dk0WCMo8nhsRB503yAbQOiahgP17rzWPTiFtH9N22FpySw1wAz3sXA4GK6q2q0/pkKnhusVBbnEV/vVzpdinZr6lKaNOy31f29lIYP/XDLGb0nk0Du1JEQDlTGiMVTbmaHSep72Iq+WyjP9mC+oHKTWbLQGvnRKsqXC3qTTehWzKRaS8SkhenreT4WufPpo110xJcpRHfIHdzuP3NyT/3qZm1B1m1Qt13QYXIxjcr1kHZiPsjk53plnH9GSIBZONM4RaZbMFs/NuiSnIMrG+WWopAz/LgCYoFUc3xu9R5U7PfyJbNZtwzPZIZjDi7c0MdjUMN/+GV8urG1CgNlmfNzeJ/LCJNppvobC4IghESlzPdg612+2M1gmhjNJPnwbCd0CAb4GdNfSep+TqcK6fgi7Ajf2YgDeaPHKNKe+53DfiQx8FTyr8w5KngwEaLRaLapojNxm74FCLDH5pq22g9XBgpolO4J8PlOyV9N+r5eXenQVb0AoqIfOeVpm3Yr/C01J1lZ+ArQTgx37xO9LE+sKv2AfIQ69WWqbhBrUvn21A3qs=
-  bucket: bolingbrook-church-dev
+  provider: releases
+  api_key:
+    secure: wp0qvTH64CQrjYlso42DsOUT9FaSjK0T5VHtPquesnPgg+JNGxK9tn7jQxWlMMzibwQ5+JjOdUcH+imiL7rm0yiPwrT9yqHn/7o6F67D3OGTEMxfsTyCUgRHUJWsf0ats1RTlwCnOucz55t0fP8stmRV6zl5qSxskD1W0D8lC5cfGjeEemUi0St0cDsFwPNwVCxi04dflbWi++F7rWBzeeyuhtMNUtED4lMR0/bb+E9hcI6dVvsCO1Pi+yjcsTuFtPYgvBgYPLvn5UtvEo1XiMQHBgbVTNyoCjR6mFJvfAnzjMC5/fDKiLQvBnpf2t7t2uW5aiRL5xuBNI9Hc9oIAZZM7fO8sGwj+gAiRHY81S1m8twnNwOBcjqBxDPKLzz0UYce4AznvFRk2+nSdrGK8j9B63rNjmE3BJ1P3K5EIv/krAebqBLtnezl4oJTha4ZEHCfHhFx4lBFIFfc/UKfCzS/VMUDBSyYcVXINACwaQAk70v5liuaKSaj1Umly6DinfPdTOUPA8O/pCsuHx98HNzV5rc7RO134V6BPu5FaT575m9Rrr0zOhExVeawWKQwfj99L4aW2COvO7G2ycD9cF6y1oJRHQPDatvM/iEo+fg3x+M8CeSS6/7xYF5w+e9wLEIo52e4tyJAnCrp0gjePwp6iVPPCT1opkybAb9GloE=
+  file: release.tar.gz
   skip_cleanup: true
-  acl: public_read
-  local_dir: deploy
-  upload-dir: deployments
   on:
+    repo: clarkmalmgren/bolingbrook-church
     tags: true
