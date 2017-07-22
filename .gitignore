@@ -3,7 +3,7 @@
 # compiled output
 /dist
 /tmp
-/deploy
+/release.tar.gz
 
 # dependencies
 /node_modules

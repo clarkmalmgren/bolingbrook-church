@@ -1,16 +1,11 @@
-var pkg = require('./package.json'),
-    ncp = require('ncp').ncp,
-    fs  = require('fs');
+const targz = require('tar.gz'),
+      fs    = require('fs');
 
-var target = 'deploy/' + pkg.version;
+let tarball = targz({}, { fromBase: true });
+let read = tarball.createReadStream('dist');
+let write = fs.createWriteStream('release.tar.gz');
 
-fs.mkdirSync('deploy');
-fs.mkdirSync(target);
-
-ncp('dist', target, function(err) {
-  if (err) {
-    throw new Error(err);
-  }
-
-  console.log('Created ' + target)
+read.pipe(write);
+read.on('end', () => {
+  console.log('Done Creating Stream!');
 });
