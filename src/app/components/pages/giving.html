@@ -2,6 +2,49 @@
   <h2>Giving</h2>
 </sda-header>
 <main>
+  <section>
+    <div class="content">
+      <h2 class="giving-header">WAYS TO GIVE</h2>
+
+      <div class="giving-list">
+
+        <a class="giving-list-item" (click)="showEnvelope()">
+          <button md-fab>
+            <md-icon>mail_icon</md-icon>
+          </button>
+          <h3>ENVELOPE</h3>
+          <span>cash or check</span>
+        </a>
+
+        <a class="giving-list-item" href="https://www.adventistgiving.org/?OrgID=ANF4BV" (click)="give('adventist')">
+          <button md-fab>
+            <md-icon>computer</md-icon>
+          </button>
+          <h3>ONLINE</h3>
+          <span>Adventist Giving</span>
+        </a>
+
+        <a class="giving-list-item" href="http://www.easytithe.com/dl/?uid=boli301244t7" (click)="give('easy')">
+          <button md-fab>
+            <md-icon>computer</md-icon>
+          </button>
+          <h3>ONLINE</h3>
+          <span>Easy Tithe</span>
+        </a>
+
+        <a class="giving-list-item" href="tel:6302464885">
+          <button md-fab>
+            <md-icon>phone_iphone</md-icon>
+          </button>
+          <h3>TEXT AMOUNT TO</h3>
+          <span>630-246-4885</span>
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
   <section class="white">
     <div class="content">
       <h3>Your Generosity is Making a Difference.</h3>
@@ -11,16 +54,6 @@
         generosity. At Bolingbrook Church, we want to make acting on your generosity rather simple.
       </p>
       
-      <a md-raised-button class="center" href="http://www.easytithe.com/dl/?uid=boli301244t7" (click)="give()">Give Online</a>
-    </div>
-  </section>
-
-  <section>
-    <banner image="/assets/giving/giving2-e1443270113333.jpg">
-      &nbsp;
-    </banner>
-
-    <div class="content">
       <h3>Tithing is the beginning of giving</h3>
       
       <p>
@@ -33,16 +66,7 @@
       <p>
         Moreover, our tithe helps support the global mission of the Seventh Day Adventist church and its Pastors.
       </p>
-      
-      <a md-raised-button class="center" href="http://www.easytithe.com/dl/?uid=boli301244t7" (click)="give()">Give Online</a>
-    </div>
-  </section>
 
-  <section class="white">
-    <banner image="/assets/giving/Untitled-1.png">
-      &nbsp;
-    </banner>
-    <div class="content">
       <h3>Your Offering Helps Create Spaces for the People God misses the Most.</h3>
       
       <p>
@@ -50,16 +74,7 @@
         in the lives of so many we serve on a weekly basis. Your offering makes our vision possible to see God work through
         a variety of spaces to reach the ones God misses the most.
       </p>
-      
-      <a md-raised-button class="center" href="http://www.easytithe.com/dl/?uid=boli301244t7" (click)="give()">Give Online</a>
-    </div>
-  </section>
 
-  <section>
-    <banner image="/assets/giving/giving3-e1443209170714.jpg">
-      &nbsp;
-    </banner>
-    <div class="content">
       <h3>More Opportunities to Give</h3>
 
       <h5>Food Pantry</h5>
@@ -81,37 +96,24 @@
         Go &amp; Tell funds help the Illinois Conference plant new churches throughout Illinois and give existing churches
         like ours more resources to spread the good news of God’s love.
       </p>
-      <a md-raised-button class="center" href="http://www.easytithe.com/dl/?uid=boli301244t7" (click)="give()">Give Online</a>
-
-      <h3>More ways to Give</h3>
-
-      <h5>On Campus</h5>
-      <p>
-        You can give your gifts in person using cash or check.
-      </p>
-
-      <h5>Online Giving</h5>
-      <p>
-        With just a click you are able to schedule your giving, review your history, make pledges, update your contact information,
-        and much more.
-      </p>
-
-      <a md-raised-button class="center" href="http://www.easytithe.com/dl/?uid=boli301244t7" (click)="give()">Give Online</a>
-
-      <h5>Text</h5>
-      <p>
-        Text the amount of your gift to <a href="tel:6302464885" class="tel">630-246-4885</a>
-      </p>
-
-      <h5>Mail</h5>
-      <p>
-        You can always mail a check to our church offices:
-      </p>
-      <p class="address">
-        Bolingbrook Church
-        301 E Boughton Rd
-        Bolingbrook IL 60440
-      </p>
     </div>
   </section>
 </main>
+
+
+<div class="envelope" [class.visible]="envelopeShown" (click)="hideEnvelope()">
+  <div class="content">
+    <button md-mini-fab (click)="hideEnvelope()">
+      <md-icon>close</md-icon>
+    </button>
+    <h3>Mail</h3>
+    <p>
+      You can always mail a check to our church offices:
+    </p>
+    <p class="address">
+      Bolingbrook Church
+      301 E Boughton Rd
+      Bolingbrook IL 60440
+    </p>
+  </div>
+</div>
