@@ -8,6 +8,7 @@ module.exports = function (config) {
     plugins: [
       require('karma-jasmine'),
       require('karma-nyan-reporter'),
+      require('karma-mocha-reporter'),
       require('karma-chrome-launcher'),
       require('karma-phantomjs-launcher'),
       require('karma-coverage-istanbul-reporter'),
