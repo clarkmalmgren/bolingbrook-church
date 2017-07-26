@@ -3,6 +3,11 @@ node_js:
   - 'node'
 before_script:
   - npm install -g @angular/cli
+script:
+  - ng build -prod
+  - ng test --browsers=PhantomJS --reporters=progress,coverage-istanbul --single-run --code-coverage
+after_success:
+  - ./node_modules/coveralls/bin/coveralls.js < coverage/lcov.info
 before_deploy:
   - node pre-deploy.js
 deploy:
