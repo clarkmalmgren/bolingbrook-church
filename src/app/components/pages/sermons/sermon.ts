@@ -74,7 +74,7 @@ export class SermonComponent extends Autoclean implements OnInit {
 
     /* Record Analytics when Playing */
     this.autoclean(
-      Observable.interval(15000)
+      Observable.interval(60000)
         .subscribe(() => {
           if (this.videoState == VideoState.PLAYING) {
             this.analytics.event(this.live ? 'Live Sermon' : 'Sermon', 'Playing', this.sermon.youtube);
