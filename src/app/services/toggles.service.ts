@@ -23,7 +23,7 @@ export class TogglesService {
         .map((toggles: FeatureToggles) => {
           this.toggles = toggles;
           return toggles;
-        })
+        });
     }
   }
 }

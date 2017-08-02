@@ -1,8 +1,11 @@
-import { Header }               from './header';
-import { Footer }               from './footer';
+import { FooterComponent }      from './footer';
+import { HeaderComponent }      from './header';
 import { SermonListComponent }  from './sermon-list';
-import { UStream }              from './ustream';
+import { UStreamComponent }     from './ustream';
 
 export const ORGANISMS = [
-  Header, Footer, SermonListComponent, UStream
+  FooterComponent,
+  HeaderComponent,
+  SermonListComponent,
+  UStreamComponent
 ];

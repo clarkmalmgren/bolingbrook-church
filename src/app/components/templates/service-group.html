@@ -1,6 +1,6 @@
-<sda-header [image]="hero_ref" shade="0.4" relativeHeight="0.4">
+<bc-header [image]="hero_ref" shade="0.4" relativeHeight="0.4">
   <h1>{{ title }}</h1>
-</sda-header>
+</bc-header>
 <main>
   <section class="white">
     <div class="content">
@@ -85,9 +85,9 @@
                    [(ngModel)]="interests[key]">{{ types[key].name }}</md-checkbox>
 
       <div class="submit-wrapper">
-        <observable-button (sda-click)="submit()" [disabled]="!request.valid">
+        <bc-observable-button (bcOnClick)="submit()" [disabled]="!request.valid">
           Submit
-        </observable-button>
+        </bc-observable-button>
       </div>
 
     </form>

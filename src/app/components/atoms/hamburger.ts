@@ -1,21 +1,21 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'hamburger',
+  selector: 'bc-hamburger',
   templateUrl: './hamburger.html',
   styleUrls: [ './hamburger.scss' ],
 })
-export class Hamburger {
+export class HamburgerComponent {
 
   @Output('activeChange')
-  change = new EventEmitter<boolean>(false);
-  
+  activeChange = new EventEmitter<boolean>(false);
+
   @Input('active')
   active: boolean = false;
 
   handleClick() {
     this.active = !this.active;
-    this.change.emit(this.active);
+    this.activeChange.emit(this.active);
   }
 }
 

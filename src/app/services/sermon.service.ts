@@ -4,8 +4,6 @@ import { Observable }         from './observable';
 import * as moment            from 'moment';
 import                             'moment-timezone';
 
-type map = { [key: string]: any };
-
 export interface Sermon {
   date: string;
   series: string;
@@ -26,11 +24,11 @@ export class SermonService {
   ) {}
 
   private clean<T>(source: T): T {
-    let cleaned = {} as T;
+    const cleaned = {} as T;
 
     Object.keys(source)
       .forEach(k => {
-        if (typeof source[k] != 'undefined') {
+        if (typeof source[k] !== 'undefined') {
           cleaned[k] = source[k];
         }
       });
@@ -57,10 +55,10 @@ export class SermonService {
   next(): Observable<Sermon> {
     return this.filter(false)
       .map(sermons => {
-        if (sermons.length == 0) {
-          throw new Error("No Sermons Found");
+        if (sermons.length === 0) {
+          throw new Error('No Sermons Found');
         }
-        
+
         return sermons[sermons.length - 1];
       });
   }
@@ -77,13 +75,13 @@ export class SermonService {
   }
 
   filter(past: boolean): Observable<Sermon[]> {
-    let threshold = this.liveThreshold();
+    const threshold = this.liveThreshold();
     return this.all()
       .map((sermons) => {
         return sermons.filter(s => {
-          let date = moment.tz(s.date, "America/Chicago").add(12, 'hours')
-          return (date.isBefore(threshold) == past);
-        })
+          const date = moment.tz(s.date, 'America/Chicago').add(12, 'hours');
+          return (date.isBefore(threshold) === past);
+        });
       });
   }
 

@@ -1,7 +1,7 @@
-import { Hamburger }          from './hamburger';
-import { ObservableButton }   from './observable-button';
+import { HamburgerComponent }         from './hamburger';
+import { ObservableButtonComponent }  from './observable-button';
 
 export const ATOMS = [
-  Hamburger,
-  ObservableButton
+  HamburgerComponent,
+  ObservableButtonComponent
 ];

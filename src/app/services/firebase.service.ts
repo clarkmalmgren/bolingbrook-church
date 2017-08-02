@@ -5,13 +5,13 @@ import { Observable, Observer } from './observable';
 
 @Injectable()
 export class FirebaseService {
-  
+
   fb = firebase;
   initialized = false;
   private _storage: firebase.storage.Storage;
   private _database: firebase.database.Database;
   private _user: firebase.User;
-  
+
   constructor(private env: Env) {}
 
   private init(): Observable<firebase.User> {
@@ -41,7 +41,7 @@ export class FirebaseService {
   public auth(): Observable<any> {
     this.init();
 
-    let provider = new firebase.auth.GoogleAuthProvider();
+    const provider = new firebase.auth.GoogleAuthProvider();
     provider.addScope('profile');
     provider.addScope('email');
 
@@ -81,7 +81,7 @@ export class Storage {
 
   upload(path: string, file: File): Observable<any> {
     if (!path || path.length < 1) {
-      return Observable.throw(new Error("No uploading to root!"));
+      return Observable.throw(new Error('No uploading to root!'));
     }
 
     return observe(this.fb.storage.ref(path).put(file));
@@ -101,7 +101,7 @@ export class Database {
     return observe(this.fb.database.ref(path).once('value'))
       .map((snap: firebase.database.DataSnapshot) => snap.val());
   }
-  
+
   watch(path: string): Observable<any> {
     return Observable
       .create((observer: Observer<any>) => {
@@ -127,7 +127,7 @@ export class Database {
     return Object.keys(data)
       .sort()
       .map((key) => {
-        let d = data[key];
+        const d = data[key];
         if (idKey) {
           d[idKey] = key;
         }
@@ -145,6 +145,6 @@ function observe<T>(promise: firebase.Promise<any>): Observable<any> {
       })
       .catch((err) => {
         observer.error(err);
-      })
+      });
   });
 }

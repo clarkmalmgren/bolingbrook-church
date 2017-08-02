@@ -25,8 +25,8 @@ describe('GoogleAnalyticsWrapper', () => {
 
   it('should wrap GA', () => {
     window['ga'] = 'faceoff';
-    let gaw = new GoogleAnalyticsWrapper();
-    expect(gaw.call).to.equal('faceoff')
+    const gaw = new GoogleAnalyticsWrapper();
+    expect(gaw.call).to.equal('faceoff');
   });
 
 });
@@ -36,18 +36,18 @@ describe('Analytics', () => {
   describe('init()', () => {
 
     it('should call global ga by default', () => {
-      let a = new Analytics(undefined, undefined, undefined);
-      expect(() => { a.init() }).to.throw();
+      const a = new Analytics(undefined, undefined, undefined);
+      expect(() => { a.init(); }).to.throw();
     });
 
     it('should init angular performance', () => {
-      let subscribe = sinon.spy();
-      let router = <Router><any> { events: { subscribe: subscribe } };
-      let ga = sinon.spy();
-      let gaw = new MockGoogleAnalyticsWrapper(ga);
-      let env = { version: '3.3.3' } as Env;
+      const subscribe = sinon.spy();
+      const router = <Router><any> { events: { subscribe: subscribe } };
+      const ga = sinon.spy();
+      const gaw = new MockGoogleAnalyticsWrapper(ga);
+      const env = { version: '3.3.3' } as Env;
 
-      let a = new Analytics(env, undefined, router);
+      const a = new Analytics(env, undefined, router);
 
       a.init(gaw);
 
@@ -58,16 +58,16 @@ describe('Analytics', () => {
 
     it('event callbacks should work correctly', () => {
       let subscription: (event: Event) => void;
-      let subscribe = sinon.stub().callsFake((fn) => { subscription = fn; });
+      const subscribe = sinon.stub().callsFake((fn) => { subscription = fn; });
 
-      let router = <Router><any> { events: { subscribe: subscribe } };
-      let ga = sinon.spy();
-      let gaw = new MockGoogleAnalyticsWrapper(ga);
-      let env = { version: '3.3.3' } as Env;
+      const router = <Router><any> { events: { subscribe: subscribe } };
+      const ga = sinon.spy();
+      const gaw = new MockGoogleAnalyticsWrapper(ga);
+      const env = { version: '3.3.3' } as Env;
 
-      let location = <Location><any> { path: sinon.stub().returns('') };
+      const location = <Location><any> { path: sinon.stub().returns('') };
 
-      let a = new Analytics(env, location, router);
+      const a = new Analytics(env, location, router);
 
       a.init(gaw);
 
@@ -95,13 +95,13 @@ describe('Analytics', () => {
 
   describe('pageview()', () => {
     it('should report correct events per lifecycle', () => {
-      let subscribe = sinon.spy();
-      let router = <Router><any> { events: { subscribe: subscribe } };
-      let ga = sinon.spy();
-      let gaw = new MockGoogleAnalyticsWrapper(ga);
-      let env = { version: '3.3.3' } as Env;
+      const subscribe = sinon.spy();
+      const router = <Router><any> { events: { subscribe: subscribe } };
+      const ga = sinon.spy();
+      const gaw = new MockGoogleAnalyticsWrapper(ga);
+      const env = { version: '3.3.3' } as Env;
 
-      let a = new Analytics(env, undefined, router);
+      const a = new Analytics(env, undefined, router);
 
       a.init(gaw);
 
@@ -134,13 +134,13 @@ describe('Analytics', () => {
 
   describe('event()', () => {
     it('should work like a champ', async(() => {
-      let subscribe = sinon.spy();
-      let router = <Router><any> { events: { subscribe: subscribe } };
-      let ga = sinon.spy();
-      let gaw = new MockGoogleAnalyticsWrapper(ga);
-      let env = { version: '3.3.3' } as Env;
+      const subscribe = sinon.spy();
+      const router = <Router><any> { events: { subscribe: subscribe } };
+      const ga = sinon.spy();
+      const gaw = new MockGoogleAnalyticsWrapper(ga);
+      const env = { version: '3.3.3' } as Env;
 
-      let a = new Analytics(env, undefined, router);
+      const a = new Analytics(env, undefined, router);
 
       a.init(gaw);
       ga.reset();
@@ -162,13 +162,13 @@ describe('Analytics', () => {
 
   describe('exception()', () => {
     it('should work like a champ', async(() => {
-      let subscribe = sinon.spy();
-      let router = <Router><any> { events: { subscribe: subscribe } };
-      let ga = sinon.spy();
-      let gaw = new MockGoogleAnalyticsWrapper(ga);
-      let env = { version: '3.3.3' } as Env;
+      const subscribe = sinon.spy();
+      const router = <Router><any> { events: { subscribe: subscribe } };
+      const ga = sinon.spy();
+      const gaw = new MockGoogleAnalyticsWrapper(ga);
+      const env = { version: '3.3.3' } as Env;
 
-      let a = new Analytics(env, undefined, router);
+      const a = new Analytics(env, undefined, router);
 
       a.init(gaw);
       ga.reset();

@@ -1,17 +1,15 @@
-
-
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from '../../services';
 
 @Component({
-  selector: 'observable-button',
+  selector: 'bc-observable-button',
   templateUrl: './observable-button.html',
   styleUrls: [ './observable-button.scss' ],
 })
-export class ObservableButton {
+export class ObservableButtonComponent {
 
-  @Input('disabled') isDisabled: boolean = false;
-  @Output('sda-click') click = new EventEmitter<() => void>(false);
+  @Input() disabled: boolean = false;
+  @Output() bcOnClick = new EventEmitter<() => void>(false);
   loading: boolean = false;
 
   handleClick() {
@@ -20,7 +18,7 @@ export class ObservableButton {
     }
 
     this.loading = true;
-    this.click.emit(() => {
+    this.bcOnClick.emit(() => {
       this.loading = false;
     });
   }

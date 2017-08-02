@@ -23,13 +23,13 @@ const TYPES: { [key: string]: ServiceSubtype } = {
       therefore they require the highest level of commitment to our values, our mission, and our vision.
     `
   }
-}
+};
 
 @Component({
   templateUrl: '../../templates/service-group.html',
   styleUrls: [ '../../templates/service-group.scss' ]
 })
-export class Ask extends ServiceGroup {
+export class AskComponent extends ServiceGroup {
 
   constructor(
     service: ConnectionService,

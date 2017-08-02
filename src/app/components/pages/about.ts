@@ -4,7 +4,7 @@ import { Analytics }    from '../../services';
 @Component({
   templateUrl: './about.html'
 })
-export class About {
+export class AboutComponent {
 
   constructor(
     private analytics: Analytics

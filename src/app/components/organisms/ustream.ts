@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'ustream',
+  selector: 'bc-ustream',
   templateUrl: './ustream.html',
   styleUrls: ['./ustream.scss']
 })
-export class UStream {
+export class UStreamComponent {
 }

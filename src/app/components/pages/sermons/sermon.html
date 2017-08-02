@@ -1,4 +1,4 @@
-<sda-header></sda-header>
+<bc-header></bc-header>
 <main>
   <section class="video">
     <iframe *ngIf="showYoutube"
@@ -10,7 +10,7 @@
             allowfullscreen="">
     </iframe>
 
-    <ustream *ngIf="showUstream"></ustream>
+    <bc-ustream *ngIf="showUstream"></bc-ustream>
 
     <div class="data" *ngIf="sermon">
       <div *ngIf="sermon.image" class="icon" [style.background-image]="icon"></div>
@@ -34,6 +34,6 @@
   <section class="more">
     <h3>More Sermons</h3>
 
-    <sermon-list></sermon-list>
+    <bc-sermon-list></bc-sermon-list>
   </section>
 </main>

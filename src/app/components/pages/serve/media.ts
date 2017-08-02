@@ -33,13 +33,13 @@ const TYPES: { [key: string]: ServiceSubtype } = {
       the world wide web. 
     `
   }
-}
+};
 
 @Component({
   templateUrl: '../../templates/service-group.html',
   styleUrls: [ '../../templates/service-group.scss' ]
 })
-export class Media extends ServiceGroup {
+export class MediaComponent extends ServiceGroup {
 
   constructor(
     service: ConnectionService,

@@ -43,7 +43,7 @@ export class Analytics {
   }
 
   pageview(route: string): void {
-    if (this.currentRoute != route) {
+    if (this.currentRoute !== route) {
       this.analytics.call('set', 'page', route);
       this.analytics.call('send', 'pageview');
 
@@ -85,13 +85,13 @@ export class Analytics {
     let o: Observable<any> = Observable.create((observer: Observer<any>) => {
       /* Common methodology for closing out */
       let done = false;
-      let complete = (val) => {
+      const complete = (val) => {
         if (!done) {
           done = true;
           observer.next(val);
           observer.complete();
         }
-      }
+      };
 
       /* Create the correct callback channel */
       data['hitCallback'] = ((val = '') => complete(val));
@@ -107,9 +107,7 @@ export class Analytics {
      * Enter fancy share replay for just this purpose! */
     o = o.shareReplay();
     o.subscribe();
-    
+
     return o;
   }
-
-
 }

@@ -1,10 +1,14 @@
-import { Router }                                                       from '@angular/router';
-import { ConnectionRequest, ConnectionService, Observable, Analytics }  from '../../services';
-
+import { Router } from '@angular/router';
+import {
+  Analytics,
+  ConnectionRequest,
+  ConnectionService,
+  Observable
+} from '../../services';
 
 export interface ServiceSubtype {
-  name: string,
-  description: string
+  name: string;
+  description: string;
 }
 
 export abstract class ServiceGroup {
@@ -35,7 +39,7 @@ export abstract class ServiceGroup {
 
   submit(): Observable<any> {
     this.request.interests = Object.keys(this.interests).map(i => this.types[i].name);
-    let o = this.service.submit(this.request)
+    const o = this.service.submit(this.request)
       .flatMap(() => { return this.analytics.event('form', 'submit', this.title); })
       .catch((err) => { return this.analytics.exception(err); });
 
