@@ -35,7 +35,8 @@ export class ConnectComponent {
     this.request.interests = Object.keys(this.interests).map(i => this.types[i]);
     const o = this.service.submit(this.request)
       .flatMap(() => { return this.analytics.event('form', 'submit', 'connect'); })
-      .catch((err) => { return this.analytics.exception(err); });
+      .catch((err) => { return this.analytics.exception(err); })
+      .shareReplay();
 
     o.subscribe(() => {
       this.router.navigate([ '/thank-you' ]);
