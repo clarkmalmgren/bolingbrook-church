@@ -3,17 +3,17 @@ import { SermonService, Sermon }    from '../../../services';
 
 @Component({
   template: `
-    <sda-header image="/assets/messages.png" relativeHeight="0.4" shade="0.4">
+    <bc-header image="/assets/messages.png" relativeHeight="0.4" shade="0.4">
       <h2>Sermons</h2>
-    </sda-header>
+    </bc-header>
     <main>
       <section class="white">
-        <sermon-list></sermon-list>
+        <bc-sermon-list></bc-sermon-list>
       </section>
     </main>
   `
 })
-export class SermonList implements OnInit {
+export class SermonListComponent implements OnInit {
 
   sermons: Sermon[];
 

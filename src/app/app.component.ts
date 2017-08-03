@@ -3,7 +3,7 @@ import { Router, NavigationEnd }  from '@angular/router';
 import { Analytics }              from './services';
 
 @Component({
-  selector: 'bolingbrook-church',
+  selector: 'bc-app',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })

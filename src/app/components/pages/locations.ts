@@ -9,7 +9,7 @@ const office_query  = 'place_id:ChIJsWqLHlBaDogRzwidXU9DMnk';
   templateUrl: './locations.html',
   styleUrls: [ './locations.scss' ]
 })
-export class Locations implements OnInit {
+export class LocationsComponent implements OnInit {
 
   service_ref: SafeResourceUrl;
   office_ref: SafeResourceUrl;

@@ -5,7 +5,7 @@ import { Analytics }    from '../../services';
   templateUrl: './giving.html',
   styleUrls: [ './giving.scss' ]
 })
-export class Giving {
+export class GivingComponent {
 
   envelopeShown: boolean = false;
 
@@ -16,7 +16,7 @@ export class Giving {
   give(type: string): boolean {
     this.analytics.event('nav', 'leave', 'donate')
       .subscribe(() => {
-        location.href = (type == 'easy') ?
+        location.href = (type === 'easy') ?
                           'http://www.easytithe.com/dl/?uid=boli301244t7' :
                           'https://www.adventistgiving.org/?OrgID=ANF4BV';
       });
@@ -31,5 +31,5 @@ export class Giving {
   hideEnvelope() {
     this.envelopeShown = false;
   }
-  
+
 }

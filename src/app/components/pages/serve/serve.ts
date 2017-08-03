@@ -5,7 +5,7 @@ import { Env }          from '../../../services';
   templateUrl: './serve.html',
   styleUrls: [ './serve.scss' ]
 })
-export class Serve {
+export class ServeComponent {
 
   get mobile(): boolean {
     return window.innerWidth < 830;

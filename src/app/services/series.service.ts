@@ -3,8 +3,6 @@ import { DomSanitizer, SafeResourceUrl, SafeStyle } from '@angular/platform-brow
 import { Database, Storage }                        from './firebase.service';
 import { Observable }                               from './observable';
 
-type map = { [key: string]: any };
-
 export interface SeriesImageForm {
   name: string;
   url?: SafeResourceUrl;
@@ -36,10 +34,10 @@ export class SeriesImageService {
 
   saveSeriesImage(form: SeriesImageForm): Observable<any> {
     if (!this.isValid(form.name)) {
-      throw new Error("Invalid Resource Name");
+      throw new Error('Invalid Resource Name');
     }
 
-    let path = `/series/${form.name}`;
+    const path = `/series/${form.name}`;
     return this.store.upload(path, form.file)
       .flatMap(() => {
         return this.db.put(`/data/series/${form.name}`, '0');
@@ -64,7 +62,7 @@ export class SeriesImageService {
             name: name,
             url: this.sanatizer.bypassSecurityTrustResourceUrl(url),
             style: this.sanatizer.bypassSecurityTrustStyle(`url(${url})`)
-          } as SeriesImageForm });
+          } as SeriesImageForm; });
       })
       .toArray();
   }

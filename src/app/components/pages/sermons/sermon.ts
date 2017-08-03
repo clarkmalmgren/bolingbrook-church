@@ -40,7 +40,7 @@ export class SermonComponent extends Autoclean implements OnInit {
     private service: SermonService,
     private youtubeService: YoutubeService
   ) {
-    super()
+    super();
   }
 
   get showYoutube() {
@@ -76,16 +76,16 @@ export class SermonComponent extends Autoclean implements OnInit {
     this.autoclean(
       Observable.interval(60000)
         .subscribe(() => {
-          if (this.videoState == VideoState.PLAYING) {
+          if (this.videoState === VideoState.PLAYING) {
             this.analytics.event(this.live ? 'Live Sermon' : 'Sermon', 'Playing', this.sermon.youtube);
           }
         }));
 
     this.activatedRoute.params
       .flatMap((params) => {
-        let id = params['sermon'];
+        const id = params['sermon'];
 
-        if (id == 'live') {
+        if (id === 'live') {
           this.live = true;
           return this.service.next();
         } else {
@@ -95,13 +95,13 @@ export class SermonComponent extends Autoclean implements OnInit {
       })
       .subscribe(sermon => {
         this.sermon = sermon;
-        let url = `https://www.youtube.com/embed/${sermon.youtube}?enablejsapi=1`;
+        const url = `https://www.youtube.com/embed/${sermon.youtube}?enablejsapi=1`;
         this.youtube_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
         this.error = false;
 
         if (sermon.image) {
           this.imageService.getSeriesImageStyle(sermon.image)
-            .subscribe(style => { this.icon = style });
+            .subscribe(style => { this.icon = style; });
         }
       }, (err) => {
         console.error(err);

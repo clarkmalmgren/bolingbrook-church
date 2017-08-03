@@ -4,7 +4,7 @@ import { Meta }               from '@angular/platform-browser';
 @Component({
   templateUrl: './not-found.html'
 })
-export class NotFound implements OnInit {
+export class NotFoundComponent implements OnInit {
 
   constructor(private meta: Meta) {}
 

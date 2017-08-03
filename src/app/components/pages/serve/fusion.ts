@@ -20,13 +20,13 @@ const TYPES: { [key: string]: ServiceSubtype } = {
       Greeters are driven to make others feel the love that Jesus has for them the minute they walk through our doors.
     `
   }
-}
+};
 
 @Component({
   templateUrl: '../../templates/service-group.html',
   styleUrls: [ '../../templates/service-group.scss' ]
 })
-export class Fusion extends ServiceGroup {
+export class FusionComponent extends ServiceGroup {
 
   constructor(
     service: ConnectionService,

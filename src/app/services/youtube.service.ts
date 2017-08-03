@@ -6,11 +6,10 @@ declare namespace YT {
   class Player {
     constructor(
       name: string | Element,
-      options?: {
-
-      }
+      options?: { }
     );
   }
+
 }
 
 export enum VideoState {
@@ -42,9 +41,9 @@ export class YoutubeService {
           observer.complete();
         });
 
-        let tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        let firstScriptTag = document.getElementsByTagName('script')[0];
+        const tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        const firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
       });
 
@@ -54,13 +53,13 @@ export class YoutubeService {
 
   private getElement(id: string): Observable<Element> {
     return Observable.create((observer: Observer<Element>) => {
-      let find = () => {
-        let e = document.getElementById(id);
+      const find = () => {
+        const e = document.getElementById(id);
         if (e) {
           observer.next(e);
           observer.complete();
         } else {
-          setTimeout(() => { find() }, 100);
+          setTimeout(() => { find(); }, 100);
         }
       };
 
@@ -79,6 +78,6 @@ export class YoutubeService {
             }
           });
         });
-      })
+      });
   }
 }

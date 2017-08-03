@@ -6,11 +6,11 @@ class Social {
 }
 
 @Component({
-  selector: 'sda-footer',
+  selector: 'bc-footer',
   templateUrl: './footer.html',
   styleUrls: [ './footer.scss' ]
 })
-export class Footer {
+export class FooterComponent {
   constructor(
     private env: Env
   ) {}

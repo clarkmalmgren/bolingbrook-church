@@ -7,7 +7,7 @@ import { Secured }                                                          from
   templateUrl: './series.html',
   styleUrls: [ './series.scss' ]
 })
-export class SeriesComponent extends Secured {
+export class SeriesComponent extends Secured implements OnInit {
 
   series: SeriesImageForm[] = [];
 

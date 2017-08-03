@@ -4,11 +4,11 @@ import { Sermon, SeriesImageService } from '../../services';
 
 
 @Component({
-  selector: 'sermon-card',
+  selector: 'bc-sermon-card',
   templateUrl: './sermon-card.html',
   styleUrls: [ './sermon-card.scss' ]
 })
-export class SermonCard implements OnInit {
+export class SermonCardComponent implements OnInit {
 
   @Input()
   sermon: Sermon;
@@ -22,12 +22,12 @@ export class SermonCard implements OnInit {
   ngOnInit() {
     if (this.sermon.image) {
       this.service.getSeriesImageStyle(this.sermon.image)
-        .subscribe(style => { this.icon = style });
+        .subscribe(style => { this.icon = style; });
     }
   }
-  
+
   get image(): string {
-    return `https://i.ytimg.com/vi/${this.sermon.youtube}/hqdefault.jpg`
+    return `https://i.ytimg.com/vi/${this.sermon.youtube}/hqdefault.jpg`;
   }
 
   get route(): string[] {

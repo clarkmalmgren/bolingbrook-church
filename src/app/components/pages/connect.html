@@ -1,4 +1,4 @@
-<sda-header></sda-header>
+<bc-header></bc-header>
 <main>
   <section class="white">
     <form>
@@ -90,9 +90,9 @@
                     [(ngModel)]="interests[key]">{{ types[key] }}</md-checkbox>
 
         <div class="submit-wrapper">
-          <observable-button (sda-click)="submit()" [disabled]="!request.valid">
+          <bc-observable-button (bcOnClick)="submit()" [disabled]="!request.valid">
             Submit
-          </observable-button>
+          </bc-observable-button>
         </div>
       </div>
 

@@ -1,7 +1,5 @@
-import { Banner }     from './banner';
-import { SermonCard } from './sermon-card'
+import { SermonCardComponent } from './sermon-card';
 
 export const MOLECULES = [
-  Banner,
-  SermonCard
+  SermonCardComponent
 ];

@@ -31,7 +31,7 @@ export class BackgroundVideoService {
 
   private getStorageSource(path: string, type: string): Observable<BackgroundVideoSource> {
       return this.storage.getUrl(path)
-        .map(url => { return { url: this.sanitize(url), type: type } });
+        .map(url => { return { url: this.sanitize(url), type: type }; });
   }
 
   private getBundledSources(): Observable<BackgroundVideoSource[]> {

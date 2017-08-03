@@ -6,7 +6,7 @@ import { FirebaseService }    from '../../../services/firebase.service';
   templateUrl: './login.html',
   styleUrls: [ './login.scss' ]
 })
-export class Login implements OnInit {
+export class LoginComponent implements OnInit {
 
   constructor(
     private firebase: FirebaseService,
@@ -16,7 +16,7 @@ export class Login implements OnInit {
   ngOnInit(): void {
     this.firebase.auth().subscribe((user: any) => {
       this.router.navigate(['/admin']);
-      console.log("User: ", user);
-    })
+      console.log(`User: ${user}`);
+    });
   }
 }

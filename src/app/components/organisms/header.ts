@@ -1,11 +1,11 @@
 import { Component, Input, HostListener, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'sda-header',
+  selector: 'bc-header',
   templateUrl: './header.html',
   styleUrls: ['./header.scss']
 })
-export class Header implements OnInit {
+export class HeaderComponent implements OnInit {
 
   _window: Window = window;
 
@@ -41,10 +41,10 @@ export class Header implements OnInit {
     this.mobile = (window.innerWidth < 450);
 
     if (this.video || this.image) {
-      let px = window.innerHeight * this.relativeHeight + this.absoluteHeight;
+      const px = window.innerHeight * this.relativeHeight + this.absoluteHeight;
       this.assetHeight = `${px}px`;
     } else {
       this.assetHeight = '0px';
-    } 
+    }
   }
 }

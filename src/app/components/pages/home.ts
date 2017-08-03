@@ -8,12 +8,12 @@ import                                                                          
   templateUrl: './home.html',
   styleUrls: [ './home.scss' ]
 })
-export class Home implements OnInit {
+export class HomeComponent implements OnInit {
 
   streaming: boolean = false;
   sources: BackgroundVideoSource[];
   sermon: Sermon;
-  
+
   constructor(
     private service: BackgroundVideoService,
     private sermons: SermonService
@@ -24,14 +24,14 @@ export class Home implements OnInit {
       .subscribe((sources) => {
         this.sources = sources;
       });
-    
+
     this.sermons.latest()
-      .subscribe((sermon) => { this.sermon = sermon });
+      .subscribe((sermon) => { this.sermon = sermon; });
   }
 
   get live(): boolean {
-    let now = moment.tz('America/Chicago');
-    return (now.day() == 6 && now.hour() >= 11 &&  now.hour() < 14);
+    const now = moment.tz('America/Chicago');
+    return (now.day() === 6 && now.hour() >= 11 &&  now.hour() < 14);
   }
 
 }

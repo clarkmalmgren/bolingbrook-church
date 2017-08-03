@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { SermonService, Sermon }  from '../../services';
 
 @Component({
-  selector: 'sermon-list',
+  selector: 'bc-sermon-list',
   templateUrl: './sermon-list.html',
   styleUrls: [ './sermon-list.scss' ]
 })

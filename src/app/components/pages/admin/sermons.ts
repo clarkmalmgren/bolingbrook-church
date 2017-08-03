@@ -2,7 +2,7 @@ import { OnInit, Component }  from '@angular/core';
 import { Router }             from '@angular/router';
 import { Secured }            from './secured';
 
-import { 
+import {
   FirebaseService,
   Observable,
   SeriesImageForm,
@@ -15,7 +15,7 @@ import {
   templateUrl: './sermons.html',
   styleUrls: [ './sermons.scss' ]
 })
-export class Sermons extends Secured {
+export class SermonsComponent extends Secured implements OnInit {
 
   sermons: Sermon[];
   images: SeriesImageForm[];
@@ -30,7 +30,6 @@ export class Sermons extends Secured {
   }
 
   ngOnInit() {
-    let id: string;
     this.secure().subscribe(() => {
       this.service.all()
         .subscribe(sermons => {
@@ -40,7 +39,7 @@ export class Sermons extends Secured {
       this.imageService.listSeries()
         .subscribe(images => {
           this.images = images;
-        })
+        });
     });
   }
 

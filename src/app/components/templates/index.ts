@@ -1,5 +1,5 @@
-import { Frame }                from './frame';
+import { FrameComponent } from './frame';
 
 export const TEMPLATES = [
-  Frame
+  FrameComponent
 ];
