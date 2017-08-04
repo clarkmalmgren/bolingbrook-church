@@ -13,7 +13,7 @@ This project is built on [Angular](https://angular.io) using [Angular CLI](https
 This website is built and managed with services offered by amazing companies who help to make open source projects
 like this one possible. Big thanks to the following:
 
-![browserstack](https://rawgit.com/clarkmalmgren/bolingbrook-church/master/docs/browserstack.svg)
+![browserstack](https://github.com/clarkmalmgren/bolingbrook-church/raw/master/docs/browserstack.png)
 Browserstack allows me to do testing on multiple browsers and OS setups that I don't have access to. This allows
 me to support a user base that has a much broader technology base than I could ever personally achieve.
 
