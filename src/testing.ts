@@ -42,6 +42,10 @@ export class MockBuilder<T> {
   }
 }
 
+export function callCount(spy: any) {
+  return spy.callCount;
+}
+
 export class Loop {
   static times(n: number) {
     return new Loop(n);

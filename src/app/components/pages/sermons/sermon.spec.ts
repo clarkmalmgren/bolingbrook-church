@@ -1,6 +1,6 @@
-import { expect, sinon, async, MockBuilder }  from 'testing';
-import { ActivatedRoute }                     from '@angular/router';
-import { SermonComponent }                    from './sermon';
+import { expect, sinon, async, MockBuilder, callCount } from 'testing';
+import { ActivatedRoute }                               from '@angular/router';
+import { SermonComponent }                              from './sermon';
 import {
   Analytics,
   FeatureToggles,
@@ -49,15 +49,16 @@ describe('SermonComponent', () => {
                           .build();
 
       const sermon = new SermonComponent(activatedRoute, analytics, null, null, null, null, youtubeService);
-      sermon.analyticsInterval = 10;
+      sermon.analyticsInterval = 5;
       sermon.videoState = VideoState.PLAYING;
       sermon.sermon = { youtube: 'Jesus4Life' } as Sermon;
 
       sermon.ngOnInit();
 
       window.setTimeout(() => {
-        expect(analytics.event).to.have.been.calledTwice
-          .and.to.have.been.calledWith('Sermon', 'Playing', 'Jesus4Life');
+        /* Giving a reasonable range to account for annoying time based testing */
+        expect(callCount(analytics.event)).to.be.at.least(2).and.at.most(6);
+        expect(analytics.event).to.have.been.calledWith('Sermon', 'Playing', 'Jesus4Life');
         sermon.ngOnDestroy();
       }, 25);
     }));
@@ -76,7 +77,7 @@ describe('SermonComponent', () => {
                           .build();
 
       const sermon = new SermonComponent(activatedRoute, analytics, null, null, null, null, youtubeService);
-      sermon.analyticsInterval = 10;
+      sermon.analyticsInterval = 5;
       sermon.videoState = VideoState.PLAYING;
       sermon.live = true;
       sermon.sermon = { youtube: 'Jesus4Life' } as Sermon;
@@ -110,7 +111,7 @@ describe('SermonComponent', () => {
                             .build();
 
         const sermon = new SermonComponent(activatedRoute, analytics, null, null, null, null, youtubeService);
-        sermon.analyticsInterval = 10;
+        sermon.analyticsInterval = 5;
         sermon.videoState = state;
         sermon.sermon = { youtube: 'Jesus4Life' } as Sermon;
 
