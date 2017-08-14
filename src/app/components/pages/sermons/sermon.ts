@@ -10,7 +10,6 @@ import {
   SeriesImageService,
   Sermon,
   SermonService,
-  TogglesService,
   VideoState,
   YoutubeService
 } from '../../../services';
@@ -27,13 +26,12 @@ export class SermonComponent extends Autoclean implements OnInit {
   youtube_url: SafeResourceUrl;
   icon: SafeStyle;
 
-  youtube_live: boolean = false;
   videoState: VideoState = VideoState.UNSTARTED;
+  analyticsInterval: number = 60000;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private analytics: Analytics,
-    private featureToggles: TogglesService,
     private imageService: SeriesImageService,
     private meta: Meta,
     private sanitizer: DomSanitizer,
@@ -43,27 +41,7 @@ export class SermonComponent extends Autoclean implements OnInit {
     super();
   }
 
-  get showYoutube() {
-    if (this.live) {
-      return this.youtube_live;
-    } else {
-      return this.sermon && this.youtube_url;
-    }
-  }
-
-  get showUstream(): boolean {
-    return this.live && !this.youtube_live;
-  }
-
   ngOnInit() {
-    /* Subscribe to Toggles */
-    this.autoclean(
-      this.featureToggles
-        .getToggles()
-        .subscribe((toggles) => {
-          this.youtube_live = toggles.youtube_live;
-        }));
-
     /* Subscribe to Video State Change Events */
     this.autoclean(
       this.youtubeService
@@ -74,7 +52,7 @@ export class SermonComponent extends Autoclean implements OnInit {
 
     /* Record Analytics when Playing */
     this.autoclean(
-      Observable.interval(60000)
+      Observable.interval(this.analyticsInterval)
         .subscribe(() => {
           if (this.videoState === VideoState.PLAYING) {
             this.analytics.event(this.live ? 'Live Sermon' : 'Sermon', 'Playing', this.sermon.youtube);

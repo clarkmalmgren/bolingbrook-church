@@ -1,5 +1,5 @@
 import { OnDestroy }    from '@angular/core';
-import { Subscription } from '../../services';
+import { Subscription } from 'app/services';
 
 export abstract class Autoclean implements OnDestroy {
 
