@@ -41,7 +41,8 @@ export abstract class ServiceGroup {
     this.request.interests = Object.keys(this.interests).map(i => this.types[i].name);
     const o = this.service.submit(this.request)
       .flatMap(() => { return this.analytics.event('form', 'submit', this.title); })
-      .catch((err) => { return this.analytics.exception(err); });
+      .catch((err) => { return this.analytics.exception(err); })
+      .shareReplay();
 
     o.subscribe(() => {
       this.router.navigate([ '/thank-you' ]);

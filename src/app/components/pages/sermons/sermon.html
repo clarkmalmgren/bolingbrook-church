@@ -1,7 +1,7 @@
 <bc-header></bc-header>
 <main>
   <section class="video">
-    <iframe *ngIf="showYoutube"
+    <iframe *ngIf="youtube_url"
             id="sermonVideo"
             [src]="youtube_url"
             frameborder="0"
@@ -9,8 +9,6 @@
             mozallowfullscreen=""
             allowfullscreen="">
     </iframe>
-
-    <bc-ustream *ngIf="showUstream"></bc-ustream>
 
     <div class="data" *ngIf="sermon">
       <div *ngIf="sermon.image" class="icon" [style.background-image]="icon"></div>

@@ -15,7 +15,7 @@ export class MockBuilder<T> {
     return new MockBuilder<T>();
   }
 
-  with(key: string, fn: Function): MockBuilder<T> {
+  with(key: string, fn: any): MockBuilder<T> {
     const keys = key.split('.');
     let o = this.object;
 
@@ -39,6 +39,24 @@ export class MockBuilder<T> {
 
   build(): T {
     return this.object as T;
+  }
+}
+
+export function callCount(spy: any) {
+  return spy.callCount;
+}
+
+export class Loop {
+  static times(n: number) {
+    return new Loop(n);
+  }
+
+  constructor(private times: number) {}
+
+  do(fn: Function): void {
+    for (let i = 0; i < this.times; i++) {
+      fn();
+    }
   }
 }
 
