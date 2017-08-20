@@ -26,6 +26,7 @@ export class GivingComponent {
   showEnvelope() {
     this.analytics.event('overlay', 'show', 'giving envelope');
     this.envelopeShown = true;
+    return false;
   }
 
   hideEnvelope() {
