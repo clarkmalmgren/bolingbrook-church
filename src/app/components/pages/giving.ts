@@ -8,6 +8,7 @@ import { Analytics }    from '../../services';
 export class GivingComponent {
 
   envelopeShown: boolean = false;
+  _location: Location = location;
 
   constructor(
     private analytics: Analytics
@@ -16,7 +17,7 @@ export class GivingComponent {
   give(type: string): boolean {
     this.analytics.event('nav', 'leave', 'donate')
       .subscribe(() => {
-        location.href = (type === 'easy') ?
+        this._location.href = (type === 'easy') ?
                           'http://www.easytithe.com/dl/?uid=boli301244t7' :
                           'https://www.adventistgiving.org/?OrgID=ANF4BV';
       });
