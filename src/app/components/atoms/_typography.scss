@@ -29,32 +29,32 @@ h1 {
   margin: 1em 0 .5em;
 
   @include break(medium)  { font-size: 55px; }
-  @include break(small)   { font-size: 50px; }
-  @include break(tiny)    { font-size: 45px; }
+  @include break(small)   { font-size: 46px; }
+  @include break(tiny)    { font-size: 44px; }
   @include break(micro)   { font-size: 40px; }
 }
 
 h2 {
-  font-size: 55px;
-  @include break(small)   { font-size: 50px; }
-  @include break(tiny)    { font-size: 45px; }
-  @include break(micro)   { font-size: 40px; }
+  font-size: 48px;
+  @include break(small)   { font-size: 42px; }
+  @include break(tiny)    { font-size: 36px; }
+  @include break(micro)   { font-size: 32px; }
 }
 
 h3 {
-  font-size: 45px;
-  @include break(small)   { font-size: 38px; }
-  @include break(tiny)    { font-size: 34px; }
-  @include break(micro)   { font-size: 30px; }
+  font-size: 32px;
+  @include break(small)   { font-size: 30px; }
+  @include break(tiny)    { font-size: 28px; }
+  @include break(micro)   { font-size: 26px; }
 }
 
 h4 {
-  font-size: 32px;
-  @include break(small)   { font-size: 28px; }
-  @include break(tiny)    { font-size: 26px; }
-  @include break(micro)   { font-size: 24px; }
+  font-size: 29px;
+  @include break(small)   { font-size: 26px; }
+  @include break(tiny)    { font-size: 24px; }
+  @include break(micro)   { font-size: 22px; }
 }
 
 h5 {
-  font-size: 25px;
+  font-size: 22px;
 }
