@@ -1,0 +1,26 @@
+@import '../atoms/colors';
+
+main section div.content {
+  h2 {
+    color: black;
+  }
+
+  p {
+    color: $color-grey-000;
+  }
+
+  &.values {
+    h4 {
+      margin-bottom: 0;
+    }
+    p.value {
+      margin-top: 0;
+    }
+
+    a {
+      margin-top: 20px;
+      color: black;
+      background-color: white;
+    }
+  }
+}

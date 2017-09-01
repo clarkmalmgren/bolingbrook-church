@@ -21,6 +21,7 @@ a[href], button, .mat-button, .mat-raised-button, .mat-icon-button {
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Khand', sans-serif;
   font-weight: 400;
+  margin: .5em 0;
 }
 
 h1 {
@@ -28,39 +29,32 @@ h1 {
   margin: 1em 0 .5em;
 
   @include break(medium)  { font-size: 55px; }
-  @include break(small)   { font-size: 45px; }
-  @include break(tiny)    { font-size: 38px; }
-  @include break(micro)   { font-size: 36px; }
+  @include break(small)   { font-size: 46px; }
+  @include break(tiny)    { font-size: 44px; }
+  @include break(micro)   { font-size: 40px; }
 }
 
 h2 {
-  font-size: 41px;
-  margin: 1em 0 .5em;
-
-  @include break(small)   { font-size: 37px; }
-  @include break(tiny)    { font-size: 29px; }
-  @include break(micro)   { font-size: 27px; }
+  font-size: 48px;
+  @include break(small)   { font-size: 42px; }
+  @include break(tiny)    { font-size: 36px; }
+  @include break(micro)   { font-size: 32px; }
 }
 
 h3 {
-  font-size: 27px;
-  margin: 1em 0 .5em;
-
-  @include break(small)   { font-size: 23px; }
-  @include break(tiny)    { font-size: 23px; }
-  @include break(micro)   { font-size: 21px; }
+  font-size: 32px;
+  @include break(small)   { font-size: 30px; }
+  @include break(tiny)    { font-size: 28px; }
+  @include break(micro)   { font-size: 26px; }
 }
 
 h4 {
-  font-size: 19px;
-  margin: 1em 0 .5em;
-
-  @include break(small)   { font-size: 17px; }
-  @include break(tiny)    { font-size: 17px; }
-  @include break(micro)   { font-size: 16px; }
+  font-size: 29px;
+  @include break(small)   { font-size: 26px; }
+  @include break(tiny)    { font-size: 24px; }
+  @include break(micro)   { font-size: 22px; }
 }
 
 h5 {
-  font-size: 16px;
-  margin: 1em 0 .5em;
+  font-size: 22px;
 }

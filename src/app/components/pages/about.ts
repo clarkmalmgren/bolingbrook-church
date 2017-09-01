@@ -2,7 +2,8 @@ import { Component }    from '@angular/core';
 import { Analytics }    from '../../services';
 
 @Component({
-  templateUrl: './about.html'
+  templateUrl: './about.html',
+  styleUrls: [ './about.scss' ]
 })
 export class AboutComponent {
 
