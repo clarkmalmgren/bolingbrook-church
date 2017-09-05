@@ -2,6 +2,7 @@ import { Component, NgModule }                      from '@angular/core';
 import { RouterModule, Routes }                     from '@angular/router';
 
 import { AboutComponent }                           from './about';
+import { BeliefsComponent }                         from './beliefs';
 import { ConnectComponent }                         from './connect';
 import { EventsComponent }                          from './events';
 import { FriendsAndFamilyComponent }                from './friends-and-family';
@@ -19,6 +20,7 @@ import { SERVE_ROUTES, SERVE_COMPONENTS }           from './serve/';
 const routes: Routes = [
   { path: '',                       component: HomeComponent },
   { path: 'about',                  component: AboutComponent },
+  { path: 'beliefs',                component: BeliefsComponent },
   { path: 'connect',                component: ConnectComponent },
   { path: 'events',                 component: EventsComponent },
   { path: 'friends-family-sabbath', component: FriendsAndFamilyComponent },
@@ -40,6 +42,7 @@ export class AppRoutingModule {}
 
 export const PAGE_COMPONENTS = [
   AboutComponent,
+  BeliefsComponent,
   ConnectComponent,
   EventsComponent,
   FriendsAndFamilyComponent,

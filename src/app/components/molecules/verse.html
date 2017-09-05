@@ -1,0 +1,13 @@
+<a class="verse" md-button [href]="url" (click)="show()">
+  {{ book }} {{ chapter }} : {{ verses }}
+</a>
+
+<div class="shadow" *ngIf="shown" (click)="hide()">
+  <div class="content">
+    <button md-mini-fab (click)="hide()">
+      <md-icon>close</md-icon>
+    </button>
+    <iframe [src]="safeResourceUrl" [style.height]="frameHeight" frameborder="0"></iframe>
+    <a md-button class="outlink" [href]="url" (click)="launch()">See on YouVersion (bible.com)</a>
+  </div>
+</div>
