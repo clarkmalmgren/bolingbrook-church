@@ -1,0 +1,44 @@
+a.verse {
+  width: 200px;
+  text-align: left;
+}
+
+div.shadow {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1000;
+  background-color: rgba(black, 0.6);
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  div.content {
+    background-color: white;
+    position: relative;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    width: 450px;
+
+    button {
+      position: absolute;
+      background-color: white;
+      color: black;
+      right: 10px;
+      top: 10px;
+    }
+
+    iframe {
+      width: 100%;
+    }
+
+    a.outlink {
+      float: right;
+      font-style: italic;
+    }
+  }
+}

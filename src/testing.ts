@@ -11,7 +11,7 @@ const expect = chai.expect;
 export class MockBuilder<T> {
   private object = {};
 
-  static of<T>(clazz: new (...argv) => T): MockBuilder<T> {
+  static of<T>(clazz?: new (...argv) => T): MockBuilder<T> {
     return new MockBuilder<T>();
   }
 
