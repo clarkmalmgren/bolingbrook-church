@@ -8,6 +8,7 @@ import {
   SeriesImageService,
   Sermon,
   SermonService,
+  TogglesService,
   VideoState,
   YoutubeService
 } from 'app/services';
@@ -25,7 +26,11 @@ describe('SermonComponent', () => {
                                 .with('params', Observable.empty())
                                 .build();
 
-      const sermon = new SermonComponent(activatedRoute, null, null, null, null, null, youtubeService);
+      const togglesService = MockBuilder.of(TogglesService)
+                                .withStub('getToggles', Observable.empty())
+                                .build();
+
+      const sermon = new SermonComponent(activatedRoute, null, null, null, null, null, togglesService, youtubeService);
 
       sermon.ngOnInit();
 
@@ -48,7 +53,11 @@ describe('SermonComponent', () => {
                           .withSpy('event')
                           .build();
 
-      const sermon = new SermonComponent(activatedRoute, analytics, null, null, null, null, youtubeService);
+      const togglesService = MockBuilder.of(TogglesService)
+                                .withStub('getToggles', Observable.empty())
+                                .build();
+
+      const sermon = new SermonComponent(activatedRoute, analytics, null, null, null, null, togglesService, youtubeService);
       sermon.analyticsInterval = 5;
       sermon.videoState = VideoState.PLAYING;
       sermon.sermon = { youtube: 'Jesus4Life' } as Sermon;
@@ -76,7 +85,10 @@ describe('SermonComponent', () => {
                           .withSpy('event')
                           .build();
 
-      const sermon = new SermonComponent(activatedRoute, analytics, null, null, null, null, youtubeService);
+      const togglesService = MockBuilder.of(TogglesService)
+                              .withStub('getToggles', Observable.empty())
+                              .build();
+      const sermon = new SermonComponent(activatedRoute, analytics, null, null, null, null, togglesService, youtubeService);
       sermon.analyticsInterval = 5;
       sermon.videoState = VideoState.PLAYING;
       sermon.live = true;
@@ -110,7 +122,11 @@ describe('SermonComponent', () => {
                             .withSpy('event')
                             .build();
 
-        const sermon = new SermonComponent(activatedRoute, analytics, null, null, null, null, youtubeService);
+      const togglesService = MockBuilder.of(TogglesService)
+                                .withStub('getToggles', Observable.empty())
+                                .build();
+
+        const sermon = new SermonComponent(activatedRoute, analytics, null, null, null, null, togglesService, youtubeService);
         sermon.analyticsInterval = 5;
         sermon.videoState = state;
         sermon.sermon = { youtube: 'Jesus4Life' } as Sermon;
@@ -123,9 +139,6 @@ describe('SermonComponent', () => {
         }, 25);
       }));
     });
-
-
-
 
   });
 

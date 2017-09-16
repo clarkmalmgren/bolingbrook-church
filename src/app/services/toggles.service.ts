@@ -4,6 +4,7 @@ import { Observable }         from './observable';
 
 export interface FeatureToggles {
   youtube_live: boolean;
+  youtube_live_issues: boolean;
 }
 
 @Injectable()

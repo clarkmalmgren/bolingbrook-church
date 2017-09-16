@@ -10,6 +10,7 @@ import {
   SeriesImageService,
   Sermon,
   SermonService,
+  TogglesService,
   VideoState,
   YoutubeService
 } from '../../../services';
@@ -24,6 +25,7 @@ export class SermonComponent extends Autoclean implements OnInit {
   sermon: Sermon;
   live: boolean = false;
   youtube_url: SafeResourceUrl;
+  youtube_live_issues: boolean = false;
   icon: SafeStyle;
 
   videoState: VideoState = VideoState.UNSTARTED;
@@ -36,6 +38,7 @@ export class SermonComponent extends Autoclean implements OnInit {
     private meta: Meta,
     private sanitizer: DomSanitizer,
     private service: SermonService,
+    private togglesService: TogglesService,
     private youtubeService: YoutubeService
   ) {
     super();
@@ -48,6 +51,13 @@ export class SermonComponent extends Autoclean implements OnInit {
         .videoState('sermonVideo')
         .subscribe((state) => {
           this.videoState = state;
+        }));
+
+    /* Handle issues if youtube is having issues */
+    this.autoclean(
+      this.togglesService.getToggles()
+        .subscribe((toggles) => {
+          this.youtube_live_issues = !!toggles.youtube_live_issues;
         }));
 
     /* Record Analytics when Playing */

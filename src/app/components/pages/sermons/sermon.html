@@ -1,5 +1,13 @@
 <bc-header></bc-header>
 <main>
+  <section *ngIf="youtube_live_issues && live">
+    <h2>Experiencing Issues</h2>
+    <p>
+      Unfortunately, we are having techincal issues with our live streaming. We are working hard to address
+      the issue and will be back soon.
+    </p>
+  </section>
+
   <section class="video">
     <iframe *ngIf="youtube_url"
             id="sermonVideo"
