@@ -1,0 +1,29 @@
+@import '../atoms/breaks';
+
+@mixin sized($width) {
+  width: $width;
+  height: $width * 3 / 4;
+}
+
+div.video {
+  padding: 45px 0;
+  text-align: center;
+
+  iframe {
+    @include sized(640px);
+
+    @include break(tiny)  { @include sized(360px); }
+    @include break(micro) { @include sized(300px); }
+  }
+}
+
+a.host-card {
+  flex: 100%;
+  display: block;
+
+  img {
+    display: block;
+    max-width: 100%;
+    margin: auto;
+  }
+}
