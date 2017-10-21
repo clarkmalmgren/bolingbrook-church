@@ -36,6 +36,11 @@ export class SermonService {
     return cleaned;
   }
 
+  liveToday(date: moment.Moment = moment.tz('America/Chicago')): Observable<Boolean> {
+    const path = date.format('YYYY-MM-DD');
+    return this.db.exists(path);
+  }
+
   getSermon(date: string): Observable<Sermon> {
     return this.db.getOnce(`data/sermons/${date}`)
       .map((sermon: Sermon) => {

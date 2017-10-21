@@ -97,6 +97,11 @@ export class Database {
 
   constructor(private fb: FirebaseService) {}
 
+  exists(path: string): Observable<Boolean> {
+    return observe(this.fb.database.ref(path).once('value'))
+      .map((snap: firebase.database.DataSnapshot) => snap.exists());
+  }
+
   getOnce(path: string): Observable<any> {
     return observe(this.fb.database.ref(path).once('value'))
       .map((snap: firebase.database.DataSnapshot) => snap.val());
