@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
       .liveToday()
       .subscribe((liveToday) => {
         const now = moment.tz('America/Chicago');
-        this.live = (liveToday && now.day() === 6 && now.hour() >= 11 &&  now.hour() < 14)
+        this.live = (liveToday && now.day() === 6 && now.hour() >= 11 &&  now.hour() < 14);
       });
   }
 
