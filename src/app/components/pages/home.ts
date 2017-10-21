@@ -10,7 +10,7 @@ import                                                                          
 })
 export class HomeComponent implements OnInit {
 
-  streaming: boolean = false;
+  live: boolean = false;
   sources: BackgroundVideoSource[];
   sermon: Sermon;
 
@@ -27,11 +27,13 @@ export class HomeComponent implements OnInit {
 
     this.sermons.latest()
       .subscribe((sermon) => { this.sermon = sermon; });
-  }
 
-  get live(): boolean {
-    const now = moment.tz('America/Chicago');
-    return (now.day() === 6 && now.hour() >= 11 &&  now.hour() < 14);
+    this.sermons
+      .liveToday()
+      .subscribe((liveToday) => {
+        const now = moment.tz('America/Chicago');
+        this.live = (liveToday && now.day() === 6 && now.hour() >= 11 &&  now.hour() < 14)
+      });
   }
 
 }
