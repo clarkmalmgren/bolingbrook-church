@@ -1,6 +1,8 @@
 import { expect, sinon, async, MockBuilder }  from 'testing';
 import { HeaderComponent }                    from './header';
 
+
+/* tslint:disable no-unused-expression */
 describe('HeaderComponent', () => {
 
   describe('on init', () => {

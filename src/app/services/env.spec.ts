@@ -1,6 +1,7 @@
 import { expect, sinon, async }                           from 'testing';
 import { Env }                                            from './env';
 
+/* tslint:disable no-unused-expression */
 describe('Env', () => {
 
   it('should be preloaded with default settings', () => {

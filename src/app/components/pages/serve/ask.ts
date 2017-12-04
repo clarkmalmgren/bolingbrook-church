@@ -10,8 +10,8 @@ const TYPES: { [key: string]: ServiceSubtype } = {
       The Ask Me Anything team serve in the lobby at specific stations with clear signage that indicate they
       are the ones that can answer any question a guest may have about what’s going on that day. They are the
       people that provide guest the feeling “we are here for you.” They direct guests to restrooms, kid's
-      experiences, Student Connect events, worship experiences, and any other event happening in-between 
-      services. They also give out any brochures, posters, or prints that guests will be need for the day. 
+      experiences, Student Connect events, worship experiences, and any other event happening in-between
+      services. They also give out any brochures, posters, or prints that guests will be need for the day.
     `
   },
   next: {
@@ -19,7 +19,7 @@ const TYPES: { [key: string]: ServiceSubtype } = {
     description: `
       The Next Steps Team serve as our resource team. If a guest has a question concerning next steps, getting
       involved, or any question concerning the church as a whole, the Next Steps Team has the answers. They
-      know everything there is to know about our church and  the processes involved in getting connected, 
+      know everything there is to know about our church and  the processes involved in getting connected,
       therefore they require the highest level of commitment to our values, our mission, and our vision.
     `
   }
@@ -55,11 +55,11 @@ export class AskComponent extends ServiceGroup {
           happening that day, and the other connects the person to the next step in their journey whether
           that’s baptism or marriage care. Guests want to feel connected beyond the worship experience. Our
           What’s Next team plays a vital role in fulfilling that purpose; they are the bridge that connects
-          our guests to all our available resources and next steps. 
+          our guests to all our available resources and next steps.
         `,
         `
           We'd love to tell you more about how you can become part of the team that keeps people connected to
-          our Church . Every Saturday a new story is created about someone who took their first next step in 
+          our Church . Every Saturday a new story is created about someone who took their first next step in
           their journey in becoming the person they always knew they could be.
         `,
         `
