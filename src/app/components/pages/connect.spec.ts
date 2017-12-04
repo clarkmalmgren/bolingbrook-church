@@ -1,6 +1,6 @@
-import { expect, sinon, async, MockBuilder }  from 'testing';
-import { ConnectComponent }                   from './connect';
-import { Router }                             from '@angular/router';
+import { expect, sinon, async, MockBuilder, spyOf } from 'testing';
+import { ConnectComponent }                         from './connect';
+import { Router }                                   from '@angular/router';
 import {
   Analytics,
   ConnectionRequest,
@@ -8,6 +8,7 @@ import {
   Observable
 } from '../../services';
 
+/* tslint:disable: no-unused-expression */
 describe('ConnectComponent', () => {
 
   describe('submit', () => {
@@ -28,8 +29,9 @@ describe('ConnectComponent', () => {
 
       connect.submit()
         .subscribe(() => {
-          expect(analytics.event).to.have.been.calledOnce;
-          expect(router.navigate).to.have.been.calledOnce.and.calledWith([ '/thank-you' ]);
+          spyOf(analytics.event).calledOnce.should.be.true;
+          spyOf(router.navigate).calledOnce.should.be.true;
+          spyOf(router.navigate).calledWith([ '/thank-you' ]).should.be.true;
         });
     }));
   });

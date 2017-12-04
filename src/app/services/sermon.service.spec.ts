@@ -1,4 +1,4 @@
-import { expect, sinon, async, MockBuilder }        from 'testing';
+import { expect, sinon, async, MockBuilder, stubOf } from 'testing';
 import {
   Database,
   Storage,
@@ -6,9 +6,10 @@ import {
   SermonService,
   Observable
 } from './index';
-import * as moment                                  from 'moment';
-import                                                   'moment-timezone';
+import * as moment                                   from 'moment';
+import                                                    'moment-timezone';
 
+/* tslint:disable: no-unused-expression */
 describe('SermonService', () => {
   describe('liveToday', () => {
     it('should work', async(() => {
@@ -24,7 +25,7 @@ describe('SermonService', () => {
         .liveToday()
         .subscribe((isLive) => {
           expect(isLive).to.be.true;
-          expect(db.exists).to.have.been.calledOnce;
+          stubOf(db.exists).calledOnce.should.be.true;
         });
 
     }));

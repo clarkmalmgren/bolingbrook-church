@@ -8,86 +8,88 @@
       <div class="form-group">
         <h4>Step 1: Tell us about yourself</h4>
 
-        <md-input-container>
-          <input mdInput
+        <mat-form-field>
+          <input matInput
                 required
                 name="first_name"
                 [(ngModel)]="request.first_name"
                 placeholder="First Name" >
-        </md-input-container>
+        </mat-form-field>
 
-        <md-input-container>
-          <input mdInput
+        <mat-form-field>
+          <input matInput
                 required
                 name="last_name"
                 [(ngModel)]="request.last_name"
                 placeholder="Last Name" >
-        </md-input-container>
+        </mat-form-field>
 
-        <md-input-container>
-          <input mdInput
+        <mat-form-field>
+          <input matInput
                 name="address"
                 [(ngModel)]="request.address"
                 placeholder="Address" >
-        </md-input-container>
+        </mat-form-field>
 
 
-        <md-input-container>
-          <input mdInput
+        <mat-form-field>
+          <input matInput
                 name="city"
                 [(ngModel)]="request.city"
                 placeholder="City" >
-        </md-input-container>
+        </mat-form-field>
 
-        <md-select name="state"
-                    [(ngModel)]="request.state"
-                    placeholder="State">
-          <md-option *ngFor="let state of states" [value]="state">{{ state }}</md-option>
-        </md-select>
+        <mat-form-field>
+          <mat-select name="state"
+                      [(ngModel)]="request.state"
+                      placeholder="State">
+            <mat-option *ngFor="let state of states" [value]="state">{{ state }}</mat-option>
+          </mat-select>
+      </mat-form-field>
 
-        <md-input-container>
-          <input mdInput
+        <mat-form-field>
+          <input matInput
                 type="number"
                 min="10000"
                 max="99999"
                 name="zipcode"
                 [(ngModel)]="request.zipcode"
                 placeholder="Zipcode" >
-        </md-input-container>
+        </mat-form-field>
 
-        <md-input-container>
-          <input mdInput
+        <mat-form-field>
+          <input matInput
                 type="date"
                 name="birthday"
                 [(ngModel)]="request.birthday"
                 placeholder="Birthday" >
-        </md-input-container>
+        </mat-form-field>
 
-        <md-input-container>
-          <input mdInput
+        <mat-form-field>
+          <input matInput
                 required
                 name="phone"
                 type="tel"
                 [(ngModel)]="request.phone"
                 placeholder="Phone Number" >
-        </md-input-container>
+        </mat-form-field>
 
-        <md-input-container>
-          <input mdInput
+        <mat-form-field>
+          <input matInput
                 required
                 name="email"
                 type="email"
                 [(ngModel)]="request.email"
                 placeholder="Email Address" >
-        </md-input-container>
+        </mat-form-field>
       </div>
 
       <div class="form-group">
         <h4>Step 2. Get Involved</h4>
 
-        <md-checkbox *ngFor="let key of typeKeys"
+        <mat-checkbox *ngFor="let key of typeKeys"
                     [name]="'interests_' + key"
-                    [(ngModel)]="interests[key]">{{ types[key] }}</md-checkbox>
+                    [(ngModel)]="interests[key]">{{ types[key] }}</mat-checkbox>
 
         <div class="submit-wrapper">
           <bc-observable-button (bcOnClick)="submit()" [disabled]="!request.valid">

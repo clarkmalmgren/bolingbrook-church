@@ -9,32 +9,32 @@
       <div class="giving-list">
 
         <a class="giving-list-item" href="/giving" (click)="showEnvelope()">
-          <button md-fab>
-            <md-icon>mail_icon</md-icon>
+          <button mat-fab>
+            <mat-icon>mail_icon</mat-icon>
           </button>
           <h4>ENVELOPE</h4>
           <span>cash or check</span>
         </a>
 
         <a class="giving-list-item" href="https://www.adventistgiving.org/?OrgID=ANF4BV" (click)="give('adventist')">
-          <button md-fab>
-            <md-icon>computer</md-icon>
+          <button mat-fab>
+            <mat-icon>computer</mat-icon>
           </button>
           <h4>ONLINE</h4>
           <span>Adventist Giving</span>
         </a>
 
         <a class="giving-list-item" href="http://www.easytithe.com/dl/?uid=boli301244t7" (click)="give('easy')">
-          <button md-fab>
-            <md-icon>computer</md-icon>
+          <button mat-fab>
+            <mat-icon>computer</mat-icon>
           </button>
           <h4>ONLINE</h4>
           <span>Easy Tithe</span>
         </a>
 
         <a class="giving-list-item" href="tel:6302464885">
-          <button md-fab>
-            <md-icon>phone_iphone</md-icon>
+          <button mat-fab>
+            <mat-icon>phone_iphone</mat-icon>
           </button>
           <h4>TEXT AMOUNT TO</h4>
           <span>630-246-4885</span>
@@ -105,8 +105,8 @@
 
 <div class="envelope" [class.visible]="envelopeShown" (click)="hideEnvelope()">
   <div class="content">
-    <button md-mini-fab (click)="hideEnvelope()">
-      <md-icon>close</md-icon>
+    <button mat-mini-fab (click)="hideEnvelope()">
+      <mat-icon>close</mat-icon>
     </button>
     <h3>Mail</h3>
     <p>

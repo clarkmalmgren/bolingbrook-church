@@ -1,7 +1,8 @@
-import { expect, sinon, async, MockBuilder }  from 'testing';
-import { GivingComponent }                    from './giving';
-import { Analytics, Observable }              from 'app/services';
+import { expect, sinon, async, MockBuilder, stubOf }  from 'testing';
+import { GivingComponent }                            from './giving';
+import { Analytics, Observable }                      from 'app/services';
 
+/* tslint:disable: no-unused-expression */
 describe('GivingComponent', () => {
 
   describe('give', () => {
@@ -30,7 +31,7 @@ describe('GivingComponent', () => {
         giving._location = location;
         giving.give(type);
 
-        expect(analytics.event).to.have.been.calledWithMatch('nav');
+        stubOf(analytics.event).calledWithMatch('nav').should.be.true;
         expect(location.href).to.contain(href);
       });
     });
@@ -47,7 +48,7 @@ describe('GivingComponent', () => {
 
       expect(response).to.be.false;
       expect(giving.envelopeShown).to.be.true;
-      expect(analytics.event).to.have.been.calledWithMatch('overlay');
+      stubOf(analytics.event).calledWithMatch('overlay').should.be.true;
     });
   });
 

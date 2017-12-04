@@ -1,4 +1,4 @@
-import { expect, sinon, async }                           from 'testing';
+import { expect, sinon, async, spyOf }                    from 'testing';
 
 import { Location }                                       from '@angular/common';
 import {
@@ -21,6 +21,7 @@ class MockGoogleAnalyticsWrapper extends GoogleAnalyticsWrapper {
   }
 }
 
+/* tslint:disable: no-unused-expression */
 describe('GoogleAnalyticsWrapper', () => {
 
   it('should wrap GA', () => {
@@ -51,9 +52,9 @@ describe('Analytics', () => {
 
       a.init(gaw);
 
-      expect(ga).to.have.been.calledWith('send', 'timing');
-      expect(ga).to.have.been.calledWith('set', 'dimension1', '3.3.3');
-      expect(subscribe).to.have.been.calledOnce;
+      spyOf(ga).calledWith('send', 'timing').should.be.true;
+      spyOf(ga).calledWith('set', 'dimension1', '3.3.3').should.be.true;
+      spyOf(subscribe).calledOnce.should.be.true;
     });
 
     it('event callbacks should work correctly', () => {
@@ -71,24 +72,24 @@ describe('Analytics', () => {
 
       a.init(gaw);
 
-      expect(ga).to.have.been.calledWith('send', 'timing');
-      expect(subscribe).to.have.been.calledOnce;
+      spyOf(ga).calledWith('send', 'timing').should.be.true;
+      spyOf(subscribe).calledOnce.should.be.true;
 
       ga.reset();
 
       subscription(new NavigationStart(1, ''));
       subscription(new NavigationEnd(1, '', ''));
 
-      expect(ga).to.have.callCount(4);
-      expect(ga).to.have.been.calledWith('set', 'page', '/');
-      expect(ga).to.have.been.calledWith('send', 'pageview');
-      expect(ga).to.have.been.calledWith('send', 'timing', sinon.match({ timingCategory: 'pageview', timingVar: 'init' }));
-      expect(ga).to.have.been.calledWith('send', 'timing', sinon.match({ timingCategory: 'pageview', timingVar: 'load' }));
+      spyOf(ga).callCount.should.equal(4);
+      spyOf(ga).calledWith('set', 'page', '/').should.be.true;
+      spyOf(ga).calledWith('send', 'pageview').should.be.true;
+      spyOf(ga).calledWith('send', 'timing', sinon.match({ timingCategory: 'pageview', timingVar: 'init' })).should.be.true;
+      spyOf(ga).calledWith('send', 'timing', sinon.match({ timingCategory: 'pageview', timingVar: 'load' })).should.be.true;
 
       ga.reset();
 
       subscription(new NavigationCancel(1, '/', 'just cause'));
-      expect(ga).to.not.have.been.called;
+      spyOf(ga).called.should.be.false;
     });
 
   });
@@ -109,26 +110,26 @@ describe('Analytics', () => {
       ga.reset();
       a.pageview('/awesome');
 
-      expect(ga).to.have.callCount(4);
-      expect(ga).to.have.been.calledWith('set', 'page', '/awesome');
-      expect(ga).to.have.been.calledWith('send', 'pageview');
-      expect(ga).to.have.been.calledWith('send', 'timing', sinon.match({ timingCategory: 'pageview', timingVar: 'init' }));
-      expect(ga).to.have.been.calledWith('send', 'timing', sinon.match({ timingCategory: 'pageview', timingVar: 'load' }));
+      spyOf(ga).callCount.should.equal(4);
+      spyOf(ga).calledWith('set', 'page', '/awesome').should.be.true;
+      spyOf(ga).calledWith('send', 'pageview').should.be.true;
+      spyOf(ga).calledWith('send', 'timing', sinon.match({ timingCategory: 'pageview', timingVar: 'init' })).should.be.true;
+      spyOf(ga).calledWith('send', 'timing', sinon.match({ timingCategory: 'pageview', timingVar: 'load' })).should.be.true;
 
       /* Second new should not send init timing event */
       ga.reset();
       a.pageview('/awesome/more');
 
-      expect(ga).to.have.callCount(3);
-      expect(ga).to.have.been.calledWith('set', 'page', '/awesome/more');
-      expect(ga).to.have.been.calledWith('send', 'pageview');
-      expect(ga).to.have.been.calledWith('send', 'timing', sinon.match({ timingCategory: 'pageview', timingVar: 'load' }));
+      spyOf(ga).callCount.should.equal(3);
+      spyOf(ga).calledWith('set', 'page', '/awesome/more').should.be.true;
+      spyOf(ga).calledWith('send', 'pageview').should.be.true;
+      spyOf(ga).calledWith('send', 'timing', sinon.match({ timingCategory: 'pageview', timingVar: 'load' })).should.be.true;
 
       /* Third page is a reload and should not report */
       ga.reset();
       a.pageview('/awesome/more');
 
-      expect(ga).to.not.have.been.called;
+      spyOf(ga).called.should.be.false;
     });
   });
 
@@ -148,13 +149,13 @@ describe('Analytics', () => {
       a.event('awesome', 'pants', 'for', 1)
         .subscribe((val) => { expect(val).to.equal(''); });
 
-      expect(ga).to.have.been.calledOnce;
-      expect(ga).to.have.been.calledWith('send', 'event', sinon.match({
+      spyOf(ga).calledOnce.should.be.true;
+      spyOf(ga).calledWith('send', 'event', sinon.match({
         eventCategory: 'awesome',
         eventAction: 'pants',
         eventLabel: 'for',
         eventValue: 1
-      }));
+      })).should.be.true;
 
       ga.getCall(0).args[2].hitCallback();
     }));
@@ -176,11 +177,11 @@ describe('Analytics', () => {
       a.exception('oh noes!', true)
         .subscribe((val) => { expect(val).to.equal('got it'); });
 
-      expect(ga).to.have.been.calledOnce;
-      expect(ga).to.have.been.calledWith('send', 'exception', sinon.match({
+      spyOf(ga).calledOnce.should.be.true;
+      spyOf(ga).calledWith('send', 'exception', sinon.match({
         exDescription: 'oh noes!',
         exFatal: true
-      }));
+      })).should.be.true;
 
       ga.getCall(0).args[2].hitCallback('got it');
     }));

@@ -14,43 +14,43 @@
     <form *ngIf="sermons">
       <h4>Sermons</h4>
 
-      <md-list>
+      <mat-list>
 
-        <md-list-item *ngFor="let s of sermons; let i = index;">
-          <md-input-container>
-            <input mdInput type="date" [name]="'sermon_date_' + i" [(ngModel)]="s.date" placeholder="Date of Service">
-          </md-input-container>
-          <md-input-container>
-            <input mdInput [name]="'sermon_series_' + i" [(ngModel)]="s.series" placeholder="Series">
-          </md-input-container>
-          <md-input-container>
-            <input mdInput [name]="'sermon_speaker_' + i" [(ngModel)]="s.speaker" placeholder="Speaker">
-          </md-input-container>
+        <mat-list-item *ngFor="let s of sermons; let i = index;">
+          <mat-form-field>
+            <input matInput type="date" [name]="'sermon_date_' + i" [(ngModel)]="s.date" placeholder="Date of Service">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput [name]="'sermon_series_' + i" [(ngModel)]="s.series" placeholder="Series">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput [name]="'sermon_speaker_' + i" [(ngModel)]="s.speaker" placeholder="Speaker">
+          </mat-form-field>
 
-          <md-select placeholder="Series Image" [name]="'image_' + i" [(ngModel)]="s.image">
-            <md-option>None</md-option>
-            <md-option *ngFor="let i of images" [value]="i.name">
+          <mat-select placeholder="Series Image" [name]="'image_' + i" [(ngModel)]="s.image">
+            <mat-option>None</mat-option>
+            <mat-option *ngFor="let i of images" [value]="i.name">
               <div class="icon" [style.background-image]="i.style"></div> {{ i.name }}
-            </md-option>
-          </md-select>
+            </mat-option>
+          </mat-select>
 
-          <md-input-container>
-            <input mdInput [name]="'sermon_youtube_' + i" [(ngModel)]="s.youtube" placeholder="Youtube ID">
-          </md-input-container>
-          <button md-mini-fab class="add" (click)="saveSermon(s)">
-            <md-icon>save</md-icon>
+          <mat-form-field>
+            <input matInput [name]="'sermon_youtube_' + i" [(ngModel)]="s.youtube" placeholder="Youtube ID">
+          </mat-form-field>
+          <button mat-mini-fab class="add" (click)="saveSermon(s)">
+            <mat-icon>save</mat-icon>
           </button>
-          <button md-mini-fab (click)="removeSermon(i)">
-            <md-icon>delete</md-icon>
+          <button mat-mini-fab (click)="removeSermon(i)">
+            <mat-icon>delete</mat-icon>
           </button>
-        </md-list-item>
+        </mat-list-item>
 
-        <md-list-item class="new-sermon">
-          <button class="add" md-mini-fab (click)="addSermon()">
-            <md-icon>add</md-icon>
+        <mat-list-item class="new-sermon">
+          <button class="add" mat-mini-fab (click)="addSermon()">
+            <mat-icon>add</mat-icon>
           </button>
-        </md-list-item>
-      </md-list>
+        </mat-list-item>
+      </mat-list>
 
       <div class="submit-wrapper">
         <bc-observable-button class="save" (bcOnClick)="save()" [disabled]="!valid">Save</bc-observable-button>

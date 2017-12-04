@@ -54,7 +54,7 @@ main section {
       padding: 0;
     }
 
-    md-input-container, md-checkbox {
+    mat-form-field, mat-checkbox {
       margin: 5px;
     }
 
@@ -65,7 +65,7 @@ main section {
     }
 
     /deep/ {
-      input.md-checkbox-input {
+      input.mat-checkbox-input {
         appearance: none;
       }
 

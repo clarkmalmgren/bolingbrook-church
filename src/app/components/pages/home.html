@@ -1,15 +1,15 @@
 <bc-header [video]="sources" image="/assets/messages.png" shade="0.4">
 
-  <button *ngIf="live" class="live" md-raised-button routerLink="/sermons/live">
-    <md-icon>live_tv</md-icon> WATCH LIVE SERMON
+  <button *ngIf="live" class="live" mat-raised-button routerLink="/sermons/live">
+    <mat-icon>live_tv</mat-icon> WATCH LIVE SERMON
   </button>
 
   <h2     *ngIf="!live && !!sermon">Latest Sermon</h2>
-  <button *ngIf="!live && !!sermon" md-raised-button [routerLink]="['/sermons', sermon.date]">
+  <button *ngIf="!live && !!sermon" mat-raised-button [routerLink]="['/sermons', sermon.date]">
     {{sermon.series}}
   </button>
 
-  <a *ngIf="!live" md-button routerLink="/sermons">More Sermons</a>
+  <a *ngIf="!live" mat-button routerLink="/sermons">More Sermons</a>
 
 </bc-header>
 

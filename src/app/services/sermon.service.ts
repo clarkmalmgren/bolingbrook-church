@@ -37,8 +37,8 @@ export class SermonService {
   }
 
   liveToday(date: moment.Moment = moment.tz('America/Chicago')): Observable<Boolean> {
-    const path = date.format('YYYY-MM-DD');
-    return this.db.exists(path);
+    const dateString = date.format('YYYY-MM-DD');
+    return this.db.exists(`data/sermons/${dateString}`);
   }
 
   getSermon(date: string): Observable<Sermon> {

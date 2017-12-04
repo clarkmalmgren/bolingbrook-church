@@ -1,7 +1,7 @@
-import { expect, sinon, async, MockBuilder }  from 'testing';
-import { AppComponent }                       from './app.component';
-import { Analytics }                          from './services';
-import { Router, NavigationEnd }              from '@angular/router';
+import { expect, sinon, async, MockBuilder, spyOf } from 'testing';
+import { AppComponent }                             from './app.component';
+import { Analytics }                                from './services';
+import { Router, NavigationEnd }                    from '@angular/router';
 
 describe('AppComponent', () => {
 
@@ -18,8 +18,9 @@ describe('AppComponent', () => {
       const app = new AppComponent(analytics, router);
       app.ngOnInit();
 
-      expect(analytics.init).to.have.been.called;
-      expect(router.events.subscribe).to.have.been.called;
+      /* tslint:disable: no-unused-expression */
+      spyOf(analytics.init).called.should.be.true;
+      spyOf(router.events.subscribe).called.should.be.true;
     });
 
   });

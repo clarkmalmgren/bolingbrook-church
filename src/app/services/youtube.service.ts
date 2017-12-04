@@ -68,6 +68,7 @@ export class YoutubeService {
   }
 
   videoState(id: string): Observable<VideoState> {
+    /* tslint:disable: no-unused-expression */
     return this.loadYoutubeApi()
       .flatMap(() => this.getElement(id))
       .flatMap((element) => {

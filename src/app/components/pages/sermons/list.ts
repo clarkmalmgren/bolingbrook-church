@@ -21,6 +21,9 @@ export class SermonListComponent implements OnInit {
 
   ngOnInit() {
     this.service.complete()
-      .subscribe(sermons => { this.sermons = sermons; });
+      .subscribe(
+        sermons => { this.sermons = sermons; },
+        error => { console.error('Aww shucks', error) }
+      );
   }
 }

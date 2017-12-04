@@ -14,31 +14,31 @@
     <form>
       <h4>Series</h4>
 
-      <md-list>
+      <mat-list>
 
-        <md-list-item *ngFor="let s of series; let i = index;">
-          <md-input-container>
-            <input mdInput [name]="'series_name_' + i" [(ngModel)]="s.name" placeholder="Name" [disabled]="s.url">
-          </md-input-container>
+        <mat-list-item *ngFor="let s of series; let i = index;">
+          <mat-form-field>
+            <input matInput [name]="'series_name_' + i" [(ngModel)]="s.name" placeholder="Name" [disabled]="s.url">
+          </mat-form-field>
 
           <img *ngIf="s.url" [src]="s.url" />
 
-          <button *ngIf="!s.url" md-mini-fab class="add" (click)="imgFileInput.click()" [disabled]="!valid(s)">
-            <md-icon>file_upload</md-icon>
+          <button *ngIf="!s.url" mat-mini-fab class="add" (click)="imgFileInput.click()" [disabled]="!valid(s)">
+            <mat-icon>file_upload</mat-icon>
           </button>
           <input hidden type="file" #imgFileInput (change)="attachFile($event, s)">
           
-          <button md-mini-fab (click)="removeSeries(s)">
-            <md-icon>delete</md-icon>
+          <button mat-mini-fab (click)="removeSeries(s)">
+            <mat-icon>delete</mat-icon>
           </button>
-        </md-list-item>
+        </mat-list-item>
 
-        <md-list-item class="new-series">
-          <button class="add" md-mini-fab (click)="addSeries()">
-            <md-icon>add</md-icon>
+        <mat-list-item class="new-series">
+          <button class="add" mat-mini-fab (click)="addSeries()">
+            <mat-icon>add</mat-icon>
           </button>
-        </md-list-item>
-      </md-list>
+        </mat-list-item>
+      </mat-list>
     </form>
   </section>
 

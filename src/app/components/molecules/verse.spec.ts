@@ -1,8 +1,9 @@
-import { expect, sinon, async, MockBuilder }      from 'testing';
+import { expect, sinon, async, MockBuilder, spyOf }      from 'testing';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { VerseComponent }                         from './verse';
 import { Analytics, Observable }                  from 'app/services';
 
+/* tslint:disable: no-unused-expression */
 describe('VerseComponent', () => {
   describe('url', () => {
     it('should construct correctly', () => {
@@ -63,9 +64,9 @@ describe('VerseComponent', () => {
       verse._window = _window;
 
       expect(verse.launch()).to.be.false;
-      expect(analytics.event).to.have.been.calledOnce;
-      expect(_window.open).to.have.been.calledOnce
-        .and.calledWith('https://www.bible.com/bible/111/John.3.16.NIV', '_blank');
+      spyOf(analytics.event).calledOnce.should.be.true;
+      spyOf(_window.open).calledOnce.should.be.true
+      spyOf(_window.open).calledWith('https://www.bible.com/bible/111/John.3.16.NIV', '_blank').should.be.true;
     });
   });
 
@@ -80,7 +81,7 @@ describe('VerseComponent', () => {
 
       expect(verse.show()).to.be.false;
 
-      expect(analytics.event).to.have.been.calledOnce;
+      spyOf(analytics.event).calledOnce.should.be.true;
       expect(verse.shown).to.be.true;
     });
   });

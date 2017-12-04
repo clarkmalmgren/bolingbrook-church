@@ -55,14 +55,12 @@ export class FirebaseService {
     return this.init().map(user => !!user);
   }
 
-  get storage(): firebase.storage.Storage {
-    this.init();
-    return this._storage;
+  get storage(): Observable<firebase.storage.Storage> {
+    return this.init().map(_ => this._storage);
   }
 
-  get database(): firebase.database.Database {
-    this.init();
-    return this._database;
+  get database(): Observable<firebase.database.Database> {
+    return this.init().map(_ => this._database);
   }
 }
 
@@ -76,7 +74,8 @@ export class Storage {
       return Observable.of(undefined);
     }
 
-    return observe(this.fb.storage.ref(path).getDownloadURL());
+    return this.fb.storage
+      .flatMap(store => observe(store.ref(path).getDownloadURL()));
   }
 
   upload(path: string, file: File): Observable<any> {
@@ -84,11 +83,13 @@ export class Storage {
       return Observable.throw(new Error('No uploading to root!'));
     }
 
-    return observe(this.fb.storage.ref(path).put(file));
+    return this.fb.storage
+      .flatMap(store => observe(store.ref(path).put(file)));
   }
 
   delete(path: string): Observable<any> {
-    return observe(this.fb.storage.ref(path).delete());
+    return this.fb.storage
+      .flatMap(store => observe(store.ref(path).delete()));
   }
 }
 
@@ -98,34 +99,40 @@ export class Database {
   constructor(private fb: FirebaseService) {}
 
   exists(path: string): Observable<Boolean> {
-    return observe(this.fb.database.ref(path).once('value'))
+    return this.fb.database
+      .flatMap(db => db.ref(path).once('value'))
       .map((snap: firebase.database.DataSnapshot) => snap.exists());
   }
 
   getOnce(path: string): Observable<any> {
-    return observe(this.fb.database.ref(path).once('value'))
+    return this.fb.database
+      .flatMap(db => db.ref(path).once('value'))
       .map((snap: firebase.database.DataSnapshot) => snap.val());
   }
 
   watch(path: string): Observable<any> {
     return Observable
       .create((observer: Observer<any>) => {
-        this.fb.database.ref(path).on('value', (snap) => {
-          observer.next(snap.val());
-        });
+        this.fb.database
+          .subscribe(db => db.ref(path).on('value', (snap) => {
+            observer.next(snap.val());
+          }));
       });
   }
 
   put(path: string, value: any): Observable<any> {
-    return observe(this.fb.database.ref(path).set(value));
+    return this.fb.database
+      .flatMap(db => observe(db.ref(path).set(value)));
   }
 
   push(path: string, value: any): Observable<any> {
-    return observe(this.fb.database.ref(path).push(value));
+    return this.fb.database
+      .flatMap(db => observe(db.ref(path).push(value)));
   }
 
   delete(path: string): Observable<any> {
-    return observe(this.fb.database.ref(path).remove());
+    return this.fb.database
+      .flatMap(db => observe(db.ref(path).remove()));
   }
 
   toArray<T>(data: { [key: string]: T }, idKey?: string): T[] {
@@ -141,15 +148,17 @@ export class Database {
   }
 }
 
-function observe<T>(promise: firebase.Promise<any>): Observable<any> {
+function observe<T>(promise: PromiseLike<any>): Observable<any> {
   return Observable.create((observer: Observer<any>) => {
     promise
-      .then((val) => {
-        observer.next(val || '');
-        observer.complete();
-      })
-      .catch((err) => {
-        observer.error(err);
-      });
+      .then(
+        (val) => {
+          observer.next(val || '');
+          observer.complete();
+        },
+        (err) => {
+          observer.error(err);
+        }
+      );
   });
 }

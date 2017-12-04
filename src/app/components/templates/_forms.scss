@@ -23,23 +23,23 @@ form {
     flex: 100%;
   }
 
-  md-input-container {
+  mat-form-field {
     @include formPart();
 
     &.wide {
       flex: 100%;
     }
 
-    input[md-input] {
+    input[mat-input] {
       color: $color-black;
     }
   }
 
-  md-checkbox {
+  mat-checkbox {
     @include formPart();
   }
 
-  md-select.mat-select {
+  mat-select.mat-select {
     @include formPart();
     padding-top: 9px;
     height: 45px;

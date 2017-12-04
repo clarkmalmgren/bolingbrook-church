@@ -5,7 +5,7 @@
   to { transform: rotate(360deg); }
 }
 
-[md-raised-button] {
+[mat-raised-button] {
   font-size: 18px;
   margin-bottom: 30px;
   padding: 4px 22px;
@@ -13,7 +13,7 @@
   color: $color-white;
   transition: background-color 500ms linear;
 
-  md-icon {
+  mat-icon {
     animation: spinner 1s infinite;
     position: relative;
     top: 3px;

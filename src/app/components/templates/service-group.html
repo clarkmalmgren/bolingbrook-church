@@ -35,7 +35,7 @@
 
   <section class="white" *ngIf="signupLink">
     <div class="content">
-      <a md-raised-button class="center" [href]="signupLink" (click)="clickSignupLink()">Fill Out an Application</a>
+      <a mat-raised-button class="center" [href]="signupLink" (click)="clickSignupLink()">Fill Out an Application</a>
     </div>
   </section>
 
@@ -44,45 +44,45 @@
 
       <h3>Register Here</h3>
 
-      <md-input-container>
-        <input mdInput
+      <mat-form-field>
+        <input matInput
                required
                name="first_name"
                [(ngModel)]="request.first_name"
                placeholder="First Name" >
-      </md-input-container>
+      </mat-form-field>
 
-      <md-input-container>
-        <input mdInput
+      <mat-form-field>
+        <input matInput
                required
                name="last_name"
                [(ngModel)]="request.last_name"
                placeholder="Last Name" >
-      </md-input-container>
+      </mat-form-field>
 
-      <md-input-container>
-        <input mdInput
+      <mat-form-field>
+        <input matInput
                required
                name="phone"
                type="tel"
                [(ngModel)]="request.phone"
                placeholder="Phone Number" >
-      </md-input-container>
+      </mat-form-field>
 
-      <md-input-container>
-        <input mdInput
+      <mat-form-field>
+        <input matInput
                required
                name="email"
                type="email"
                [(ngModel)]="request.email"
                placeholder="Email Address" >
-      </md-input-container>
+      </mat-form-field>
 
       <h4>Choose a Team</h4>
 
-      <md-checkbox *ngFor="let key of typeKeys"
+      <mat-checkbox *ngFor="let key of typeKeys"
                    [name]="'interests_' + key"
-                   [(ngModel)]="interests[key]">{{ types[key].name }}</md-checkbox>
+                   [(ngModel)]="interests[key]">{{ types[key].name }}</mat-checkbox>
 
       <div class="submit-wrapper">
         <bc-observable-button (bcOnClick)="submit()" [disabled]="!request.valid">
