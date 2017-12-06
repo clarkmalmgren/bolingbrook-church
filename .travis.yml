@@ -21,6 +21,7 @@ after_success:
 
 before_deploy:
   - node docker
+  - chmod +x deploy.sh
 
 deploy:
   provider: script

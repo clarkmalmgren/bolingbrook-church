@@ -1,5 +1,7 @@
 #! /bin/bash
 
+echo "Starting Deploy Script"
+
 docker --version
 pip install --user awscli
 export PATH=$PATH:$HOME/.local/bin
