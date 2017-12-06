@@ -26,6 +26,7 @@ deploy:
   provider: script
   file: release.tar.gz
   script: deploy.sh
+  skip_cleanup: true
   on:
     repo: clarkmalmgren/bolingbrook-church
     tags: true
