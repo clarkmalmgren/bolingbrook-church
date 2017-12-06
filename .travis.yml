@@ -21,13 +21,11 @@ after_success:
 
 before_deploy:
   - node docker
-  - chmod +x deploy.sh
 
 deploy:
   provider: script
   file: release.tar.gz
-  script: deploy.sh
-  skip_cleanup: true
+  script: ./deploy.sh
   on:
     repo: clarkmalmgren/bolingbrook-church
     tags: true
