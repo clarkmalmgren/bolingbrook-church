@@ -1,18 +1,18 @@
 /* Material Dependencies */
 import {
-  MdButtonModule,
-  MdCheckboxModule,
-  MdIconModule,
-  MdInputModule,
-  MdSelectModule,
-  MdListModule,
+  MatButtonModule,
+  MatCheckboxModule,
+  MatIconModule,
+  MatInputModule,
+  MatSelectModule,
+  MatListModule,
 } from '@angular/material';
 
 export const MATERIAL_MODULES = [
-  MdButtonModule,
-  MdCheckboxModule,
-  MdIconModule,
-  MdInputModule,
-  MdSelectModule,
-  MdListModule
+  MatButtonModule,
+  MatCheckboxModule,
+  MatIconModule,
+  MatInputModule,
+  MatSelectModule,
+  MatListModule
 ];

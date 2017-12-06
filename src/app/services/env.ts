@@ -1,12 +1,12 @@
 import { Injectable }   from '@angular/core';
 import { environment }  from '../../environments/environment';
-const pkg: any = require('../../../package.json');
+const { version: appVersion } = require('../../../package.json')
 
 @Injectable()
 export class Env {
 
   env = environment;
-  nodePackage = pkg;
+  version: string = appVersion
 
   get firebaseConfig() {
     return this.env.firebaseConfig;
@@ -14,9 +14,5 @@ export class Env {
 
   get useBundledBackgroundVideo(): boolean {
     return this.env.useBundledBackgroundVideo;
-  }
-
-  get version(): string {
-    return this.nodePackage.version;
   }
 }

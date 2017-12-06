@@ -1,5 +1,5 @@
 import { Injectable }           from '@angular/core';
-import { Database }             from './firebase.service';
+import { FirebaseService }      from './firebase.service';
 import { Observable }           from './observable';
 
 export type RequestType = ('serve' | 'connect' | 'mission');
@@ -31,9 +31,11 @@ export class ConnectionRequest {
 @Injectable()
 export class ConnectionService {
 
-  constructor(private database: Database) {}
+  constructor(private firebase: FirebaseService) {}
 
   submit(request: ConnectionRequest): Observable<any> {
-    return this.database.push(`/connections/`, request);
+    return this.firebase
+      .database()
+      .flatMap(db => db.push(`/connections/`, request));
   }
 }

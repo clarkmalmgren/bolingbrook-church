@@ -1,22 +1,31 @@
 language: node_js
+
 node_js:
   - 'node'
+
+sudo: required
+
+services:
+  - docker
+
 before_script:
   - npm install -g @angular/cli
+
 script:
   - ng lint
   - ng test --browsers=PhantomJS --reporters=mocha,coverage-istanbul --single-run --code-coverage --progress=false
-  - ng build -prod --progress=false
+  - npm run build:ssr
+
 after_success:
   - ./node_modules/coveralls/bin/coveralls.js < coverage/lcov.info
+
 before_deploy:
-  - node pre-deploy.js
+  - node docker
+
 deploy:
-  provider: releases
-  api_key:
-    secure: wp0qvTH64CQrjYlso42DsOUT9FaSjK0T5VHtPquesnPgg+JNGxK9tn7jQxWlMMzibwQ5+JjOdUcH+imiL7rm0yiPwrT9yqHn/7o6F67D3OGTEMxfsTyCUgRHUJWsf0ats1RTlwCnOucz55t0fP8stmRV6zl5qSxskD1W0D8lC5cfGjeEemUi0St0cDsFwPNwVCxi04dflbWi++F7rWBzeeyuhtMNUtED4lMR0/bb+E9hcI6dVvsCO1Pi+yjcsTuFtPYgvBgYPLvn5UtvEo1XiMQHBgbVTNyoCjR6mFJvfAnzjMC5/fDKiLQvBnpf2t7t2uW5aiRL5xuBNI9Hc9oIAZZM7fO8sGwj+gAiRHY81S1m8twnNwOBcjqBxDPKLzz0UYce4AznvFRk2+nSdrGK8j9B63rNjmE3BJ1P3K5EIv/krAebqBLtnezl4oJTha4ZEHCfHhFx4lBFIFfc/UKfCzS/VMUDBSyYcVXINACwaQAk70v5liuaKSaj1Umly6DinfPdTOUPA8O/pCsuHx98HNzV5rc7RO134V6BPu5FaT575m9Rrr0zOhExVeawWKQwfj99L4aW2COvO7G2ycD9cF6y1oJRHQPDatvM/iEo+fg3x+M8CeSS6/7xYF5w+e9wLEIo52e4tyJAnCrp0gjePwp6iVPPCT1opkybAb9GloE=
+  provider: script
   file: release.tar.gz
-  skip_cleanup: true
+  script: deploy.sh
   on:
     repo: clarkmalmgren/bolingbrook-church
     tags: true

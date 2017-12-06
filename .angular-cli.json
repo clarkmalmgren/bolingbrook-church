@@ -1,13 +1,12 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "version": "1.0.0-beta.24",
     "name": "bolingbrook-church"
   },
   "apps": [
     {
       "root": "src",
-      "outDir": "dist",
+      "outDir": "dist/browser",
       "assets": [
         "assets",
         "favicon.ico"
@@ -19,7 +18,6 @@
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
-      "mobile": false,
       "styles": [
         "styles.css",
         "theme.scss"
@@ -32,11 +30,33 @@
         "prod": "environments/environment.prod.ts",
         "beta": "environments/environment.beta.ts"
       }
+    },
+    {
+      "platform": "server",
+      "root": "src",
+      "outDir": "dist/server",
+      "assets": [
+        "assets",
+        "favicon.ico"
+      ],
+      "index": "index.html",
+      "main": "main.server.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.server.json",
+      "testTsconfig": "tsconfig.spec.json",
+      "prefix": "app",
+      "styles": [
+        "styles.css",
+        "theme.scss"
+      ],
+      "scripts": [],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts",
+        "beta": "environments/environment.beta.ts"
+      }
     }
-  ],
-  "addons": [
-  ],
-  "packages": [
   ],
   "e2e": {
     "protractor": {

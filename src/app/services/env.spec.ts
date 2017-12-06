@@ -1,6 +1,7 @@
 import { expect, sinon, async }                           from 'testing';
 import { Env }                                            from './env';
 
+/* tslint:disable no-unused-expression */
 describe('Env', () => {
 
   it('should be preloaded with default settings', () => {
@@ -34,7 +35,7 @@ describe('Env', () => {
     it('should pull version from node package info', () => {
       const env = new Env();
 
-      env.nodePackage = { version: version };
+      env.version = version;
       expect(env.version).to.equal(version);
     });
   }

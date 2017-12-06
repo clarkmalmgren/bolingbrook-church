@@ -1,6 +1,6 @@
 import { Injectable }                               from '@angular/core';
 import { DomSanitizer, SafeResourceUrl, SafeStyle } from '@angular/platform-browser';
-import { Database, Storage }                        from './firebase.service';
+import { FirebaseService }                          from './firebase.service';
 import { Observable }                               from './observable';
 
 export interface SeriesImageForm {
@@ -14,8 +14,7 @@ export interface SeriesImageForm {
 export class SeriesImageService {
 
   constructor(
-    private db: Database,
-    private store: Storage,
+    private firebase: FirebaseService,
     private sanatizer: DomSanitizer
   ) {}
 
@@ -24,7 +23,9 @@ export class SeriesImageService {
   }
 
   getSeriesImage(name: string): Observable<string> {
-    return this.store.getUrl(`/series/${name}`);
+    return this.firebase
+      .storage()
+      .flatMap(s => s.getUrl(`/series/${name}`));
   }
 
   getSeriesImageStyle(name: string): Observable<SafeStyle> {
@@ -38,24 +39,26 @@ export class SeriesImageService {
     }
 
     const path = `/series/${form.name}`;
-    return this.store.upload(path, form.file)
-      .flatMap(() => {
-        return this.db.put(`/data/series/${form.name}`, '0');
-      });
+    return this.firebase
+      .storage()
+      .flatMap(s => s.upload(path, form.file))
+      .flatMap(() => this.firebase.database())
+      .flatMap(db => db.put(`/data/series/${form.name}`, '0'));
   }
 
   deleteSeries(form: SeriesImageForm): Observable<any> {
-    return this.db.delete(`/data/series/${form.name}`)
-      .flatMap(() => {
-        return this.store.delete(`/series/${name}`);
-      });
+    return this.firebase
+      .database()
+      .flatMap(db => db.delete(`/data/series/${form.name}`))
+      .flatMap(() => this.firebase.storage())
+      .flatMap(s => s.delete(`/series/${name}`));
   }
 
   listSeries(): Observable<SeriesImageForm[]> {
-    return this.db.getOnce('data/series')
-      .flatMap((data: any) => {
-        return Observable.from(Object.keys(data));
-      })
+    return this.firebase
+      .database()
+      .flatMap(db => db.getOnce('data/series'))
+      .flatMap((data: any) => Observable.from(Object.keys(data)))
       .flatMap((name) => {
         return this.getSeriesImage(`${name}`)
           .map((url) => { return {

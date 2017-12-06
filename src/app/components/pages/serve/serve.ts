@@ -1,5 +1,5 @@
-import { Component }    from '@angular/core';
-import { Env }          from '../../../services';
+import { Component }      from '@angular/core';
+import { Env, Aperture }  from '../../../services';
 
 @Component({
   templateUrl: './serve.html',
@@ -7,7 +7,9 @@ import { Env }          from '../../../services';
 })
 export class ServeComponent {
 
+  constructor(private aperture: Aperture) { }
+
   get mobile(): boolean {
-    return window.innerWidth < 830;
+    return this.aperture.innerWidth < 830;
   }
 }

@@ -1,8 +1,8 @@
-<button md-raised-button (click)="handleClick()" [disabled]="disabled">
+<button mat-raised-button (click)="handleClick()" [disabled]="disabled">
   <div class="content" [class.visible]="!loading">
     <ng-content></ng-content>
   </div>
   <div class="content" [class.visible]="loading">
-    <md-icon>sync</md-icon>
+    <mat-icon>sync</mat-icon>
   </div>
 </button>

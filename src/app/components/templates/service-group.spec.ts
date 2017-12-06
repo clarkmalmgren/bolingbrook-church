@@ -1,6 +1,6 @@
-import { expect, sinon, async, MockBuilder }  from 'testing';
-import { Router }                             from '@angular/router';
-import { ServiceGroup }                       from './service-group';
+import { expect, sinon, async, MockBuilder, spyOf, stubOf } from 'testing';
+import { Router }                                           from '@angular/router';
+import { ServiceGroup }                                     from './service-group';
 import {
   Analytics,
   ConnectionRequest,
@@ -10,6 +10,7 @@ import {
 
 class TestableServiceGroup extends ServiceGroup {}
 
+/* tslint:disable: no-unused-expression */
 describe('ServiceGroup', () => {
 
   describe('constructor', () => {
@@ -61,9 +62,10 @@ describe('ServiceGroup', () => {
 
       sg.submit()
         .subscribe(() => {
-          expect(service.submit).to.have.been.calledOnce;
-          expect(analytics.event).to.have.been.calledOnce;
-          expect(router.navigate).to.have.been.calledOnce.and.be.calledWith([ '/thank-you' ]);
+          stubOf(service.submit).calledOnce.should.be.true;
+          stubOf(analytics.event).calledOnce.should.be.true;
+          spyOf(router.navigate).calledOnce.should.be.true;
+          spyOf(router.navigate).calledWith([ '/thank-you' ]).should.be.true;
         });
     }));
   });

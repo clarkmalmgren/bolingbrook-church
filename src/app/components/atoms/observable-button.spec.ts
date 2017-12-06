@@ -1,8 +1,9 @@
-import { expect, sinon, async, MockBuilder }  from 'testing';
+import { expect, sinon, async, MockBuilder, spyOf } from 'testing';
 
-import { EventEmitter }                       from '@angular/core';
-import { ObservableButtonComponent }          from './observable-button';
+import { EventEmitter }                             from '@angular/core';
+import { ObservableButtonComponent }                from './observable-button';
 
+/* tslint:disable: no-unused-expression */
 describe('ObservableButton', () => {
   describe('handleClick', () => {
     it('should send off for processing', () => {
@@ -11,7 +12,7 @@ describe('ObservableButton', () => {
 
       lb.handleClick();
 
-      expect(spy).to.have.been.calledOnce;
+      spyOf(spy).called.should.be.true;
       expect(lb.loading).to.be.true;
 
       spy.getCall(0).args[0]();
@@ -25,7 +26,7 @@ describe('ObservableButton', () => {
 
       lb.handleClick();
 
-      expect(spy).to.not.have.been.called;
+      spyOf(spy).called.should.be.false;
       expect(lb.loading).to.be.true;
     });
   });

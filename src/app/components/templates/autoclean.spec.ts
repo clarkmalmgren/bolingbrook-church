@@ -1,9 +1,10 @@
-import { expect, sinon, async, MockBuilder, Loop }  from 'testing';
-import { Autoclean }                                from './autoclean';
-import { Subscription }                             from 'app/services';
+import { expect, sinon, async, MockBuilder, Loop, spyOf } from 'testing';
+import { Autoclean }                                      from './autoclean';
+import { Subscription }                                   from 'app/services';
 
 class TestableAutoclean extends Autoclean {}
 
+/* tslint:disable: no-unused-expression */
 describe('Autoclean', () => {
 
   it('should clean up registered subscriptions', () => {
@@ -16,7 +17,7 @@ describe('Autoclean', () => {
 
     ac.ngOnDestroy();
 
-    expect(subscription.unsubscribe).to.have.callCount(10);
+    spyOf(subscription.unsubscribe).callCount.should.equal(10);
   });
 
 });

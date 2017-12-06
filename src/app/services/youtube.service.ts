@@ -1,5 +1,6 @@
 import { Injectable }           from '@angular/core';
 import { Observable, Observer } from './observable';
+import { Aperture }             from './aperture';
 
 declare namespace YT {
 
@@ -27,6 +28,8 @@ export class YoutubeService {
   loaded: boolean = false;
   loading: Observable<any>;
 
+  constructor(private aperture: Aperture) { }
+
   private loadYoutubeApi(): Observable<any> {
     if (this.loaded) {
       return Observable.of('');
@@ -34,12 +37,12 @@ export class YoutubeService {
       return this.loading;
     } else {
       this.loading = Observable.create((observer: Observer<any>) => {
-        window['onYouTubeIframeAPIReady'] = (() => {
+        this.aperture.set('onYouTubeIframeAPIReady', (() => {
           this.loaded = true;
           this.loading = undefined;
           observer.next('');
           observer.complete();
-        });
+        }));
 
         const tag = document.createElement('script');
         tag.src = 'https://www.youtube.com/iframe_api';
@@ -68,6 +71,7 @@ export class YoutubeService {
   }
 
   videoState(id: string): Observable<VideoState> {
+    /* tslint:disable: no-unused-expression */
     return this.loadYoutubeApi()
       .flatMap(() => this.getElement(id))
       .flatMap((element) => {

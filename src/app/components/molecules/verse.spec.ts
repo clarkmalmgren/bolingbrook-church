@@ -1,12 +1,13 @@
-import { expect, sinon, async, MockBuilder }      from 'testing';
+import { expect, sinon, async, MockBuilder, spyOf }      from 'testing';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { VerseComponent }                         from './verse';
-import { Analytics, Observable }                  from 'app/services';
+import { Analytics, Aperture, Observable }                  from 'app/services';
 
+/* tslint:disable: no-unused-expression */
 describe('VerseComponent', () => {
   describe('url', () => {
     it('should construct correctly', () => {
-      const verse = new VerseComponent(undefined, undefined);
+      const verse = new VerseComponent(undefined, undefined, undefined);
       verse.book = 'John';
       verse.chapter = '3';
       verse.verses = '16';
@@ -21,27 +22,24 @@ describe('VerseComponent', () => {
                           .withStub('bypassSecurityTrustResourceUrl', safe)
                           .build();
 
-      const verse = new VerseComponent(sanitizer, undefined);
+      const verse = new VerseComponent(sanitizer, undefined, undefined);
       expect(verse.safeResourceUrl).to.equal(safe);
     });
   });
 
   describe('frameHeight', () => {
     it('should be 600px on large devices', () => {
-      const verse = new VerseComponent(undefined, undefined);
-      verse._window = { innerHeight: 1000 } as Window;
+      const verse = new VerseComponent(undefined, undefined, { innerHeight: 1000 } as Aperture);
       expect(verse.frameHeight).to.equal('600px');
     });
 
-    it('should be 80px less than window height on smaller devices', () => {
-      const verse = new VerseComponent(undefined, undefined);
-      verse._window = { innerHeight: 500 } as Window;
+    it('should be 80px less than aperture height on smaller devices', () => {
+      const verse = new VerseComponent(undefined, undefined, { innerHeight: 500 } as Aperture);
       expect(verse.frameHeight).to.equal('420px');
     });
 
-    it('should be 80px less than window height on smaller devices', () => {
-      const verse = new VerseComponent(undefined, undefined);
-      verse._window = { innerHeight: 679 } as Window;
+    it('should be 80px less than aperture height on smaller devices', () => {
+      const verse = new VerseComponent(undefined, undefined, { innerHeight: 679 } as Aperture);
       expect(verse.frameHeight).to.equal('599px');
     });
   });
@@ -52,20 +50,17 @@ describe('VerseComponent', () => {
                           .withSpy('event')
                           .build();
 
-      const _window = MockBuilder.of(Window)
-                        .withSpy('open')
-                        .build();
+      const aperture = { open: sinon.spy() } as any as Aperture;
 
-      const verse = new VerseComponent(undefined, analytics);
+      const verse = new VerseComponent(undefined, analytics, aperture);
       verse.book = 'John';
       verse.chapter = '3';
       verse.verses = '16';
-      verse._window = _window;
 
       expect(verse.launch()).to.be.false;
-      expect(analytics.event).to.have.been.calledOnce;
-      expect(_window.open).to.have.been.calledOnce
-        .and.calledWith('https://www.bible.com/bible/111/John.3.16.NIV', '_blank');
+      spyOf(analytics.event).calledOnce.should.be.true;
+      spyOf(aperture.open).calledOnce.should.be.true
+      spyOf(aperture.open).calledWith('https://www.bible.com/bible/111/John.3.16.NIV', '_blank').should.be.true;
     });
   });
 
@@ -75,19 +70,19 @@ describe('VerseComponent', () => {
                           .withSpy('event')
                           .build();
 
-      const verse = new VerseComponent(undefined, analytics);
+      const verse = new VerseComponent(undefined, analytics, undefined);
       expect(verse.shown).to.be.false;
 
       expect(verse.show()).to.be.false;
 
-      expect(analytics.event).to.have.been.calledOnce;
+      spyOf(analytics.event).calledOnce.should.be.true;
       expect(verse.shown).to.be.true;
     });
   });
 
   describe('hide', () => {
     it('should hide and nothing else', () => {
-      const verse = new VerseComponent(undefined, undefined);
+      const verse = new VerseComponent(undefined, undefined, undefined);
       expect(verse.shown).to.be.false;
       verse.shown = true;
 

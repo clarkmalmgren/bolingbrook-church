@@ -1,7 +1,7 @@
 import { Injectable }                       from '@angular/core';
 import { DomSanitizer, SafeResourceUrl }    from '@angular/platform-browser';
 import { Env }                              from './env';
-import { Storage }                          from './firebase.service';
+import { FirebaseService }                  from './firebase.service';
 import { Observable }                       from './observable';
 
 export interface BackgroundVideoSource {
@@ -14,7 +14,7 @@ export class BackgroundVideoService {
 
   constructor(
     private env: Env,
-    private storage: Storage,
+    private firebase: FirebaseService,
     private sanitizer: DomSanitizer
   ) {}
 
@@ -30,7 +30,9 @@ export class BackgroundVideoService {
   }
 
   private getStorageSource(path: string, type: string): Observable<BackgroundVideoSource> {
-      return this.storage.getUrl(path)
+      return this.firebase
+        .storage()
+        .flatMap(s => s.getUrl(path))
         .map(url => { return { url: this.sanitize(url), type: type }; });
   }
 

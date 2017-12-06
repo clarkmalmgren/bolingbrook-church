@@ -1,6 +1,6 @@
 import { Component, OnInit }      from '@angular/core';
 import { Router, NavigationEnd }  from '@angular/router';
-import { Analytics }              from './services';
+import { Analytics, Aperture }    from './services';
 
 @Component({
   selector: 'bc-app',
@@ -11,14 +11,15 @@ export class AppComponent implements OnInit {
 
   constructor(
     private analytics: Analytics,
-    private router: Router
+    private router: Router,
+    private aperture: Aperture
   ) {}
 
   ngOnInit() {
     this.analytics.init();
     this.router.events.subscribe((evt) => {
       if (evt instanceof NavigationEnd) {
-        window.scrollTo({
+        this.aperture.scrollTo({
           top: 0,
           left: 0,
           behavior: 'smooth'

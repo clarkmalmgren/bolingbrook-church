@@ -1,30 +1,26 @@
-import { expect, sinon, async, MockBuilder }        from 'testing';
+import { expect, sinon, async, MockBuilder, stubOf } from 'testing';
 import {
-  Database,
-  Storage,
+  FirebaseDatabase,
+  FirebaseService,
   Sermon,
   SermonService,
   Observable
 } from './index';
-import * as moment                                  from 'moment';
-import                                                   'moment-timezone';
+import * as moment                                   from 'moment';
+import                                                    'moment-timezone';
 
+/* tslint:disable: no-unused-expression */
 describe('SermonService', () => {
   describe('liveToday', () => {
     it('should work', async(() => {
-      const db = MockBuilder
-        .of(Database)
-        .withStub('exists', Observable.of(true))
-        .build();
+      const db = { exists: () => Observable.of(true) } as any as FirebaseDatabase;
+      const firebase = { database: () => Observable.of(db) } as any as FirebaseService;
 
-      const store = MockBuilder.of(Storage).build();
-
-      const service = new SermonService(db, store);
+      const service = new SermonService(firebase);
       service
         .liveToday()
         .subscribe((isLive) => {
           expect(isLive).to.be.true;
-          expect(db.exists).to.have.been.calledOnce;
         });
 
     }));

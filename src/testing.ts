@@ -1,12 +1,9 @@
 import { async }        from '@angular/core/testing';
 import * as sinon       from 'sinon';
 import * as chai        from 'chai';
-import * as sinonChai   from 'sinon-chai';
-
-chai.use(sinonChai);
 
 const expect = chai.expect;
-
+chai.should();
 
 export class MockBuilder<T> {
   private object = {};
@@ -58,6 +55,14 @@ export class Loop {
       fn();
     }
   }
+}
+
+export function spyOf(obj: any): sinon.SinonSpy {
+  return obj as sinon.SinonSpy;
+}
+
+export function stubOf(obj: any): sinon.SinonStub {
+  return obj as sinon.SinonStub;
 }
 
 export {

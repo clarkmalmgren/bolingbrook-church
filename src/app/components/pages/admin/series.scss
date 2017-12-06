@@ -1,7 +1,7 @@
 form {
   margin-top: 10px;
 
-  md-input-container {
+  mat-form-field {
     flex: 100%;
   }
 
@@ -13,7 +13,7 @@ form {
     margin-top: 23px !important;
   }
 
-  md-list {
+  mat-list {
     flex: 100%;
     margin-bottom: 25px;
 
@@ -21,7 +21,7 @@ form {
       max-width: 45px;
     }
 
-    md-input-container {
+    mat-form-field {
       min-width: 0;
     }
 
@@ -44,6 +44,6 @@ form {
   }
 }
 
-md-list-item.new-series /deep/ div.md-list-item {
+mat-list-item.new-series /deep/ div.mat-list-item {
   justify-content: flex-end;
 }

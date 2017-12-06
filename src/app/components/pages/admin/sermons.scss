@@ -10,15 +10,15 @@ form {
   }
 
 
-  md-list {
+  mat-list {
     flex: 100%;
     margin-bottom: 25px;
 
-    md-list-item {
+    mat-list-item {
       margin-bottom: 12px;
     }
 
-    md-input-container, md-select {
+    mat-form-field, mat-select {
       flex: 1;
       min-width: 0;
     }
@@ -42,7 +42,7 @@ form {
   }
 }
 
-md-list-item.new-sermon /deep/ div.md-list-item {
+mat-list-item.new-sermon /deep/ div.mat-list-item {
   justify-content: flex-end;
 }
 

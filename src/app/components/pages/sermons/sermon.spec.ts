@@ -1,6 +1,6 @@
-import { expect, sinon, async, MockBuilder, callCount } from 'testing';
-import { ActivatedRoute }                               from '@angular/router';
-import { SermonComponent }                              from './sermon';
+import { expect, sinon, async, MockBuilder, callCount, stubOf, spyOf } from 'testing';
+import { ActivatedRoute }                                              from '@angular/router';
+import { SermonComponent }                                             from './sermon';
 import {
   Analytics,
   FeatureToggles,
@@ -13,6 +13,7 @@ import {
   YoutubeService
 } from 'app/services';
 
+/* tslint:disable: no-unused-expression */
 describe('SermonComponent', () => {
 
   describe('ngOnInit', () => {
@@ -34,7 +35,8 @@ describe('SermonComponent', () => {
 
       sermon.ngOnInit();
 
-      expect(youtubeService.videoState).to.have.been.calledOnce.and.calledWith('sermonVideo');
+      stubOf(youtubeService.videoState).calledOnce.should.be.true;
+      stubOf(youtubeService.videoState).calledWith('sermonVideo').should.be.true;
       expect(sermon.videoState).to.equal(VideoState.BUFFERING);
 
       sermon.ngOnDestroy();
@@ -58,16 +60,16 @@ describe('SermonComponent', () => {
                                 .build();
 
       const sermon = new SermonComponent(activatedRoute, analytics, null, null, null, null, togglesService, youtubeService);
-      sermon.analyticsInterval = 5;
+      sermon.interval = () => Observable.from(['', '']);
       sermon.videoState = VideoState.PLAYING;
       sermon.sermon = { youtube: 'Jesus4Life' } as Sermon;
 
       sermon.ngOnInit();
 
-      window.setTimeout(() => {
+      setTimeout(() => {
         /* Giving a reasonable range to account for annoying time based testing */
-        expect(callCount(analytics.event)).to.be.at.least(2).and.at.most(6);
-        expect(analytics.event).to.have.been.calledWith('Sermon', 'Playing', 'Jesus4Life');
+        expect(callCount(analytics.event)).to.equal(2);
+        spyOf(analytics.event).calledWith('Sermon', 'Playing', 'Jesus4Life').should.be.true;
         sermon.ngOnDestroy();
       }, 25);
     }));
@@ -89,15 +91,15 @@ describe('SermonComponent', () => {
                               .withStub('getToggles', Observable.empty())
                               .build();
       const sermon = new SermonComponent(activatedRoute, analytics, null, null, null, null, togglesService, youtubeService);
-      sermon.analyticsInterval = 5;
+      sermon.interval = () => Observable.of('');
       sermon.videoState = VideoState.PLAYING;
       sermon.live = true;
       sermon.sermon = { youtube: 'Jesus4Life' } as Sermon;
 
       sermon.ngOnInit();
 
-      window.setTimeout(() => {
-        expect(analytics.event).to.have.been.calledWith('Live Sermon', 'Playing', 'Jesus4Life');
+      setTimeout(() => {
+        spyOf(analytics.event).calledWith('Live Sermon', 'Playing', 'Jesus4Life').should.be.true;
         sermon.ngOnDestroy();
       }, 25);
     }));
@@ -127,14 +129,14 @@ describe('SermonComponent', () => {
                                 .build();
 
         const sermon = new SermonComponent(activatedRoute, analytics, null, null, null, null, togglesService, youtubeService);
-        sermon.analyticsInterval = 5;
+        sermon.interval = () => Observable.of('');
         sermon.videoState = state;
         sermon.sermon = { youtube: 'Jesus4Life' } as Sermon;
 
         sermon.ngOnInit();
 
-        window.setTimeout(() => {
-          expect(analytics.event).to.not.have.been.called;
+        setTimeout(() => {
+          spyOf(analytics.event).called.should.be.false;
           sermon.ngOnDestroy();
         }, 25);
       }));
