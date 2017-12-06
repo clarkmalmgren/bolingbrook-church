@@ -9,35 +9,6 @@ import {
   FirebaseUtils
 }                                   from './firebase.service';
 
-@Injectable()
-export class FirebaseServerService extends FirebaseService {
-
-  private static initialized: boolean = false;
-  private _storage: FirebaseServerStorage;
-  private _database: FirebaseServerDatabase;
-
-  constructor(private env: Env, private http: HttpClient) {
-    super();
-    this._storage = new FirebaseServerStorage();
-    this._database = new FirebaseServerDatabase(env, http);
-  }
-
-  public auth(): Observable<any> {
-    return Observable.throw('No custom authentication allowed on ');
-  }
-
-  authenticated(): Observable<boolean> {
-    return Observable.of(false);
-  }
-
-  storage(): Observable<FirebaseStorage> {
-    return Observable.of(this._storage);
-  }
-
-  database(): Observable<FirebaseDatabase> {
-    return Observable.of(this._database);
-  }
-}
 
 export class FirebaseServerStorage implements FirebaseStorage {
 
@@ -91,3 +62,33 @@ export class FirebaseServerDatabase implements FirebaseDatabase {
   }
 }
 
+@Injectable()
+export class FirebaseServerService extends FirebaseService {
+
+  private static initialized: boolean = false;
+  private _storage: FirebaseServerStorage;
+  private _database: FirebaseServerDatabase;
+
+  constructor(private env: Env, private http: HttpClient) {
+    super();
+
+    this._storage = new FirebaseServerStorage();
+    this._database = new FirebaseServerDatabase(env, http);
+  }
+
+  public auth(): Observable<any> {
+    return Observable.throw('No custom authentication allowed on ');
+  }
+
+  authenticated(): Observable<boolean> {
+    return Observable.of(false);
+  }
+
+  storage(): Observable<FirebaseStorage> {
+    return Observable.of(this._storage);
+  }
+
+  database(): Observable<FirebaseDatabase> {
+    return Observable.of(this._database);
+  }
+}
