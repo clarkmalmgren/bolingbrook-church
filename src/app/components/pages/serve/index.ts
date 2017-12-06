@@ -6,10 +6,10 @@ import { MediaComponent }           from './media';
 import { ServeComponent }           from './serve';
 
 export const SERVE_ROUTES: Routes = [
-  { path: 'serve',             component: ServeComponent },
-  { path: 'serve/ask',         component: AskComponent },
-  { path: 'serve/fusion',      component: FusionComponent },
-  { path: 'serve/media',       component: MediaComponent }
+  { path: 'serve',        pathMatch: 'full', component: ServeComponent },
+  { path: 'serve/ask',    pathMatch: 'full', component: AskComponent },
+  { path: 'serve/fusion', pathMatch: 'full', component: FusionComponent },
+  { path: 'serve/media',  pathMatch: 'full', component: MediaComponent }
 ];
 
 export const SERVE_COMPONENTS = [

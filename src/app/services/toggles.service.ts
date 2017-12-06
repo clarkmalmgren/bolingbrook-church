@@ -1,5 +1,5 @@
 import { Injectable }         from '@angular/core';
-import { Database }           from './firebase.service';
+import { FirebaseService }    from './firebase.service';
 import { Observable }         from './observable';
 
 export interface FeatureToggles {
@@ -13,14 +13,16 @@ export class TogglesService {
   toggles: FeatureToggles;
 
   constructor (
-    private db: Database
+    private firebase: FirebaseService
   ) {}
 
   getToggles(): Observable<FeatureToggles> {
     if (this.toggles) {
       return Observable.of(this.toggles);
     } else {
-      return this.db.watch(`features`)
+      return this.firebase
+        .database()
+        .flatMap(db => db.watch(`features`))
         .map((toggles: FeatureToggles) => {
           this.toggles = toggles;
           return toggles;

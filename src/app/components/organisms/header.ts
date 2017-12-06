@@ -1,4 +1,5 @@
 import { Component, Input, HostListener, OnInit } from '@angular/core';
+import { Aperture }                               from '../../services';
 
 @Component({
   selector: 'bc-header',
@@ -6,8 +7,6 @@ import { Component, Input, HostListener, OnInit } from '@angular/core';
   styleUrls: ['./header.scss']
 })
 export class HeaderComponent implements OnInit {
-
-  _window: Window = window;
 
   @Input()
   video: any;
@@ -28,20 +27,22 @@ export class HeaderComponent implements OnInit {
   opened: boolean = false;
   assetHeight: string = 'auto';
 
+  constructor(private aperture: Aperture) { }
+
   ngOnInit() {
-    this.processScreenSize(this._window);
+    this.processScreenSize(this.aperture);
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
-    this.processScreenSize(event.target);
+    this.processScreenSize(this.aperture.create(event.target));
   }
 
-  processScreenSize(window: Window) {
-    this.mobile = (window.innerWidth < 450);
+  processScreenSize(aperture: Aperture) {
+    this.mobile = (aperture.innerWidth < 450);
 
     if (this.video || this.image) {
-      const px = window.innerHeight * this.relativeHeight + this.absoluteHeight;
+      const px = aperture.innerHeight * this.relativeHeight + this.absoluteHeight;
       this.assetHeight = `${px}px`;
     } else {
       this.assetHeight = '0px';

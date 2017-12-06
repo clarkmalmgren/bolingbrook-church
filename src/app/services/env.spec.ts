@@ -35,7 +35,7 @@ describe('Env', () => {
     it('should pull version from node package info', () => {
       const env = new Env();
 
-      env.nodePackage = { version: version };
+      env.version = version;
       expect(env.version).to.equal(version);
     });
   }

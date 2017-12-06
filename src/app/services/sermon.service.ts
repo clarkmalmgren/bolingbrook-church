@@ -1,8 +1,8 @@
-import { Injectable }         from '@angular/core';
-import { Database, Storage }  from './firebase.service';
-import { Observable }         from './observable';
-import * as moment            from 'moment';
-import                             'moment-timezone';
+import { Injectable }                     from '@angular/core';
+import { FirebaseService, FirebaseUtils } from './firebase.service';
+import { Observable }                     from './observable';
+import * as moment                        from 'moment';
+import                                         'moment-timezone';
 
 export interface Sermon {
   date: string;
@@ -18,10 +18,7 @@ export interface Sermon {
 @Injectable()
 export class SermonService {
 
-  constructor(
-    private db: Database,
-    private store: Storage
-  ) {}
+  constructor(private firebase: FirebaseService) {}
 
   private clean<T>(source: T): T {
     const cleaned = {} as T;
@@ -38,11 +35,15 @@ export class SermonService {
 
   liveToday(date: moment.Moment = moment.tz('America/Chicago')): Observable<Boolean> {
     const dateString = date.format('YYYY-MM-DD');
-    return this.db.exists(`data/sermons/${dateString}`);
+    return this.firebase
+      .database()
+      .flatMap(db => db.exists(`data/sermons/${dateString}`));
   }
 
   getSermon(date: string): Observable<Sermon> {
-    return this.db.getOnce(`data/sermons/${date}`)
+    return this.firebase
+      .database()
+      .flatMap(db => db.getOnce(`data/sermons/${date}`))
       .map((sermon: Sermon) => {
         sermon.date = date;
         return sermon;
@@ -50,11 +51,15 @@ export class SermonService {
   }
 
   saveSermon(sermon: Sermon): Observable<any> {
-    return this.db.put(`data/sermons/${sermon.date}`, this.clean(sermon));
+    return this.firebase
+      .database()
+      .flatMap(db => db.put(`data/sermons/${sermon.date}`, this.clean(sermon)));
   }
 
   deleteSermon(date: string): Observable<any> {
-    return this.db.delete(`data/sermons/${date}`);
+    return this.firebase
+      .database()
+      .flatMap(db => db.delete(`data/sermons/${date}`));
   }
 
   next(): Observable<Sermon> {
@@ -91,13 +96,14 @@ export class SermonService {
   }
 
   all(): Observable<Sermon[]> {
-    return this.db.getOnce('data/sermons')
+    return this.firebase
+      .database()
+      .flatMap(db => db.getOnce('data/sermons'))
       .map((data: any) => {
-        return this.db.toArray(data, 'date')
+        return FirebaseUtils
+          .toArray(data, 'date')
           .map(it => (it as Sermon))
-          .sort((a, b) => {
-            return b.date.localeCompare(a.date);
-          });
+          .sort((a, b) => b.date.localeCompare(a.date));
       });
   }
 

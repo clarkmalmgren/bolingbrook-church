@@ -1,6 +1,6 @@
 import { Component, Input }                       from '@angular/core';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
-import { Analytics }                              from 'app/services';
+import { Analytics, Aperture }                    from 'app/services';
 
 @Component({
   selector: 'bc-verse',
@@ -21,11 +21,10 @@ export class VerseComponent {
 
   shown: boolean = false;
 
-  _window = window;
-
   constructor(
     private sanatizer: DomSanitizer,
-    private analytics: Analytics
+    private analytics: Analytics,
+    private aperture: Aperture
   ) {}
 
   get url(): string {
@@ -37,13 +36,13 @@ export class VerseComponent {
   }
 
   get frameHeight(): string {
-    const height = Math.min(600, this._window.innerHeight - 80);
+    const height = Math.min(600, this.aperture.innerHeight - 80);
     return `${height}px`;
   }
 
   launch(): boolean {
     this.analytics.event('nav', 'verse', `${this.book} ${this.chapter}:${this.verses}`);
-    this._window.open(this.url, '_blank');
+    this.aperture.open(this.url, '_blank');
     return false;
   }
 

@@ -3,55 +3,45 @@ import { Location }                                       from '@angular/common'
 import { Router, NavigationEnd, NavigationStart, Event }  from '@angular/router';
 import { Env }                                            from './env';
 import { Observable, Observer }                           from './observable';
-
-/* Make ga typesafe, sortof */
-declare var ga: Function;
-
-export class GoogleAnalyticsWrapper {
-  get call(): Function {
-    return ga;
-  }
-}
+import { Aperture }                                       from './aperture';
 
 @Injectable()
 export class Analytics {
 
   private navStartedAt: number = 0;
   private currentRoute: string;
-  private analytics: GoogleAnalyticsWrapper;
 
   constructor(
     private env: Env,
     private location: Location,
-    private router: Router
+    private router: Router,
+    private aperture: Aperture
   ) { }
 
-  init(analytics: GoogleAnalyticsWrapper = new GoogleAnalyticsWrapper()): void {
-    this.analytics = analytics;
-
+  init(): void {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {
-        this.navStartedAt = performance.now();
+        this.navStartedAt = this.aperture.now();
       } else if (event instanceof NavigationEnd) {
         // When the route is '/', location.path actually returns ''.
         this.pageview(this.location.path() || '/');
       }
     });
 
-    this.timing('angular', 'init', performance.now());
-    this.analytics.call('set', 'dimension1', this.env.version);
+    this.timing('angular', 'init', this.aperture.now());
+    this.aperture.ga('set', 'dimension1', this.env.version);
   }
 
   pageview(route: string): void {
     if (this.currentRoute !== route) {
-      this.analytics.call('set', 'page', route);
-      this.analytics.call('send', 'pageview');
+      this.aperture.ga('set', 'page', route);
+      this.aperture.ga('send', 'pageview');
 
       if (this.currentRoute == null) {
-        this.timing('pageview', 'init', performance.now());
+        this.timing('pageview', 'init', this.aperture.now());
       }
 
-      this.timing('pageview', 'load', performance.now() - this.navStartedAt, route);
+      this.timing('pageview', 'load', this.aperture.now() - this.navStartedAt, route);
       this.currentRoute = route;
     }
   }
@@ -100,7 +90,7 @@ export class Analytics {
       setTimeout(() => complete(''), 250);
 
       /* Invoke the Analytics Call! */
-      this.analytics.call(method, type, data);
+      this.aperture.ga(method, type, data);
     });
 
     /* At least one subscriber must subscribe, but we don't want to fire more than once.

@@ -1,6 +1,5 @@
-import { expect, sinon, async, spyOf }                    from 'testing';
-
-import { Location }                                       from '@angular/common';
+import { expect, sinon, async, spyOf }  from 'testing';
+import { Location }                     from '@angular/common';
 import {
   Event,
   NavigationCancel,
@@ -8,36 +7,42 @@ import {
   NavigationStart,
   Router
 }  from '@angular/router';
-import { Analytics, GoogleAnalyticsWrapper }              from './analytics';
-import { Env }                                            from './env';
+import { Analytics }                    from './analytics';
+import { Aperture }                     from './aperture';
+import { Env }                          from './env';
 
-class MockGoogleAnalyticsWrapper extends GoogleAnalyticsWrapper {
+class MockAperture extends Aperture {
+  scrollTo(options?: ScrollToOptions): void {
+    throw new Error('Method not implemented.');
+  }
+  open(url?: string, target?: string, features?: string, replace?: boolean): Aperture {
+    throw new Error('Method not implemented.');
+  }
+  set(key: string, value: any): void {
+    throw new Error('Method not implemented.');
+  }
+  now(): number {
+    return performance.now()
+  }
+  create(target: any): Aperture {
+    throw new Error('Method not implemented.');
+  }
   constructor(private wrapped: Function) {
     super();
   }
 
-  get call(): Function {
+  get ga(): Function {
     return this.wrapped;
   }
 }
 
 /* tslint:disable: no-unused-expression */
-describe('GoogleAnalyticsWrapper', () => {
-
-  it('should wrap GA', () => {
-    window['ga'] = 'faceoff';
-    const gaw = new GoogleAnalyticsWrapper();
-    expect(gaw.call).to.equal('faceoff');
-  });
-
-});
-
 describe('Analytics', () => {
 
   describe('init()', () => {
 
     it('should call global ga by default', () => {
-      const a = new Analytics(undefined, undefined, undefined);
+      const a = new Analytics(undefined, undefined, undefined, undefined);
       expect(() => { a.init(); }).to.throw();
     });
 
@@ -45,12 +50,12 @@ describe('Analytics', () => {
       const subscribe = sinon.spy();
       const router = <Router><any> { events: { subscribe: subscribe } };
       const ga = sinon.spy();
-      const gaw = new MockGoogleAnalyticsWrapper(ga);
+      const gaw = new MockAperture(ga);
       const env = { version: '3.3.3' } as Env;
 
-      const a = new Analytics(env, undefined, router);
+      const a = new Analytics(env, undefined, router, gaw);
 
-      a.init(gaw);
+      a.init();
 
       spyOf(ga).calledWith('send', 'timing').should.be.true;
       spyOf(ga).calledWith('set', 'dimension1', '3.3.3').should.be.true;
@@ -63,14 +68,14 @@ describe('Analytics', () => {
 
       const router = <Router><any> { events: { subscribe: subscribe } };
       const ga = sinon.spy();
-      const gaw = new MockGoogleAnalyticsWrapper(ga);
+      const gaw = new MockAperture(ga);
       const env = { version: '3.3.3' } as Env;
 
       const location = <Location><any> { path: sinon.stub().returns('') };
 
-      const a = new Analytics(env, location, router);
+      const a = new Analytics(env, location, router, gaw);
 
-      a.init(gaw);
+      a.init();
 
       spyOf(ga).calledWith('send', 'timing').should.be.true;
       spyOf(subscribe).calledOnce.should.be.true;
@@ -99,12 +104,12 @@ describe('Analytics', () => {
       const subscribe = sinon.spy();
       const router = <Router><any> { events: { subscribe: subscribe } };
       const ga = sinon.spy();
-      const gaw = new MockGoogleAnalyticsWrapper(ga);
+      const gaw = new MockAperture(ga);
       const env = { version: '3.3.3' } as Env;
 
-      const a = new Analytics(env, undefined, router);
+      const a = new Analytics(env, undefined, router, gaw);
 
-      a.init(gaw);
+      a.init();
 
       /* First Pageview */
       ga.reset();
@@ -138,12 +143,12 @@ describe('Analytics', () => {
       const subscribe = sinon.spy();
       const router = <Router><any> { events: { subscribe: subscribe } };
       const ga = sinon.spy();
-      const gaw = new MockGoogleAnalyticsWrapper(ga);
+      const gaw = new MockAperture(ga);
       const env = { version: '3.3.3' } as Env;
 
-      const a = new Analytics(env, undefined, router);
+      const a = new Analytics(env, undefined, router, gaw);
 
-      a.init(gaw);
+      a.init();
       ga.reset();
 
       a.event('awesome', 'pants', 'for', 1)
@@ -166,12 +171,12 @@ describe('Analytics', () => {
       const subscribe = sinon.spy();
       const router = <Router><any> { events: { subscribe: subscribe } };
       const ga = sinon.spy();
-      const gaw = new MockGoogleAnalyticsWrapper(ga);
+      const gaw = new MockAperture(ga);
       const env = { version: '3.3.3' } as Env;
 
-      const a = new Analytics(env, undefined, router);
+      const a = new Analytics(env, undefined, router, gaw);
 
-      a.init(gaw);
+      a.init();
       ga.reset();
 
       a.exception('oh noes!', true)

@@ -96,7 +96,7 @@ export class SermonComponent extends Autoclean implements OnInit {
             .subscribe(style => { this.icon = style; });
         }
       }, (err) => {
-        console.error(err);
+        console.error('Sermon Loading Error', err);
         this.error = true;
         this.meta.addTag({
           name: 'prerender-status-code',

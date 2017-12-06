@@ -6,10 +6,10 @@ import { SeriesComponent }          from './series';
 import { SermonsComponent }         from './sermons';
 
 export const ADMIN_ROUTES: Routes = [
-  { path: 'admin',                  component: HomeComponent },
-  { path: 'admin/login',            component: LoginComponent },
-  { path: 'admin/series',           component: SeriesComponent },
-  { path: 'admin/sermons',          component: SermonsComponent }
+  { path: 'admin',                  pathMatch: 'full', component: HomeComponent },
+  { path: 'admin/login',            pathMatch: 'full', component: LoginComponent },
+  { path: 'admin/series',           pathMatch: 'full', component: SeriesComponent },
+  { path: 'admin/sermons',          pathMatch: 'full', component: SermonsComponent }
 ];
 
 export const ADMIN_COMPONENTS = [

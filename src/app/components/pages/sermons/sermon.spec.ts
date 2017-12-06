@@ -66,7 +66,7 @@ describe('SermonComponent', () => {
 
       sermon.ngOnInit();
 
-      window.setTimeout(() => {
+      setTimeout(() => {
         /* Giving a reasonable range to account for annoying time based testing */
         expect(callCount(analytics.event)).to.equal(2);
         spyOf(analytics.event).calledWith('Sermon', 'Playing', 'Jesus4Life').should.be.true;
@@ -98,7 +98,7 @@ describe('SermonComponent', () => {
 
       sermon.ngOnInit();
 
-      window.setTimeout(() => {
+      setTimeout(() => {
         spyOf(analytics.event).calledWith('Live Sermon', 'Playing', 'Jesus4Life').should.be.true;
         sermon.ngOnDestroy();
       }, 25);
@@ -135,7 +135,7 @@ describe('SermonComponent', () => {
 
         sermon.ngOnInit();
 
-        window.setTimeout(() => {
+        setTimeout(() => {
           spyOf(analytics.event).called.should.be.false;
           sermon.ngOnDestroy();
         }, 25);

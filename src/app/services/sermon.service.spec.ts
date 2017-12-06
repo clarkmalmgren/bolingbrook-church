@@ -1,7 +1,7 @@
 import { expect, sinon, async, MockBuilder, stubOf } from 'testing';
 import {
-  Database,
-  Storage,
+  FirebaseDatabase,
+  FirebaseService,
   Sermon,
   SermonService,
   Observable
@@ -13,19 +13,14 @@ import                                                    'moment-timezone';
 describe('SermonService', () => {
   describe('liveToday', () => {
     it('should work', async(() => {
-      const db = MockBuilder
-        .of(Database)
-        .withStub('exists', Observable.of(true))
-        .build();
+      const db = { exists: () => Observable.of(true) } as any as FirebaseDatabase;
+      const firebase = { database: () => Observable.of(db) } as any as FirebaseService;
 
-      const store = MockBuilder.of(Storage).build();
-
-      const service = new SermonService(db, store);
+      const service = new SermonService(firebase);
       service
         .liveToday()
         .subscribe((isLive) => {
           expect(isLive).to.be.true;
-          stubOf(db.exists).calledOnce.should.be.true;
         });
 
     }));

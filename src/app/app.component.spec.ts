@@ -15,7 +15,7 @@ describe('AppComponent', () => {
                           .withSpy('events.subscribe')
                           .build();
 
-      const app = new AppComponent(analytics, router);
+      const app = new AppComponent(analytics, router, undefined);
       app.ngOnInit();
 
       /* tslint:disable: no-unused-expression */
