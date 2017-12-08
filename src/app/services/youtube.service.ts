@@ -71,6 +71,10 @@ export class YoutubeService {
   }
 
   videoState(id: string): Observable<VideoState> {
+    if (!this.aperture.browser) {
+      return Observable.empty();
+    }
+
     /* tslint:disable: no-unused-expression */
     return this.loadYoutubeApi()
       .flatMap(() => this.getElement(id))
