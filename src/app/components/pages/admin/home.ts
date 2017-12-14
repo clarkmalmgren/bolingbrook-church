@@ -1,19 +1,44 @@
-import { OnInit, Component }  from '@angular/core';
-import { Router }             from '@angular/router';
-import { FirebaseService }    from '../../../services/firebase.service';
-import { Secured }            from './secured';
+import { OnInit, Component, NgZone }  from '@angular/core';
+import { FirebaseService }            from '../../../services/firebase.service';
+import { Secured }                    from './secured';
 
 @Component({
   templateUrl: './home.html',
   styleUrls: [ './home.scss' ]
 })
-export class HomeComponent extends Secured {
+export class HomeComponent implements OnInit {
+
+  authd: boolean = false;
 
   constructor(
-    router: Router,
-    firebase: FirebaseService
-  ) {
-    super(router, firebase);
+    private firebase: FirebaseService,
+    private zone: NgZone
+  ) { }
+
+  ngOnInit(): void {
+    this.firebase
+      .authenticated()
+      .subscribe(authd => {
+        this.authd = authd;
+      });
+  }
+
+  login(): void {
+    this.firebase
+      .auth()
+      .subscribe(_ => {
+        this.zone.run(() => {
+          this.authd = true;
+        });
+      });
+  }
+
+  logout(): void {
+    this.firebase
+      .logout()
+      .subscribe(_ => {
+        this.authd = false;
+      });
   }
 
 }

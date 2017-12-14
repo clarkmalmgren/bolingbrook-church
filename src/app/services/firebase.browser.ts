@@ -116,6 +116,19 @@ export class FirebaseBrowserService extends FirebaseService {
       });
   }
 
+  public logout(): Observable<any> {
+    const cb = (_ => {
+      this._user = undefined;
+      return _;
+    });
+
+    this.init();
+
+    return observe(this.fb.auth().signOut())
+      .map(cb)
+      .catch(cb);
+  }
+
   authenticated(): Observable<boolean> {
     return this.init().map(user => !!user);
   }

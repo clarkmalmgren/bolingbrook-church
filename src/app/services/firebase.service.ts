@@ -19,6 +19,7 @@ export class FirebaseUtils {
 export abstract class FirebaseService {
 
   abstract auth(): Observable<any>;
+  abstract logout(): Observable<any>;
   abstract authenticated(): Observable<boolean>;
   abstract storage(): Observable<FirebaseStorage>;
   abstract database(): Observable<FirebaseDatabase>;

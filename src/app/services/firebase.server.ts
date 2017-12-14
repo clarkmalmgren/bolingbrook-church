@@ -77,7 +77,11 @@ export class FirebaseServerService extends FirebaseService {
   }
 
   public auth(): Observable<any> {
-    return Observable.throw('No custom authentication allowed on ');
+    return Observable.throw('No custom authentication allowed on server');
+  }
+
+  public logout(): Observable<any> {
+    return Observable.throw('No custom authentication allowed on server');
   }
 
   authenticated(): Observable<boolean> {

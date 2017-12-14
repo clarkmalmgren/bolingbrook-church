@@ -1,3 +1,5 @@
+
+
 form {
   margin-top: 10px;
 
@@ -10,17 +12,27 @@ form {
   }
 
 
-  mat-list {
+  mat-accordion {
     flex: 100%;
     margin-bottom: 25px;
 
-    mat-list-item {
-      margin-bottom: 12px;
+    mat-panel-title {
+      min-width: 85px;
     }
 
     mat-form-field, mat-select {
       flex: 1;
       min-width: 0;
+    }
+
+    div.command-row {
+      display: flex;
+      flex-flow: row nowrap;
+      flex-direction: row-reverse;
+
+      button {
+        margin: 0 5px;
+      }
     }
 
     button.add {

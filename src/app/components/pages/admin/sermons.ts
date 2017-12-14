@@ -30,29 +30,47 @@ export class SermonsComponent extends Secured implements OnInit {
   }
 
   ngOnInit() {
-    this.secure().subscribe(() => {
-      this.service.all()
-        .subscribe(sermons => {
-          this.sermons = sermons;
-        });
+    this.secure()
+      .subscribe((authd) => {
+        if (authd) {
+          this.update();
+        }
+      });
+  }
 
-      this.imageService.listSeries()
-        .subscribe(images => {
-          this.images = images;
-        });
-    });
+  update(): void {
+    this.service.all()
+      .subscribe(sermons => {
+        this.sermons = sermons;
+      });
+
+    this.imageService.listSeries()
+      .subscribe(images => {
+        this.images = images;
+      });
   }
 
   removeSermon(date: string): void {
-    this.service.deleteSermon(date);
+    this.service
+      .deleteSermon(date)
+      .subscribe(() => this.update());
   }
 
   addSermon(date: string): void {
-    this.sermons.push({} as Sermon);
+    const sermon = {
+      date: date,
+      series: '',
+      speaker: ''
+    } as Sermon;
+
+    this.service
+      .saveSermon(sermon)
+      .subscribe(() => this.update());
   }
 
   saveSermon(sermon: Sermon): void {
-    this.service.saveSermon(sermon);
+    this.service
+      .saveSermon(sermon);
   }
 
 }
