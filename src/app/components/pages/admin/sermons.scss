@@ -40,22 +40,15 @@ form {
     }
   }
 
-  div.submit-wrapper {
+  mat-paginator {
     flex: 100%;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-
-    observable-button {
-      flex: 1 1 auto;
-      max-width: 230px;
-      margin: 13px;
+    padding-bottom: 13px;
+    
+    /deep/ mat-select.mat-select {
+      height: initial;
     }
   }
-}
 
-mat-list-item.new-sermon /deep/ div.mat-list-item {
-  justify-content: flex-end;
 }
 
 div.icon {

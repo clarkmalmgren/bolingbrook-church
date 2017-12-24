@@ -5,6 +5,7 @@ import {
   MatExpansionModule,
   MatIconModule,
   MatInputModule,
+  MatPaginatorModule,
   MatSelectModule,
   MatListModule
 } from '@angular/material';
@@ -15,6 +16,7 @@ export const MATERIAL_MODULES = [
   MatExpansionModule,
   MatIconModule,
   MatInputModule,
+  MatPaginatorModule,
   MatSelectModule,
   MatListModule
 ];

@@ -5,6 +5,7 @@ import { Secured }            from './secured';
 import {
   FirebaseService,
   Observable,
+  Pager,
   SeriesImageForm,
   SeriesImageService,
   Sermon,
@@ -19,6 +20,7 @@ export class SermonsComponent extends Secured implements OnInit {
 
   sermons: Sermon[];
   images: SeriesImageForm[];
+  pager: Pager<Sermon>;
 
   constructor(
     router: Router,
@@ -39,7 +41,9 @@ export class SermonsComponent extends Secured implements OnInit {
   }
 
   update(): void {
-    this.service.all()
+    this.pager = this.service.page();
+    this.pager
+      .observe()
       .subscribe(sermons => {
         this.sermons = sermons;
       });

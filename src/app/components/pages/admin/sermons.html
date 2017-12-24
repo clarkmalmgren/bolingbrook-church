@@ -62,9 +62,12 @@
         </mat-expansion-panel>
       </mat-accordion>
 
-      <div class="submit-wrapper">
-        <bc-observable-button class="save" (bcOnClick)="save()" [disabled]="!valid">Save</bc-observable-button>
-      </div>
+      <mat-paginator
+        [length]="pager.length"
+        [pageSize]="pager.itemsPerPage"
+        [pageSizeOptions]="[5, 10, 25]"
+        (page)="pager.update($event)"
+      ></mat-paginator>
     </form>
   </section>
 

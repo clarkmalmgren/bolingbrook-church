@@ -1,6 +1,7 @@
 import { Injectable }                     from '@angular/core';
 import { FirebaseService, FirebaseUtils } from './firebase.service';
 import { Observable }                     from './observable';
+import { Pager }                          from './pager';
 import * as moment                        from 'moment';
 import                                         'moment-timezone';
 
@@ -93,6 +94,10 @@ export class SermonService {
           return (date.isBefore(threshold) === past);
         });
       });
+  }
+
+  page(): Pager<Sermon> {
+    return new Pager(this.all());
   }
 
   all(): Observable<Sermon[]> {
