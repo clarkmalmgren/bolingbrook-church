@@ -1,4 +1,5 @@
-import { Aperture } from './aperture';
+import { Aperture }   from './aperture';
+import { Observable } from './observable';
 
 export class ServerAperture extends Aperture {
 
@@ -30,5 +31,9 @@ export class ServerAperture extends Aperture {
 
   create(target: any): Aperture {
     return this;
+  }
+
+  observableWindowEvent(eventName: string): Observable<Event> {
+    return Observable.empty();
   }
 }

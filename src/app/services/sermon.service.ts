@@ -1,7 +1,7 @@
 import { Injectable }                     from '@angular/core';
 import { FirebaseService, FirebaseUtils } from './firebase.service';
 import { Observable }                     from './observable';
-import { Pager }                          from './pager';
+import { PaginatedPager, LinearPager }    from './pager';
 import * as moment                        from 'moment';
 import                                         'moment-timezone';
 
@@ -96,8 +96,8 @@ export class SermonService {
       });
   }
 
-  page(): Pager<Sermon> {
-    return new Pager(this.all());
+  paginated(): PaginatedPager<Sermon> {
+    return new PaginatedPager(this.all());
   }
 
   all(): Observable<Sermon[]> {

@@ -1,5 +1,5 @@
-import { Aperture } from './aperture';
-
+import { Aperture }   from './aperture';
+import { Observable } from './observable';
 
 /* Make ga typesafe, sortof */
 declare global {
@@ -48,5 +48,9 @@ export class BrowserAperture extends Aperture {
 
   create(target: any): Aperture {
     return new BrowserAperture().with(target);
+  }
+
+  observableWindowEvent(eventName: string): Observable<Event> {
+    return Observable.fromEvent(window, eventName);
   }
 }
