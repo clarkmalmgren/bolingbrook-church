@@ -6,9 +6,14 @@
       Welcome to the admin portal for the Bolingbrook Church. From here you can manage sermons.
     </p>
 
-    <div class="row links">
+    <div *ngIf="!authd" class="row links">
+      <a mat-raised-button (click)="login()">Login</a>
+    </div>
+
+    <div *ngIf="authd" class="row links">
       <a mat-raised-button [routerLink]="['./series']">Edit Series</a>
       <a mat-raised-button [routerLink]="['./sermons']">Edit Sermons</a>
+      <a mat-raised-button (click)="logout()">Logout</a>
     </div>
   </section>
 </main>

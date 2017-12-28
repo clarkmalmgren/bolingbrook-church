@@ -43,14 +43,14 @@ export class FirebaseBrowserDatabase implements FirebaseDatabase {
       .map((snap: firebase.database.DataSnapshot) => snap.exists());
   }
 
-  getOnce(path: string): Observable<any> {
+  getOnce<T>(path: string): Observable<T> {
     return observe(this.database.ref(path).once('value'))
       .map((snap: firebase.database.DataSnapshot) => snap.val());
   }
 
-  watch(path: string): Observable<any> {
+  watch<T>(path: string): Observable<T> {
     return Observable
-      .create((observer: Observer<any>) => {
+      .create((observer: Observer<T>) => {
         this.database.ref(path).on('value', (snap) => {
           observer.next(snap.val());
         });
@@ -114,6 +114,19 @@ export class FirebaseBrowserService extends FirebaseService {
       .map((result) => {
         return this._user = result.user;
       });
+  }
+
+  public logout(): Observable<any> {
+    const cb = (_ => {
+      this._user = undefined;
+      return _;
+    });
+
+    this.init();
+
+    return observe(this.fb.auth().signOut())
+      .map(cb)
+      .catch(cb);
   }
 
   authenticated(): Observable<boolean> {

@@ -14,19 +14,22 @@ export abstract class Secured implements OnInit {
     this.secure();
   }
 
-  secure(): Observable<any> {
-    return this.firebase.authenticated()
+  secure(): Observable<boolean> {
+    return this.firebase
+      .authenticated()
       .flatMap((authd) => {
         if (!authd) {
-          this.router.navigate(['/admin/login']);
-          return Observable.of('');
+          return Observable
+            .fromPromise(this.router.navigate(['/admin']))
+            .map(_ => false);
         } else {
-          return Observable.of('');
+          return Observable.of(true);
         }
       })
       .catch((err) => {
-        this.router.navigate(['/admin/login']);
-        return Observable.of('');
+        return Observable
+          .fromPromise(this.router.navigate(['/admin']))
+          .map(_ => false);
       });
   }
 }

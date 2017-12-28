@@ -1,4 +1,4 @@
-<bc-header image="/assets/messages.png" shade="0.4" relativeHeight="0.4">
+<bc-header image="/assets/messages.png" shade="0.4" relativeHeight="0" absoluteHeight="220">
   <h2>Edit Sermons</h2>
 </bc-header>
 <main>
@@ -12,49 +12,62 @@
 
   <section class="white">
     <form *ngIf="sermons">
+      
+      <h4>Add Another Sermon</h4>
+
+      <div class="row">
+        <mat-form-field>
+            <input matInput #newSermonDate type="date" name="new_sermon_date" placeholder="Date of Service">
+          </mat-form-field>
+        <button class="add" mat-mini-fab (click)="addSermon(newSermonDate.value)" [disabled]="!!newSermonDate">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
       <h4>Sermons</h4>
 
-      <mat-list>
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let s of sermons; let idx = index;">
+          <mat-expansion-panel-header>
+            <mat-panel-title>{{s.date}}</mat-panel-title>
+            <mat-panel-description>{{s.series}}</mat-panel-description>
+          </mat-expansion-panel-header>
 
-        <mat-list-item *ngFor="let s of sermons; let i = index;">
           <mat-form-field>
-            <input matInput type="date" [name]="'sermon_date_' + i" [(ngModel)]="s.date" placeholder="Date of Service">
+            <input matInput [name]="'sermon_series_' + idx" [(ngModel)]="s.series" placeholder="Title / Series">
           </mat-form-field>
           <mat-form-field>
-            <input matInput [name]="'sermon_series_' + i" [(ngModel)]="s.series" placeholder="Series">
+            <input matInput [name]="'sermon_speaker_' + idx" [(ngModel)]="s.speaker" placeholder="Speaker">
           </mat-form-field>
           <mat-form-field>
-            <input matInput [name]="'sermon_speaker_' + i" [(ngModel)]="s.speaker" placeholder="Speaker">
+            <input matInput [name]="'sermon_youtube_' + idx" [(ngModel)]="s.youtube" placeholder="Youtube ID">
           </mat-form-field>
 
-          <mat-select placeholder="Series Image" [name]="'image_' + i" [(ngModel)]="s.image">
+          <mat-select placeholder="Series Image" [name]="'image_' + idx" [(ngModel)]="s.image">
             <mat-option>None</mat-option>
             <mat-option *ngFor="let i of images" [value]="i.name">
               <div class="icon" [style.background-image]="i.style"></div> {{ i.name }}
             </mat-option>
           </mat-select>
 
-          <mat-form-field>
-            <input matInput [name]="'sermon_youtube_' + i" [(ngModel)]="s.youtube" placeholder="Youtube ID">
-          </mat-form-field>
-          <button mat-mini-fab class="add" (click)="saveSermon(s)">
-            <mat-icon>save</mat-icon>
-          </button>
-          <button mat-mini-fab (click)="removeSermon(i)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </mat-list-item>
 
-        <mat-list-item class="new-sermon">
-          <button class="add" mat-mini-fab (click)="addSermon()">
-            <mat-icon>add</mat-icon>
-          </button>
-        </mat-list-item>
-      </mat-list>
+          <div class="command-row">
+            <button mat-mini-fab class="add" (click)="saveSermon(s)">
+              <mat-icon>save</mat-icon>
+            </button>
+            <button mat-mini-fab (click)="removeSermon(s.date)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
 
-      <div class="submit-wrapper">
-        <bc-observable-button class="save" (bcOnClick)="save()" [disabled]="!valid">Save</bc-observable-button>
-      </div>
+      <mat-paginator
+        [length]="pager.length"
+        [pageSize]="pager.itemsPerPage"
+        [pageSizeOptions]="[5, 10, 25]"
+        (page)="pager.update($event)"
+      ></mat-paginator>
     </form>
   </section>
 

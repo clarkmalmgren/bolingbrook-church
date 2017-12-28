@@ -1,7 +1,7 @@
 import { expect, sinon, async, spyOf }  from 'testing';
 import { Location }                     from '@angular/common';
 import {
-  Event,
+  Event as RouterEvent,
   NavigationCancel,
   NavigationEnd,
   NavigationStart,
@@ -10,6 +10,7 @@ import {
 import { Analytics }                    from './analytics';
 import { Aperture }                     from './aperture';
 import { Env }                          from './env';
+import { Observable }                   from './observable';
 
 class MockAperture extends Aperture {
   scrollTo(options?: ScrollToOptions): void {
@@ -25,6 +26,9 @@ class MockAperture extends Aperture {
     return performance.now()
   }
   create(target: any): Aperture {
+    throw new Error('Method not implemented.');
+  }
+  observableWindowEvent(eventName: string): Observable<Event> {
     throw new Error('Method not implemented.');
   }
   constructor(private wrapped: Function) {
@@ -63,7 +67,7 @@ describe('Analytics', () => {
     });
 
     it('event callbacks should work correctly', () => {
-      let subscription: (event: Event) => void;
+      let subscription: (event: RouterEvent) => void;
       const subscribe = sinon.stub().callsFake((fn) => { subscription = fn; });
 
       const router = <Router><any> { events: { subscribe: subscribe } };

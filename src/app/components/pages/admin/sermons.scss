@@ -1,3 +1,5 @@
+
+
 form {
   margin-top: 10px;
 
@@ -10,12 +12,12 @@ form {
   }
 
 
-  mat-list {
+  mat-accordion {
     flex: 100%;
     margin-bottom: 25px;
 
-    mat-list-item {
-      margin-bottom: 12px;
+    mat-panel-title {
+      min-width: 85px;
     }
 
     mat-form-field, mat-select {
@@ -23,27 +25,30 @@ form {
       min-width: 0;
     }
 
+    div.command-row {
+      display: flex;
+      flex-flow: row nowrap;
+      flex-direction: row-reverse;
+
+      button {
+        margin: 0 5px;
+      }
+    }
+
     button.add {
       background-color: #009688;
     }
   }
 
-  div.submit-wrapper {
+  mat-paginator {
     flex: 100%;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-
-    observable-button {
-      flex: 1 1 auto;
-      max-width: 230px;
-      margin: 13px;
+    padding-bottom: 13px;
+    
+    /deep/ mat-select.mat-select {
+      height: initial;
     }
   }
-}
 
-mat-list-item.new-sermon /deep/ div.mat-list-item {
-  justify-content: flex-end;
 }
 
 div.icon {

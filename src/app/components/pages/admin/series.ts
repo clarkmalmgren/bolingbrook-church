@@ -20,7 +20,12 @@ export class SeriesComponent extends Secured implements OnInit {
   }
 
   ngOnInit() {
-    this.secure().subscribe(() => { this.update(); });
+    this.secure()
+      .subscribe((authd) => {
+        if (authd) {
+          this.update();
+        }
+      });
   }
 
   update(): void {

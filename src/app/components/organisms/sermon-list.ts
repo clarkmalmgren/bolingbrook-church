@@ -1,5 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { SermonService, Sermon }  from '../../services';
+import {
+  LinearPager,
+  SermonService,
+  Sermon
+}  from '../../services';
 
 @Component({
   selector: 'bc-sermon-list',
@@ -8,13 +12,25 @@ import { SermonService, Sermon }  from '../../services';
 })
 export class SermonListComponent implements OnInit {
 
-  @Input() sermons: Sermon[];
+  sermons: Sermon[] = [];
+  pager: LinearPager<Sermon>;
 
   constructor(private service: SermonService) {}
 
   ngOnInit() {
-    this.service.complete()
-      .subscribe(sermons => { this.sermons = sermons; });
+    this.pager = new LinearPager(this.service.complete());
+    this.pager.itemsPerPage = 20;
+
+    this.pager
+      .observe()
+      .subscribe(sermons => {
+        this.sermons = this.sermons.concat(sermons);
+      })
+  }
+
+  addSermons(): void {
+    console.log('Add more sermons!');
+    this.pager.next();
   }
 
 }

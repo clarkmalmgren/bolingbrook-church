@@ -1,3 +1,6 @@
-<div class="sermon-list">
+<div
+  class="sermon-list"
+  bcInfiniteScroll
+  (onScroll)="addSermons()">
   <bc-sermon-card *ngFor="let s of sermons" [sermon]="s"></bc-sermon-card>
 </div>
