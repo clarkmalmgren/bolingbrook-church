@@ -10,5 +10,5 @@ docker tag ${REPO}:${TRAVIS_TAG} ${REPO}:latest
 pip install --user awscli
 export PATH=$PATH:$HOME/.local/bin
 
-eval $(aws ecr get-login --region us-east-1)
+eval $(aws ecr get-login --region us-east-1 --no-include-email)
 docker push ${REPO}

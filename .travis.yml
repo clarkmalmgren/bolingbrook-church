@@ -23,6 +23,7 @@ before_deploy:
   - node docker
 
 deploy:
+  skip_cleanup: true
   provider: script
   file: release.tar.gz
   script: ./deploy.sh
