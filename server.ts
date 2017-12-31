@@ -2,12 +2,12 @@
 import 'zone.js/dist/zone-node';
 import 'reflect-metadata';
 
-import { renderModuleFactory } from '@angular/platform-server';
-import { enableProdMode } from '@angular/core';
-
-import * as express from 'express';
-import { join } from 'path';
-import { readFileSync } from 'fs';
+import { renderModuleFactory }  from '@angular/platform-server';
+import { enableProdMode }       from '@angular/core';
+import * as express             from 'express';
+import { join }                 from 'path';
+import { readFileSync }         from 'fs';
+import { Sitemap }              from './server/sitemap';
 
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();
@@ -17,6 +17,8 @@ const app = express();
 
 const PORT = process.env.PORT || 4000;
 const DIST_FOLDER = join(process.cwd(), 'dist');
+
+const sitemap = new Sitemap();
 
 // Our index.html we'll use as our template
 const template = readFileSync(join(DIST_FOLDER, 'browser', 'index.html')).toString();
@@ -42,6 +44,13 @@ app.engine('html', (_, options, callback) => {
 
 app.set('view engine', 'html');
 app.set('views', join(DIST_FOLDER, 'browser'));
+
+
+// Render the Sitemap
+app.get('*/sitemap.txt', (req, res) => {
+  res.set('Content-Type', 'plain/text');
+  sitemap.render().subscribe(map => { res.send(map); });
+});
 
 // Server static files from /browser
 app.get('*.*', express.static(join(DIST_FOLDER, 'browser')));
