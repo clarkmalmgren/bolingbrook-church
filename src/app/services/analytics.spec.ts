@@ -11,34 +11,7 @@ import { Analytics }                    from './analytics';
 import { Aperture }                     from './aperture';
 import { Env }                          from './env';
 import { Observable }                   from './observable';
-
-class MockAperture extends Aperture {
-  scrollTo(options?: ScrollToOptions): void {
-    throw new Error('Method not implemented.');
-  }
-  open(url?: string, target?: string, features?: string, replace?: boolean): Aperture {
-    throw new Error('Method not implemented.');
-  }
-  set(key: string, value: any): void {
-    throw new Error('Method not implemented.');
-  }
-  now(): number {
-    return performance.now()
-  }
-  create(target: any): Aperture {
-    throw new Error('Method not implemented.');
-  }
-  observableWindowEvent(eventName: string): Observable<Event> {
-    throw new Error('Method not implemented.');
-  }
-  constructor(private wrapped: Function) {
-    super();
-  }
-
-  get ga(): Function {
-    return this.wrapped;
-  }
-}
+import { MockAperture }                 from './aperture.mock';
 
 /* tslint:disable: no-unused-expression */
 describe('Analytics', () => {
