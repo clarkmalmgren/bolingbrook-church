@@ -5,6 +5,7 @@ import { Autoclean }                                        from '../../template
 
 import {
   Analytics,
+  Aperture,
   FeatureToggles,
   Observable,
   SeriesImageService,
@@ -34,6 +35,7 @@ export class SermonComponent extends Autoclean implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private analytics: Analytics,
+    private aperture: Aperture,
     private imageService: SeriesImageService,
     private meta: Meta,
     private sanitizer: DomSanitizer,
@@ -45,7 +47,7 @@ export class SermonComponent extends Autoclean implements OnInit {
   }
 
   interval(): Observable<any> {
-    return Observable.interval(this.analyticsInterval);
+    return this.aperture.browser ? Observable.interval(this.analyticsInterval) : Observable.empty();
   }
 
   ngOnInit() {

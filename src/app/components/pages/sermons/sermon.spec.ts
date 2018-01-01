@@ -1,8 +1,10 @@
 import { expect, sinon, async, MockBuilder, callCount, stubOf, spyOf } from 'testing';
 import { ActivatedRoute }                                              from '@angular/router';
 import { SermonComponent }                                             from './sermon';
+import { MockAperture }                                                from '../../../services/aperture.mock';
 import {
   Analytics,
+  Aperture,
   FeatureToggles,
   Observable,
   SeriesImageService,
@@ -16,6 +18,8 @@ import {
 /* tslint:disable: no-unused-expression */
 describe('SermonComponent', () => {
 
+  const aperture = new MockAperture();
+
   describe('ngOnInit', () => {
 
     it('should subscribe to video state changes', async(() => {
@@ -27,11 +31,12 @@ describe('SermonComponent', () => {
                                 .with('params', Observable.empty())
                                 .build();
 
+
       const togglesService = MockBuilder.of(TogglesService)
                                 .withStub('getToggles', Observable.empty())
                                 .build();
 
-      const sermon = new SermonComponent(activatedRoute, null, null, null, null, null, togglesService, youtubeService);
+      const sermon = new SermonComponent(activatedRoute, null, aperture, null, null, null, null, togglesService, youtubeService);
 
       sermon.ngOnInit();
 
@@ -59,7 +64,7 @@ describe('SermonComponent', () => {
                                 .withStub('getToggles', Observable.empty())
                                 .build();
 
-      const sermon = new SermonComponent(activatedRoute, analytics, null, null, null, null, togglesService, youtubeService);
+      const sermon = new SermonComponent(activatedRoute, analytics, aperture, null, null, null, null, togglesService, youtubeService);
       sermon.interval = () => Observable.from(['', '']);
       sermon.videoState = VideoState.PLAYING;
       sermon.sermon = { youtube: 'Jesus4Life' } as Sermon;
@@ -90,7 +95,7 @@ describe('SermonComponent', () => {
       const togglesService = MockBuilder.of(TogglesService)
                               .withStub('getToggles', Observable.empty())
                               .build();
-      const sermon = new SermonComponent(activatedRoute, analytics, null, null, null, null, togglesService, youtubeService);
+      const sermon = new SermonComponent(activatedRoute, analytics, aperture, null, null, null, null, togglesService, youtubeService);
       sermon.interval = () => Observable.of('');
       sermon.videoState = VideoState.PLAYING;
       sermon.live = true;
@@ -128,7 +133,7 @@ describe('SermonComponent', () => {
                                 .withStub('getToggles', Observable.empty())
                                 .build();
 
-        const sermon = new SermonComponent(activatedRoute, analytics, null, null, null, null, togglesService, youtubeService);
+        const sermon = new SermonComponent(activatedRoute, analytics, aperture, null, null, null, null, togglesService, youtubeService);
         sermon.interval = () => Observable.of('');
         sermon.videoState = state;
         sermon.sermon = { youtube: 'Jesus4Life' } as Sermon;
