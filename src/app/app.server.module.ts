@@ -1,12 +1,14 @@
-import { NgModule }               from '@angular/core';
-import { ServerModule }           from '@angular/platform-server';
-import { ModuleMapLoaderModule }  from '@nguniversal/module-map-ngfactory-loader';
-import { AppModule }              from './app.module';
-import { AppComponent }           from './app.component';
-import { Aperture }               from './services/aperture';
-import { ServerAperture }         from './services/aperture.server';
-import { FirebaseService }        from './services/firebase.service';
-import { FirebaseServerService }  from './services/firebase.server';
+import { NgModule }                                   from '@angular/core';
+import { ServerModule }                               from '@angular/platform-server';
+import { ModuleMapLoaderModule }                      from '@nguniversal/module-map-ngfactory-loader';
+import { RESPONSE }                                    from '@nguniversal/express-engine/tokens'
+import * as express                                   from 'express';
+import { AppModule }                                  from './app.module';
+import { AppComponent }                               from './app.component';
+import { Aperture, FirebaseService, ResponseService } from './services';
+import { ServerAperture }                             from './services/aperture.server';
+import { FirebaseServerService }                      from './services/firebase.server';
+import { ServerResponseService }                      from './services/response.server';
 
 @NgModule({
   imports: [
@@ -20,6 +22,7 @@ import { FirebaseServerService }  from './services/firebase.server';
   providers: [
     { provide: Aperture,        useClass: ServerAperture},
     { provide: FirebaseService, useClass: FirebaseServerService },
+    { provide: ResponseService, useClass: ServerResponseService }
   ]
 })
 export class AppServerModule { }

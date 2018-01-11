@@ -5,6 +5,7 @@ import 'reflect-metadata';
 import { renderModuleFactory }  from '@angular/platform-server';
 import { enableProdMode }       from '@angular/core';
 import * as express             from 'express';
+import { RESPONSE }             from '@nguniversal/express-engine/tokens'
 import { join }                 from 'path';
 import { readFileSync }         from 'fs';
 import { Sitemap }              from './server/sitemap';
@@ -35,7 +36,8 @@ app.engine('html', (_, options, callback) => {
     url: options.req.url,
     // DI so that we can get lazy-loading to work differently (since we need it to just instantly render it)
     extraProviders: [
-      provideModuleMap(LAZY_MODULE_MAP)
+      provideModuleMap(LAZY_MODULE_MAP),
+      { provide: RESPONSE, useFactory: () => options.res, deps: [] }
     ]
   }).then(html => {
     callback(null, html);
@@ -57,7 +59,7 @@ app.get('*.*', express.static(join(DIST_FOLDER, 'browser')));
 
 // All regular routes use the Universal engine
 app.get('*', (req, res) => {
-  res.render(join(DIST_FOLDER, 'browser', 'index.html'), { req });
+  res.render(join(DIST_FOLDER, 'browser', 'index.html'), { req: req, res: res });
 });
 
 // Start up the Node server
