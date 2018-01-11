@@ -52,28 +52,28 @@ export class SermonComponent extends Autoclean implements OnInit {
 
   ngOnInit() {
     /* Subscribe to Video State Change Events */
-    this.autoclean(
-      this.youtubeService
-        .videoState('sermonVideo')
-        .subscribe((state) => {
-          this.videoState = state;
-        }));
+    this.youtubeService
+      .videoState('sermonVideo')
+      .subscribe((state) => {
+        this.videoState = state;
+      })
+      .autoclean(this);
 
     /* Handle issues if youtube is having issues */
-    this.autoclean(
-      this.togglesService.getToggles()
-        .subscribe((toggles) => {
-          this.youtube_live_issues = !!toggles.youtube_live_issues;
-        }));
+    this.togglesService.getToggles()
+      .subscribe((toggles) => {
+        this.youtube_live_issues = !!toggles.youtube_live_issues;
+      })
+      .autoclean(this);
 
     /* Record Analytics when Playing */
-    this.autoclean(
-      this.interval()
-        .subscribe(() => {
-          if (this.videoState === VideoState.PLAYING) {
-            this.analytics.event(this.live ? 'Live Sermon' : 'Sermon', 'Playing', this.sermon.youtube);
-          }
-        }));
+    this.interval()
+      .subscribe(() => {
+        if (this.videoState === VideoState.PLAYING) {
+          this.analytics.event(this.live ? 'Live Sermon' : 'Sermon', 'Playing', this.sermon.youtube);
+        }
+      })
+      .autoclean(this);
 
     this.activatedRoute.params
       .flatMap((params) => {
