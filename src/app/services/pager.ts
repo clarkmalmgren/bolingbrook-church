@@ -23,8 +23,13 @@ export abstract class Pager<T> {
     });
   }
 
+  close(): void {
+    this.observer.complete();
+    this.observer = undefined;
+  }
+
   get length(): number {
-    return this.items.length;
+    return this.items ? this.items.length : 0;
   }
 
   get pages(): number {

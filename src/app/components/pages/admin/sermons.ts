@@ -21,6 +21,7 @@ export class SermonsComponent extends Secured implements OnInit {
   sermons: Sermon[];
   images: SeriesImageForm[];
   pager: PaginatedPager<Sermon>;
+  newSermonDate: string;
 
   constructor(
     router: Router,
@@ -37,16 +38,22 @@ export class SermonsComponent extends Secured implements OnInit {
         if (authd) {
           this.update();
         }
-      });
+      })
+      .autoclean(this);
   }
 
   update(): void {
+    if (this.pager) {
+      this.pager.close();
+    }
+
     this.pager = this.service.paginated();
     this.pager
       .observe()
       .subscribe(sermons => {
         this.sermons = sermons;
-      });
+      })
+      .autoclean(this);
 
     this.imageService.listSeries()
       .subscribe(images => {
@@ -74,7 +81,8 @@ export class SermonsComponent extends Secured implements OnInit {
 
   saveSermon(sermon: Sermon): void {
     this.service
-      .saveSermon(sermon);
+      .saveSermon(sermon)
+      .subscribe(() => this.update());
   }
 
 }

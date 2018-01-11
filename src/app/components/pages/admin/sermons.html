@@ -19,7 +19,7 @@
         <mat-form-field>
             <input matInput #newSermonDate type="date" name="new_sermon_date" placeholder="Date of Service">
           </mat-form-field>
-        <button class="add" mat-mini-fab (click)="addSermon(newSermonDate.value)" [disabled]="!!newSermonDate">
+        <button class="add" mat-mini-fab (click)="addSermon(newSermonDate.value)" [disabled]="!newSermonDate.value">
           <mat-icon>add</mat-icon>
         </button>
       </div>

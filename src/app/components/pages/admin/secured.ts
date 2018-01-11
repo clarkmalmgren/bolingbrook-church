@@ -2,13 +2,16 @@ import { OnInit }           from '@angular/core';
 import { Router }           from '@angular/router';
 import { FirebaseService }  from '../../../services/firebase.service';
 import { Observable }       from '../../../services/observable';
+import { Autoclean }        from '../../templates/autoclean';
 
-export abstract class Secured implements OnInit {
+export abstract class Secured extends Autoclean implements OnInit {
 
   constructor(
     protected router: Router,
     protected firebase: FirebaseService
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.secure();
