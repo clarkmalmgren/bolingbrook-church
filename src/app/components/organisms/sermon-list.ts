@@ -29,7 +29,6 @@ export class SermonListComponent implements OnInit {
   }
 
   addSermons(): void {
-    console.log('Add more sermons!');
     this.pager.next();
   }
 
