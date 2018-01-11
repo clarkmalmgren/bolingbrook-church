@@ -1,17 +1,14 @@
 import { Component, OnInit }  from '@angular/core';
-import { Meta }               from '@angular/platform-browser';
+import { ResponseService }    from '../../services';
 
 @Component({
   templateUrl: './not-found.html'
 })
 export class NotFoundComponent implements OnInit {
 
-  constructor(private meta: Meta) {}
+  constructor(private responseService: ResponseService) {}
 
   ngOnInit() {
-    this.meta.addTag({
-      name: 'prerender-status-code',
-      content: '404'
-    });
+    this.responseService.setStatus(404, 'Not Found');
   }
 }

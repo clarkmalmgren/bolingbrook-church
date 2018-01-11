@@ -7,6 +7,7 @@ import { GlobalErrorHandler }                                 from './error.hand
 import { FirebaseService, FirebaseStorage, FirebaseDatabase } from './firebase.service';
 import { Observable, Subscription }                           from './observable';
 import { Pager, PaginatedPager, LinearPager }                 from './pager';
+import { ResponseService }                                    from './response.service';
 import { SeriesImageForm, SeriesImageService }                from './series.service';
 import { SermonService, Sermon }                              from './sermon.service';
 import { FeatureToggles, TogglesService }                     from './toggles.service';
@@ -40,6 +41,7 @@ export {
   Observable,
   Pager,
   PaginatedPager,
+  ResponseService,
   SeriesImageForm,
   SeriesImageService,
   Sermon,
