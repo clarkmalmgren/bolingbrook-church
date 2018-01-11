@@ -6,10 +6,6 @@ import { ResponseService }      from './response.service';
 @Injectable()
 export class ServerResponseService extends ResponseService {
 
-  static factory(response: express.Response): ServerResponseService {
-    return new ServerResponseService(response);
-  }
-
   constructor( @Inject(RESPONSE) private response: express.Response ) {
     super();
   }
