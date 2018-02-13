@@ -1,0 +1,23 @@
+aside.popup {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  background: #84f1f9;
+  color: black;
+  
+  section {
+    padding: 20px;
+  }
+
+  ul {
+    list-style: none;
+    border-left: solid 2px #6d6b6b;
+    padding-left: 20px;
+
+    li {
+      padding: 9px 0;
+    }
+  }
+}
