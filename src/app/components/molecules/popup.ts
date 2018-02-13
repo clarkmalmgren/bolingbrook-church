@@ -1,5 +1,6 @@
 import { Component, OnInit }                          from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { Aperture }                                   from '../../services'
 
 @Component({
   selector: 'bc-popup',
@@ -15,10 +16,13 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 })
 export class PopupComponent implements OnInit {
 
-  popupState: string = 'hidden';
+  popupState: string = 'shown';
+
+  constructor(private aperture: Aperture) {}
 
   ngOnInit() {
-    setTimeout(() => this.popupState = 'shown', 1000);
-    setTimeout(() => this.popupState = 'hidden', 10000);
+    if (this.aperture.browser) {
+      setTimeout(() => this.popupState = 'hidden', 10000);
+    }
   }
 }
