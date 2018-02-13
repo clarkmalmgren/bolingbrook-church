@@ -2,8 +2,7 @@ import { Component, OnInit }                from '@angular/core';
 import { DomSanitizer, SafeResourceUrl }    from '@angular/platform-browser';
 import { Env }                              from '../../services';
 
-const service_query = 'place_id:ChIJhfSXudNeDogRc69spHCK76Q';
-const office_query  = 'place_id:ChIJsWqLHlBaDogRzwidXU9DMnk';
+const location_query  = 'place_id:ChIJsWqLHlBaDogRzwidXU9DMnk';
 
 @Component({
   templateUrl: './locations.html',
@@ -11,8 +10,7 @@ const office_query  = 'place_id:ChIJsWqLHlBaDogRzwidXU9DMnk';
 })
 export class LocationsComponent implements OnInit {
 
-  service_ref: SafeResourceUrl;
-  office_ref: SafeResourceUrl;
+  location_ref: SafeResourceUrl;
 
   constructor(
     private env: Env,
@@ -20,8 +18,7 @@ export class LocationsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.service_ref = this.getRef(service_query);
-    this.office_ref = this.getRef(office_query);
+    this.location_ref = this.getRef(location_query);
   }
 
   getRef(query: string): SafeResourceUrl {
