@@ -22,7 +22,7 @@ export class PopupComponent implements OnInit {
 
   ngOnInit() {
     if (this.aperture.browser) {
-      setTimeout(() => this.popupState = 'hidden', 10000);
+      setTimeout(() => this.popupState = 'hidden', 6000);
     }
   }
 }
