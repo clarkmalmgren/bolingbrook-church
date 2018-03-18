@@ -2,6 +2,8 @@ import { Component, OnInit }                                from '@angular/core'
 import { DomSanitizer, SafeResourceUrl, SafeStyle, Meta }   from '@angular/platform-browser';
 import { ActivatedRoute }                                   from '@angular/router';
 import { Autoclean }                                        from '../../templates/autoclean';
+import * as moment                                          from 'moment';
+import                                                           'moment-timezone';
 
 import {
   Analytics,
@@ -88,8 +90,10 @@ export class SermonComponent extends Autoclean implements OnInit {
         }
       })
       .subscribe(sermon => {
+        const youtube = (this.live && sermon.second_youtube && this.afterNoon()) ? sermon.second_youtube : sermon.youtube;
+
         this.sermon = sermon;
-        const url = `https://www.youtube.com/embed/${sermon.youtube}?enablejsapi=1`;
+        const url = `https://www.youtube.com/embed/${youtube}?enablejsapi=1`;
         this.youtube_url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
         this.error = false;
 
@@ -105,5 +109,10 @@ export class SermonComponent extends Autoclean implements OnInit {
           content: '404'
         });
       });
+  }
+
+  private afterNoon(): boolean {
+    const now = moment.tz('America/Chicago');
+    return now.hour() > 12;
   }
 }

@@ -11,6 +11,7 @@ export interface Sermon {
   speaker: string;
   image?: string;
   youtube?: string;
+  second_youtube?: string; // afternoon service
 
   // deprecated
   name?: string;
