@@ -42,6 +42,9 @@
           <mat-form-field>
             <input matInput [name]="'sermon_youtube_' + idx" [(ngModel)]="s.youtube" placeholder="Youtube ID">
           </mat-form-field>
+          <mat-form-field>
+            <input matInput [name]="'sermon_second_youtube_' + idx" [(ngModel)]="s.second_youtube" placeholder="Second Youtube ID">
+          </mat-form-field>
 
           <mat-select placeholder="Series Image" [name]="'image_' + idx" [(ngModel)]="s.image">
             <mat-option>None</mat-option>
