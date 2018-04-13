@@ -1,6 +1,6 @@
 import { expect, sinon, async, MockBuilder, stubOf }  from 'testing';
 import { GivingComponent }                            from './giving';
-import { Analytics, Observable }                      from 'app/services';
+import { Analytics, Observable, Aperture }            from 'app/services';
 
 /* tslint:disable: no-unused-expression */
 describe('GivingComponent', () => {
@@ -11,7 +11,9 @@ describe('GivingComponent', () => {
         .withStub('event', Observable.empty())
         .build();
 
-      const giving = new GivingComponent(analytics);
+      const aperture = { browser: false } as Aperture
+
+      const giving = new GivingComponent(analytics, aperture);
       expect(giving.give('easy')).to.be.false;
     });
 
@@ -27,7 +29,10 @@ describe('GivingComponent', () => {
 
         const location = {} as Location;
 
-        const giving = new GivingComponent(analytics);
+        const aperture = { browser: false } as Aperture
+
+        const giving = new GivingComponent(analytics, aperture);
+        giving.ngOnInit()
         giving._location = location;
         giving.give(type);
 
@@ -43,7 +48,9 @@ describe('GivingComponent', () => {
         .withStub('event', Observable.of(''))
         .build();
 
-      const giving = new GivingComponent(analytics);
+      const aperture = { browser: false } as Aperture
+
+      const giving = new GivingComponent(analytics, aperture);
       const response = giving.showEnvelope();
 
       expect(response).to.be.false;
@@ -54,7 +61,9 @@ describe('GivingComponent', () => {
 
   describe('hiding the envelope', () => {
     it('just hide the envelope', () => {
-      const giving = new GivingComponent(undefined);
+      const aperture = { browser: false } as Aperture
+
+      const giving = new GivingComponent(undefined, aperture);
       giving.envelopeShown = true;
       giving.hideEnvelope();
 

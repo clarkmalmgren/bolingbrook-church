@@ -1,10 +1,9 @@
 <a class="card" [routerLink]="route">
   <div class="wrapper">
-    <img [src]="image" [alt]="sermon.name">
+    <img [src]="image" [alt]="sermon.title">
     <div class="data">
-      <div *ngIf="sermon.image" class="icon" [style.background-image]="icon"></div>
       <div class="text">
-        <div class="title">{{ sermon.series }}</div>
+        <div class="title">{{ sermon.title }}</div>
         <div class="speaker">{{ sermon.speaker }}</div>
       </div>
       <span class="date">{{ sermon.date | date:'longDate' }}</span>

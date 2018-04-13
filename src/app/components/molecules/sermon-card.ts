@@ -8,26 +8,18 @@ import { Sermon, SeriesImageService } from '../../services';
   templateUrl: './sermon-card.html',
   styleUrls: [ './sermon-card.scss' ]
 })
-export class SermonCardComponent implements OnInit {
+export class SermonCardComponent {
 
   @Input()
   sermon: Sermon;
-
-  icon: SafeStyle;
 
   constructor(
     private service: SeriesImageService
   ) {}
 
-  ngOnInit() {
-    if (this.sermon.image) {
-      this.service.getSeriesImageStyle(this.sermon.image)
-        .subscribe(style => { this.icon = style; });
-    }
-  }
-
   get image(): string {
-    return `https://i.ytimg.com/vi/${this.sermon.youtube}/hqdefault.jpg`;
+    const youtube = this.sermon.services[0].youtube
+    return `https://i.ytimg.com/vi/${youtube}/hqdefault.jpg`;
   }
 
   get route(): string[] {

@@ -10,6 +10,7 @@ import                                                                          
 export class HomeComponent implements OnInit {
 
   live: boolean = false;
+  today: string
   sources: BackgroundVideoSource[];
   sermon: Sermon;
 
@@ -33,7 +34,8 @@ export class HomeComponent implements OnInit {
       .liveToday()
       .subscribe((liveToday) => {
         const now = moment.tz('America/Chicago');
-        this.live = (liveToday && now.day() === 6 && now.hour() >= 10 &&  now.hour() < 14);
+        this.today =  now.format('YYYY-MM-DD')
+        this.live = liveToday && now.hour() >= 10 && now.hour() < 14;
       });
   }
 

@@ -9,7 +9,7 @@ import { Observable, Subscription }                           from './observable
 import { Pager, PaginatedPager, LinearPager }                 from './pager';
 import { ResponseService }                                    from './response.service';
 import { SeriesImageForm, SeriesImageService }                from './series.service';
-import { SermonService, Sermon }                              from './sermon.service';
+import { SermonService, Sermon, WorshipService }              from './sermon.service';
 import { FeatureToggles, TogglesService }                     from './toggles.service';
 import { YoutubeService, VideoState }                         from './youtube.service';
 
@@ -49,5 +49,6 @@ export {
   Subscription,
   TogglesService,
   VideoState,
+  WorshipService,
   YoutubeService
 };
