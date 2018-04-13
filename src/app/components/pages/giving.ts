@@ -1,18 +1,23 @@
-import { Component }    from '@angular/core';
-import { Analytics }    from '../../services';
+import { Component, OnInit }   from '@angular/core';
+import { Analytics, Aperture } from '../../services';
 
 @Component({
   templateUrl: './giving.html',
   styleUrls: [ './giving.scss' ]
 })
-export class GivingComponent {
+export class GivingComponent implements OnInit {
 
   envelopeShown: boolean = false;
-  _location: Location = location;
+  _location: Location
 
   constructor(
-    private analytics: Analytics
+    private analytics: Analytics,
+    private aperture: Aperture
   ) {}
+
+  ngOnInit() {
+    this._location = this.aperture.browser ? window.location : {} as Location
+  }
 
   give(type: string): boolean {
     this.analytics.event('nav', 'leave', 'donate')

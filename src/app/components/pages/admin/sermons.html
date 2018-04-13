@@ -17,8 +17,8 @@
 
       <div class="row">
         <mat-form-field>
-            <input matInput #newSermonDate type="date" name="new_sermon_date" placeholder="Date of Service">
-          </mat-form-field>
+          <input matInput #newSermonDate type="date" name="new_sermon_date" placeholder="Date of Service">
+        </mat-form-field>
         <button class="add" mat-mini-fab (click)="addSermon(newSermonDate.value)" [disabled]="!newSermonDate.value">
           <mat-icon>add</mat-icon>
         </button>
@@ -30,29 +30,38 @@
         <mat-expansion-panel *ngFor="let s of sermons; let idx = index;">
           <mat-expansion-panel-header>
             <mat-panel-title>{{s.date}}</mat-panel-title>
-            <mat-panel-description>{{s.series}}</mat-panel-description>
+            <mat-panel-description>{{s.title}}</mat-panel-description>
           </mat-expansion-panel-header>
 
           <mat-form-field>
-            <input matInput [name]="'sermon_series_' + idx" [(ngModel)]="s.series" placeholder="Title / Series">
+            <input matInput [name]="'sermon_title_' + idx" [(ngModel)]="s.title" placeholder="Title">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput [name]="'sermon_series_' + idx" [(ngModel)]="s.series" placeholder="Series">
           </mat-form-field>
           <mat-form-field>
             <input matInput [name]="'sermon_speaker_' + idx" [(ngModel)]="s.speaker" placeholder="Speaker">
           </mat-form-field>
           <mat-form-field>
-            <input matInput [name]="'sermon_youtube_' + idx" [(ngModel)]="s.youtube" placeholder="Youtube ID">
+            <textarea matInput [name]="'sermon_description_' + idx" [(ngModel)]="s.description" placeholder="Description"></textarea>
           </mat-form-field>
           <mat-form-field>
-            <input matInput [name]="'sermon_second_youtube_' + idx" [(ngModel)]="s.second_youtube" placeholder="Second Youtube ID">
+            <input matInput [name]="'sermon_tags_' + idx" [(ngModel)]="s.tags" placeholder="Tags (comma separated)">
           </mat-form-field>
 
-          <mat-select placeholder="Series Image" [name]="'image_' + idx" [(ngModel)]="s.image">
-            <mat-option>None</mat-option>
-            <mat-option *ngFor="let i of images" [value]="i.name">
-              <div class="icon" [style.background-image]="i.style"></div> {{ i.name }}
-            </mat-option>
-          </mat-select>
-
+          <div class="services">
+            <div class="service" *ngFor="let ws of s.services; let ws_idx = index;">
+              <mat-form-field>
+                <input matInput [name]="'sermon_start_' + idx + ws_idx" type="time" [(ngModel)]="ws.start" name="start time" placeholder="Start Time">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput [name]="'sermon_identifier_' + idx + ws_idx" [(ngModel)]="ws.identifier" placeholder="Identifier">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput [name]="'sermon_youtube_' + idx + ws_idx" [(ngModel)]="ws.youtube" placeholder="Youtube ID">
+              </mat-form-field>
+            </div>
+          </div>
 
           <div class="command-row">
             <button mat-mini-fab class="add" (click)="saveSermon(s)">

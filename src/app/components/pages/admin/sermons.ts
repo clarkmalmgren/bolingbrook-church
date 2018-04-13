@@ -1,6 +1,7 @@
 import { OnInit, Component }  from '@angular/core';
 import { Router }             from '@angular/router';
 import { Secured }            from './secured';
+import * as moment            from 'moment'
 
 import {
   FirebaseService,
@@ -10,6 +11,7 @@ import {
   SeriesImageService,
   Sermon,
   SermonService,
+  WorshipService
 } from '../../../services';
 
 @Component({
@@ -68,11 +70,10 @@ export class SermonsComponent extends Secured implements OnInit {
   }
 
   addSermon(date: string): void {
-    const sermon = {
-      date: date,
-      series: '',
-      speaker: ''
-    } as Sermon;
+    const sermon = new Sermon(date, '', '', '', '', '', [
+      new WorshipService('10:30:00', 'Morning', ''),
+      new WorshipService('12:30:00', 'Afternoon', ''),
+    ]);
 
     this.service
       .saveSermon(sermon)

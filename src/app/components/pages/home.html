@@ -1,6 +1,6 @@
 <bc-header [video]="sources" image="/assets/messages.png" shade="0.4">
 
-  <button *ngIf="live" class="live" mat-raised-button routerLink="/sermons/live">
+  <button *ngIf="live" class="live" mat-raised-button [routerLink]="['/sermons', today]">
     <mat-icon>live_tv</mat-icon> WATCH LIVE SERMON
   </button>
 

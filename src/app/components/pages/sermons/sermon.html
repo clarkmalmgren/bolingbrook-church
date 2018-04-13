@@ -1,27 +1,22 @@
 <bc-header></bc-header>
 <main>
-  <section *ngIf="youtube_live_issues && live">
-    <h2>Experiencing Issues</h2>
-    <p>
-      Unfortunately, we are having techincal issues with our live streaming. We are working hard to address
-      the issue and will be back soon.
-    </p>
-  </section>
+  
 
   <section class="video">
-    <iframe *ngIf="youtube_url"
-            id="sermonVideo"
-            [src]="youtube_url"
-            frameborder="0"
-            webkitallowfullscreen=""
-            mozallowfullscreen=""
-            allowfullscreen="">
-    </iframe>
+
+    <div class="video" *ngFor="let service of services">
+      <iframe *ngIf="service.url"
+              [src]="service.url"
+              frameborder="0"
+              webkitallowfullscreen=""
+              mozallowfullscreen=""
+              allowfullscreen="">
+      </iframe>
+    </div>
 
     <div class="data" *ngIf="sermon">
-      <div *ngIf="sermon.image" class="icon" [style.background-image]="icon"></div>
       <div class="text">
-        <div class="title">{{ sermon.series }}</div>
+        <div class="title">{{ sermon.title }}</div>
         <div class="speaker">{{ sermon.speaker }}</div>
       </div>
       <span class="date">{{ sermon.date | date:'longDate' }}</span>
