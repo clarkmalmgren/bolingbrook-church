@@ -13,17 +13,3 @@ export abstract class Autoclean implements OnDestroy {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 }
-
-function autoclean(this: Subscription, cleaner: Autoclean): Subscription {
-  cleaner.autoclean(this);
-  return this;
-}
-
-/* tslint:disable */
-declare module 'rxjs/Subscription' {
-  interface Subscription {
-    autoclean: typeof autoclean;
-  }
-}
-
-Subscription.prototype.autoclean = autoclean;
