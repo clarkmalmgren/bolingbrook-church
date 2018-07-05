@@ -1,4 +1,3 @@
-import { Env }          from './env';
 import { Observable }   from './observable';
 
 export class FirebaseUtils {
