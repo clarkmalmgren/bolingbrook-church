@@ -41,14 +41,17 @@ export class InfiniteScrollDirective extends Autoclean implements AfterViewInit 
   }
 
   ngAfterViewInit() {
-    this.aperture
-      .observableWindowEvent('scroll')
-      .map((e: Event) => new Snapshot((e.target as any).scrollingElement as Element))
-      .pairwise()
-      .filter((pair: Snapshot[]) => pair[0].scrollTop < pair[1].scrollTop)
-      .map((pair: Snapshot[]) => pair[1])
-      .filter((s: Snapshot) => 100 * (s.scrollTop + s.clientHeight) / s.scrollHeight > this.scrollPercent)
-      .subscribe(e => { this.onScroll.emit(''); })
-      .autoclean(this);
+    const sub =
+      this.aperture
+        .observableWindowEvent('scroll')
+        .map((e: Event) => new Snapshot((e.target as any).scrollingElement as Element))
+        .pairwise()
+        .filter((pair: Snapshot[]) => pair[0].scrollTop < pair[1].scrollTop)
+        .map((pair: Snapshot[]) => pair[1])
+        .filter((s: Snapshot) => 100 * (s.scrollTop + s.clientHeight) / s.scrollHeight > this.scrollPercent)
+        .subscribe(e => { this.onScroll.emit(''); })
+
+    this.autoclean(sub)
+    return sub
   }
 }

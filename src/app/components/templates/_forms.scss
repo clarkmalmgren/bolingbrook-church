@@ -42,7 +42,6 @@ form {
   mat-select.mat-select {
     @include formPart();
     padding-top: 9px;
-    height: 45px;
     font-family: 'Comfortaa', cursive !important;
   }
 }

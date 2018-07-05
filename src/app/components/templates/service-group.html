@@ -48,6 +48,7 @@
         <input matInput
                required
                name="first_name"
+               autocomplete="given-name"
                [(ngModel)]="request.first_name"
                placeholder="First Name" >
       </mat-form-field>
@@ -56,6 +57,7 @@
         <input matInput
                required
                name="last_name"
+               autocomplete="family-name"
                [(ngModel)]="request.last_name"
                placeholder="Last Name" >
       </mat-form-field>
@@ -65,6 +67,7 @@
                required
                name="phone"
                type="tel"
+               autocomplete="tel-national"
                [(ngModel)]="request.phone"
                placeholder="Phone Number" >
       </mat-form-field>
@@ -74,6 +77,7 @@
                required
                name="email"
                type="email"
+               autocomplete="email"
                [(ngModel)]="request.email"
                placeholder="Email Address" >
       </mat-form-field>

@@ -1,12 +1,11 @@
 import { Injectable }               from '@angular/core';
 import { HttpClient }               from '@angular/common/http';
 import { Env }                      from './env';
-import { Observable, Observer }     from './observable';
+import { Observable }               from './observable';
 import {
   FirebaseDatabase,
   FirebaseService,
-  FirebaseStorage,
-  FirebaseUtils
+  FirebaseStorage
 }                                   from './firebase.service';
 
 
@@ -65,7 +64,6 @@ export class FirebaseServerDatabase implements FirebaseDatabase {
 @Injectable()
 export class FirebaseServerService extends FirebaseService {
 
-  private static initialized: boolean = false;
   private _storage: FirebaseServerStorage;
   private _database: FirebaseServerDatabase;
 

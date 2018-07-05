@@ -7,10 +7,10 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class HamburgerComponent {
 
-  @Output('activeChange')
+  @Output()
   activeChange = new EventEmitter<boolean>(false);
 
-  @Input('active')
+  @Input()
   active: boolean = false;
 
   handleClick() {

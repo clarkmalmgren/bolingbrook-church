@@ -1,5 +1,5 @@
 import { Injectable, Inject }   from '@angular/core';
-import { RESPONSE }             from '@nguniversal/express-engine'
+import { RESPONSE }             from '@nguniversal/express-engine/tokens'
 import * as express             from 'express';
 import { ResponseService }      from './response.service';
 

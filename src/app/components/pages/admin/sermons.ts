@@ -35,13 +35,15 @@ export class SermonsComponent extends Secured implements OnInit {
   }
 
   ngOnInit() {
-    this.secure()
-      .subscribe((authd) => {
-        if (authd) {
-          this.update();
-        }
-      })
-      .autoclean(this);
+    const subscription =
+      this.secure()
+        .subscribe((authd) => {
+          if (authd) {
+            this.update();
+          }
+        })
+
+    this.autoclean(subscription)
   }
 
   update(): void {
@@ -50,12 +52,8 @@ export class SermonsComponent extends Secured implements OnInit {
     }
 
     this.pager = this.service.paginated();
-    this.pager
-      .observe()
-      .subscribe(sermons => {
-        this.sermons = sermons;
-      })
-      .autoclean(this);
+    const subscription = this.pager.observe().subscribe(sermons => { this.sermons = sermons })
+    this.autoclean(subscription)
 
     this.imageService.listSeries()
       .subscribe(images => {

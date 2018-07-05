@@ -5,7 +5,7 @@ import 'reflect-metadata';
 import { renderModuleFactory }  from '@angular/platform-server';
 import { enableProdMode }       from '@angular/core';
 import * as express             from 'express';
-import { RESPONSE }             from '@nguniversal/express-engine'
+import { RESPONSE }             from '@nguniversal/express-engine/tokens'
 import { join }                 from 'path';
 import { readFileSync }         from 'fs';
 import { Sitemap }              from './server/sitemap';
@@ -25,7 +25,7 @@ const sitemap = new Sitemap();
 const template = readFileSync(join(DIST_FOLDER, 'browser', 'index.html')).toString();
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
-const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/main.bundle');
+const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/main');
 
 const { provideModuleMap } = require('@nguniversal/module-map-ngfactory-loader');
 
