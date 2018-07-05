@@ -1,0 +1,26 @@
+
+div.background {
+  background-image: url(https://df4tq599m6mt0.cloudfront.net/assets/icons/public/bgPattern-781a3d0a2a0246d71d56bea047c63e76b32e3a2a22bea09bc6569cc1871e4f9b.jpg);
+
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  padding: 50px;
+
+  img {
+    max-width: 300px;
+  }
+
+  p.date {
+    margin: 0;
+  }
+
+  a {
+    font-family: 'Khand', sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 48px;
+    padding: 0 36px;
+    margin-top: 15px;
+  }
+}

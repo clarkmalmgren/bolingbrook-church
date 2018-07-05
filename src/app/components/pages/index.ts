@@ -12,6 +12,7 @@ import { LocationsComponent }                       from './locations';
 import { NewsletterComponent }                      from './newsletter';
 import { NotFoundComponent }                        from './not-found';
 import { ThankYouComponent }                        from './thank-you';
+import { VBSComponent }                             from './vbs';
 
 import { ADMIN_ROUTES, ADMIN_COMPONENTS }           from './admin/';
 import { SERMON_COMPONENTS, SERMON_ROUTES }         from './sermons/';
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'locations',              pathMatch: 'full', component: LocationsComponent },
   { path: 'newsletter',             pathMatch: 'full', component: NewsletterComponent },
   { path: 'thank-you',              pathMatch: 'full', component: ThankYouComponent },
+  { path: 'vbs',                    pathMatch: 'full', component: VBSComponent },
   ...ADMIN_ROUTES,
   ...SERMON_ROUTES,
   ...SERVE_ROUTES,
@@ -52,6 +54,7 @@ export const PAGE_COMPONENTS = [
   NewsletterComponent,
   NotFoundComponent,
   ThankYouComponent,
+  VBSComponent,
   ...ADMIN_COMPONENTS,
   ...SERVE_COMPONENTS,
   ...SERMON_COMPONENTS
