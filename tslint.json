@@ -98,9 +98,6 @@
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
     "directive-class-suffix": true,
-    "no-access-missing-member": true,
-    "templates-use-public": true,
-    "invoke-injectable": true,
     "callable-types": true,
     "import-blacklist": [true],
     "import-spacing": false,
@@ -108,7 +105,6 @@
     "no-empty-interface": true,
     "no-string-throw": true,
     "prefer-const": true,
-    "typeof-compare": true,
     "unified-signatures": true
   }
 }
