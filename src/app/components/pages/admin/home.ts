@@ -1,6 +1,5 @@
-import { OnInit, Component, NgZone }  from '@angular/core';
-import { FirebaseService }            from '../../../services/firebase.service';
-import { Secured }                    from './secured';
+import { OnInit, Component, NgZone } from '@angular/core';
+import { FirebaseService, YoutubeApiService } from '../../../services';
 
 @Component({
   templateUrl: './home.html',
@@ -12,6 +11,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private firebase: FirebaseService,
+    private youtubeApi: YoutubeApiService,
     private zone: NgZone
   ) { }
 
@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
       .authenticated()
       .subscribe(authd => {
         this.authd = authd;
+        this.youtubeApi.login();
       });
   }
 
