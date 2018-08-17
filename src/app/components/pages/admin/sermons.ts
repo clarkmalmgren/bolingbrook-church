@@ -11,7 +11,8 @@ import {
   SeriesImageService,
   Sermon,
   SermonService,
-  WorshipService
+  WorshipService,
+  YoutubeApiService
 } from '../../../services';
 
 @Component({
@@ -28,6 +29,7 @@ export class SermonsComponent extends Secured implements OnInit {
   constructor(
     router: Router,
     firebase: FirebaseService,
+    private youtubeApi: YoutubeApiService,
     private service: SermonService,
     private imageService: SeriesImageService
   ) {
@@ -76,6 +78,18 @@ export class SermonsComponent extends Secured implements OnInit {
     this.service
       .saveSermon(sermon)
       .subscribe(() => this.update());
+  }
+
+  createVideo(sermon: Sermon, ws: WorshipService): void {
+    // just double check that you are still logged in...
+    if (this.youtubeApi.login()) {
+      const start = moment.tz(`${sermon.date}T${ws.start}`, 'America/Chicago')
+      const title = `${sermon.title} (${start.format('MMMM D, YYYY')} - ${ws.identifier})`
+
+      this.youtubeApi
+        .createEvent(title, sermon.description, start)
+        .subscribe(id => ws.youtube = id)
+    }
   }
 
   saveSermon(sermon: Sermon): void {

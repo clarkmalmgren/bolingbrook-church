@@ -60,6 +60,9 @@
               <mat-form-field>
                 <input matInput [name]="'sermon_youtube_' + idx + ws_idx" [(ngModel)]="ws.youtube" placeholder="Youtube ID">
               </mat-form-field>
+              <button *ngIf="!ws.youtube" mat-mini-fab class="add" (click)="createVideo(s,ws)">
+                <mat-icon>video_call</mat-icon>
+              </button>
             </div>
           </div>
 

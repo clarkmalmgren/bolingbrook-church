@@ -12,6 +12,7 @@ import { SeriesImageForm, SeriesImageService }                from './series.ser
 import { SermonService, Sermon, WorshipService }              from './sermon.service';
 import { FeatureToggles, TogglesService }                     from './toggles.service';
 import { YoutubeService, VideoState }                         from './youtube.service';
+import { YoutubeApiService }                                  from './youtube-api.service';
 
 export const SERVICES = [
   Analytics,
@@ -21,7 +22,8 @@ export const SERVICES = [
   SeriesImageService,
   SermonService,
   TogglesService,
-  YoutubeService
+  YoutubeService,
+  YoutubeApiService
 ];
 
 export {
@@ -50,5 +52,6 @@ export {
   TogglesService,
   VideoState,
   WorshipService,
-  YoutubeService
+  YoutubeService,
+  YoutubeApiService
 };
