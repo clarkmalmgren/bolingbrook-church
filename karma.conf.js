@@ -2,6 +2,11 @@
 // https://karma-runner.github.io/0.13/config/configuration-file.html
 
 module.exports = function (config) {
+  const reporters = config.buildWebpack.options.progress ? [ 'nyan' ] : ['mocha' ];
+  if (config.buildWebpack.options.codeCoverage) {
+    reporters.push('coverage-istanbul')
+  }
+
   config.set({
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
@@ -33,14 +38,12 @@ module.exports = function (config) {
     angularCli: {
       environment: 'dev'
     },
-    reporters: config.angularCli && config.angularCli.codeCoverage
-              ? ['nyan', 'coverage-istanbul']
-              : ['nyan'],
+    reporters: reporters,
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: [ 'Chrome' ],
-    singleRun: false
+    singleRun: config.buildWebpack.options.progress
   });
 };
