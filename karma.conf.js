@@ -44,6 +44,6 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: [ 'Chrome' ],
-    singleRun: config.buildWebpack.options.progress
+    singleRun: !config.buildWebpack.options.progress
   });
 };
