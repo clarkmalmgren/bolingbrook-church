@@ -13,7 +13,7 @@ before_script:
 
 script:
   - ng lint
-  - ng test --browsers=PhantomJS --reporters=mocha,coverage-istanbul --single-run --code-coverage --progress=false
+  - ng test --browsers=PhantomJS --code-coverage --progress=false
   - npm run build:ssr
 
 after_success:

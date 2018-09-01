@@ -54,7 +54,7 @@ export class YoutubeApiService {
         scheduledEndTime: start.clone().add(1, 'hour').toISOString()
       },
       status: {
-        privacyStatus: 'private'
+        privacyStatus: 'public'
       }
     }
 
