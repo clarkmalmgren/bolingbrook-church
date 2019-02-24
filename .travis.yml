@@ -1,0 +1,32 @@
+language: node_js
+
+node_js:
+  - 'node'
+
+sudo: required
+
+services:
+  - docker
+
+before_script:
+  - npm install -g @angular/cli
+
+script:
+  - ng lint
+  - ng test --browsers=PhantomJS --code-coverage --progress=false
+  - npm run build:ssr
+
+after_success:
+  - ./node_modules/coveralls/bin/coveralls.js < coverage/lcov.info
+
+before_deploy:
+  - node docker
+
+deploy:
+  skip_cleanup: true
+  provider: script
+  file: release.tar.gz
+  script: ./deploy.sh
+  on:
+    repo: clarkmalmgren/bolingbrook-church
+    tags: true
