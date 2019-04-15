@@ -1,18 +1,32 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-import logo from './logo.svg';
+import { Router, Route, Switch } from 'react-router'
+import { Provider } from 'react-redux'
+// import { Store } from 'redux'
 import './App.scss';
+
+import createBrowserHistory from "history/createBrowserHistory";
+const history = createBrowserHistory()
 
 import * as Routes from './pages/index'
 
-class App extends Component {
+interface AppProps {
+  store: any
+}
+
+export default class App extends Component<AppProps> {
   render() {
     return (
-      <Router>
-        <Route exact path="/" component={Routes.HomePage} />
-      </Router>
+      <Provider store={this.props.store}>
+        <Router history={history}>
+          <Switch>
+            <Route exact path="/" component={Routes.HomePage} />
+            <Route path="/about" component={Routes.AboutPage} />
+            <Route path="/locations" component={Routes.Locations} />
+            <Route path="/connect" component={Routes.Connect} />
+            <Route path="/sermons" component={Routes.Sermons} />
+          </Switch>
+        </Router>
+      </Provider>
     );
   }
 }
-
-export default App;

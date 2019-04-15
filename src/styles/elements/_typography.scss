@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css?family=Comfortaa:300|Khand|Roboto+Condensed:300:400');
+
+/* fallback */
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       url(assets/fonts/google-material-icons.woff2) format('woff2'),
+       url(assets/fonts/google-material-icons.ttf) format('truetype');;
+}
+
+@font-face {
+  font-family: 'Socicon';
+  src: url('assets/fonts/Socicon.eot');
+  src: url('assets/fonts/Socicon.eot#iefix') format('embedded-opentype'),
+       url('assets/fonts/Socicon.woff2?xvgs9q') format('woff2'),
+       url('assets/fonts/Socicon.ttf?xvgs9q') format('truetype'),
+       url('assets/fonts/Socicon.woff?xvgs9q') format('woff'),
+       url('assets/fonts/Socicon.svg?xvgs9q#Socicon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: 'liga';
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+html, body {
+  font-family: 'Comfortaa', cursive;
+  margin: 0;
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Khand', sans-serif;
+  font-weight: 400;
+  margin: .5em 0;
+}
+
+h1 {
+  font-size: 65px;
+  margin: 1em 0 .5em;
+
+  @include break(medium)  { font-size: 55px; }
+  @include break(small)   { font-size: 46px; }
+  @include break(tiny)    { font-size: 44px; }
+  @include break(micro)   { font-size: 40px; }
+}
+
+h2 {
+  font-size: 48px;
+  @include break(small)   { font-size: 42px; }
+  @include break(tiny)    { font-size: 36px; }
+  @include break(micro)   { font-size: 32px; }
+}
+
+h3 {
+  font-size: 32px;
+  @include break(small)   { font-size: 30px; }
+  @include break(tiny)    { font-size: 28px; }
+  @include break(micro)   { font-size: 26px; }
+}
+
+h4 {
+  font-size: 29px;
+  @include break(small)   { font-size: 26px; }
+  @include break(tiny)    { font-size: 24px; }
+  @include break(micro)   { font-size: 22px; }
+}
+
+h5 {
+  font-size: 22px;
+}
