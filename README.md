@@ -6,7 +6,7 @@ Interested in joining us? Check us out on our [website](https://bolingbrook.chur
 
 Interested in participating in the develpment of our website? Checkout our [contribution guidelines](./CONTRIBUTING.md).
 
-This project is built on [Angular](https://angular.io) using [Angular CLI](https://github.com/angular/angular-cli). For more information, see our [contribution guidelines](./CONTRIBUTING.md).
+This project is built on [React](https://reactjs.org) using [react-scripts](https://TKTK). For more information, see our [contribution guidelines](./CONTRIBUTING.md).
 
 ## Services that make this Possible
 
@@ -25,5 +25,5 @@ giving me insight into risks and validates on PRs that coverage is trending in t
 
 ![travis-ci](https://s3.amazonaws.com/loadimpact_uservoice/Automated+Testing/Travis+CI/Travis.png)
 
-[Travis CI](https://travis-ci.org/clarkmalmgren/bolingbrook-church) powers my automated testing and even the deployment of my application to github as a release artifact.
+[Travis CI](https://travis-ci.org/clarkmalmgren/bolingbrook-church) powers my automated testing and even the deployment of the application.
 

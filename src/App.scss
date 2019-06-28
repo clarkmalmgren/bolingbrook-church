@@ -1,17 +1,45 @@
+@import url('https://fonts.googleapis.com/css?family=Comfortaa:300|Khand|Roboto+Condensed:300:400');
 
-@import "./styles/utilities/_breaks";
-@import "./styles/utilities/_colors";
+/* fallback */
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       url(assets/fonts/google-material-icons.woff2) format('woff2'),
+       url(assets/fonts/google-material-icons.ttf) format('truetype');;
+}
 
-@import "./styles/elements/_typography";
-@import "./styles/elements/_socicon";
-@import "./styles/elements/_container";
+@font-face {
+  font-family: 'Socicon';
+  src: url('assets/fonts/Socicon.eot');
+  src: url('assets/fonts/Socicon.eot#iefix') format('embedded-opentype'),
+       url('assets/fonts/Socicon.woff2?xvgs9q') format('woff2'),
+       url('assets/fonts/Socicon.ttf?xvgs9q') format('truetype'),
+       url('assets/fonts/Socicon.woff?xvgs9q') format('woff'),
+       url('assets/fonts/Socicon.svg?xvgs9q#Socicon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
 
-@import "./components/button/button";
-@import "./components/hamburger/hamburger";
-@import "./components/nav/nav";
-@import "./components/header/header";
-@import "./components/footer/footer";
-@import "./components/sermon-card/sermon-card";
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: 'liga';
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
 
-@import "./pages/about/about";
-@import "./pages/locations/locations";
+body, html {
+  margin: 0;
+}

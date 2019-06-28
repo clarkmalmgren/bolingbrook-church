@@ -8,13 +8,9 @@ sudo: required
 services:
   - docker
 
-before_script:
-  - npm install -g @angular/cli
-
 script:
-  - ng lint
-  - ng test --browsers=PhantomJS --code-coverage --progress=false
-  - npm run build:ssr
+  - yarn test --coverage
+  - yarn build
 
 after_success:
   - ./node_modules/coveralls/bin/coveralls.js < coverage/lcov.info

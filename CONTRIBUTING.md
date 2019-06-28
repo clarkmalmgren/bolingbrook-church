@@ -30,36 +30,19 @@ On OS X, use [NVM](http://nvm.sh/):
 $ nvm install node
 ```
 
-### Globally Install Angular CLI
+### Install Yarn
 
-[Angular CLI](https://github.com/angular/angular-cli) is the tool that is used to build and test this project.
-It needs to be installed globally in order for it to work from the command line. You can do that by issuing the following command:
-
-```bash
-npm install -g @angular/cli
-```
+Follow instructions on [Yarn](https://yarn.io) 
 
 ### Install NPM Dependencies
 
 ```bash
-$ npm install
+$ yarn install
 ```
-
-### Running and Testing
-
-This project uses standard Angular CLI processes for development. For more information, see the
-[Angular CLI Usage](https://github.com/angular/angular-cli#usage) documentation.
-
-### Project Layout
-
-This project attempts to employ [Atomic Design](http://bradfrost.com/blog/post/atomic-web-design/)
-to create reusable components at every level. Please keep this in mind.
 
 ### Developing Tests
 
-Tests should be well organized into functional groups using `describe` blocks. Each test should also read descriptively
-in a hierarchical fashion. The test should also be separated into given, when, then phases with comments to delinate
-setup, run and verification parts of a test.  There could be multiple when and then blocks in a single test.
+Tests should be well organized. Each test should also read descriptively.
 
 ## More Questions?
 

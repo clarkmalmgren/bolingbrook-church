@@ -1,13 +1,12 @@
+import './bootstrap'
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux'
-import { install, StoreCreator } from 'redux-loop';
-import { reducer, initialState } from './store/sermons/reducer'
+
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import './index.css';
-
-const store = (createStore as StoreCreator)(reducer, initialState, install())
+import './App.scss';
+import store from './store'
 
 ReactDOM.render(<App store={store}/>, document.getElementById('root'));
 
