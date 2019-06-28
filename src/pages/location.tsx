@@ -4,9 +4,8 @@ import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
 import Box from '../components/box'
 import Page from '../components/page'
 
-
-const href =
-  "https://www.google.com/maps/embed/v1/place?q=place_id:ChIJRcmvHlBaDogRL4gzWu1p8Ag&key=AIzaSyCKaQgqd0cxJQ932U57W74Bpe8CALxZEUw"
+const placeId = 'place_id:ChIJRcmvHlBaDogRL4gzWu1p8Ag'
+const href = `https://www.google.com/maps/embed/v1/place?q=${placeId}&key=${process.env.REACT_APP_MAPS_API_KEY}`
 
 const styles = createStyles({
   address: {
