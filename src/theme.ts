@@ -1,6 +1,7 @@
 import { createMuiTheme, Theme } from '@material-ui/core/styles'
 import orange from '@material-ui/core/colors/orange'
 import cyan from '@material-ui/core/colors/cyan'
+import common from '@material-ui/core/colors/common'
 import { CSSProperties } from '@material-ui/styles/withStyles'
 
 function headerMargin(base: number): CSSProperties {
@@ -15,7 +16,7 @@ export default
         main: orange[500],
         light: orange[200],
         dark: orange[900],
-        contrastText: orange.A400
+        contrastText: common.white
       }
     },
     typography: {

@@ -1,4 +1,4 @@
-import { ParseAction, parse, SermonActions, LOAD, PARSE } from './actions'
+import { ParseAction, SermonActions, parse, load, LOAD, PARSE, REFRESH } from './actions'
 import moment from 'moment'
 import { loop, Cmd, LoopReducer } from 'redux-loop';
 import { Sermon } from '../../models/sermon'
@@ -37,6 +37,12 @@ export class SermonReduxer implements Reduxer<State, SermonActions> {
         } else {
           return state
         }
+      
+      case REFRESH:
+        return loop(
+          { ...state, lastLoad: undefined },
+          Cmd.action(load())
+        )
 
       case PARSE:
         return {
@@ -61,6 +67,13 @@ export class SermonReduxer implements Reduxer<State, SermonActions> {
     date: (state: State) => (date: string) => (
       state.sermons.find(s => s.date == date)
     ),
+
+    published: (state: State) => () => {
+      const today = moment().startOf('day')
+      return state
+        .sermons
+        .filter(s => moment(s.date).isSameOrBefore(today))
+    },
 
     all: (state: State) => () => state.sermons
 

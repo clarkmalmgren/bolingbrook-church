@@ -11,3 +11,8 @@ export { default as Sermons } from './sermons'
 export { default as Serve } from './serve'
 export { default as ThankYou } from './thank-you'
 export { default as NotFound} from './not-found'
+
+export { default as Login } from '../admin/login'
+export { AdminPage } from '../admin/admin'
+export { EditSermons } from '../admin/edit-sermons'
+export { EditSermon, NewSermon } from '../admin/edit-sermon'

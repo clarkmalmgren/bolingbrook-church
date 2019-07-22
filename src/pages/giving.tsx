@@ -24,7 +24,7 @@ export default class Giving extends React.PureComponent<{}, GivingState> {
           <HeroCard title="Envelope"
                     subtitle="Cash or Check"
                     onClick={this.open}
-                    image="https://www.blakleysflooring.com/wp-content/uploads/2016/03/Placeholder-768x768.png" />
+                    image="https://guardian.ng/wp-content/uploads/2017/12/tithe.jpg" />
           
           <HeroCard title="Online"
                     subtitle="Adventist Giving"

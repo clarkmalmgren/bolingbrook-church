@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import { Link, LinkProps } from 'react-router-dom'
-import { Card, CardHeader, CardMedia, CardContent, Typography } from '@material-ui/core'
+import { Card, CardHeader, CardMedia, CardContent, Typography, CardActions } from '@material-ui/core'
 import { createStyles, withStyles, WithStyles } from '@material-ui/styles';
 import { Sermon, getImageUrl } from '../models/sermon'
 
@@ -27,15 +27,15 @@ const styles = createStyles({
 
 export interface SermonCardProps extends WithStyles<typeof styles> {
   sermon: Sermon
+  linkRoot: string
 }
 
 class SermonCard extends React.PureComponent<SermonCardProps, {}> {
 
-
   dateString: string = moment(this.props.sermon.date).format("MMMM D, YYYY")
 
 
-  private link = (lp: LinkProps) => (<Link to={`/sermons/${this.props.sermon.date}`} {...lp} />)
+  private link = (lp: LinkProps) => (<Link to={`${this.props.linkRoot}/${this.props.sermon.date}`} {...lp} />)
   private baseCardProps: any = { component: this.link }
 
   render() {

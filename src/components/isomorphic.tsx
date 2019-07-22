@@ -1,5 +1,5 @@
 import React from 'react'
-import { createStyles, withStyles, WithStyles, makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/styles'
 import classNames from 'classnames'
 import Box from './box'
 import { PositionProperty, WidthProperty } from 'csstype';

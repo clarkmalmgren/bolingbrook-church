@@ -24,3 +24,9 @@ export function isToday(sermon: Sermon): boolean {
   const today = moment().startOf('day')
   return today.isSame(moment(sermon.date))
 }
+
+type DeepPartial<T> = {
+  [P in keyof T]?: DeepPartial<T[P]>
+}
+
+export type PartialSermon = DeepPartial<Sermon>

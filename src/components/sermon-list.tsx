@@ -12,6 +12,8 @@ interface Props {
   sermons?: Sermon[]
   onLoad?: () => void
   classes?: any
+  linkRoot: string
+  all?: boolean
 }
 
 const styles = createStyles({
@@ -23,6 +25,10 @@ const styles = createStyles({
 })
 
 class SermonList extends React.PureComponent<Props, {}> {
+
+  static defaultProps: Pick<Props, 'linkRoot'> = {
+    linkRoot: '/sermons'
+  }
 
   componentWillMount() {
     if (this.props.onLoad) {
@@ -37,14 +43,18 @@ class SermonList extends React.PureComponent<Props, {}> {
   render() {
     return (
       <Box className={this.props.classes.root}>
-        { this.sermons.map(s => (<SermonCard sermon={s} key={s.date}/>)) }
+        { this.sermons.map(s => (<SermonCard sermon={s} key={s.date} linkRoot={this.props.linkRoot}/>)) }
       </Box>
     )
   }
 }
 
-const mapStateToProps = (state: any) =>
-  ({ sermons: sermonSelectors.all(state)() })
+const mapStateToProps = (state: any, ownState: Props) => {
+  const selector = ownState.all ? sermonSelectors.all : sermonSelectors.published
+  return {
+    sermons: selector(state)()
+  }
+}
 
 function mapDispatchToProps(dispatch: Dispatch): any {
   return {

@@ -23,7 +23,7 @@ export default () => (
       <HeroCard title="Giving"
                 subtitle="Your Generosity, Making a Difference"
                 link="/giving"
-                image="https://www.blakleysflooring.com/wp-content/uploads/2016/03/Placeholder-768x768.png" />
+                image="https://guardian.ng/wp-content/uploads/2017/12/tithe.jpg" />
 
       <HeroCard title="Connect"
                 subtitle="Connect with Us"

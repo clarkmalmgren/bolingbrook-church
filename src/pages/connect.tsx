@@ -3,32 +3,8 @@ import { Redirect } from 'react-router'
 import { Modal, Typography } from '@material-ui/core'
 import Box from '../components/box'
 import Page from '../components/page'
-import Form, { FormConfig, Generator } from '../components/form'
-
-const config: FormConfig = {
-  _h1: Generator.header('Get Connected', 'h1'),
-  _h2: Generator.header('Step 1: Tell us about yourself', 'h2'),
-  
-  first_name:  Generator.text('First Name', 'given-name', true),
-  last_name:  Generator.text('Last Name', 'family-name', true),
-  address:  Generator.text('Address', 'address-line1'),
-  city:  Generator.text('City', 'address-level2'),
-  state:  Generator.text('State', 'address-level1'),
-  zipcode:  Generator.text('Zipcode', 'postal-code', false, 'number'),
-  phone:  Generator.text('Phone Number', 'tel-national'),
-  email:  Generator.text('Email', 'email'),
-
-  _h3: Generator.header('Step 2: Get Involved', 'h2'),
-
-  interests: Generator.checkboxes(
-    'Learn more about following Jesus',
-    'Learn more about our PreK-8 School',
-    'Be Baptized',
-    'Make Bolingbrook my home church'
-  ),
-
-  submit: Generator.submit()
-}
+import { Form, TextField, Header, Checkboxes, CheckboxOption, Submit } from '../forms'
+import { ErrorDialog } from '../components/error'
 
 interface ConnectState {
   submitted: boolean
@@ -49,12 +25,7 @@ export default class Connect extends React.PureComponent<{}, ConnectState> {
       headers: { 'Content-Type': 'application/json' }
     })
     .then(() => this.setState({ submitted: true }))
-    .catch(() => {
-      this.setState({ failed: true })
-      setTimeout(() => {
-        this.setState({ failed: false })
-      }, 1000)
-    })
+    .catch(() => this.setState({ failed: true }))
   }
 
   render() {
@@ -62,16 +33,33 @@ export default class Connect extends React.PureComponent<{}, ConnectState> {
       (<Redirect to="/thank-you" />) :
       (
         <Page>
-          <Form config={config} onsubmit={this.submit}/>
+          <Form onSubmit={this.submit}>
+            <Header id="_h1" variant="h1">Get Connected</Header>
+            <Header id="_h2" variant="h2">Step 1: Tell us about yourself</Header>
+
+            <TextField id="first_name" required autoComplete="given-name">First Name</TextField>
+            <TextField id="last_name" required autoComplete="family-name">Last Name</TextField>
+            <TextField id="address" autoComplete="address-line1">Address</TextField>
+            <TextField id="city" autoComplete="address-level2">City</TextField>
+            <TextField id="state" autoComplete="address-level1">State</TextField>
+            <TextField id="zipcode" autoComplete="postal-code" dataType="number">Zipcode</TextField>
+            <TextField id="phone" autoComplete="tel-national">Phone Number</TextField>
+            <TextField id="email" autoComplete="email">Email</TextField>
+
+            <Header id="_h3" variant="h2">Step 2: Get Involved</Header>
+
+            <Checkboxes id="interests">
+              <CheckboxOption>Learn more about following Jesus</CheckboxOption>
+              <CheckboxOption>Learn more about our PreK-8 School</CheckboxOption>
+              <CheckboxOption>Be Baptized</CheckboxOption>
+              <CheckboxOption>Make Bolingbrook my home church</CheckboxOption>
+            </Checkboxes>
+
+            <Submit>Submit</Submit>
+
+          </Form>
           
-          <Modal open={this.state.failed} onClose={() => this.setState({ failed: false })}>
-            <Box>
-              <Typography variant="h2">Failed to Submit</Typography>
-              <Typography>
-                Please try again. Sorry for the inconvenience.
-              </Typography>
-            </Box>
-          </Modal>
+          <ErrorDialog open={this.state.failed} onClose={() => this.setState({ failed: false })} />
         </Page>
       )
   }

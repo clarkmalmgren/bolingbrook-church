@@ -1,12 +1,11 @@
 import React from 'react'
+import { Dispatch } from 'redux'
+import { connect } from 'react-redux'
 import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
-import { Theme, Drawer, Divider, Icon, Link } from '@material-ui/core'
+import { Theme, Drawer, Divider, Button } from '@material-ui/core'
 import * as Links from './links'
-
-
-interface NavState {
-  opened: boolean
-}
+import { authSelectors } from '../store/index'
+import { logout as logoutAction } from '../store/auth/actions'
 
 const styles = (theme: Theme) => createStyles({
   space: {
@@ -15,8 +14,14 @@ const styles = (theme: Theme) => createStyles({
 })
 
 interface NavProps extends WithStyles<typeof styles> {
+  loggedIn: boolean
   opened?: boolean
   onToggle?: (active: boolean) => void
+  logout: () => void
+}
+
+interface NavState {
+  opened: boolean
 }
 
 class Nav extends React.PureComponent<NavProps, NavState> {
@@ -51,6 +56,21 @@ class Nav extends React.PureComponent<NavProps, NavState> {
     })
   }
 
+  logout = () => {
+    this.props.logout()
+  }
+  
+
+  adminLinks() {
+    return this.props.loggedIn ?
+      [
+        (<Divider key="divider" />),
+        (<Links.EditSermons key="edit" />),
+        (<div key="space" style={({flex: '1'})}/>),
+        (<Button key="logout" fullWidth color="secondary" onClick={this.logout} variant="contained">Logout</Button>)
+      ] : []
+  }
+
   render() {
     return (
       <Drawer anchor="right" open={this.state.opened} onClose={this.close()}>
@@ -71,9 +91,13 @@ class Nav extends React.PureComponent<NavProps, NavState> {
         <Links.Serve />
         <Links.Newsletter />
         <Links.FriendsFam />
+        { this.adminLinks() }
       </Drawer>
     )
   }
 }
 
-export default withStyles(styles)(Nav)
+const mapStateToProps = (state: any) => ({ loggedIn: authSelectors.loggedIn(state)() })
+const mapDispatchToProps = (dispatch: Dispatch) => ({ logout: () => dispatch(logoutAction) })
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Nav))

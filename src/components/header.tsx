@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStyles, withStyles } from '@material-ui/styles';
 import { Theme } from '@material-ui/core'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import Button from './button'
 import Nav from './nav'
 import { Hamburger } from './hamburger'
@@ -20,6 +20,7 @@ interface HeaderState {
   opened: boolean
   height: string
   mobile: boolean
+  clickCount: number
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -89,34 +90,42 @@ class Header extends React.PureComponent<HeaderProps, HeaderState> {
     this.state = {
       opened: false,
       mobile: false,
-      height: '98px'
+      height: '98px',
+      clickCount: 0
     }
   }
 
   toggle = (open: boolean) => { this.setState(() => ({ opened: open })) }
 
+  onHomeClick = () => {
+    this.setState({ clickCount: this.state.clickCount + 1 })
+  }
+
   render() {
+    if (this.state.clickCount > 10) {
+      return (<Redirect to="/admin/login" />)
+    } else {
+      return (
+        <header className={this.props.classes.root}>
+          <Link className={this.props.classes.logo} to="/" onClick={this.onHomeClick}>
+            <img className="icon" src={LogoWhiteLarge} alt="Home" />
+            <img className="text" src={LogoWhiteLargeText} />
+          </Link>
 
-    return (
-      <header className={this.props.classes.root}>
-        <Link className={this.props.classes.logo} to="/">
-          <img className="icon" src={LogoWhiteLarge} alt="Home" />
-          <img className="text" src={LogoWhiteLargeText} />
-        </Link>
+          <nav className={this.props.classes.links}>
+            <Button className={this.props.classes.linkButton} variant="text" link="/about">Our Story</Button>
+            <Button className={this.props.classes.linkButton} variant="text" link="/connect">Connect</Button>
+            <Button className={this.props.classes.linkButton} variant="text" link="/sermons">Sermons</Button>
+            <Button className={this.props.classes.linkButton} variant="text" link="/giving">Giving</Button>
+            <Button className={this.props.classes.linkButton} variant="text" link="/location">Location</Button>
+          </nav>
 
-        <nav className={this.props.classes.links}>
-          <Button className={this.props.classes.linkButton} variant="text" link="/about">Our Story</Button>
-          <Button className={this.props.classes.linkButton} variant="text" link="/connect">Connect</Button>
-          <Button className={this.props.classes.linkButton} variant="text" link="/sermons">Sermons</Button>
-          <Button className={this.props.classes.linkButton} variant="text" link="/giving">Giving</Button>
-          <Button className={this.props.classes.linkButton} variant="text" link="/location">Location</Button>
-        </nav>
+          <Hamburger className={this.props.classes.hamburger} active={this.state.opened} onToggle={this.toggle}></Hamburger>
 
-        <Hamburger className={this.props.classes.hamburger} active={this.state.opened} onToggle={this.toggle}></Hamburger>
-
-        <Nav opened={this.state.opened} onToggle={this.toggle} ></Nav>
-      </header>
-    )
+          <Nav opened={this.state.opened} onToggle={this.toggle} ></Nav>
+        </header>
+      )
+    }
   }
 }
 

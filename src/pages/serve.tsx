@@ -1,35 +1,12 @@
 import * as React from 'react'
 import { Redirect } from 'react-router'
-import { Modal, Typography } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
-import Box from '../components/box'
 import Content from '../components/content'
 import Hero from '../components/hero'
 import Page from '../components/page'
-import Form, { FormConfig, Generator } from '../components/form'
-
-const config: FormConfig = {
-  _h1: Generator.header('Register Here', 'h2'),
-  
-  first_name:  Generator.text('First Name', 'given-name', true),
-  last_name:  Generator.text('Last Name', 'family-name', true),
-  phone:  Generator.text('Phone Number', 'tel-national'),
-  email:  Generator.text('Email', 'email'),
-
-  _h3: Generator.header('Choose a Team', 'h2'),
-
-  interests: Generator.checkboxes(
-    'Ask Me Anything Guide',
-    'Next Steps Team',
-    'Greeter',
-    'Usher',
-    'Audio Team',
-    'Video Team',
-    'Visual & Lighting Team'
-  ),
-
-  submit: Generator.submit()
-}
+import { ErrorDialog } from '../components/error'
+import { Form, Checkboxes, CheckboxOption, TextField, Header, Submit } from '../forms'
 
 const styles = createStyles({
   header: {
@@ -56,12 +33,7 @@ class Serve extends React.PureComponent<WithStyles<typeof styles>, ServeState> {
       headers: { 'Content-Type': 'application/json' }
     })
     .then(() => this.setState({ submitted: true }))
-    .catch(() => {
-      this.setState({ failed: true })
-      setTimeout(() => {
-        this.setState({ failed: false })
-      }, 1000)
-    })
+    .catch(() => this.setState({ failed: true }))
   }
 
   render() {
@@ -73,16 +45,31 @@ class Serve extends React.PureComponent<WithStyles<typeof styles>, ServeState> {
             <Typography className={this.props.classes.header} variant="h1">Serve</Typography>
           </Hero>
           <Content name="Serve" />
-          <Form config={config} onsubmit={this.submit}/>
+
+          <Form onSubmit={this.submit}>
+            <Header variant="h2">Register Here</Header>
+  
+            <TextField id="first_name" autoComplete="given-name" required>First Name</TextField>
+            <TextField id="last_name" autoComplete="family-name" required>Last Name</TextField>
+            <TextField id="phone" autoComplete="tel-national" required>Phone Number</TextField>
+            <TextField id="email" autoComplete="email">Email</TextField>
+  
+            <Header variant="h2">Choose a Team</Header>
+  
+            <Checkboxes id="interests">
+              <CheckboxOption>Ask Me Anything Guide</CheckboxOption>
+              <CheckboxOption>Next Steps Team</CheckboxOption>
+              <CheckboxOption>Greeter</CheckboxOption>
+              <CheckboxOption>Usher</CheckboxOption>
+              <CheckboxOption>Audio Team</CheckboxOption>
+              <CheckboxOption>Video Team</CheckboxOption>
+              <CheckboxOption>Visual &amp; Lighting Team</CheckboxOption>
+            </Checkboxes>
+  
+            <Submit>Submit</Submit>
+          </Form>
           
-          <Modal open={this.state.failed} onClose={() => this.setState({ failed: false })}>
-            <Box>
-              <Typography variant="h2">Failed to Submit</Typography>
-              <Typography>
-                Please try again. Sorry for the inconvenience.
-              </Typography>
-            </Box>
-          </Modal>
+          <ErrorDialog open={this.state.failed} onClose={() => this.setState({ failed: false })} />
         </Page>
       )
   }

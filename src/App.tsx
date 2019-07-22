@@ -21,16 +21,22 @@ export default class App extends Component<AppProps> {
           <Router history={history}>
             <Switch>
               <Route exact path="/" component={Routes.HomePage} />
-              <Route path="/about" component={Routes.AboutPage} />
-              <Route path="/location" component={Routes.Location} />
-              <Route path="/connect" component={Routes.Connect} />
-              <Route path="/friends-and-family" component={Routes.FriendsAndFamily} />
-              <Route path="/giving" component={Routes.Giving} />
-              <Route path="/newsletter" component={Routes.Newsletter} />
-              <Route path="/sermons/:id" component={Routes.Sermon} />
-              <Route path="/sermons" exact component={Routes.Sermons} />
-              <Route path="/serve" exact component={Routes.Serve} />
-              <Route path="/thank-you" exact component={Routes.ThankYou} />
+              <Route exact path="/about" component={Routes.AboutPage} />
+              <Route exact path="/location" component={Routes.Location} />
+              <Route exact path="/connect" component={Routes.Connect} />
+              <Route exact path="/friends-and-family" component={Routes.FriendsAndFamily} />
+              <Route exact path="/giving" component={Routes.Giving} />
+              <Route exact path="/newsletter" component={Routes.Newsletter} />
+              <Route exact path="/sermons/:id" component={Routes.Sermon} />
+              <Route exact path="/sermons" component={Routes.Sermons} />
+              <Route exact path="/serve" component={Routes.Serve} />
+              <Route exact path="/thank-you" component={Routes.ThankYou} />
+
+              <Route exact path="/admin" component={Routes.AdminPage} />
+              <Route exact path="/admin/login" component={Routes.Login} />
+              <Route exact path="/admin/sermons" component={Routes.EditSermons} />
+              <Route exact path="/admin/sermons/new" component={Routes.NewSermon} />
+              <Route exact path="/admin/sermons/:id" component={Routes.EditSermon} />
               <Route component={Routes.NotFound} />
             </Switch>
           </Router>
