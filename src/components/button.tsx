@@ -8,8 +8,6 @@ const styles = createStyles({
   root: {
     fontSize: '18px',
     padding: '4px 22px',
-    fontFamily: `'Roboto Condensed',sans-serif`,
-    fontWeight: 400,
     
     '&.align-left': {
       textAlign: 'left',

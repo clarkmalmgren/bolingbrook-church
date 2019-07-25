@@ -8,6 +8,9 @@ function headerMargin(base: number): CSSProperties {
  return { marginBlockStart: `${base}rem`, marginBlockEnd: `${base/2}rem` }
 } 
 
+const primaryFontFamily = `'Lora', serif`
+const accentFontFamily = `'Montserrat', sans-serif`
+
 export default
   createMuiTheme({
     palette: {
@@ -20,25 +23,26 @@ export default
       }
     },
     typography: {
-      fontFamily: `'Comfortaa', cursive`,
+      fontFamily: primaryFontFamily,
       useNextVariants: true,
 
-      h1: { fontSize: '2.5rem' },
-      h2: { fontSize: '2.0rem' },
-      h3: { fontSize: '1.5rem' },
-      h4: { fontSize: '1.3rem' },
-      h5: { fontSize: '1.2rem' },
-      h6: { fontSize: '1.1rem' },
+      h1: { fontSize: '2.5rem', fontFamily: accentFontFamily },
+      h2: { fontSize: '2.0rem', fontFamily: accentFontFamily },
+      h3: { fontSize: '1.5rem', fontFamily: accentFontFamily },
+      h4: { fontSize: '1.3rem', fontFamily: accentFontFamily },
+      h5: { fontSize: '1.2rem', fontFamily: accentFontFamily },
+      h6: { fontSize: '1.1rem', fontFamily: accentFontFamily },
     },
     overrides: {
       MuiButton: {
         root: {
           fontSize: '18px',
-          fontFamily: `'Roboto Condensed',sans-serif`
+          fontFamily: accentFontFamily,
+          fontWeight: 300
         }
       },
       MuiTypography: {
-        root: { fontFamily: `'Comfortaa', cursive` },
+        root: { fontFamily: primaryFontFamily },
         body2: { margin: '12px 0' },
 
         h1: headerMargin(1.3),

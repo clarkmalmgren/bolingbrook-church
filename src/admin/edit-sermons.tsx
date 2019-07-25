@@ -26,7 +26,7 @@ export const EditSermons: React.FunctionComponent<{}> = (props) => {
 
   return (
     <SecurePage>
-      <Hero cdnImage="3hCNV0M908IghsfWtqypNj" height={0.4} shade={0.4}>
+      <Hero media="sermons" height={0.4} shade={0.4}>
         <Typography className={classes.header} variant="h1">Edit Sermons</Typography>
       </Hero>
       <SermonList linkRoot="/admin/sermons" all/>

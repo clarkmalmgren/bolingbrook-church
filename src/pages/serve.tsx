@@ -41,7 +41,7 @@ class Serve extends React.PureComponent<WithStyles<typeof styles>, ServeState> {
       (<Redirect to="/thank-you" />) :
       (
         <Page>
-          <Hero cdnImage="1HhVFyX6nDz41jR7NaqYsx" height={0.3} shade={0.4}>
+          <Hero media="serve" height={0.3} shade={0.4}>
             <Typography className={this.props.classes.header} variant="h1">Serve</Typography>
           </Hero>
           <Content name="Serve" />

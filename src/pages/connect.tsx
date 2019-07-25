@@ -1,7 +1,5 @@
 import * as React from 'react'
 import { Redirect } from 'react-router'
-import { Modal, Typography } from '@material-ui/core'
-import Box from '../components/box'
 import Page from '../components/page'
 import { Form, TextField, Header, Checkboxes, CheckboxOption, Submit } from '../forms'
 import { ErrorDialog } from '../components/error'

@@ -19,22 +19,22 @@ export default class Giving extends React.PureComponent<{}, GivingState> {
   render() {
     return (
       <Page>
-        <Hero cdnImage="NShwg4WM69b1n47AMzow9" height={0.7}>
+        <Hero media="giving" height={0.7}>
           
           <HeroCard title="Envelope"
                     subtitle="Cash or Check"
                     onClick={this.open}
-                    image="https://guardian.ng/wp-content/uploads/2017/12/tithe.jpg" />
+                    media="envelope" />
           
           <HeroCard title="Online"
                     subtitle="Adventist Giving"
                     link="https://www.adventistgiving.org/?OrgID=ANF4BV"
-                    image="https://adventistgiving.org/assets/images/AG-logo@2x-d1843609979cf602d74d38212bbc6c17.png" />
+                    media="online" />
 
           <HeroCard title="Text Amount To"
                     subtitle="630-246-4885"
                     link="tel:6302464885"
-                    image="https://www.blakleysflooring.com/wp-content/uploads/2016/03/Placeholder-768x768.png" />
+                    media="text" />
         </Hero>
 
         <Content name="Giving" />

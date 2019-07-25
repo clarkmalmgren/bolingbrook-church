@@ -2,7 +2,7 @@ import * as React from 'react'
 import classNames from 'classnames'
 import { Typography, List, ListItem } from '@material-ui/core'
 import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
-import { getEntry, findEntry } from '../services/contentful'
+import { ContentFinder } from '../services/contentful'
 import Box from './box'
 import Button from './button'
 import Youtube from './youtube'
@@ -17,8 +17,7 @@ const styles = createStyles({
 })
 
 interface ContentProps extends WithStyles<typeof styles> {
-  name?: string
-  id?: string
+  name: string
 }
 
 interface ContentState {
@@ -39,20 +38,15 @@ function match<T>(s: string, matchers: MatchArgs<T>): T | null {
   return null
 }
 
+const pageFinder = new ContentFinder('staticPage', 'pageName')
+
 class Content extends React.PureComponent<ContentProps, ContentState> {
 
   state = {} as ContentState
 
   componentWillMount() {
-    if (this.props.name) {
-      findEntry({ content_type: 'staticPage', 'fields.pageName': this.props.name })
-        .then(e => { this.setState({ data: e[0] }) })
-    } else if (this.props.id) {
-      getEntry(this.props.id)
-        .then(e => this.setState({ data: e }))
-    } else {
-      throw new Error("Need to include either a 'name' or 'id' attribute on <Content>")
-    }
+    pageFinder.get(this.props.name)
+      .then(data => { this.setState({ data }) })
   }
 
   renderNode(node: any, key: string = "0", dense?: boolean) {

@@ -16,7 +16,7 @@ export default (props: {}) => {
 
     return (
       <Page>
-        <Hero cdnImage="kabPd963TBdnvNcOWTxJX" height={0.3} shade={0.4}>
+        <Hero media="thank-you" height={0.3} shade={0.4}>
           <Typography className={classes.header} variant="h1">Thank You!</Typography>
         </Hero>
         <Content name="Thank You" />

@@ -3,9 +3,9 @@ import { Link, LinkProps } from 'react-router-dom'
 import Card from '@material-ui/core/Card'
 import { Theme } from '@material-ui/core'
 import CardHeader from '@material-ui/core/CardHeader'
-import CardMedia from '@material-ui/core/CardMedia'
+import CardMedia, { CardMediaProps } from '@material-ui/core/CardMedia'
 import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
-import { getMediaUrl } from '../services/contentful'
+import { ContentFinder, Asset } from '../services/contentful'
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -43,15 +43,22 @@ interface HeroCardProps extends WithStyles<typeof styles> {
   subtitle?: string
   
   image?: string
-  cdnImage?: string
+  media?: string
   
   link?: string
   onClick?: () => void
 }
 
-interface HeroCardState {
-  cdnImageUrl?: string
+type HeroCardMedia = {
+  name: string
+  media: Asset
 }
+
+interface HeroCardState {
+  mediaData?: HeroCardMedia
+}
+
+const heroCardFinder = new ContentFinder<HeroCardMedia>('heroCard', 'name')
 
 class HeroCard extends React.PureComponent<HeroCardProps, HeroCardState> {
 
@@ -61,10 +68,26 @@ class HeroCard extends React.PureComponent<HeroCardProps, HeroCardState> {
 
 
   componentWillMount() {
-    if (this.props.cdnImage) {
-      getMediaUrl(this.props.cdnImage, 250)
-        .then(url => { this.setState({ cdnImageUrl: url }) })
+    if (this.props.media) {
+      heroCardFinder.get(this.props.media)
+        .then(mediaData => { this.setState({ mediaData }) })
     }
+  }
+
+  renderMedia() {
+    const props: CardMediaProps = {
+      className: this.props.classes.media
+    }
+    
+    if (this.props.image) {
+      props.image = this.props.image
+    } else if (this.state.mediaData) {
+      props.image = this.state.mediaData.media.fields.file.url + "?w=250"
+    } else {
+      props.image = '//via.placeholder.com/1'
+    }
+    
+    return (<CardMedia {...props} />)
   }
 
   render() {
@@ -79,7 +102,7 @@ class HeroCard extends React.PureComponent<HeroCardProps, HeroCardState> {
 
     return (
       <Card className={this.props.classes.root} {...cardProps}>
-        <CardMedia className={this.props.classes.media} image={this.props.image || this.state.cdnImageUrl}></CardMedia>
+        { this.renderMedia() }
         <CardHeader className={this.props.classes.header} title={this.props.title} subheader={ this.props.subtitle }></CardHeader>
       </Card>
     )

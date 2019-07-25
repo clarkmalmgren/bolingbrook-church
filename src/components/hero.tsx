@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Theme } from '@material-ui/core'
 import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
-import { getMediaUrl } from '../services/contentful'
+import { ContentFinder, Asset } from '../services/contentful'
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -46,22 +46,22 @@ const styles = (theme: Theme) => createStyles({
   }
 })
 
-export interface VideoSource {
-  url: string
-  type: string
+type HeroMedia = {
+  name: string
+  media: Asset[]
 }
 
+const heroFinder = new ContentFinder<HeroMedia>('hero', 'name')
+
 export interface HeroProps extends WithStyles<typeof styles> {
-  video?: VideoSource[]
-  image?: string
-  cdnImage?: string
+  media: string
   height: number
   shade?: number
 }
 
 interface HeroState {
   height: number
-  cdnImageUrl?: string
+  mediaData?: HeroMedia
 }
 
 class Hero extends React.PureComponent<HeroProps, HeroState> {
@@ -79,10 +79,8 @@ class Hero extends React.PureComponent<HeroProps, HeroState> {
   }
 
   componentWillMount() {
-    if (this.props.cdnImage) {
-      getMediaUrl(this.props.cdnImage)
-        .then(url => { this.setState({ cdnImageUrl: url }) })
-    }
+    heroFinder.get(this.props.media)
+      .then(mediaData => { this.setState({ mediaData }) })
   }
 
   componentDidMount() {
@@ -94,18 +92,20 @@ class Hero extends React.PureComponent<HeroProps, HeroState> {
   }
 
   background() {
-    if (this.props.video) {
-      return (
-        <video autoPlay loop className={this.props.classes.video}>
-          { this.props.video.map((s) => <source key={s.url} src={s.url} type={s.type} />) }
-        </video>
-      )
-    } else if (this.props.image || this.state.cdnImageUrl) {
-      const url = this.props.image || this.state.cdnImageUrl
-      return (
-        <div className={this.props.classes.background}
-             style={ { backgroundImage: `url(${url})` } } />
-      )
+    if (this.state.mediaData) {
+      const file = this.state.mediaData.media[0].fields.file
+      if (file.contentType.startsWith("video")) {
+        return (
+          <video autoPlay loop className={this.props.classes.video}>
+            <source src={file.url} type={file.contentType} />
+          </video>
+        )
+      } else {
+        const url = file.url + "?w=" + screen.width
+        return (
+          <div className={this.props.classes.background} style={ { backgroundImage: `url(${url})` } } />
+        )
+      }
     }
   }
 

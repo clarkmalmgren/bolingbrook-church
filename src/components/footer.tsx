@@ -15,7 +15,7 @@ const styles = (theme: Theme) => createStyles({
   root: {
     position: 'relative',
     marginTop: '20px',
-    background: grey[200]
+    background: grey[100]
   },
 
   notice: {
@@ -34,7 +34,7 @@ const styles = (theme: Theme) => createStyles({
     '& .link-group': {
       display: 'flex',
       flexDirection: 'column',
-      width: '220px',
+      width: '250px',
 
       '& .header': { padding: '4px 30px' }
     }
@@ -68,7 +68,7 @@ class Footer extends React.PureComponent<FooterProps, {}> {
 
         <div className={this.props.classes.links}>
           <div className="link-group">
-            <Typography className="header" variant="h5">Connect</Typography>
+            <Typography className="header" variant="h4">Connect</Typography>
 
             <Links.Twitter />
             <Links.Instagram />
@@ -77,7 +77,7 @@ class Footer extends React.PureComponent<FooterProps, {}> {
           </div>
 
           <div className="link-group">
-            <Typography className="header" variant="h5">About</Typography>
+            <Typography className="header" variant="h4">About</Typography>
 
             <Links.OurStory />
             <Links.Location />
@@ -86,7 +86,7 @@ class Footer extends React.PureComponent<FooterProps, {}> {
           </div>
 
           <div className="link-group">
-            <Typography className="header" variant="h5">Get Involved</Typography>
+            <Typography className="header" variant="h4">Get Involved</Typography>
 
             <Links.Giving />
             <Links.GetConnected />

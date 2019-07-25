@@ -16,7 +16,7 @@ const Sermons: React.FunctionComponent<{}> = (props) => {
 
     return (
       <Page>
-        <Hero cdnImage="3hCNV0M908IghsfWtqypNj" height={0.4} shade={0.4}>
+        <Hero media="sermons" height={0.4} shade={0.4}>
           <Typography className={classes.header} variant="h1">Sermons</Typography>
         </Hero>
         <SermonList />
