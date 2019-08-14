@@ -14,15 +14,3 @@ script:
 
 after_success:
   - ./node_modules/coveralls/bin/coveralls.js < coverage/lcov.info
-
-before_deploy:
-  - node docker
-
-deploy:
-  skip_cleanup: true
-  provider: script
-  file: release.tar.gz
-  script: ./deploy.sh
-  on:
-    repo: clarkmalmgren/bolingbrook-church
-    tags: true
