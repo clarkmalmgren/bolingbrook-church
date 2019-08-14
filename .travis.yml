@@ -14,3 +14,12 @@ script:
 
 after_success:
   - ./node_modules/coveralls/bin/coveralls.js < coverage/lcov.info
+
+deploy:
+  provider: firebase
+  skip_cleanup: true
+  on:
+    repo: clarkmalmgren/bolingbrook-church
+    tags: true
+  token:
+    secure: Wx5KZPo2pzzBKYqST1vW8ynchz8+yK2PBqLayGOG7DmbsEpgE8nktcUSmqen6gYI+5+WQ414vhLfz30rlG4FmlfgghZ0OIsgV/yqpiaP0H/R3surQzDv6wlNW0vGSrrwzeuOChX10w3yw9j5DZpEmqQ2SnOdXzj/FsCSeNgCUaWvntzHm+4GOAKB3X+93NjIjP5+1dQ6tUcXCUDHrXtmHlax/HM7HpnvF46St6dPblmj2mYHAeYtpW9ZymLgQang8XzhFGrEyWLLSxM9XT3vfRLO5poQ25Oxl6wUjGt1xIsaRw1Z3ZBiZVAZnYN7udcq1chhoeUxZZqfAV0+/KhDIAjIs3PVHwvggIfhy3dFIsXGJoYUKIcv1qcfZAt7kSfV+I6w5DrXqOkhTuNPyNG2yYwG9FJRu08tlDAwMj5Gbk3qq80eNKj40SOD2vb38ouYdtnI9lMCinLfTNcYbSTJRgHomFM0tBPs6vQxPrEEo00JOuUu3S0ITCff6oq5XAolcgV6lT/5551U/w0nYYS5POZb7Auu6RrfMHOTOu++bXbix0n6vYplOMucH2OtAPJavmN2FqUf8HHMgltW3RdZjUlj25WlqmNoCvwr8cqXJli3cCClnhxxZ6kr4cx92pB9yHsT4vUwpaTiWhbbjRjI1ay1Xm5j42JLKJJc7Q83u/M=

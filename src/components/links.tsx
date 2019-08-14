@@ -59,7 +59,7 @@ export const FriendsFam   = () => (<Link link='/friends-and-family' icon='group_
 export const Twitter    = () => (<Link link='http://www.twitter.com/bolingbrooksda' icon='twitter' socicon>Twitter</Link>)
 export const Instagram  = () => (<Link link='http://instagram.com/bolingbrookchurch' icon='instagram' socicon>Instagram</Link>)
 export const Facebook   = () => (<Link link='https://www.facebook.com/bolingbrooksda' icon='facebook' socicon>Facebook</Link>)
-export const Youtube    = () => (<Link link='https://www.youtube.com/channel/UCLkqCaFc_-puBhVEGLxCnbw' icon='youtube' socicon>Youtube</Link>)
+export const Youtube    = () => (<Link link='https://www.youtube.com/bolingbrook-church' icon='youtube' socicon>Youtube</Link>)
 
 // Admin Links
 export const EditSermons = () => (<Link link="/admin/sermons" icon="library_add">Edit Sermons</Link>)
