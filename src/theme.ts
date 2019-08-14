@@ -8,8 +8,8 @@ function headerMargin(base: number): CSSProperties {
  return { marginBlockStart: `${base}rem`, marginBlockEnd: `${base/2}rem` }
 } 
 
-const primaryFontFamily = `'Lora', serif`
-const accentFontFamily = `'Montserrat', sans-serif`
+const primaryFontFamily = `'Roboto', sans-serif`
+const accentFontFamily = `'Roboto', sans-serif`
 
 export default
   createMuiTheme({
