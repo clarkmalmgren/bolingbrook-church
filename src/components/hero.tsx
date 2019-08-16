@@ -96,7 +96,7 @@ class Hero extends React.PureComponent<HeroProps, HeroState> {
       const file = this.state.mediaData.media[0].fields.file
       if (file.contentType.startsWith("video")) {
         return (
-          <video autoPlay loop className={this.props.classes.video}>
+          <video autoPlay muted loop className={this.props.classes.video}>
             <source src={file.url} type={file.contentType} />
           </video>
         )
