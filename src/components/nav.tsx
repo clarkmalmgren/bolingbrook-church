@@ -91,6 +91,7 @@ class Nav extends React.PureComponent<NavProps, NavState> {
         <Links.Serve />
         <Links.Newsletter />
         <Links.FriendsFam />
+        <Links.ShopBC />
         { this.adminLinks() }
       </Drawer>
     )

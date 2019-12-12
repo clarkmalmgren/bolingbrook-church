@@ -1,6 +1,6 @@
 import React from 'react'
 import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
-import { Theme, Drawer, Divider, Icon } from '@material-ui/core'
+import { Icon } from '@material-ui/core'
 import Button from './button'
 import Socicon from './socicon'
 
@@ -54,6 +54,7 @@ export const Location     = () => (<Link link='/location' icon='place'>Location<
 export const Serve        = () => (<Link link='/serve' icon='pan_tool'>Serve</Link>)
 export const Newsletter   = () => (<Link link='/newsletter' icon='email'>Newsletter</Link>)
 export const FriendsFam   = () => (<Link link='/friends-and-family' icon='group_add'>Friends &amp; Family</Link>)
+export const ShopBC       = () => (<Link link='/shop-bc' icon='shopping_cart'>Shop BC</Link>)
 
 // External Social Links
 export const Twitter    = () => (<Link link='http://www.twitter.com/bolingbrooksda' icon='twitter' socicon>Twitter</Link>)

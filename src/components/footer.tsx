@@ -68,15 +68,6 @@ class Footer extends React.PureComponent<FooterProps, {}> {
 
         <div className={this.props.classes.links}>
           <div className="link-group">
-            <Typography className="header" variant="h4">Connect</Typography>
-
-            <Links.Twitter />
-            <Links.Instagram />
-            <Links.Facebook />
-            <Links.Youtube />
-          </div>
-
-          <div className="link-group">
             <Typography className="header" variant="h4">About</Typography>
 
             <Links.OurStory />
@@ -92,6 +83,16 @@ class Footer extends React.PureComponent<FooterProps, {}> {
             <Links.GetConnected />
             <Links.Newsletter />
             <Links.Serve />
+            <Links.ShopBC />
+          </div>
+
+          <div className="link-group">
+            <Typography className="header" variant="h4">Connect</Typography>
+
+            <Links.Twitter />
+            <Links.Instagram />
+            <Links.Facebook />
+            <Links.Youtube />
           </div>
         </div>
 
