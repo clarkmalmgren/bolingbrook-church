@@ -52,6 +52,7 @@ interface HeroCardProps extends WithStyles<typeof styles> {
 type HeroCardMedia = {
   name: string
   media: Asset
+  surpress_image: boolean
 }
 
 interface HeroCardState {
@@ -68,20 +69,29 @@ class HeroCard extends React.PureComponent<HeroCardProps, HeroCardState> {
 
 
   componentWillMount() {
+    console.log(`WillMount for ${this.props.title}`)
     if (this.props.media) {
       heroCardFinder.get(this.props.media)
-        .then(mediaData => { this.setState({ mediaData }) })
+        .then(mediaData => {
+          this.setState({ mediaData })
+          console.log(`Updating media for ${this.props.media}`, mediaData)
+        })
     }
   }
 
   renderMedia() {
+    /* Don't show it if we want to surpress the image */
+    if (this.state.mediaData && this.state.mediaData.surpress_image) {
+      return undefined
+    }
+
     const props: CardMediaProps = {
       className: this.props.classes.media
     }
     
     if (this.props.image) {
       props.image = this.props.image
-    } else if (this.state.mediaData) {
+    } else if (this.state.mediaData && this.state.mediaData.media) {
       props.image = this.state.mediaData.media.fields.file.url + "?w=250"
     } else {
       props.image = '//via.placeholder.com/1'

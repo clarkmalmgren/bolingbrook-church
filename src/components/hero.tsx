@@ -33,15 +33,17 @@ const styles = (theme: Theme) => createStyles({
 
   content: {
     position: 'absolute',
-    top: '50%',
+    bottom: '25px',
     width: '100%',
-    transform: 'translateY(-50%)',
     display: 'flex',
     flexFlow: 'row',
     justifyContent: 'center',
-
+    
     [theme.breakpoints.down('sm')]: {
-      flexWrap: 'wrap'
+      flexWrap: 'wrap',
+      top: '50%',
+      bottom: 'inherit',
+      transform: 'translateY(-50%)'
     }
   }
 })

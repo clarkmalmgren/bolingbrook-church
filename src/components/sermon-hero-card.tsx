@@ -24,12 +24,13 @@ class SermonHeroCard extends React.PureComponent<SermonHeroCardProps, {}> {
 
   render() {
     if (!this.props.sermon) {
-      return (<HeroCard title="" image="" link="#"/>)
+      return (<HeroCard title="" image="" link="#" media="latest_sermon"/>)
     } else {
       return (
         <HeroCard title={ isToday(this.props.sermon ) ? "Today's Sermon" : "Latest Sermon" }
                   subtitle={ this.props.sermon.title }
                   image={ getImageUrl(this.props.sermon) }
+                  media="latest_sermon"
                   link={ `/sermons/${this.props.sermon.date}` }/>
       )
     }
