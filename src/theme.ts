@@ -14,7 +14,7 @@ const accentFontFamily = `'Roboto', sans-serif`
 export default
   createMuiTheme({
     palette: {
-      primary: cyan,
+      primary: orange,
       secondary: {
         main: orange[500],
         light: orange[200],

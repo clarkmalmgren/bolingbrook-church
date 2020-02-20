@@ -81,6 +81,7 @@ class Nav extends React.PureComponent<NavProps, NavState> {
         <Links.Home />
 
         <Links.OurStory />
+        <Links.MeetUs />
         <Links.GetConnected />
         <Links.Sermons />
         <Links.Giving />

@@ -27,6 +27,7 @@ export default class App extends Component<AppProps> {
               <Route exact path="/friends-and-family" component={Routes.FriendsAndFamily} />
               <Route exact path="/giving" component={Routes.Giving} />
               <Route exact path="/shop-bc" component={Routes.ShopBC} />
+              <Route exact path="/meet-us" component={Routes.MeetUs} />
               <Route exact path="/newsletter" component={Routes.Newsletter} />
               <Route exact path="/sermons/:id" component={Routes.Sermon} />
               <Route exact path="/sermons" component={Routes.Sermons} />

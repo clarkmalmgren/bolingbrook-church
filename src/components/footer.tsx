@@ -71,6 +71,7 @@ class Footer extends React.PureComponent<FooterProps, {}> {
             <Typography className="header" variant="h4">About</Typography>
 
             <Links.OurStory />
+            <Links.MeetUs />
             <Links.Location />
             <Links.Sermons />
             <Links.FriendsFam />
