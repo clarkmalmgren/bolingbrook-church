@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Theme } from '@material-ui/core'
 import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
 import { ContentFinder, Asset } from '../services/contentful'
+import { inherits } from 'util'
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -33,17 +34,25 @@ const styles = (theme: Theme) => createStyles({
 
   content: {
     position: 'absolute',
-    bottom: '25px',
+
+    top: '50%',
+    transform: 'translateY(-50%)',
+
     width: '100%',
     display: 'flex',
     flexFlow: 'row',
     justifyContent: 'center',
+
+    '&.bottom': {
+      [theme.breakpoints.up('sm')]: {
+        top: 'inherit',
+        transform: 'inherit',
+        bottom: '25px'
+      }
+    },
     
     [theme.breakpoints.down('sm')]: {
       flexWrap: 'wrap',
-      top: '50%',
-      bottom: 'inherit',
-      transform: 'translateY(-50%)'
     }
   }
 })
@@ -59,6 +68,7 @@ export interface HeroProps extends WithStyles<typeof styles> {
   media: string
   height: number
   shade?: number
+  bottom?: boolean
 }
 
 interface HeroState {
@@ -116,13 +126,17 @@ class Hero extends React.PureComponent<HeroProps, HeroState> {
       (<div className={this.props.classes.shade} style={({backgroundColor: `rgba(0,0,0,${this.props.shade})`})}/>) : null
   }
 
+  contentClassName(): string {
+    return this.props.classes.content + (this.props.bottom ? ' bottom' : '')
+  }
+
   render() {
     return (
       <div className={this.props.classes.root} style={{height: this.state.height + 'px'}}>
         {this.background()}
 
         {this.renderShade()}
-        <div className={this.props.classes.content}>
+        <div className={this.contentClassName()}>
           {this.props.children}
         </div>
       </div>

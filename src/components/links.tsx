@@ -52,7 +52,7 @@ export const Sermons      = () => (<Link link='/sermons' icon='video_library'>Se
 export const Giving       = () => (<Link link='/giving' icon='attach_money'>Giving</Link>)
 export const Location     = () => (<Link link='/location' icon='place'>Location</Link>)
 export const Serve        = () => (<Link link='/serve' icon='pan_tool'>Serve</Link>)
-export const MeetUs       = () => (<Link link='/meet-us' icon='people'>Meet Us</Link>)
+export const MeetUs       = () => (<Link link='/meet-us' icon='emoji_people'>Meet Us</Link>)
 export const Newsletter   = () => (<Link link='/newsletter' icon='email'>Newsletter</Link>)
 export const FriendsFam   = () => (<Link link='/friends-and-family' icon='group_add'>Friends &amp; Family</Link>)
 export const ShopBC       = () => (<Link link='/shop-bc' icon='shopping_cart'>Shop BC</Link>)

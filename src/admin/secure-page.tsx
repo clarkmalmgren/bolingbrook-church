@@ -7,6 +7,7 @@ import { Redirect } from 'react-router';
 interface SecurePageProps {
   loggedIn: boolean
   className?: string
+  children: React.ReactNode
 }
 
 const BaseSecurePage: React.FunctionComponent<SecurePageProps> =

@@ -1,6 +1,6 @@
 {
   "name": "bolingbrook-church",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.9.2",
@@ -12,6 +12,7 @@
     "@types/react-dom": "16.8.0",
     "@types/react-redux": "^7.0.4",
     "@types/react-router-dom": "^4.3.1",
+    "babel-loader": "8.0.4",
     "classnames": "^2.2.6",
     "contentful": "^7.8.0",
     "hamburgers": "^1.1.3",

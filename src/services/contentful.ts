@@ -1,5 +1,5 @@
-import { createClient, Asset } from 'contentful'
-export type Asset = Asset
+import { createClient, Asset as ContentfulAsset } from 'contentful'
+export type Asset = ContentfulAsset
 
 const client = createClient({
   space: 'eiyme5kkttnk',

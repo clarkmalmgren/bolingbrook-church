@@ -7,7 +7,7 @@ import Content from '../components/content'
 
 export default () => (
   <Page>
-    <Hero media="home">
+    <Hero media="home" bottom>
       <SermonHeroCard />
 
       <HeroCard title="Giving"
