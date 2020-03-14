@@ -18,14 +18,14 @@ export function query<T>(query: any): Promise<T[]> {
     .then(e => e.items.map(i => i.fields))
 }
 
-export class ContentFinder<T> {
+export class ContentFinder<T, K = string> {
   constructor(private type: string, private field_name: string) {}
 
-  find(value: string): Promise<T[]> {
+  find(value: K): Promise<T[]> {
     return query({ content_type: this.type, [`fields.${this.field_name}`]: value })
   }
 
-  get(value: string): Promise<T> {
+  get(value: K): Promise<T> {
     return this.find(value).then(list => list[0])
   }
 }

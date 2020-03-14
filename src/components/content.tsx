@@ -16,8 +16,11 @@ const styles = createStyles({
   code: { fontFamily: 'monospace' }
 })
 
-interface ContentProps extends WithStyles<typeof styles> {
-  name: string
+// The properties for content can either be named or pre-defined but not both
+type NamedContentProps = { name: string }
+type DataContentProps = { data: any }
+type ContentProps = (NamedContentProps | DataContentProps) & WithStyles<typeof styles> & {
+  boxVariant: 'main' | 'section'
 }
 
 interface ContentState {
@@ -42,18 +45,26 @@ const pageFinder = new ContentFinder('staticPage', 'pageName')
 
 class Content extends React.PureComponent<ContentProps, ContentState> {
 
+  static defaultProps: Partial<ContentProps> = {
+    boxVariant: 'main'
+  }
+
   state = {} as ContentState
 
   componentWillMount() {
-    pageFinder.get(this.props.name)
-      .then(data => { this.setState({ data }) })
+    if ("name" in this.props) {
+      pageFinder.get(this.props.name)
+        .then(data => { this.setState({ data }) })
+    } else {
+      this.setState({ data: this.props.data })
+    }
   }
 
   renderNode(node: any, key: string = "0", dense?: boolean) {
     const children = (dense?: boolean) => node.content.map((c: any, index: number) => this.renderNode(c, `${key}.${index}`, dense))
 
     return match(node.nodeType, {
-      'document': () => (<Box key={key}>{children()}</Box>),
+      'document': () => (<Box variant={this.props.boxVariant} key={key}>{children()}</Box>),
 
       'heading-(\\d)': ([k]) => {
         const variant = `h${k}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
@@ -70,7 +81,7 @@ class Content extends React.PureComponent<ContentProps, ContentState> {
         return (<span key={key} className={classNames(classes)}>{node.value}</span>)
       },
 
-      'hyperlink': () => (<Button key={key} variant="contained" link={node.data.uri}>{children()}</Button>),
+      'hyperlink': () => (<Button key={key} variant="text" size="small" link={node.data.uri}>{children()}</Button>),
 
       'unordered-list': () => (<List key={key} dense={true}>{children()}</List>),
 
