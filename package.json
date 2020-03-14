@@ -1,6 +1,6 @@
 {
   "name": "bolingbrook-church",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.9.2",
