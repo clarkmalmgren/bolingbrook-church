@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { Redirect } from 'react-router'
-import Page from '../components/page'
 import { Form, TextField, Header, Checkboxes, CheckboxOption, Submit } from '../forms'
 import { ErrorDialog } from '../components/error'
 
@@ -30,7 +29,7 @@ export default class Connect extends React.PureComponent<{}, ConnectState> {
     return this.state.submitted ?
       (<Redirect to="/thank-you" />) :
       (
-        <Page>
+        <div>
           <Form onSubmit={this.submit}>
             <Header id="_h1" variant="h1">Get Connected</Header>
             <Header id="_h2" variant="h2">Step 1: Tell us about yourself</Header>
@@ -58,7 +57,7 @@ export default class Connect extends React.PureComponent<{}, ConnectState> {
           </Form>
           
           <ErrorDialog open={this.state.failed} onClose={() => this.setState({ failed: false })} />
-        </Page>
+        </div>
       )
   }
 }

@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react'
 import { Typography } from '@material-ui/core';
 import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
 import Box from '../components/box'
-import Page from '../components/page'
 
 const placeId = 'place_id:ChIJRcmvHlBaDogRL4gzWu1p8Ag'
 const href = `https://www.google.com/maps/embed/v1/place?q=${placeId}&key=${process.env.REACT_APP_MAPS_API_KEY}`
@@ -22,7 +21,7 @@ class Location extends PureComponent<WithStyles<typeof styles>, {}> {
 
   render() {
     return (
-      <Page>
+      <div>
         <Box>
           <Typography variant="h2">Location</Typography>
 
@@ -33,8 +32,8 @@ class Location extends PureComponent<WithStyles<typeof styles>, {}> {
           }</Typography>
         </Box>
       
-        <iframe frameBorder="0" allowFullScreen src={href} className={this.props.classes.map} />
-      </Page>
+        <iframe title="Google Maps" frameBorder="0" allowFullScreen src={href} className={this.props.classes.map} />
+      </div>
     )
   }
 }

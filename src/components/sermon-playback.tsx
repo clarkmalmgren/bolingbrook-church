@@ -1,44 +1,32 @@
-import * as React from 'react'
-import { Dispatch } from 'redux'
-import { connect } from 'react-redux'
+import { Typography } from '@material-ui/core'
+import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
 import moment from 'moment'
-import { createStyles, withStyles } from '@material-ui/styles'
+import * as React from 'react'
+import { connect } from 'react-redux'
+import { Dispatch } from 'redux'
+import { Sermon } from '../models/sermon'
+import { sermonSelectors } from '../store/index'
+import { load } from '../store/sermons/actions'
 import Box from './box'
 import YouTube from './youtube'
-import { load } from '../store/sermons/actions'
-import { Sermon } from '../models/sermon'
-import { sermonSelectors } from '../store/index' 
-import { Typography, Theme } from '@material-ui/core'
 
-interface Props {
-  date: string
-  sermon?: Sermon
-  onLoad?: () => void
-  classes?: any
-}
-
-function sized(width: number) {
-  return {
-    width: `${width}px`,
-    height: `${width*3/4}px`
-  }
-}
-
-const styles = (theme: Theme) => createStyles({
-  root: {  },
-  video: {
-    // display: 'block',
-    // margin: '20px auto',
-    // ...sized(640),
-  },
+const styles = createStyles({
   data: {
     display: 'flex',
   }
 })
 
+interface Props extends WithStyles<typeof styles> {
+  date: string
+  sermon?: Sermon
+  onLoad?: () => void
+}
+
+
+
 class SermonList extends React.PureComponent<Props, {}> {
 
-  componentWillMount() {
+  componentDidMount() {
     if (this.props.onLoad) {
       this.props.onLoad()
     }
@@ -46,7 +34,7 @@ class SermonList extends React.PureComponent<Props, {}> {
 
   renderLoading() {
     return (
-      <Box className={this.props.classes.root}>
+      <Box>
         <Typography variant="h2">Loading...</Typography>
       </Box>
     )
@@ -54,8 +42,8 @@ class SermonList extends React.PureComponent<Props, {}> {
 
   renderPlayback(sermon: Sermon) {
     return (
-      <Box className={this.props.classes.root}>
-        { sermon.services.map(s => <YouTube className={this.props.classes.video} key={s.youtube} id={s.youtube} />) }
+      <Box>
+        { sermon.services.map(s => <YouTube key={s.youtube} id={s.youtube} />) }
         <Box className={this.props.classes.data}>
           <Box className="text">
             <Typography variant="h4">{sermon.title}</Typography>

@@ -9,7 +9,7 @@ interface CheckboxesProps extends FieldProps<string[]> {
 const Checkboxes: FunctionComponent<CheckboxesProps> =
   (props) => {
     const update = (id: string, checked: boolean) => {
-      const original = (props.value || []).filter(s => s != id)
+      const original = (props.value || []).filter(s => s !== id)
 
       if (checked) {
         props.onChange([id, ...original])

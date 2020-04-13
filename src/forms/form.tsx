@@ -1,8 +1,8 @@
-import React, { PureComponent, cloneElement } from 'react'
+import { Paper } from '@material-ui/core'
 import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
-import { Paper, Theme } from '@material-ui/core'
+import React, { PureComponent } from 'react'
 import { merge } from './merge'
-import { BaseFieldProps, ProvidedFieldProps } from './props'
+import { ProvidedFieldProps } from './props'
 
 const styles = createStyles({
   root: {

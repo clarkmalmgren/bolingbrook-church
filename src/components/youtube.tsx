@@ -1,6 +1,5 @@
-import React from 'react'
 import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
-import classNames from 'classnames'
+import React from 'react'
 import Isomorphic from './isomorphic'
 
 const styles = createStyles({
@@ -23,7 +22,7 @@ class Youtube extends React.PureComponent<Props, {}> {
   render() {
     return (
       <Isomorphic aspectRatio={4/3} maxWidth='800px'>
-        <iframe className={this.props.classes.frame} src={this.url} frameBorder="0" allowFullScreen={true} />
+        <iframe title="Youtube Video" className={this.props.classes.frame} src={this.url} frameBorder="0" allowFullScreen={true} />
       </Isomorphic>
     )
   }

@@ -1,27 +1,15 @@
-import * as React from 'react'
-import { Typography } from '@material-ui/core'
-import { createStyles, makeStyles } from '@material-ui/styles'
-import Hero from '../components/hero'
-import Page from '../components/page'
+import React from 'react'
 import SermonList from '../components/sermon-list'
+import { ContentfulHero } from '../contentful/hero'
 
-const styles = createStyles({
-  header: {
-    color: 'white'
-  }
-})
-
-const Sermons: React.FunctionComponent<{}> = (props) => {
-  const classes = makeStyles(styles)(props)
-
+export const Sermons: React.FunctionComponent<{}> =
+  () => {
     return (
-      <Page>
-        <Hero media="sermons" height={0.4} shade={0.4}>
-          <Typography className={classes.header} variant="h1">Sermons</Typography>
-        </Hero>
+      <div>
+        <ContentfulHero name="sermons" />
         <SermonList />
-      </Page>
+      </div>
     )
-}
+  }
 
 export default Sermons

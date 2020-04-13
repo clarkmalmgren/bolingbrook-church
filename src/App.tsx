@@ -1,49 +1,62 @@
-import React, { Component } from 'react';
-import { Router, Route, Switch } from 'react-router'
+import { ThemeProvider } from '@material-ui/styles'
+import { createBrowserHistory } from 'history'
+import React, { FunctionComponent } from 'react'
 import { Provider } from 'react-redux'
-import { ThemeProvider } from '@material-ui/styles';
-
-import { createBrowserHistory } from 'history';
-const history = createBrowserHistory()
-
-import theme from './theme'
+import { Route, Router, Switch } from 'react-router'
+import Banner from './components/banner'
+import Box from './components/box'
+import Footer from './components/footer'
+import Header from './components/header'
+import { ContentfulPage } from './contentful/page'
 import * as Routes from './pages/index'
+import theme from './theme'
+import { NavWatcher } from './components/nav-watcher'
+
+const history = createBrowserHistory()
 
 interface AppProps {
   store: any
 }
 
-export default class App extends Component<AppProps> {
-  render() {
+const App: FunctionComponent<AppProps> =
+  (props) => {
     return (
       <ThemeProvider theme={theme}>
-        <Provider store={this.props.store}>
+        <Provider store={props.store}>
           <Router history={history}>
-            <Switch>
-              <Route exact path="/" component={Routes.HomePage} />
-              <Route exact path="/about" component={Routes.AboutPage} />
-              <Route exact path="/location" component={Routes.Location} />
-              <Route exact path="/connect" component={Routes.Connect} />
-              <Route exact path="/friends-and-family" component={Routes.FriendsAndFamily} />
-              <Route exact path="/giving" component={Routes.Giving} />
-              <Route exact path="/shop-bc" component={Routes.ShopBC} />
-              <Route exact path="/meet-us" component={Routes.MeetUs} />
-              <Route exact path="/newsletter" component={Routes.Newsletter} />
-              <Route exact path="/sermons/:id" component={Routes.Sermon} />
-              <Route exact path="/sermons" component={Routes.Sermons} />
-              <Route exact path="/serve" component={Routes.Serve} />
-              <Route exact path="/thank-you" component={Routes.ThankYou} />
+            <NavWatcher />
+            <Header />
+            <Banner />
+            <Box variant="main">
+              <Switch>
+                <Route exact path="/"                     component={() => <ContentfulPage path='/' />} />
+                <Route exact path="/about"                component={() => <ContentfulPage path='/about' />} />
+                <Route exact path="/location"             component={Routes.Location} />
+                <Route exact path="/connect"              component={Routes.Connect} />
+                <Route exact path="/friends-and-family"   component={() => <ContentfulPage path='/friends-and-family' />}  />
+                <Route exact path="/giving"               component={() => <ContentfulPage path='/giving' />}  />
+                <Route exact path="/shop-bc"              component={Routes.ShopBC} />
+                <Route exact path="/meet-us"              component={() => <ContentfulPage path='/meet-us' />}  />
+                <Route exact path="/newsletter"           component={Routes.Newsletter} />
+                <Route exact path="/sermons/:id"          component={Routes.Sermon} />
+                <Route exact path="/sermons"              component={Routes.Sermons} />
+                <Route exact path="/serve"                component={Routes.Serve} />
+                <Route exact path="/thank-you"            component={() => <ContentfulPage path='/thank-you' />}  />
 
-              <Route exact path="/admin" component={Routes.AdminPage} />
-              <Route exact path="/admin/login" component={Routes.Login} />
-              <Route exact path="/admin/sermons" component={Routes.EditSermons} />
-              <Route exact path="/admin/sermons/new" component={Routes.NewSermon} />
-              <Route exact path="/admin/sermons/:id" component={Routes.EditSermon} />
-              <Route component={Routes.NotFound} />
-            </Switch>
+                <Route exact path="/admin"                component={Routes.AdminPage} />
+                <Route exact path="/admin/login"          component={Routes.Login} />
+                <Route exact path="/admin/sermons"        component={Routes.EditSermons} />
+                <Route exact path="/admin/sermons/new"    component={Routes.NewSermon} />
+                <Route exact path="/admin/sermons/:id"    component={Routes.EditSermon} />
+                <Route                                    component={ContentfulPage} />
+              </Switch>
+              </Box>
+            <Footer />
           </Router>
         </Provider>
       </ThemeProvider>
-    );
+    )
+
   }
-}
+
+export default App

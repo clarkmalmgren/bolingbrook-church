@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { match } from 'react-router'
 import { createStyles, withStyles } from '@material-ui/styles'
-import Page from '../components/page'
 import SermonList from '../components/sermon-list'
 import SermonPlayback from '../components/sermon-playback'
 import { Typography } from '@material-ui/core';
@@ -21,13 +20,13 @@ class Sermon extends React.PureComponent<Props, {}> {
 
   render() {
     return (
-      <Page>
+      <div>
         <SermonPlayback date={this.props.match.params.id} />
 
         <Typography variant="h1" align="center">More Sermons</Typography>
 
         <SermonList />
-      </Page>
+      </div>
     )
   }
 }

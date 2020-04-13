@@ -1,12 +1,12 @@
 import { createClient, Asset as ContentfulAsset } from 'contentful'
 export type Asset = ContentfulAsset
 
-const client = createClient({
+export const client = createClient({
   space: 'eiyme5kkttnk',
   accessToken: '6a8d5626e4b0e632e15ca2694084cd5789404ad0413ef00e3503fe42b46deb0f'
 })
 
-export function getMediaUrl(id: string, width: number = screen.width): Promise<string> {
+export function getMediaUrl(id: string, width: number = window.screen.width): Promise<string> {
   return client
     .getAsset(id)
     .then(a => a.fields.file.url + "?w=" + width)

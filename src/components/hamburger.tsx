@@ -1,5 +1,6 @@
-import * as React from 'react'
-import './hamburger.scss';
+import classNames from 'classnames'
+import React, { FunctionComponent, useState } from 'react'
+import './hamburger.scss'
 
 interface HamburgerProps {
   className?: string
@@ -7,51 +8,35 @@ interface HamburgerProps {
   onToggle?: (active: boolean) => void
 }
 
-interface HamburgerState {
-  active: boolean
-}
-
-export class Hamburger extends React.PureComponent<HamburgerProps, HamburgerState> {
-
-  constructor(props: HamburgerProps) {
-    super(props)
-    this.state = { active : !!props.active }
-  }
-
-  componentWillReceiveProps(props: HamburgerProps) {
-    if (this.state.active != props.active) {
-      this.setState(() => ({ active: !!props.active }))
+export const Hamburger: FunctionComponent<HamburgerProps> =
+  (props) => {
+    const [active, setActive] = useState(props.active)
+    const [lastPropsActive, setLastPropsActive] = useState(props.active)
+    
+    if (props.active !== lastPropsActive) {
+      setActive(props.active)
+      setLastPropsActive(props.active)
     }
-  }
 
-  toggle = () => {
-    this.setState(state => {
-      const active = !state.active
-      if (this.props.onToggle) {
-        this.props.onToggle(active)
+    function toggle() {
+      setActive(!active)
+      if (props.onToggle) {
+        props.onToggle(!active)
       }
-      return { active : active }
-    })
-  }
+    }
 
-  getStatefulClassName = () => {
-    return [
-        this.props.className,
-        'hamburger',
-        'hamburger--spin',
-        this.state.active ? 'is-active' : undefined
-      ]
-      .filter(c => !!c)
-      .join(' ')
-  }
+    const className = classNames([
+      props.className,
+      'hamburger',
+      'hamburger--spin',
+      active ? 'is-active' : undefined
+    ])
 
-  render() {
-    return(
-      <div className={this.getStatefulClassName()} onClick={this.toggle}>
+    return (
+      <div className={className} onClick={() => toggle()}>
         <span className="hamburger-box">
           <span className="hamburger-inner"></span>
         </span>
       </div>
     )
   }
-}

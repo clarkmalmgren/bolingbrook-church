@@ -1,5 +1,4 @@
 import * as React from 'react'
-import Page from '../components/page'
 
 const baseUrl = 'https://app.printyourcause.com'
 const url = `${baseUrl}/campaign/bolingbrookchurch`
@@ -18,9 +17,7 @@ export default class ShopBC extends React.PureComponent<{}, MerchandiseState> {
 
   render() {
     return (
-      <Page>
-        <iframe src={url} frameBorder="0" style={{height: this.state.height, ...style}}></iframe>
-      </Page>
+      <iframe title="Shop Bolingbrook" src={url} frameBorder="0" style={{height: this.state.height, ...style}}></iframe>
     )
   }
 

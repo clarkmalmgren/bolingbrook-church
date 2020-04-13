@@ -29,7 +29,7 @@ const TextField: FunctionComponent<TextFieldProps> =
       rowsMax: props.rowsMax
     }
 
-    if (props.dataType == "date" || props.dataType == "time") {
+    if (props.dataType === "date" || props.dataType === "time") {
       muiProps.InputLabelProps = { shrink: true }
     }
 

@@ -1,7 +1,5 @@
-import React from 'react'
-
-import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@material-ui/core'
-import { duration } from 'moment';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
+import React from 'react';
 
 interface ErrorDialogProps {
   open: boolean

@@ -1,8 +1,8 @@
-import * as React from 'react'
 import { Theme } from '@material-ui/core'
 import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
-import { ContentFinder, Asset } from '../services/contentful'
-import { inherits } from 'util'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Asset } from '../services/contentful'
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -57,15 +57,13 @@ const styles = (theme: Theme) => createStyles({
   }
 })
 
-type HeroMedia = {
+export type HeroMedia = {
   name: string
   media: Asset[]
 }
 
-const heroFinder = new ContentFinder<HeroMedia>('hero', 'name')
-
 export interface HeroProps extends WithStyles<typeof styles> {
-  media: string
+  media: HeroMedia
   height: number
   shade?: number
   bottom?: boolean
@@ -73,30 +71,32 @@ export interface HeroProps extends WithStyles<typeof styles> {
 
 interface HeroState {
   height: number
-  mediaData?: HeroMedia
 }
 
 class Hero extends React.PureComponent<HeroProps, HeroState> {
 
   static defaultProps = { height: 0.8 }
 
-  state = { height: this.calcHeight() } as HeroState
+  state = {
+    height: this.calcHeight()
+  } as HeroState
 
   calcHeight(): number {
-    return (window.innerHeight - 60) * this.props.height
+    let top = 60
+    const el = ReactDOM.findDOMNode(this.refs['box']) as Element | undefined
+    if (el) {
+      top = el.getBoundingClientRect().top + window.scrollY
+    }
+    return (window.innerHeight - top) * this.props.height
   }
 
   updateHeight = () => {
-    this.setState((state) => ({ height: this.calcHeight() }))
-  }
-
-  componentWillMount() {
-    heroFinder.get(this.props.media)
-      .then(mediaData => { this.setState({ mediaData }) })
+    this.setState({ height: this.calcHeight() })
   }
 
   componentDidMount() {
     window.addEventListener("resize", this.updateHeight)
+    setTimeout(() => this.updateHeight(), 200)
   }
 
   componentWillUnmount() {
@@ -104,20 +104,18 @@ class Hero extends React.PureComponent<HeroProps, HeroState> {
   }
 
   background() {
-    if (this.state.mediaData) {
-      const file = this.state.mediaData.media[0].fields.file
-      if (file.contentType.startsWith("video")) {
-        return (
-          <video autoPlay muted loop className={this.props.classes.video}>
-            <source src={file.url} type={file.contentType} />
-          </video>
-        )
-      } else {
-        const url = file.url + "?w=" + screen.width
-        return (
-          <div className={this.props.classes.background} style={ { backgroundImage: `url(${url})` } } />
-        )
-      }
+    const file = this.props.media.media[0].fields.file
+    if (file.contentType.startsWith("video")) {
+      return (
+        <video autoPlay muted loop className={this.props.classes.video}>
+          <source src={file.url} type={file.contentType} />
+        </video>
+      )
+    } else {
+      const url = file.url + "?w=" + window.screen.width
+      return (
+        <div className={this.props.classes.background} style={ { backgroundImage: `url(${url})` } } />
+      )
     }
   }
 
@@ -132,7 +130,7 @@ class Hero extends React.PureComponent<HeroProps, HeroState> {
 
   render() {
     return (
-      <div className={this.props.classes.root} style={{height: this.state.height + 'px'}}>
+      <div ref='box' className={this.props.classes.root} style={{height: this.state.height + 'px'}}>
         {this.background()}
 
         {this.renderShade()}

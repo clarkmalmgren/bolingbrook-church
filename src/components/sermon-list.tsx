@@ -1,12 +1,12 @@
 import * as React from 'react'
-import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { createStyles, withStyles } from '@material-ui/styles'
-import Box from '../components/box'
+import { Dispatch } from 'redux'
+import CardList from '../components/card-list'
 import SermonCard from '../components/sermon-card'
-import { load } from '../store/sermons/actions'
 import { Sermon } from '../models/sermon'
 import { sermonSelectors } from '../store/index'
+import { load } from '../store/sermons/actions'
+import Box from './box'
 
 interface Props {
   sermons?: Sermon[]
@@ -16,21 +16,13 @@ interface Props {
   all?: boolean
 }
 
-const styles = createStyles({
-  root: {
-    display: 'flex',
-    flexFlow: 'row wrap',
-    justifyContent: 'center'
-  }
-})
-
 class SermonList extends React.PureComponent<Props, {}> {
 
   static defaultProps: Pick<Props, 'linkRoot'> = {
     linkRoot: '/sermons'
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (this.props.onLoad) {
       this.props.onLoad()
     }
@@ -42,8 +34,10 @@ class SermonList extends React.PureComponent<Props, {}> {
 
   render() {
     return (
-      <Box className={this.props.classes.root}>
-        { this.sermons.map(s => (<SermonCard sermon={s} key={s.date} linkRoot={this.props.linkRoot}/>)) }
+      <Box variant="wide-section">
+        <CardList>
+          { this.sermons.map(s => (<SermonCard sermon={s} key={s.date} linkRoot={this.props.linkRoot}/>)) }
+        </CardList>
       </Box>
     )
   }
@@ -64,4 +58,4 @@ function mapDispatchToProps(dispatch: Dispatch): any {
   }
 }
 
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(SermonList))
+export default connect(mapStateToProps, mapDispatchToProps)(SermonList)

@@ -1,17 +1,10 @@
 
-export { default as HomePage } from './home'
-export { default as AboutPage } from './about'
 export { default as Location } from './location'
 export { default as Connect } from './connect'
-export { default as FriendsAndFamily } from './friends-and-family'
-export { default as Giving } from './giving'
-export { default as MeetUs } from './meet-us'
 export { default as Newsletter } from './newsletter'
 export { default as Sermon } from './sermon'
 export { default as Sermons } from './sermons'
 export { default as Serve } from './serve'
-export { default as ThankYou } from './thank-you'
-export { default as NotFound} from './not-found'
 export { default as ShopBC } from './shop-bc'
 
 export { default as Login } from '../admin/login'

@@ -1,15 +1,14 @@
 import * as React from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { createStyles, withStyles, WithStyles } from '@material-ui/styles';
-import { Card, Typography, CardActionArea, CardContent, CardActions, CardMedia } from '@material-ui/core'
+import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
+import { Card, Typography, CardContent, CardActions, CardMedia } from '@material-ui/core'
 import { GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login'
-import Page from '../components/page'
 import { GoogleToken } from '../store/auth/token'
 import { save } from '../store/auth/actions'
 import { authSelectors } from '../store/index'
-import { Redirect } from 'react-router';
-import { TruthyOption } from '../utils/option';
+import { Redirect } from 'react-router'
+import { TruthyOption } from '../utils/option'
 
 const styles = createStyles({
   card: {
@@ -34,7 +33,7 @@ interface LoginProps extends WithStyles<typeof styles> {
 class Login extends React.PureComponent<LoginProps, {}> {
 
   readonly redirectTo: string =
-    TruthyOption(location.hash).map(_ => _.substr(1)).getOrElse("/admin")
+    TruthyOption(window.location.hash).map(_ => _.substr(1)).getOrElse("/admin")
 
   onSuccess = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
     const resp = response as GoogleLoginResponse
@@ -64,27 +63,25 @@ class Login extends React.PureComponent<LoginProps, {}> {
       )
     } else {
       return (
-        <Page>
-          <Card className={this.props.classes.card}>
-            <CardMedia className={this.props.classes.image} image="https://www.blakleysflooring.com/wp-content/uploads/2016/03/Placeholder-768x768.png" />
-            <CardContent>
-              <Typography variant="h2">Login</Typography>
-              <Typography>
-                Login using your Google credentials to manage listed sermons and
-                connect to Youtube assets.
-              </Typography>
-            </CardContent>
-            <CardActions >
-              <GoogleLogin
-                className={this.props.classes.login}
-                clientId={process.env.REACT_APP_OAUTH_CLIENT_ID as string}
-                onSuccess={this.onSuccess}
-                onFailure={this.onFailure}
-                cookiePolicy={'single_host_origin'}
-              />
-            </CardActions>
-          </Card>
-        </Page>
+        <Card className={this.props.classes.card}>
+          <CardMedia className={this.props.classes.image} image="https://www.blakleysflooring.com/wp-content/uploads/2016/03/Placeholder-768x768.png" />
+          <CardContent>
+            <Typography variant="h2">Login</Typography>
+            <Typography>
+              Login using your Google credentials to manage listed sermons and
+              connect to Youtube assets.
+            </Typography>
+          </CardContent>
+          <CardActions >
+            <GoogleLogin
+              className={this.props.classes.login}
+              clientId={process.env.REACT_APP_OAUTH_CLIENT_ID as string}
+              onSuccess={this.onSuccess}
+              onFailure={this.onFailure}
+              cookiePolicy={'single_host_origin'}
+            />
+          </CardActions>
+        </Card>
       )
     }
   }

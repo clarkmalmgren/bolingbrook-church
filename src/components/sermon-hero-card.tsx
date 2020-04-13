@@ -3,7 +3,7 @@ import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { createStyles, withStyles, WithStyles } from '@material-ui/styles';
 import { Sermon, getImageUrl, isToday } from '../models/sermon'
-import HeroCard from './hero-card'
+import Card from './card'
 import { load } from '../store/sermons/actions'
 import { sermonSelectors } from '../store/index' 
 
@@ -18,20 +18,19 @@ interface SermonHeroCardProps extends WithStyles<typeof styles> {
 
 class SermonHeroCard extends React.PureComponent<SermonHeroCardProps, {}> {
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.onload()
   }
 
   render() {
     if (!this.props.sermon) {
-      return (<HeroCard title="" image="" link="#" media="latest_sermon"/>)
+      return (<Card title="" image="" link="#" />)
     } else {
       return (
-        <HeroCard title={ isToday(this.props.sermon ) ? "Today's Sermon" : "Latest Sermon" }
-                  subtitle={ this.props.sermon.title }
-                  image={ getImageUrl(this.props.sermon) }
-                  media="latest_sermon"
-                  link={ `/sermons/${this.props.sermon.date}` }/>
+        <Card title={ isToday(this.props.sermon ) ? "Today's Sermon" : "Latest Sermon" }
+              subtitle={ this.props.sermon.title }
+              image={ getImageUrl(this.props.sermon) }
+              link={ `/sermons/${this.props.sermon.date}` }/>
       )
     }
   }

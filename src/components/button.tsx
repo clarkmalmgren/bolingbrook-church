@@ -1,13 +1,14 @@
-import React from 'react'
-import { Link, LinkProps } from 'react-router-dom'
-import MuiButton from '@material-ui/core/Button'
+import { Button as MuiButton } from '@material-ui/core';
 import { createStyles, withStyles, WithStyles } from '@material-ui/styles';
 import classNames from 'classnames';
+import React, { FunctionComponent } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
 const styles = createStyles({
   root: {
     fontSize: '18px',
     padding: '4px 22px',
+    textDecoration: 'none',
     
     '&.align-left': {
       textAlign: 'left',
@@ -19,55 +20,47 @@ const styles = createStyles({
 export interface ButtonProps extends WithStyles<typeof styles> {
   disabled?: boolean
   fullWidth?: boolean
-  mini?: boolean
   size?: 'small' | 'medium' | 'large'
   type?: string
   variant?: 'text' | 'flat' | 'outlined' | 'contained' | 'raised' | 'fab' | 'extendedFab'
   className?: string
-  color?: 'inherit' | 'primary' | 'secondary' | 'default' | undefined
+  color?: 'inherit' | 'primary' | 'secondary' | 'default'
   
   align?: 'left' | 'center' | 'right'
   link?: string
 }
 
-class Button extends React.PureComponent<ButtonProps, {}> {
-
-  constructor(props: ButtonProps) {
-    super(props)
-  }
-
-  render() {
+const Button: FunctionComponent<ButtonProps> =
+  (props) => {
     const muiProps: any =
     {
-      disabled: this.props.disabled,
-      fullWidth: this.props.fullWidth,
-      mini: this.props.mini,
-      size: this.props.size,
-      type: this.props.type,
-      variant: this.props.variant,
-      children: this.props.children,
-      color: this.props.color
+      disabled: props.disabled,
+      fullWidth: props.fullWidth,
+      size: props.size,
+      type: props.type,
+      variant: props.variant,
+      children: props.children,
+      color: props.color
     }
     
-    if (this.props.link && this.props.link.match(/^(https|http|tel):/)) {
-      muiProps.component = (props: any) => (<a href={this.props.link} {...props}/>)
-    } else if (this.props.link) {
-      muiProps.component = (lp: LinkProps) => (<Link to={this.props.link} {...lp} />)
+    if (props.link && props.link.match(/^(https|http|tel):/)) {
+      muiProps.component = 'a'
+    } else if (props.link) {
+      muiProps.component = RouterLink
     }
 
     const classes =
       classNames(
-        this.props.classes.root,
+        props.classes.root,
         {
-          [`align-${this.props.align}`]: this.props.align,
-          [`${this.props.className}`]: this.props.className,
+          [`align-${props.align}`]: props.align,
+          [`${props.className}`]: props.className,
         }
       )
 
     return (
-      <MuiButton className={classes} {...muiProps}></MuiButton>
+      <MuiButton className={classes} to={props.link} href={props.link} {...muiProps}></MuiButton>
     )
   }
-}
 
 export default withStyles(styles)(Button)

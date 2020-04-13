@@ -109,7 +109,7 @@ class Header extends React.PureComponent<HeaderProps, HeaderState> {
         <header className={this.props.classes.root}>
           <Link className={this.props.classes.logo} to="/" onClick={this.onHomeClick}>
             <img className="icon" src={LogoWhiteLarge} alt="Home" />
-            <img className="text" src={LogoWhiteLargeText} />
+            <img className="text" src={LogoWhiteLargeText} alt="Home" />
           </Link>
 
           <nav className={this.props.classes.links}>

@@ -9,7 +9,11 @@ const styles = createStyles({
   },
   section: {
     width: '95%',
-    maxWidth: '960px',
+    maxWidth: '840px',
+    margin: '20px auto'
+  },
+  'wide-section': {
+    width: '95%',
     margin: '20px auto'
   }
 })
@@ -17,7 +21,7 @@ const styles = createStyles({
 export interface BoxProps {
   className?: string
   classes?: any
-  variant: 'main' | 'section'
+  variant: 'main' | 'section' | 'wide-section'
 }
 
 class Box extends React.PureComponent<BoxProps, {}> {

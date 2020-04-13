@@ -1,12 +1,10 @@
 import * as React from 'react'
 import { Redirect } from 'react-router'
-import { Typography } from '@material-ui/core'
 import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
-import Content from '../components/content'
-import Hero from '../components/hero'
-import Page from '../components/page'
+import { ContentfulSection } from '../contentful/section'
 import { ErrorDialog } from '../components/error'
 import { Form, Checkboxes, CheckboxOption, TextField, Header, Submit } from '../forms'
+import { ContentfulHero } from '../contentful/hero'
 
 const styles = createStyles({
   header: {
@@ -40,11 +38,9 @@ class Serve extends React.PureComponent<WithStyles<typeof styles>, ServeState> {
     return this.state.submitted ?
       (<Redirect to="/thank-you" />) :
       (
-        <Page>
-          <Hero media="serve" height={0.3} shade={0.4}>
-            <Typography className={this.props.classes.header} variant="h1">Serve</Typography>
-          </Hero>
-          <Content name="Serve" />
+        <div>
+          <ContentfulHero name="serve" />
+          <ContentfulSection type="contentSection" name="Serve" />
 
           <Form onSubmit={this.submit}>
             <Header variant="h2">Register Here</Header>
@@ -70,7 +66,7 @@ class Serve extends React.PureComponent<WithStyles<typeof styles>, ServeState> {
           </Form>
           
           <ErrorDialog open={this.state.failed} onClose={() => this.setState({ failed: false })} />
-        </Page>
+        </div>
       )
   }
 }

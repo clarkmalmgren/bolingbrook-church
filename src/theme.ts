@@ -1,6 +1,5 @@
-import { createMuiTheme, Theme } from '@material-ui/core/styles'
+import { createMuiTheme } from '@material-ui/core/styles'
 import orange from '@material-ui/core/colors/orange'
-import cyan from '@material-ui/core/colors/cyan'
 import common from '@material-ui/core/colors/common'
 import { CSSProperties } from '@material-ui/styles/withStyles'
 
@@ -24,7 +23,6 @@ export default
     },
     typography: {
       fontFamily: primaryFontFamily,
-      useNextVariants: true,
 
       h1: { fontSize: '2.5rem', fontFamily: accentFontFamily },
       h2: { fontSize: '2.0rem', fontFamily: accentFontFamily },
@@ -43,7 +41,7 @@ export default
       },
       MuiTypography: {
         root: { fontFamily: primaryFontFamily },
-        body2: { margin: '12px 0' },
+        body2: { margin: '12px 0', fontSize: '16px' },
 
         h1: headerMargin(1.3),
         h2: headerMargin(1.2),

@@ -28,12 +28,12 @@ class Nav extends React.PureComponent<NavProps, NavState> {
 
   constructor(props: NavProps) {
     super(props)
-    this.state = { opened: !!props.opened}
+    this.state = { opened: !!props.opened }
   }
 
-  componentWillReceiveProps(props: NavProps) {
-    if (this.state.opened != props.opened) {
-      this.setState(() => ({ opened: !!props.opened }))
+  componentDidUpdate(prevProps: NavProps) {
+    if (prevProps.opened !== this.props.opened && this.props.opened !== this.state.opened) {
+      this.setState(() => ({ opened: !!this.props.opened }))
     }
   }
 
@@ -47,7 +47,7 @@ class Nav extends React.PureComponent<NavProps, NavState> {
     })
   }
 
-  close = () => () => {
+  close = () => {
     this.setState(state => {
       if (this.props.onToggle) {
         this.props.onToggle(false)
@@ -73,7 +73,7 @@ class Nav extends React.PureComponent<NavProps, NavState> {
 
   render() {
     return (
-      <Drawer anchor="right" open={this.state.opened} onClose={this.close()}>
+      <Drawer anchor="right" open={this.state.opened} onClose={() => this.close()} onClick={() => this.close()}>
         <div className={this.props.classes.space} />
         
         <Divider />

@@ -11,7 +11,6 @@ import { PartialSermon } from '../models/sermon'
 import { save } from '../services/sermon'
 import { ErrorDialog } from '../components/error'
 
-
 interface MatchParams { id: string }
 
 interface EditSermonProps {
@@ -38,7 +37,7 @@ export class BaseEditSermon extends React.PureComponent<EditSermonProps, EditSer
     failed: false
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.onLoad()
   }
 

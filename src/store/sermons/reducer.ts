@@ -1,9 +1,9 @@
-import { ParseAction, SermonActions, parse, load, LOAD, PARSE, REFRESH } from './actions'
-import moment from 'moment'
-import { loop, Cmd, LoopReducer } from 'redux-loop';
-import { Sermon } from '../../models/sermon'
-import { fetchSermons } from './effects'
-import { Reduxer } from '../reduxer'
+import moment from 'moment';
+import { Cmd, loop } from 'redux-loop';
+import { Sermon } from '../../models/sermon';
+import { Reduxer } from '../reduxer';
+import { load, LOAD, parse, PARSE, ParseAction, REFRESH, SermonActions } from './actions';
+import { fetchSermons } from './effects';
 
 function now(): moment.Moment { return moment() }
 
@@ -65,7 +65,7 @@ export class SermonReduxer implements Reduxer<State, SermonActions> {
     },
 
     date: (state: State) => (date: string) => (
-      state.sermons.find(s => s.date == date)
+      state.sermons.find(s => s.date === date)
     ),
 
     published: (state: State) => () => {

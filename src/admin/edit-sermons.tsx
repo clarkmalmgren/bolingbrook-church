@@ -1,10 +1,11 @@
-import { Typography, Fab, Icon } from '@material-ui/core'
-import { Link, LinkProps } from 'react-router-dom'
+import { Fab, Icon } from '@material-ui/core'
 import { createStyles, makeStyles } from '@material-ui/styles'
-import * as React from 'react'
-import Hero from '../components/hero'
+import React from 'react'
+import { Link, LinkProps } from 'react-router-dom'
 import SermonList from '../components/sermon-list'
+import { ContentfulHero } from '../contentful/hero'
 import { SecurePage } from './secure-page'
+
 
 const styles = createStyles({
   header: {
@@ -26,9 +27,7 @@ export const EditSermons: React.FunctionComponent<{}> = (props) => {
 
   return (
     <SecurePage>
-      <Hero media="sermons" height={0.4} shade={0.4}>
-        <Typography className={classes.header} variant="h1">Edit Sermons</Typography>
-      </Hero>
+      <ContentfulHero name="sermons" />
       <SermonList linkRoot="/admin/sermons" all/>
 
       <Fab className={classes.new} variant="extended" color="secondary" {...fabProps}>

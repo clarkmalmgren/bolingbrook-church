@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardHeader, CardMedia, CardContent, Typography, Link } from '@material-ui/core'
+import { Card, CardHeader, CardMedia, CardContent, Link } from '@material-ui/core'
 import { createStyles, withStyles, WithStyles } from '@material-ui/styles';
 import { StaffInfo } from '../services/staff'
 
