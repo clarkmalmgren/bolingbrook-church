@@ -1,35 +1,26 @@
 import * as React from 'react'
-import { createStyles, withStyles } from '@material-ui/styles'
-import { Theme, Icon, Typography } from '@material-ui/core'
+import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
+import { Theme, Typography } from '@material-ui/core'
 import Button from './button'
-import grey from '@material-ui/core/colors/grey'
 import * as Links from './links'
 
 const { version: appVersion } = require('../../package.json')
 
-interface FooterProps {
-  classes?: any
-}
-
 const styles = (theme: Theme) => createStyles({
   root: {
     position: 'relative',
-    marginTop: '20px',
-    background: grey[100]
-  },
-
-  notice: {
-    padding: '10px 20px',
-    background: theme.palette.primary.dark,
-    color: 'white',
-    fontSize: '14px'
+    marginTop: '40px',
+    // background: grey[200]
   },
 
   links: {
-    margin: '20px',
+    padding: '20px',
     display: 'flex',
     flexFlow: 'wrap',
     justifyContent: 'center',
+
+    borderTop: `3px solid ${theme.palette.primary.dark}`,
+    borderBottom: `3px solid ${theme.palette.primary.dark}`,
 
     '& .link-group': {
       display: 'flex',
@@ -42,30 +33,27 @@ const styles = (theme: Theme) => createStyles({
 
   contact: {
     padding: '10px 10px',
-    background: theme.palette.primary.dark,
-    color: 'white',
-    textAlign: 'center'
+    textAlign: 'center',
+    borderBottom: `3px solid ${theme.palette.primary.dark}`
   },
 
   version: {
     position: 'absolute',
     bottom: '0',
     right: '0',
-    margin: '5px'
+    margin: '5px',
+    fontSize: '.7em'
   }
 
 })
+
+interface FooterProps extends WithStyles<typeof styles> {
+}
 
 class Footer extends React.PureComponent<FooterProps, {}> {
   render() {
     return (
       <div className={this.props.classes.root}>
-        <div className={this.props.classes.notice}>
-          <Typography color="inherit">
-            Our live streams begins at 10:30am &amp; 12:30pm Central Time on Saturdays.
-          </Typography>
-        </div>
-
         <div className={this.props.classes.links}>
           <div className="link-group">
             <Typography className="header" variant="h4">About</Typography>
@@ -98,8 +86,8 @@ class Footer extends React.PureComponent<FooterProps, {}> {
         </div>
 
         <div className={this.props.classes.contact}>
-          <Typography color="inherit" variant="body1"><Icon>pin_drop</Icon> 301 E Boughton Rd, Bolingbrook IL, 60440</Typography>
-          <Button color="inherit" variant="text" link="tel:630.739.1038"><Icon>local_phone</Icon> 630.739.1038</Button>
+          <Typography color="inherit" variant="body1">301 E Boughton Rd, Bolingbrook IL, 60440</Typography>
+          <Button color="inherit" variant="text" link="tel:630.739.1038">630.739.1038</Button>
           <Typography color="inherit" variant="body1">&copy; Bolingbrook Church 2017</Typography>
         </div>
 

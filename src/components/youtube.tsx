@@ -1,5 +1,5 @@
 import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import Isomorphic from './isomorphic'
 
 const styles = createStyles({
@@ -10,22 +10,21 @@ const styles = createStyles({
 })
 
 interface Props extends WithStyles<typeof styles> {
-  id: string,
+  id: string
+  aspectRatio?: number
   className?: string
 }
 
-class Youtube extends React.PureComponent<Props, {}> {
-  get url(): string {
-    return `https://www.youtube.com/embed/${this.props.id}?enablejsapi=1`
-  }
+const UnstyledYoutube: FunctionComponent<Props> =
+  (props) => {
+    const aspectRatio = props.aspectRatio || (4 / 3)
+    const url = `https://www.youtube.com/embed/${props.id}?enablejsapi=1`
 
-  render() {
     return (
-      <Isomorphic aspectRatio={4/3} maxWidth='800px'>
-        <iframe title="Youtube Video" className={this.props.classes.frame} src={this.url} frameBorder="0" allowFullScreen={true} />
+      <Isomorphic aspectRatio={aspectRatio} maxWidth='800px'>
+        <iframe title="Youtube Video" className={props.classes.frame} src={url} frameBorder="0" allowFullScreen={true} />
       </Isomorphic>
     )
   }
-}
 
-export default withStyles(styles)(Youtube)
+export default withStyles(styles)(UnstyledYoutube)

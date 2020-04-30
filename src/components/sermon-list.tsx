@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { FunctionComponent, useState, useEffect, useMemo } from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import CardList from '../components/card-list'
@@ -7,41 +7,67 @@ import { Sermon } from '../models/sermon'
 import { sermonSelectors } from '../store/index'
 import { load } from '../store/sermons/actions'
 import Box from './box'
+import { Pagination } from '@material-ui/lab';
+import { createStyles, WithStyles, Select, MenuItem, ListItemText, Paper, Divider, Theme } from '@material-ui/core'
+import { withStyles } from '@material-ui/styles'
 
-interface Props {
+const styles = createStyles({
+  root: {
+    display: 'flex',
+    flexFlow: 'row wrap',
+    justifyContent: 'center'
+  },
+
+  pagination: {
+    flex: '0 auto',
+    margin: '10px',
+    alignSelf: 'center'
+  },
+
+  spacer: {
+    flex: '1 1',
+    minWidth: '1px'
+  },
+
+  divider: {
+    flex: '100%'
+  }
+})
+
+interface Props extends WithStyles<typeof styles> {
   sermons?: Sermon[]
   onLoad?: () => void
-  classes?: any
-  linkRoot: string
+  linkRoot?: string
   all?: boolean
 }
 
-class SermonList extends React.PureComponent<Props, {}> {
+const PAGE_SIZE = 9
 
-  static defaultProps: Pick<Props, 'linkRoot'> = {
-    linkRoot: '/sermons'
-  }
+const SermonList: FunctionComponent<Props> =
+  ({ sermons, onLoad, linkRoot, classes }) => {
+    const [page, setPage] = useState(1)
+    useEffect(() => { if (onLoad) { onLoad() } }, [onLoad])
 
-  componentDidMount() {
-    if (this.props.onLoad) {
-      this.props.onLoad()
+    const pageCount = sermons ? Math.ceil(sermons.length / PAGE_SIZE) : 0
+    const start = (page - 1) * PAGE_SIZE
+    const visibleSermons = (sermons || []).slice(start, start + PAGE_SIZE)
+
+    const selectPage = (event: React.ChangeEvent<unknown>, value: number) => {
+      setPage(value)
     }
-  }
 
-  get sermons(): Sermon[] {
-    return this.props.sermons || []
-  }
-
-  render() {
     return (
       <Box variant="wide-section">
-        <CardList>
-          { this.sermons.map(s => (<SermonCard sermon={s} key={s.date} linkRoot={this.props.linkRoot}/>)) }
-        </CardList>
+        <Paper className={classes.root}>
+          { visibleSermons.map(s => (<SermonCard sermon={s} key={s.date} linkRoot={linkRoot || '/sermons'}/>)) }
+
+          <Divider className={classes.divider} />
+          <div className={classes.spacer} />
+          <Pagination className={classes.pagination} count={pageCount} page={page} onChange={selectPage} />
+        </Paper>
       </Box>
     )
   }
-}
 
 const mapStateToProps = (state: any, ownState: Props) => {
   const selector = ownState.all ? sermonSelectors.all : sermonSelectors.published
@@ -58,4 +84,4 @@ function mapDispatchToProps(dispatch: Dispatch): any {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SermonList)
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(SermonList))

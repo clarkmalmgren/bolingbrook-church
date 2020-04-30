@@ -69,7 +69,9 @@ const UnstyledBanner: FunctionComponent<BannerProps> =
     }, [])
 
     /* Re-display on each location change */
-    useEffect(() => setOpen(!!entry?.fields.persistent), [location, entry])
+    useEffect(() => {
+      setOpen(!!entry?.fields.persistent)
+    }, [location, entry])
 
     if (!entry) { return null }
 

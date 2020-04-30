@@ -7,6 +7,7 @@ import { client } from '../services/contentful'
 export interface YoutubeData {
   name: string
   id: string
+  aspectRatio?: number
 }
 
 export interface ButtonData {
@@ -34,7 +35,7 @@ export const EmbeddedEntry: FunctionComponent<Props> =
 
     if (entry?.sys.contentType?.sys.id === 'youtubeVideo') {
       const youtubeData = entry.fields as YoutubeData
-      return (<Youtube key={entry.sys.id} id={youtubeData.id} />)
+      return (<Youtube key={entry.sys.id} id={youtubeData.id} aspectRatio={youtubeData.aspectRatio} />)
     } else if (entry?.sys.contentType?.sys.id === 'button') {
       const bd = entry.fields as ButtonData
       const bdProps = {

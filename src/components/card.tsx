@@ -67,7 +67,7 @@ class Card extends React.PureComponent<CardProps, {}> {
 
     return (
       <MuiCard className={this.props.classes.root}>
-        <ButtonBase className={this.props.classes.action} {...buttonBaseProps} to={this.props.link} href={this.props.link} >
+        <ButtonBase className={this.props.classes.action} {...buttonBaseProps} to={this.props.link} href={this.props.link} onClick={this.onClick}>
           { this.renderMedia() }
           <CardHeader title={this.props.title} subheader={ this.props.subtitle }></CardHeader>
           <CardContent>{this.props.children}</CardContent>

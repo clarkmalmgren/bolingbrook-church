@@ -3,9 +3,9 @@ import { Theme } from '@material-ui/core'
 
 export const styles = makeStyles((theme: Theme) => ({
   default: {
-    minWidth: '250px',
-    margin: '3px 10px',
-    flex: '1',
+    minWidth: '250px !important',
+    margin: '3px 10px !important',
+    flex: '1 !important',
 
     [theme.breakpoints.down('xs')]: {
       margin: '3px 0',

@@ -6,6 +6,17 @@ import { CardData, LatestSermonCardData, ContentfulCard } from './card'
 import { ContentfulRichText } from './rich-text'
 import { Loading } from '../components/loading'
 import { client } from '../services/contentful'
+import { GraphicSectionData, GraphicSection } from './graphic-section'
+import { createStyles, colors } from '@material-ui/core'
+import { WithStyles, withStyles } from '@material-ui/styles'
+
+const styles = createStyles({
+  cardSection: {
+    marginTop: '20px',
+    padding: '20px',
+    background: colors.grey[200]
+  }
+})
 
 export interface CardSectionData {
   name: string
@@ -17,23 +28,27 @@ export interface ContentSectionData {
   content: EntryFields.RichText
 }
 
-type SectionData = CardSectionData | ContentSectionData
+type SectionData = CardSectionData | ContentSectionData | GraphicSectionData
 
 function isCards(entry: Entry<SectionData>): entry is Entry<CardSectionData> {
-  return (entry as Entry<CardSectionData>).fields.cards !== undefined
+  return entry.sys.contentType?.sys.id === 'cardSection'
 }
 
 function isContent(entry: Entry<SectionData>): entry is Entry<ContentSectionData> {
-  return (entry as Entry<ContentSectionData>).fields.content !== undefined
+  return entry.sys.contentType?.sys.id === 'contentSection'
 }
 
-interface Props {
+function isGraphic(entry: Entry<SectionData>): entry is Entry<GraphicSectionData> {
+  return entry.sys.contentType?.sys.id === 'graphicSection'
+}
+
+interface Props extends WithStyles<typeof styles> {
   entry?: Entry<SectionData>
   name?: string
   type?: 'cardSection' | 'contentSection'
 }
 
-export const ContentfulSection: FunctionComponent<Props> =
+const UnstyledContentfulSection: FunctionComponent<Props> =
   (props) => {
     const [entry, setEntry] = useState(props.entry)
     useEffect(() => {
@@ -46,11 +61,11 @@ export const ContentfulSection: FunctionComponent<Props> =
 
     if (entry && isCards(entry)) {
       return (
-        <Box variant='wide-section'>
+        <div className={props.classes.cardSection}>
           <CardList key={entry.sys.id}>
             { entry.fields.cards.map(c => (<ContentfulCard key={c.sys.id} entry={c} />)) }
           </CardList>
-        </Box>
+        </div>
       )
     } else if (entry && isContent(entry)) {
       return (
@@ -58,7 +73,11 @@ export const ContentfulSection: FunctionComponent<Props> =
           <ContentfulRichText content={entry.fields.content} />
         </Box>
       )
+    } else if (entry && isGraphic(entry)) {
+      return (<GraphicSection entry={entry} />)
     } else {
       return (<Loading />)
     }
   }
+
+export const ContentfulSection = withStyles(styles)(UnstyledContentfulSection)

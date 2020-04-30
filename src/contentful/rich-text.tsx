@@ -21,6 +21,10 @@ const styles = createStyles({
     '& li:not(:first-child)': {
       marginTop: '6px'
     }
+  },
+
+  hr: {
+    border: 'solid black 0.5px'
   }
 })
 
@@ -75,7 +79,7 @@ function renderNode(node: RichTextContent, classes: Props['classes'], key: strin
       return (<Link key={key} className={classNames(linkClassList)} {...linkProps}>{children()}</Link>)
 
     case 'hr':
-      return (<hr key={key} />)
+      return (<hr key={key} className={classes.hr} />)
 
     case 'embedded-entry-block':
       return node.data.target?.sys.id ? (<EmbeddedEntry key={key} id={node.data.target.sys.id} />) : null
