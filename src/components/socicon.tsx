@@ -24,11 +24,14 @@ export interface SociconProps extends WithStyles<typeof styles> {
 
 function lookup(key: string): number {
   switch (key) {
-    case 'twitter':   return 0xe08d
-    case 'instagram': return 0xe044
-    case 'facebook':  return 0xe028
-    case 'youtube':   return 0xe0a5
-    default:          return 0x00
+    case 'twitter':         return 0xe08d
+    case 'instagram':       return 0xe044
+    case 'facebook':        return 0xe028
+    case 'youtube':         return 0xe0a5
+    case 'apple':           return 0xe008
+    case 'spotify':         return 0xe079
+    case 'googleplaymusic': return 0xe95e
+    default:                return 0x00
   }
 }
 

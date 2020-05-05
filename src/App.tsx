@@ -42,6 +42,7 @@ const App: FunctionComponent<AppProps> =
                 <Route exact path="/sermons"              component={Routes.Sermons} />
                 <Route exact path="/serve"                component={Routes.Serve} />
                 <Route exact path="/thank-you"            component={() => <ContentfulPage path='/thank-you' />}  />
+                <Route exact path="/refuel"               component={() => <ContentfulPage path='/refuel' />}  />
 
                 <Route exact path="/admin"                component={Routes.AdminPage} />
                 <Route exact path="/admin/login"          component={Routes.Login} />

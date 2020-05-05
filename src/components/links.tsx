@@ -57,6 +57,11 @@ export const Newsletter   = () => (<Link link='/newsletter' icon='email'>Newslet
 export const FriendsFam   = () => (<Link link='/friends-and-family' icon='group_add'>Friends &amp; Family</Link>)
 export const ShopBC       = () => (<Link link='/shop-bc' icon='shopping_cart'>Shop BC</Link>)
 
+// Podcasts
+export const Podcast      = () => (<Link link='https://podcasts.bolingbrook.church' icon='headset'>Podcast</Link>)
+export const ApplePodcast = () => (<Link link='https://podcasts.apple.com/us/podcast/bolingbrook-church/id1510682420' icon='apple' socicon>Apple Podcasts</Link>)
+export const Spotify      = () => (<Link link='https://open.spotify.com/show/3s7jbC3zYO3PrF93VuqpO7' icon='spotify' socicon>Spotify</Link>)
+
 // External Social Links
 export const Twitter    = () => (<Link link='http://www.twitter.com/bolingbrooksda' icon='twitter' socicon>Twitter</Link>)
 export const Instagram  = () => (<Link link='http://instagram.com/bolingbrookchurch' icon='instagram' socicon>Instagram</Link>)

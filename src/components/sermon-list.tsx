@@ -1,15 +1,14 @@
-import React, { FunctionComponent, useState, useEffect, useMemo } from 'react'
+import { createStyles, Divider, Paper, WithStyles } from '@material-ui/core'
+import { Pagination } from '@material-ui/lab'
+import { withStyles } from '@material-ui/styles'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
-import CardList from '../components/card-list'
 import SermonCard from '../components/sermon-card'
 import { Sermon } from '../models/sermon'
 import { sermonSelectors } from '../store/index'
 import { load } from '../store/sermons/actions'
 import Box from './box'
-import { Pagination } from '@material-ui/lab';
-import { createStyles, WithStyles, Select, MenuItem, ListItemText, Paper, Divider, Theme } from '@material-ui/core'
-import { withStyles } from '@material-ui/styles'
 
 const styles = createStyles({
   root: {

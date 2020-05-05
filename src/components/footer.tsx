@@ -83,6 +83,14 @@ class Footer extends React.PureComponent<FooterProps, {}> {
             <Links.Facebook />
             <Links.Youtube />
           </div>
+
+          <div className="link-group">
+            <Typography className="header" variant="h4">Listen</Typography>
+
+            <Links.Podcast />
+            <Links.ApplePodcast />
+            <Links.Spotify />
+          </div>
         </div>
 
         <div className={this.props.classes.contact}>
