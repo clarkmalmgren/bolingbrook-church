@@ -13,7 +13,6 @@ export const BCSwitch: FunctionComponent<{}> =
         client
           .getEntries<PageData>({ content_type: 'page' })
           .then(collection => {
-            console.log(collection.items.map(e => e.fields.path))
             setPages(collection.items.map(e => e.fields.path))
           })
       }
