@@ -8,7 +8,7 @@ import { Typography } from '@material-ui/core'
 import { useLocation } from 'react-router'
 import Box from '../components/box'
 
-interface PageData {
+export interface PageData {
   name: string
   path: string
   hero: Entry<HeroData>
