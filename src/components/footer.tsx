@@ -3,6 +3,7 @@ import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
 import { Theme, Typography } from '@material-ui/core'
 import Button from './button'
 import * as Links from './links'
+import { DynamicLinks } from '../contentful/dynamic-links'
 
 const { version: appVersion } = require('../../package.json')
 
@@ -63,6 +64,7 @@ class Footer extends React.PureComponent<FooterProps, {}> {
             <Links.Location />
             <Links.Sermons />
             <Links.FriendsFam />
+            <DynamicLinks display="About" />
           </div>
 
           <div className="link-group">
@@ -73,6 +75,7 @@ class Footer extends React.PureComponent<FooterProps, {}> {
             <Links.Newsletter />
             <Links.Serve />
             <Links.ShopBC />
+            <DynamicLinks display="Get Involved" />
           </div>
 
           <div className="link-group">
@@ -82,6 +85,7 @@ class Footer extends React.PureComponent<FooterProps, {}> {
             <Links.Instagram />
             <Links.Facebook />
             <Links.Youtube />
+            <DynamicLinks display="Connect" />
           </div>
 
           <div className="link-group">
@@ -90,6 +94,7 @@ class Footer extends React.PureComponent<FooterProps, {}> {
             <Links.Podcast />
             <Links.ApplePodcast />
             <Links.Spotify />
+            <DynamicLinks display="Listen" />
           </div>
         </div>
 

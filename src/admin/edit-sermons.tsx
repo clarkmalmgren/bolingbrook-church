@@ -22,7 +22,10 @@ const styles = createStyles({
 export const EditSermons: React.FunctionComponent<{}> = (props) => {
   const classes = makeStyles(styles)(props)
   const fabProps: any = {
-    component: (lp: LinkProps) => (<Link to="/admin/sermons/new" {...lp} />)
+    component: (lp: LinkProps) => {
+      const expandedProps = {...lp, to: '/admin/sermons/new'}
+      return (<Link {...expandedProps} />)
+    }
   }
 
   return (

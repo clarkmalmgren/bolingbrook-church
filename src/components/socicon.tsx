@@ -31,7 +31,12 @@ function lookup(key: string): number {
     case 'apple':           return 0xe008
     case 'spotify':         return 0xe079
     case 'googleplaymusic': return 0xe95e
-    default:                return 0x00
+    default:
+      try {
+        return Number.parseInt(key, 16)
+      } catch (e) {
+        return 0x0000
+      }
   }
 }
 

@@ -6,6 +6,7 @@ import { Theme, Drawer, Divider, Button } from '@material-ui/core'
 import * as Links from './links'
 import { authSelectors } from '../store/index'
 import { logout as logoutAction } from '../store/auth/actions'
+import { DynamicLinks } from '../contentful/dynamic-links'
 
 const styles = (theme: Theme) => createStyles({
   space: {
@@ -95,6 +96,7 @@ class Nav extends React.PureComponent<NavProps, NavState> {
         <Links.ShopBC />
         <Links.Podcast />
 
+        <DynamicLinks display="Side Bar" />
         { this.adminLinks() }
       </Drawer>
     )
