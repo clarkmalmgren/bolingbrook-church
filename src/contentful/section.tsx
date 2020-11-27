@@ -7,6 +7,7 @@ import { ContentfulRichText } from './rich-text'
 import { Loading } from '../components/loading'
 import { client } from '../services/contentful'
 import { GraphicSectionData, GraphicSection } from './graphic-section'
+import { IFrame, IFrameData } from './iframe'
 import { createStyles, colors } from '@material-ui/core'
 import { WithStyles, withStyles } from '@material-ui/styles'
 
@@ -28,7 +29,7 @@ export interface ContentSectionData {
   content: EntryFields.RichText
 }
 
-type SectionData = CardSectionData | ContentSectionData | GraphicSectionData
+type SectionData = CardSectionData | ContentSectionData | GraphicSectionData | IFrameData
 
 function isCards(entry: Entry<SectionData>): entry is Entry<CardSectionData> {
   return entry.sys.contentType?.sys.id === 'cardSection'
@@ -40,6 +41,10 @@ function isContent(entry: Entry<SectionData>): entry is Entry<ContentSectionData
 
 function isGraphic(entry: Entry<SectionData>): entry is Entry<GraphicSectionData> {
   return entry.sys.contentType?.sys.id === 'graphicSection'
+}
+
+function isIFrame(entry: Entry<SectionData>): entry is Entry<IFrameData> {
+  return entry.sys.contentType?.sys.id === 'iframe'
 }
 
 interface Props extends WithStyles<typeof styles> {
@@ -75,6 +80,8 @@ const UnstyledContentfulSection: FunctionComponent<Props> =
       )
     } else if (entry && isGraphic(entry)) {
       return (<GraphicSection entry={entry} />)
+    } else if (entry && isIFrame(entry)) {
+      return (<IFrame key={entry.sys.id} entry={entry} />)
     } else {
       return (<Loading />)
     }

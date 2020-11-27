@@ -4,6 +4,7 @@ import Button, { ButtonProps } from '../components/button'
 import Youtube from '../components/youtube'
 import { client } from '../services/contentful'
 import { Lyrics, LyricsData } from './lyrics'
+import { IFrame, IFrameData } from './iframe'
 
 export interface YoutubeData {
   name: string
@@ -25,7 +26,7 @@ interface Props {
   id: string
 }
 
-type EmbeddableTypes = ButtonData | LyricsData | YoutubeData
+type EmbeddableTypes = ButtonData | LyricsData | YoutubeData | IFrameData
 
 export const EmbeddedEntry: FunctionComponent<Props> =
   ({id}) => {
@@ -59,6 +60,9 @@ export const EmbeddedEntry: FunctionComponent<Props> =
 
       case 'songLyrics':
         return (<Lyrics key={entry.sys.id} entry={entry as Entry<LyricsData>}/>)
+
+      case 'iframe':
+        return (<IFrame key={entry.sys.id} entry={entry as Entry<IFrameData>} />)
 
       default:
         return null
