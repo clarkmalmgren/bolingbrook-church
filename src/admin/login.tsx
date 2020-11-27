@@ -3,12 +3,12 @@ import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
 import { Card, Typography, CardContent, CardActions, CardMedia } from '@material-ui/core'
-import { GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login'
 import { GoogleToken } from '../store/auth/token'
 import { save } from '../store/auth/actions'
 import { authSelectors } from '../store/index'
 import { Redirect } from 'react-router'
 import { TruthyOption } from '../utils/option'
+import { GoogleLogin } from '../components/google-login'
 
 const styles = createStyles({
   card: {
@@ -21,7 +21,8 @@ const styles = createStyles({
   },
 
   login: {
-    margin: '0 auto 10px'
+    margin: '0 auto 10px',
+    backgroundColor: 'white'
   }
 })
 
@@ -35,26 +36,7 @@ class Login extends React.PureComponent<LoginProps, {}> {
   readonly redirectTo: string =
     TruthyOption(window.location.hash).map(_ => _.substr(1)).getOrElse("/admin")
 
-  onSuccess = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
-    const resp = response as GoogleLoginResponse
-    const auth = resp.getAuthResponse()
-    const profile = resp.getBasicProfile()
-    const token = {
-      accessToken: auth.access_token,
-      tokenId: auth.id_token,
-      expiresAt: auth.expires_at,
-
-      googleId: profile.getId(),
-      email: profile.getEmail(),
-      name: profile.getName(),
-    }
-
-    this.props.onSuccess(token)
-  }
-
-  onFailure = (response: any) => {
-    console.log(response);
-  }
+  onFailure = (e: Error) => console.error(e)
 
   render() {
     if (this.props.loggedIn) {
@@ -73,13 +55,7 @@ class Login extends React.PureComponent<LoginProps, {}> {
             </Typography>
           </CardContent>
           <CardActions >
-            <GoogleLogin
-              className={this.props.classes.login}
-              clientId={process.env.REACT_APP_OAUTH_CLIENT_ID as string}
-              onSuccess={this.onSuccess}
-              onFailure={this.onFailure}
-              cookiePolicy={'single_host_origin'}
-            />
+            <GoogleLogin className={this.props.classes.login} onSuccess={(token) => this.props.onSuccess(token)} onFailure={this.onFailure} />
           </CardActions>
         </Card>
       )

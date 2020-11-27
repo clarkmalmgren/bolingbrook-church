@@ -8,9 +8,24 @@
     ],
     "rewrites": [
       {
+        "source": "/api/connect",
+        "function": "connect"
+      },
+      {
+        "source": "/api/serve",
+        "function": "serve"
+      },
+      {
+        "source": "/api/sermons",
+        "function": "sermons"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
     ]
+  },
+  "functions": {
+    "predeploy": "npm --prefix functions run build"
   }
 }

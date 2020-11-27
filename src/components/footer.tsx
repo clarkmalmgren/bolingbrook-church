@@ -104,7 +104,7 @@ class Footer extends React.PureComponent<FooterProps, {}> {
           <Typography color="inherit" variant="body1">&copy; Bolingbrook Church 2017</Typography>
         </div>
 
-        <Typography className={this.props.classes.version}>v{appVersion}</Typography>
+        <Typography className={this.props.classes.version}>v{appVersion}-{process.env.REACT_APP_ENV}</Typography>
       </div>
     )
   }

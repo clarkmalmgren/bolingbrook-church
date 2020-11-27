@@ -2,7 +2,7 @@ import { Sermon } from '../models/sermon'
 import { readFromLocalStorage } from '../store/auth/effects'
 
 export function save(data: Sermon): Promise<any> {
-  const token = readFromLocalStorage().get().accessToken
+  const token = readFromLocalStorage().get().tokenId
   
   const init = {
     method: 'POST',
