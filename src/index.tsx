@@ -5,6 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import './App.scss';
 import store from './store'
+import './utils/firebase'
 
 ReactDOM.render(<App store={store}/>, document.getElementById('root'));
 

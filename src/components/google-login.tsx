@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import { Button } from '@material-ui/core'
 import { GoogleToken } from '../store/auth/token'
+import { auth } from '../utils/firebase'
 
 type Props = {
   className?: string
@@ -8,38 +9,18 @@ type Props = {
   onFailure: (e: Error) => void
 }
 
-// Global state to indicate whether or not we are initialized
-let initialized = false
-
 export const GoogleLogin: FunctionComponent<Props> =
   ({ className, onSuccess, onFailure }) => {
 
     async function login() {
       try {
-        // Load firebase via code-splitting because it is huge
-        const firebase = await import('../utils/firebase')
-
-        if (!initialized) {
-          firebase.initializeApp({
-            apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-            authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-            databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
-            projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-            storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-            messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-            appId: process.env.REACT_APP_FIREBASE_APP_ID
-          })
-
-          initialized = true
-        }
-
-        const provider = new firebase.auth.GoogleAuthProvider()
-        const result = await firebase.auth().signInWithPopup(provider)
-        const creds = result.credential as firebase.auth.OAuthCredential
+        const provider = new auth.GoogleAuthProvider()
+        const result = await auth().signInWithPopup(provider)
+        const creds = result.credential as any
 
         const token = {
           accessToken: creds.accessToken || '',
-          tokenId: await firebase.auth().currentUser?.getIdToken() || '',
+          tokenId: await auth().currentUser?.getIdToken() || '',
           expiresAt: new Date().getTime() / 1000 + 7200,
 
           googleId: result.user?.uid || '',
