@@ -1,145 +1,106 @@
-import { Theme } from '@material-ui/core'
-import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
-import React from 'react'
-import ReactDOM from 'react-dom'
+import { createStyles, makeStyles, Theme } from '@material-ui/core'
+import { CSSProperties, FunctionComponent, useEffect, useRef, useState } from 'react'
 import { Asset } from '../services/contentful'
 
-const styles = (theme: Theme) => createStyles({
-  root: {
-    margin: '0 -20px',
-    position: 'relative',
-    overflow: 'hidden'
-  },
-
-  video: {
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover',
-    objectPosition: 'middle center'
-  },
-
-  background: {
-    width: '100%',
-    height: '100%',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center'
-  },
-
-  shade: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    top: 0
-  },
-
-  content: {
-    position: 'absolute',
-
-    top: '50%',
-    transform: 'translateY(-50%)',
-
-    width: '100%',
-    display: 'flex',
-    flexFlow: 'row',
-    justifyContent: 'center',
-
-    '&.bottom': {
-      [theme.breakpoints.up('sm')]: {
-        top: 'inherit',
-        transform: 'inherit',
-        bottom: '25px'
-      }
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      position: 'relative',
+      overflow: 'hidden',
+      display: 'flex',
+      // justifyContent: 'center',
+      alignItems: 'center',
+      padding: `${theme.spacing(4)}px 0`
     },
-    
-    [theme.breakpoints.down('sm')]: {
-      flexWrap: 'wrap',
+
+    video: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
+      objectPosition: 'middle center'
+    },
+
+    background: {
+      position: 'absolute',
+      top: 0, bottom: 0, right: 0, left: 0,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      zIndex: -100
+    },
+
+    shade: {
+      position: 'absolute',
+      top: 0, bottom: 0, right: 0, left: 0,
+      zIndex: -90
     }
-  }
-})
+  }))
 
 export type HeroMedia = {
   name: string
   media: Asset[]
 }
 
-export interface HeroProps extends WithStyles<typeof styles> {
+export type HeroProps = {
   media: HeroMedia
   height: number
   shade?: number
-  bottom?: boolean
+  shadeColor?: 'black' | 'white',
+  justify?: 'flex-start' | 'center' | 'flex-end' 
 }
 
-interface HeroState {
-  height: number
-}
+export const Hero: FunctionComponent<HeroProps> =
+  ({ media, height, shade, justify, shadeColor, children }) => {
+    const classes = useStyles()
+    const [ heightInPx, setHeightInPx ]  = useState((window.innerHeight - 60) * height)
+    const ref = useRef<HTMLDivElement>(null)
 
-class Hero extends React.PureComponent<HeroProps, HeroState> {
-
-  static defaultProps = { height: 0.8 }
-
-  state = {
-    height: this.calcHeight()
-  } as HeroState
-
-  calcHeight(): number {
-    let top = 60
-    const el = ReactDOM.findDOMNode(this.refs['box']) as Element | undefined
-    if (el) {
-      top = el.getBoundingClientRect().top + window.scrollY
+    const updateHeight = () => {
+      const top = ref.current?.offsetTop || 60
+      setHeightInPx((window.innerHeight - top) * height)
     }
-    return (window.innerHeight - top) * this.props.height
-  }
 
-  updateHeight = () => {
-    this.setState({ height: this.calcHeight() })
-  }
+    useEffect(() => {
+      updateHeight()
+      window.addEventListener('resize', updateHeight)
+      return () => window.removeEventListener('resize', updateHeight)
+      // eslint-disable-next-line
+    }, [ height ])
 
-  componentDidMount() {
-    window.addEventListener("resize", this.updateHeight)
-    setTimeout(() => this.updateHeight(), 200)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.updateHeight)
-  }
-
-  background() {
-    const file = this.props.media.media[0].fields.file
-    if (file.contentType.startsWith("video")) {
-      return (
-        <video autoPlay muted loop className={this.props.classes.video}>
-          <source src={file.url} type={file.contentType} />
-        </video>
-      )
-    } else {
-      const url = file.url + "?w=" + window.screen.width
-      return (
-        <div className={this.props.classes.background} style={ { backgroundImage: `url(${url})` } } />
-      )
+    function background() {
+      const file = media.media[0].fields.file
+      if (file.contentType.startsWith("video")) {
+        return (
+          <video autoPlay muted loop className={classes.video}>
+            <source src={file.url} type={file.contentType} />
+          </video>
+        )
+      } else {
+        const url = file.url + "?w=" + window.screen.width
+        return (
+          <div className={classes.background} style={ { backgroundImage: `url(${url})` } } />
+        )
+      }
     }
-  }
 
-  renderShade() {
-    return this.props.shade ?
-      (<div className={this.props.classes.shade} style={({backgroundColor: `rgba(0,0,0,${this.props.shade})`})}/>) : null
-  }
+    function renderShade() {
+      if (!shade) {
+        return null
+      } else {
+        const style: CSSProperties = { backgroundColor: shadeColor || 'black', opacity: shade }
+        return (<div className={classes.shade} style={style}/>)
+      }
+    }
 
-  contentClassName(): string {
-    return this.props.classes.content + (this.props.bottom ? ' bottom' : '')
-  }
+    const style: CSSProperties = {
+      minHeight: heightInPx + 'px',
+      justifyContent: justify || 'center'
+    }
 
-  render() {
     return (
-      <div ref='box' className={this.props.classes.root} style={{height: this.state.height + 'px'}}>
-        {this.background()}
-
-        {this.renderShade()}
-        <div className={this.contentClassName()}>
-          {this.props.children}
-        </div>
+      <div ref={ref} className={classes.root} style={style}>
+        {background()}
+        {renderShade()}
+        {children}
       </div>
     )
   }
-}
-
-export default withStyles(styles)(Hero)

@@ -1,10 +1,20 @@
 import { Entry } from 'contentful'
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import  { FunctionComponent, useEffect, useState } from 'react'
 import Button, { ButtonProps } from '../components/button'
 import Youtube from '../components/youtube'
 import { client } from '../services/contentful'
 import { Lyrics, LyricsData } from './lyrics'
 import { IFrame, IFrameData } from './iframe'
+import { ResponsiveContent, ResponsiveContentData } from './responsive-content'
+import { makeStyles, createStyles, Theme } from '@material-ui/core'
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    button: {
+      marginBottom: theme.spacing(1),
+      marginRight: theme.spacing(1)
+    }
+  }))
 
 export interface YoutubeData {
   name: string
@@ -26,11 +36,13 @@ interface Props {
   id: string
 }
 
-type EmbeddableTypes = ButtonData | LyricsData | YoutubeData | IFrameData
+type EmbeddableTypes = ButtonData | LyricsData | YoutubeData | IFrameData | ResponsiveContentData
 
 export const EmbeddedEntry: FunctionComponent<Props> =
-  ({id}) => {
+  ({ id }) => {
     const [entry, setEntry] = useState(undefined as undefined | Entry<EmbeddableTypes>)
+    const classes = useStyles()
+
     useEffect(() => {
       if (!entry) {
         client.getEntry<EmbeddableTypes>(id).then(setEntry)
@@ -51,6 +63,7 @@ export const EmbeddedEntry: FunctionComponent<Props> =
           variant: bd.variant,
           color: bd.color,
           align: bd.align,
+          className: classes.button
         } as ButtonProps
         return (
           <Button key={entry.sys.id} {...bdProps}>
@@ -64,7 +77,10 @@ export const EmbeddedEntry: FunctionComponent<Props> =
       case 'iframe':
         return (<IFrame key={entry.sys.id} entry={entry as Entry<IFrameData>} />)
 
+      case 'responsiveContent':
+        return (<ResponsiveContent key={entry.sys.id} entry={entry as Entry<ResponsiveContentData>} />)
+
       default:
-        return null
+        return (<span>`Unknown content type: ${entry?.sys.contentType?.sys.id}`</span>)
     }
   }

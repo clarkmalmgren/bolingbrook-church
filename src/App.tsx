@@ -1,17 +1,13 @@
 import { ThemeProvider } from '@material-ui/styles'
-import { createBrowserHistory } from 'history'
-import React, { FunctionComponent } from 'react'
+import { FunctionComponent } from 'react'
 import { Provider } from 'react-redux'
-import { Router } from 'react-router'
+import { BrowserRouter } from 'react-router-dom'
 import { BCSwitch } from './bc-switch'
 import Banner from './components/banner'
-import Box from './components/box'
 import Footer from './components/footer'
-import Header from './components/header'
+import { Header } from './components/header'
 import { NavWatcher } from './components/nav-watcher'
 import theme from './theme'
-
-const history = createBrowserHistory()
 
 interface AppProps {
   store: any
@@ -22,15 +18,13 @@ const App: FunctionComponent<AppProps> =
     return (
       <ThemeProvider theme={theme}>
         <Provider store={props.store}>
-          <Router history={history}>
+          <BrowserRouter>
             <NavWatcher />
             <Header />
             <Banner />
-            <Box variant="main">
-              <BCSwitch />
-            </Box>
+            <BCSwitch />
             <Footer />
-          </Router>
+          </BrowserRouter>
         </Provider>
       </ThemeProvider>
     )

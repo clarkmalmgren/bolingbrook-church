@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
-import { Route, Switch } from 'react-router'
+import { Route, Switch } from 'react-router-dom'
 import { ContentfulPage, PageData } from './contentful/page'
 import * as Routes from './pages/index'
 import { client } from './services/contentful'

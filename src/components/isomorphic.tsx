@@ -2,13 +2,12 @@ import React from 'react'
 import { makeStyles } from '@material-ui/styles'
 import classNames from 'classnames'
 import Box from './box'
-import { PositionProperty, WidthProperty } from 'csstype';
 
 type TLength = string | 0
 
 interface Props {
   className?: string
-  maxWidth?: WidthProperty<TLength>
+  maxWidth?: TLength
   aspectRatio: number
 }
 
@@ -19,7 +18,7 @@ const styles = makeStyles({
   inner: (props: Props) => ({
     width: '100%',
     paddingTop: `${100/props.aspectRatio}%`,
-    position: 'relative' as PositionProperty
+    position: 'relative'
   }),
   content: {
     position: 'absolute',

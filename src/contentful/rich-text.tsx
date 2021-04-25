@@ -84,6 +84,9 @@ function renderNode(node: RichTextContent, classes: Props['classes'], key: strin
     case 'embedded-entry-block':
       return node.data.target?.sys.id ? (<EmbeddedEntry key={key} id={node.data.target.sys.id} />) : null
 
+    case 'embedded-entry-inline':
+      return node.data.target?.sys.id ? (<EmbeddedEntry key={key} id={node.data.target.sys.id} />) : null
+      
     default:
       return (<Unknown data={node} />)
   }

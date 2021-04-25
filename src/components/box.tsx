@@ -4,9 +4,6 @@ import classNames from 'classnames';
 import { createStyles, withStyles } from '@material-ui/styles'
 
 const styles = createStyles({
-  main: {
-    padding: '0 20px'
-  },
   section: {
     width: '95%',
     maxWidth: '840px',
@@ -21,7 +18,7 @@ const styles = createStyles({
 export interface BoxProps {
   className?: string
   classes?: any
-  variant: 'main' | 'section' | 'wide-section'
+  variant: 'section' | 'wide-section'
 }
 
 class Box extends React.PureComponent<BoxProps, {}> {

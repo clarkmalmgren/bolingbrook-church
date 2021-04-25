@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
-import { Theme, Typography } from '@material-ui/core'
+import { Theme, Typography, Paper } from '@material-ui/core'
 import Button from './button'
 import * as Links from './links'
 import { DynamicLinks } from '../contentful/dynamic-links'
@@ -10,8 +10,7 @@ const { version: appVersion } = require('../../package.json')
 const styles = (theme: Theme) => createStyles({
   root: {
     position: 'relative',
-    marginTop: '40px',
-    // background: grey[200]
+    marginTop: '40px'
   },
 
   links: {
@@ -20,8 +19,7 @@ const styles = (theme: Theme) => createStyles({
     flexFlow: 'wrap',
     justifyContent: 'center',
 
-    borderTop: `3px solid ${theme.palette.primary.dark}`,
-    borderBottom: `3px solid ${theme.palette.primary.dark}`,
+    backgroundColor: theme.palette.grey[200],
 
     '& .link-group': {
       display: 'flex',
@@ -34,8 +32,7 @@ const styles = (theme: Theme) => createStyles({
 
   contact: {
     padding: '10px 10px',
-    textAlign: 'center',
-    borderBottom: `3px solid ${theme.palette.primary.dark}`
+    textAlign: 'center'
   },
 
   version: {
@@ -54,7 +51,7 @@ interface FooterProps extends WithStyles<typeof styles> {
 class Footer extends React.PureComponent<FooterProps, {}> {
   render() {
     return (
-      <div className={this.props.classes.root}>
+      <Paper className={this.props.classes.root}>
         <div className={this.props.classes.links}>
           <div className="link-group">
             <Typography className="header" variant="h4">About</Typography>
@@ -105,7 +102,7 @@ class Footer extends React.PureComponent<FooterProps, {}> {
         </div>
 
         <Typography className={this.props.classes.version}>v{appVersion}-{process.env.REACT_APP_ENV}</Typography>
-      </div>
+      </Paper>
     )
   }
 }

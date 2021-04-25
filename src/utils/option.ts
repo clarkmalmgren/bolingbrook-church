@@ -52,7 +52,7 @@ export class Some<T> implements Option<T> {
     return Option(this.value[k])
   }
 
-  noneIf<S>(fn: (value: T) => boolean) {
+  noneIf(fn: (value: T) => boolean) {
     return fn(this.value) ? None.singleton : this
   }
 
@@ -61,6 +61,7 @@ export class Some<T> implements Option<T> {
   getOrElse = (defaultValue: T) => this.value
 }
 
+// eslint-disable-next-line
 export function Option<T>(value: T | null | undefined): Option<T> {
   return null == value ? None.singleton : new Some(value)
 }

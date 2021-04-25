@@ -7,8 +7,8 @@ function headerMargin(base: number): CSSProperties {
  return { marginBlockStart: `${base}rem`, marginBlockEnd: `${base/2}rem` }
 } 
 
-const primaryFontFamily = `'Roboto', sans-serif`
-const accentFontFamily = `'Roboto', sans-serif`
+const primaryFontFamily = `'Montserrat', sans-serif`
+const accentFontFamily = `'Montserrat', sans-serif`
 
 export default
   createMuiTheme({
@@ -24,12 +24,12 @@ export default
     typography: {
       fontFamily: primaryFontFamily,
 
-      h1: { fontSize: '2.5rem', fontFamily: accentFontFamily },
-      h2: { fontSize: '2.0rem', fontFamily: accentFontFamily },
-      h3: { fontSize: '1.5rem', fontFamily: accentFontFamily },
-      h4: { fontSize: '1.3rem', fontFamily: accentFontFamily },
-      h5: { fontSize: '1.2rem', fontFamily: accentFontFamily },
-      h6: { fontSize: '1.1rem', fontFamily: accentFontFamily },
+      h1: { fontSize: '4.5rem', fontFamily: accentFontFamily },
+      h2: { fontSize: '3.0rem', fontFamily: accentFontFamily },
+      h3: { fontSize: '2.3rem', fontFamily: accentFontFamily },
+      h4: { fontSize: '1.8rem', fontFamily: accentFontFamily },
+      h5: { fontSize: '1.4rem', fontFamily: accentFontFamily },
+      h6: { fontSize: '1.2rem', fontFamily: accentFontFamily },
     },
     overrides: {
       MuiButton: {

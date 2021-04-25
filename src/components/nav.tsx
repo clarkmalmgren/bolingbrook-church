@@ -1,81 +1,46 @@
-import React from 'react'
+import { FunctionComponent } from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
-import { Theme, Drawer, Divider, Button } from '@material-ui/core'
+import { Theme, Drawer, Divider, Button, createStyles, makeStyles } from '@material-ui/core'
 import * as Links from './links'
 import { authSelectors } from '../store/index'
 import { logout as logoutAction } from '../store/auth/actions'
 import { DynamicLinks } from '../contentful/dynamic-links'
 
-const styles = (theme: Theme) => createStyles({
-  space: {
-    height: '60px'
-  },
-})
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    space: {
+      height: '74px'
+    },
+  }))
 
-interface NavProps extends WithStyles<typeof styles> {
+type NavProps = {
   loggedIn: boolean
   opened?: boolean
   onToggle?: (active: boolean) => void
   logout: () => void
 }
 
-interface NavState {
-  opened: boolean
-}
-
-class Nav extends React.PureComponent<NavProps, NavState> {
-
-  constructor(props: NavProps) {
-    super(props)
-    this.state = { opened: !!props.opened }
-  }
-
-  componentDidUpdate(prevProps: NavProps) {
-    if (prevProps.opened !== this.props.opened && this.props.opened !== this.state.opened) {
-      this.setState(() => ({ opened: !!this.props.opened }))
+const Nav: FunctionComponent<NavProps> =
+  ({ loggedIn, opened, onToggle, logout }) => {
+    const classes = useStyles()
+    function close() {
+      if (onToggle) { onToggle(false) }
     }
-  }
+    
+    function adminLinks() {
+      return loggedIn ?
+        [
+          (<Divider key="divider" />),
+          (<Links.EditSermons key="edit" />),
+          (<div key="space" style={({flex: '1'})}/>),
+          (<Button key="logout" fullWidth color="secondary" onClick={logout} variant="contained">Logout</Button>)
+        ] : []
+    }
 
-  handleClick = () => {
-    this.setState(state => {
-      const opened = !state.opened
-      if (this.props.onToggle) {
-        this.props.onToggle(opened)
-      }
-      return { opened : opened }
-    })
-  }
-
-  close = () => {
-    this.setState(state => {
-      if (this.props.onToggle) {
-        this.props.onToggle(false)
-      }
-      return { opened: false }
-    })
-  }
-
-  logout = () => {
-    this.props.logout()
-  }
-  
-
-  adminLinks() {
-    return this.props.loggedIn ?
-      [
-        (<Divider key="divider" />),
-        (<Links.EditSermons key="edit" />),
-        (<div key="space" style={({flex: '1'})}/>),
-        (<Button key="logout" fullWidth color="secondary" onClick={this.logout} variant="contained">Logout</Button>)
-      ] : []
-  }
-
-  render() {
     return (
-      <Drawer anchor="right" open={this.state.opened} onClose={() => this.close()} onClick={() => this.close()}>
-        <div className={this.props.classes.space} />
+      <Drawer anchor="right" open={opened} onClose={() => close()} onClick={() => close()}>
+        <div className={classes.space} />
         
         <Divider />
 
@@ -97,13 +62,12 @@ class Nav extends React.PureComponent<NavProps, NavState> {
         <Links.Podcast />
 
         <DynamicLinks display="Side Bar" />
-        { this.adminLinks() }
+        { adminLinks() }
       </Drawer>
     )
   }
-}
 
 const mapStateToProps = (state: any) => ({ loggedIn: authSelectors.loggedIn(state)() })
 const mapDispatchToProps = (dispatch: Dispatch) => ({ logout: () => dispatch(logoutAction) })
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Nav))
+export default connect(mapStateToProps, mapDispatchToProps)(Nav)
