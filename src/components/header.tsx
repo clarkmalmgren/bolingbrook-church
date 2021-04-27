@@ -52,11 +52,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
     linkButton: {
       color: 'black'
-    },
-
-    hamburger: {
-      textAlign: 'right',
-      zIndex: 1400
     }
 
   }))
@@ -91,15 +86,17 @@ export const Header: FunctionComponent<Props> =
           </Link>
 
           <nav className={classes.links}>
+            <Button className={classes.linkButton} variant="text" link="/visit">Visit</Button>
             <Button className={classes.linkButton} variant="text" link="/sermons">Sermons</Button>
             <Button className={classes.linkButton} variant="text" link="/connect">Connect</Button>
-            <Button className={classes.linkButton} variant="text" link="/about">About</Button>
           </nav>
 
-          <Button className={classes.linkButton} variant="contained" color="secondary" link="/giving">Give</Button>
-          <IconButton className={classes.hamburger} onClick={() => setOpened(true)}>
-            <Icon>menu</Icon>
-          </IconButton>
+          <div>
+            <Button className={classes.linkButton} variant="contained" color="secondary" link="/giving">Give</Button>
+            <IconButton onClick={() => setOpened(true)}>
+              <Icon>menu</Icon>
+            </IconButton>
+          </div>
 
           <Nav opened={opened} onToggle={setOpened} ></Nav>
         </Toolbar>

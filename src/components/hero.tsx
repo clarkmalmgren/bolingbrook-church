@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'absolute',
       top: 0, bottom: 0, right: 0, left: 0,
       backgroundSize: 'cover',
-      backgroundPosition: 'center',
       zIndex: -100
     },
 
@@ -45,10 +44,11 @@ export type HeroProps = {
   shade?: number
   shadeColor?: 'black' | 'white',
   justify?: 'flex-start' | 'center' | 'flex-end' 
+  imagePosition?: string
 }
 
 export const Hero: FunctionComponent<HeroProps> =
-  ({ media, height, shade, justify, shadeColor, children }) => {
+  ({ media, height, shade, justify, shadeColor, children, imagePosition }) => {
     const classes = useStyles()
     const [ heightInPx, setHeightInPx ]  = useState((window.innerHeight - 60) * height)
     const ref = useRef<HTMLDivElement>(null)
@@ -74,9 +74,12 @@ export const Hero: FunctionComponent<HeroProps> =
           </video>
         )
       } else {
-        const url = file.url + "?w=" + window.screen.width
+        const style: CSSProperties = {
+          backgroundImage: `url(${file.url + "?w=" + window.screen.width})`,
+          backgroundPosition: imagePosition || 'center',
+        }
         return (
-          <div className={classes.background} style={ { backgroundImage: `url(${url})` } } />
+          <div className={classes.background} style={style} />
         )
       }
     }

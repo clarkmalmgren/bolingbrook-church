@@ -33,6 +33,7 @@ export type HeroData = {
   shade?: number
   colorScheme?: 'black on white' | 'white on black'
   alignment?: 'left' | 'center' | 'right'
+  imagePosition?: string
 }
 
 type ContentfulHeroProps = {
@@ -66,7 +67,7 @@ export const ContentfulHero: FunctionComponent<ContentfulHeroProps> =
       const justify = data.alignment === 'left' ? 'flex-start' : data.alignment === 'right' ? 'flex-end' : 'center'
 
       return (
-        <Hero key={data.name} media={mediaData} height={data.height} shade={data.shade} shadeColor={shadeColor} justify={justify}>
+        <Hero key={data.name} media={mediaData} height={data.height} shade={data.shade} shadeColor={shadeColor} justify={justify} imagePosition={data.imagePosition}>
           { data.content ? (<ContentfulRichText className={`${color} ${alignment}`} content={data.content} />) : null }
         </Hero>
       )
