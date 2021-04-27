@@ -11,14 +11,14 @@ const useStyes = makeStyles((theme: Theme) =>
     center: { textAlign: 'center' },
     right: {
       alignSelf: 'right',
-      paddingRight: theme.spacing(8),
-      maxWidth: '45%'
+      padding: `0 ${theme.spacing(4)}px`,
+      [theme.breakpoints.up('md')]: { maxWidth: '45%' }
     },
 
     left: {
       textAlign: 'left',
-      paddingLeft: theme.spacing(8),
-      maxWidth: '45%'
+      padding: `0 ${theme.spacing(4)}px`,
+      [theme.breakpoints.up('md')]: { maxWidth: '45%' }
     },
 
     white: { color: 'white' },

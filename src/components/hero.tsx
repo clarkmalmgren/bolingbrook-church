@@ -8,7 +8,6 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'relative',
       overflow: 'hidden',
       display: 'flex',
-      // justifyContent: 'center',
       alignItems: 'center',
       padding: `${theme.spacing(4)}px 0`
     },

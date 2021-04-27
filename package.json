@@ -35,6 +35,8 @@
     "build": "yarn run build:prod",
     "build:beta": "sh -ac '. .env.beta; react-scripts build'",
     "build:prod": "sh -ac '. .env.production; react-scripts build'",
+    "deploy:beta": "yarn run build:beta; firebase use bolingbrook-church-beta; firebase deploy --only hosting",
+    "deploy:prod": "yarn run build:prod; firebase use bolingbrook-church; firebase deploy --only hosting",
     "test": "react-scripts test",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public"

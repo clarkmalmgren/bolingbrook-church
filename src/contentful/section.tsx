@@ -17,6 +17,7 @@ export interface CardSectionData {
 export interface ContentSectionData {
   name: string
   content: EntryFields.RichText
+  alignment?: 'left' | 'center' | 'right'
 }
 
 type SectionData = CardSectionData | ContentSectionData | GraphicSectionData | IFrameData
@@ -61,9 +62,12 @@ export const ContentfulSection: FunctionComponent<Props> =
         </CardList>
       )
     } else if (entry && isContent(entry)) {
+      const alignment = entry.fields.alignment || 'left'
       return (
-        <Box variant='section'>
+        <Box variant="section">
+          <div style={{ textAlign: alignment }}>
           <ContentfulRichText content={entry.fields.content} />
+          </div>
         </Box>
       )
     } else if (entry && isGraphic(entry)) {

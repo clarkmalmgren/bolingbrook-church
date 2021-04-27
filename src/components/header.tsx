@@ -91,13 +91,12 @@ export const Header: FunctionComponent<Props> =
           </Link>
 
           <nav className={classes.links}>
-            <Button className={classes.linkButton} variant="text" link="/about">Our Story</Button>
-            <Button className={classes.linkButton} variant="text" link="/connect">Connect</Button>
             <Button className={classes.linkButton} variant="text" link="/sermons">Sermons</Button>
-            <Button className={classes.linkButton} variant="text" link="/giving">Giving</Button>
-            <Button className={classes.linkButton} variant="text" link="/location">Location</Button>
+            <Button className={classes.linkButton} variant="text" link="/connect">Connect</Button>
+            <Button className={classes.linkButton} variant="text" link="/about">About</Button>
           </nav>
 
+          <Button className={classes.linkButton} variant="contained" color="secondary" link="/giving">Give</Button>
           <IconButton className={classes.hamburger} onClick={() => setOpened(true)}>
             <Icon>menu</Icon>
           </IconButton>
