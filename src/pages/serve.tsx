@@ -25,6 +25,11 @@ class Serve extends React.PureComponent<WithStyles<typeof styles>, ServeState> {
   }
 
   submit = (data: any) => {
+    // If there is an "other" selected, add it to interests
+    if (data.other) {
+      data.interests = [...data.interests, data.other]
+    }
+
     fetch(`${process.env.REACT_APP_API_URL}/serve`, {
       method: 'POST',
       body: JSON.stringify(data),
@@ -53,14 +58,16 @@ class Serve extends React.PureComponent<WithStyles<typeof styles>, ServeState> {
             <Header variant="h2">Choose a Team</Header>
   
             <Checkboxes id="interests">
-              <CheckboxOption>Ask Me Anything Guide</CheckboxOption>
-              <CheckboxOption>Next Steps Team</CheckboxOption>
               <CheckboxOption>Greeter</CheckboxOption>
+              <CheckboxOption>Media</CheckboxOption>
+              <CheckboxOption>Prayer Team</CheckboxOption>
+              <CheckboxOption>Sabbath Cafe</CheckboxOption>
+              <CheckboxOption>Safety Officer (ages 21+)</CheckboxOption>
+              <CheckboxOption>Associate Safety Officer (ages 18-21)</CheckboxOption>
+              <CheckboxOption>Junior Safety Officer (ages 16-18)</CheckboxOption>
               <CheckboxOption>Usher</CheckboxOption>
-              <CheckboxOption>Audio Team</CheckboxOption>
-              <CheckboxOption>Video Team</CheckboxOption>
-              <CheckboxOption>Visual &amp; Lighting Team</CheckboxOption>
             </Checkboxes>
+            <TextField id="other">Other</TextField>
   
             <Submit>Submit</Submit>
           </Form>
