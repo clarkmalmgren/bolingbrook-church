@@ -51,7 +51,7 @@ export const GetConnected = () => (<Link link='/connect' icon='people'>Get Conne
 export const Sermons      = () => (<Link link='/sermons' icon='video_library'>Sermons</Link>)
 export const Giving       = () => (<Link link='/giving' icon='attach_money'>Giving</Link>)
 export const Location     = () => (<Link link='/location' icon='place'>Location</Link>)
-export const Serve        = () => (<Link link='/serve' icon='pan_tool'>Serve</Link>)
+export const Serve        = () => (<Link link='/join-a-team' icon='pan_tool'>Join a Team</Link>)
 export const MeetUs       = () => (<Link link='/meet-us' icon='emoji_people'>Meet Us</Link>)
 export const Newsletter   = () => (<Link link='/newsletter' icon='email'>Newsletter</Link>)
 export const FriendsFam   = () => (<Link link='/friends-and-family' icon='group_add'>Friends &amp; Family</Link>)

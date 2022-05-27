@@ -47,7 +47,6 @@ export default class Connect extends React.PureComponent<{}, ConnectState> {
 
             <Checkboxes id="interests">
               <CheckboxOption>Learn more about following Jesus</CheckboxOption>
-              <CheckboxOption>Learn more about our PreK-8 School</CheckboxOption>
               <CheckboxOption>Be Baptized</CheckboxOption>
               <CheckboxOption>Make Bolingbrook my home church</CheckboxOption>
             </Checkboxes>
