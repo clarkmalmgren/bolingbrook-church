@@ -1,6 +1,6 @@
 {
   "name": "bolingbrook-church",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.3",
@@ -19,7 +19,7 @@
     "firebase": "^8.4.1",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.23",
-    "node-sass": "^4.11.0",
+    "node-sass": "^5.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.3",

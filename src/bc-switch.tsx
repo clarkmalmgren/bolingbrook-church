@@ -35,7 +35,7 @@ export const BCSwitch: FunctionComponent<{}> =
         <Route exact path="/newsletter"           component={Routes.Newsletter} />
         <Route exact path="/sermons/:id"          component={Routes.Sermon} />
         <Route exact path="/sermons"              component={Routes.Sermons} />
-        <Route exact path="/serve"                component={Routes.Serve} />
+        <Route exact path="/join-a-team"          component={Routes.Serve} />
         <Route exact path="/thank-you"            component={() => <ContentfulPage path='/thank-you' />}  />
 
         <Route exact path="/admin"                component={Routes.AdminPage} />
