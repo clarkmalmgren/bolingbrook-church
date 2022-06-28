@@ -66,6 +66,9 @@ class Serve extends React.PureComponent<WithStyles<typeof styles>, ServeState> {
               <CheckboxOption>Associate Safety Officer (ages 18-21)</CheckboxOption>
               <CheckboxOption>Junior Safety Officer (ages 16-18)</CheckboxOption>
               <CheckboxOption>Usher</CheckboxOption>
+              <CheckboxOption>Connection Sabbath</CheckboxOption>
+              <CheckboxOption>Serve Sabbath</CheckboxOption>
+              <CheckboxOption>Discipletown</CheckboxOption>
             </Checkboxes>
             <TextField id="other">Other</TextField>
   

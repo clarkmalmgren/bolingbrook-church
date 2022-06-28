@@ -1,7 +1,7 @@
 import { FunctionComponent, useState, MouseEvent } from 'react'
 import { Theme, AppBar, Toolbar, IconButton, Icon, useTheme } from '@mui/material'
 import { createStyles, makeStyles } from '@mui/styles'
-import { Link, Navigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Button from './button'
 import Nav from './nav'
 import { Logo } from '../assets/images/Logo'
@@ -59,23 +59,23 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type Props = {}
 
-let globalClickCount = 0
 
 export const Header: FunctionComponent<Props> =
   () => {
     const classes = useStyles()
     const theme = useTheme()
+    const navigate = useNavigate()
     const [ opened, setOpened ] = useState(false)
     const [ clickCount, setClickCount ] = useState(0)
     
     const onHomeClick = (event: MouseEvent) => {
-      globalClickCount += 1
-      setClickCount(clickCount + 1)
-    }
-
-    if (globalClickCount >= 10) {
-      globalClickCount = 0
-      return (<Navigate to='/admin/login' />)
+      if (clickCount >= 10) {
+        event.preventDefault()
+        navigate('/admin/login')
+        setClickCount(0)
+      } else {
+        setClickCount(clickCount + 1)
+      }
     }
 
     return (
@@ -94,7 +94,7 @@ export const Header: FunctionComponent<Props> =
 
           <div>
             <Button className={classes.linkButton} variant="contained" color="secondary" link="/giving">Give</Button>
-            <IconButton onClick={() => setOpened(true)}>
+            <IconButton onClick={() => setOpened(true)} sx={{ml: 1}}>
               <Icon>menu</Icon>
             </IconButton>
           </div>

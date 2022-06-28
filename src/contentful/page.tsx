@@ -23,11 +23,11 @@ interface ContentfulPageProps {
 export const ContentfulPage: FunctionComponent<ContentfulPageProps> =
   (props) => {
     const [data, setData] = useState(props.data)
-    const [initialized, setInitialized] = useState(false)
+    const [initialized, setInitialized] = useState(!!props.data)
     const locationPath = useLocation().pathname
 
     useEffect(() => {
-      if ((!initialized && !data) || data?.fields?.path !== props.path) {
+      if (!initialized || data?.fields?.path !== props.path) {
         client
           .getEntries<PageData>({ content_type: 'page', 'fields.path': (props.path || locationPath ) })
           .then(collection => {
@@ -35,7 +35,7 @@ export const ContentfulPage: FunctionComponent<ContentfulPageProps> =
             setInitialized(true)
           })
       }
-    }, [ props.path ])
+    }, [ props.path, initialized, data, locationPath ])
 
     if (data) {
       return (
