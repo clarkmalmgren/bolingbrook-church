@@ -1,8 +1,8 @@
-import { Link, Typography } from '@material-ui/core'
-import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
+import { Link, Typography } from '@mui/material'
+import { createStyles, withStyles, WithStyles } from '@mui/styles'
 import classNames from 'classnames'
 import { EntryFields, RichTextContent } from 'contentful'
-import React, { FunctionComponent } from 'react'
+import { FunctionComponent, forwardRef } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { EmbeddedEntry } from './embedded'
 import { Unknown } from './unknown'
@@ -67,14 +67,15 @@ function renderNode(node: RichTextContent, classes: Props['classes'], key: strin
 
     case 'list-item':
       return (
-        <li key={key}><Typography variant="inherit">{children(true)}</Typography></li>
+        // <li key={key}><Typography variant="inherit">{children(true)}</Typography></li>
+        <li key={key}>{children(true)}</li>
       )
 
     case 'hyperlink':
       const linkClassList = (node.marks || []).map((m: {type: MarkType}) => classes[m.type])
       const linkProps: any = (node.data.uri?.match(/^(https|http|tel|mailto):/)) ?
         { href: node.data.uri } :
-        { component: React.forwardRef((props: any, ref) => { return (<RouterLink to={node.data.uri as string} {...props} ref={ref}/>) }) }
+        { component: forwardRef((props: any, ref) => { return (<RouterLink to={node.data.uri as string} {...props} ref={ref}/>) }) }
 
       return (<Link key={key} className={classNames(linkClassList)} {...linkProps}>{children()}</Link>)
 

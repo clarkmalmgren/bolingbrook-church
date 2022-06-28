@@ -1,4 +1,4 @@
-import { ThemeProvider } from '@material-ui/styles'
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles'
 import { FunctionComponent } from 'react'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
@@ -16,17 +16,19 @@ interface AppProps {
 const App: FunctionComponent<AppProps> =
   (props) => {
     return (
-      <ThemeProvider theme={theme}>
-        <Provider store={props.store}>
-          <BrowserRouter>
-            <NavWatcher />
-            <Header />
-            <Banner />
-            <BCSwitch />
-            <Footer />
-          </BrowserRouter>
-        </Provider>
-      </ThemeProvider>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <Provider store={props.store}>
+            <BrowserRouter>
+              <NavWatcher />
+              <Header />
+              <Banner />
+              <BCSwitch />
+              <Footer />
+            </BrowserRouter>
+          </Provider>
+        </ThemeProvider>
+      </StyledEngineProvider>
     )
 
   }

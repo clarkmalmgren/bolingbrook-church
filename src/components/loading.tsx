@@ -1,7 +1,8 @@
 import React, { FunctionComponent } from 'react'
-import { createStyles, withStyles, WithStyles, CircularProgress } from '@material-ui/core'
+import { CircularProgress } from '@mui/material'
+import { createStyles, makeStyles } from '@mui/styles'
 
-const styles = createStyles({
+const useStyles = makeStyles(() => createStyles({
   outer: {
     width: '100%',
     textAlign: 'center',
@@ -13,14 +14,15 @@ const styles = createStyles({
     top: '50%',
     transform: 'translateY(-50%)'
   }
-})
+}))
 
-interface Props extends WithStyles<typeof styles> {
+type Props = {
   height?: string
 }
 
-const UnstyledLoading: FunctionComponent<Props> =
-  ({height, classes}) => {
+export const Loading: FunctionComponent<Props> =
+  ({ height }) => {
+    const classes = useStyles()
     const calculatedHeight = height ? height : '300px'
 
     return (
@@ -31,5 +33,3 @@ const UnstyledLoading: FunctionComponent<Props> =
       </div>
     )
   }
-
-export const Loading = withStyles(styles)(UnstyledLoading)

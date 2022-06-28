@@ -1,6 +1,6 @@
 import React from 'react'
-import { Card, CardHeader, CardMedia, CardContent, Link } from '@material-ui/core'
-import { createStyles, withStyles, WithStyles } from '@material-ui/styles';
+import { Card, CardHeader, CardMedia, CardContent, Link } from '@mui/material'
+import { createStyles, withStyles, WithStyles } from '@mui/styles';
 import { StaffInfo } from '../services/staff'
 
 const styles = createStyles({

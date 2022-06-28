@@ -1,12 +1,13 @@
-import React, { FunctionComponent } from 'react'
-import { Button } from '@material-ui/core'
+import { FunctionComponent } from 'react'
+import { Button } from '@mui/material'
 import { GoogleToken } from '../store/auth/token'
 import { auth } from '../utils/firebase'
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 
 type Props = {
   className?: string
   onSuccess: (token: GoogleToken) => void
-  onFailure: (e: Error) => void
+  onFailure: (e: any) => void
 }
 
 export const GoogleLogin: FunctionComponent<Props> =
@@ -14,13 +15,11 @@ export const GoogleLogin: FunctionComponent<Props> =
 
     async function login() {
       try {
-        const provider = new auth.GoogleAuthProvider()
-        const result = await auth().signInWithPopup(provider)
-        const creds = result.credential as any
+        const provider = new GoogleAuthProvider()
+        const result = await signInWithPopup(auth, provider)
 
         const token = {
-          accessToken: creds.accessToken || '',
-          tokenId: await auth().currentUser?.getIdToken() || '',
+          tokenId: await auth.currentUser?.getIdToken() || '',
           expiresAt: new Date().getTime() / 1000 + 7200,
 
           googleId: result.user?.uid || '',
@@ -29,7 +28,7 @@ export const GoogleLogin: FunctionComponent<Props> =
         }
 
         onSuccess(token)
-      } catch (e) {
+      } catch (e: any) {
         onFailure(e)
       }
     }

@@ -1,13 +1,14 @@
-import React from 'react'
-import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
-import { Icon } from '@material-ui/core'
+import React, { PropsWithChildren } from 'react'
+import { createStyles, withStyles, WithStyles } from '@mui/styles'
+import { Icon } from '@mui/material'
 import Button from './button'
 import Socicon from './socicon'
 
 
 const styles = createStyles({
   root: {
-    margin: '3px 0',
+    margin: '3px 0 !important',
+    color: 'black !important',
     '& .icon': {
       marginRight: '8px'
     }
@@ -20,7 +21,7 @@ interface LinkProps extends WithStyles<typeof styles> {
   socicon?: boolean
 }
 
-class BaseLink extends React.PureComponent<LinkProps, {}> {
+class BaseLink extends React.PureComponent<PropsWithChildren<LinkProps>, {}> {
   
   renderIcon() {
     return this.props.socicon ?

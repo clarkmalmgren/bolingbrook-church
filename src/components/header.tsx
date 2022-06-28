@@ -1,6 +1,7 @@
 import { FunctionComponent, useState, MouseEvent } from 'react'
-import { createStyles, makeStyles, Theme, AppBar, Toolbar, IconButton, Icon, useTheme } from '@material-ui/core'
-import { Link, useHistory } from 'react-router-dom'
+import { Theme, AppBar, Toolbar, IconButton, Icon, useTheme } from '@mui/material'
+import { createStyles, makeStyles } from '@mui/styles'
+import { Link, Navigate } from 'react-router-dom'
 import Button from './button'
 import Nav from './nav'
 import { Logo } from '../assets/images/Logo'
@@ -12,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      padding: '5px 12px',
+      padding: '5px 12px !important',
       backgroundColor: 'white',
       left: '0',
       right: '0',
@@ -51,12 +52,14 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     linkButton: {
-      color: 'black'
+      color: 'black !important'
     }
 
   }))
 
 type Props = {}
+
+let globalClickCount = 0
 
 export const Header: FunctionComponent<Props> =
   () => {
@@ -64,17 +67,15 @@ export const Header: FunctionComponent<Props> =
     const theme = useTheme()
     const [ opened, setOpened ] = useState(false)
     const [ clickCount, setClickCount ] = useState(0)
-    const history = useHistory()
     
     const onHomeClick = (event: MouseEvent) => {
-      const next = clickCount + 1
-      if (next >= 10) {
-        history.push("/admin/login")
-        event.preventDefault()
-        setClickCount(0)
-      } else {
-        setClickCount(next)
-      }
+      globalClickCount += 1
+      setClickCount(clickCount + 1)
+    }
+
+    if (globalClickCount >= 10) {
+      globalClickCount = 0
+      return (<Navigate to='/admin/login' />)
     }
 
     return (

@@ -1,5 +1,6 @@
-import { createStyles, makeStyles, Theme } from '@material-ui/core'
-import { CSSProperties, FunctionComponent, useEffect, useRef, useState } from 'react'
+import { Theme } from '@mui/material'
+import { createStyles, makeStyles } from '@mui/styles'
+import { CSSProperties, FunctionComponent, useEffect, useRef, useState, PropsWithChildren } from 'react'
 import { Asset } from '../services/contentful'
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -9,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) =>
       overflow: 'hidden',
       display: 'flex',
       alignItems: 'center',
-      padding: `${theme.spacing(4)}px 0`
+      padding: `${theme.spacing(4)} 0`
     },
 
     video: {
@@ -47,7 +48,7 @@ export type HeroProps = {
   imagePosition?: string
 }
 
-export const Hero: FunctionComponent<HeroProps> =
+export const Hero: FunctionComponent<PropsWithChildren<HeroProps>> =
   ({ media, height, shade, justify, shadeColor, children, imagePosition }) => {
     const classes = useStyles()
     const [ heightInPx, setHeightInPx ]  = useState((window.innerHeight - 60) * height)

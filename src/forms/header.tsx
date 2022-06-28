@@ -1,6 +1,6 @@
-import { Typography } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
-import React, { FunctionComponent } from 'react'
+import { Typography } from '@mui/material'
+import { makeStyles } from '@mui/styles'
+import { FunctionComponent, PropsWithChildren } from 'react'
 import { FieldProps, partialNoId } from './props'
 
 const styles = makeStyles({
@@ -14,7 +14,7 @@ interface HeaderProps extends FieldProps<void> {
   variant: 'h1' | 'h2' | 'h3' | 'h4' | 'h5'
 }
 
-const Header: FunctionComponent<HeaderProps> =
+const Header: FunctionComponent<PropsWithChildren<HeaderProps>> =
   (props) => (
     <Typography
       key={props.id}

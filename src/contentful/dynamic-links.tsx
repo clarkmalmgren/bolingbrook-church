@@ -1,7 +1,6 @@
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import { FunctionComponent, useEffect, useState, Fragment } from 'react'
 import { Link } from '../components/links'
 import { query } from '../services/contentful'
-
 
 type DisplayType = 'Side Bar' | 'About' | 'Get Involved' | 'Connect' | 'Listen'
 
@@ -32,9 +31,9 @@ export const DynamicLinks: FunctionComponent<Props> =
     })
 
     if (links?.length) {
-      return (<div>{
+      return (<Fragment>{
       links.map(l => (<Link key={l.text} link={l.link} icon={l.icon} socicon={l.iconType === 'socicon'}>{l.text}</Link>))
-      }</div>)
+      }</Fragment>)
     } else {
       return null
     }

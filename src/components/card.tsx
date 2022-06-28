@@ -1,9 +1,9 @@
-import * as React from 'react'
+import React, { PropsWithChildren } from 'react'
 import { Link } from 'react-router-dom'
-import { Theme, CardContent, Card as MuiCard, ButtonBase } from '@material-ui/core'
-import CardHeader from '@material-ui/core/CardHeader'
-import CardMedia, { CardMediaProps } from '@material-ui/core/CardMedia'
-import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
+import { Theme, CardContent, Card as MuiCard, ButtonBase, CardActionArea } from '@mui/material'
+import CardHeader from '@mui/material/CardHeader'
+import CardMedia, { CardMediaProps } from '@mui/material/CardMedia'
+import { createStyles, withStyles, WithStyles } from '@mui/styles'
 import { Asset } from '../services/contentful'
 
 const styles = (theme: Theme) => createStyles({
@@ -12,12 +12,6 @@ const styles = (theme: Theme) => createStyles({
     margin: '12px',
     flex: '100%',
     textDecoration: 'none'
-  },
-
-  action: {
-    display: 'block',
-    width: '100%',
-    textAlign: 'initial'
   },
 
   media: {
@@ -37,24 +31,16 @@ interface CardProps extends WithStyles<typeof styles> {
   onClick?: () => void
 }
 
-class Card extends React.PureComponent<CardProps, {}> {
+class Card extends React.PureComponent<PropsWithChildren<CardProps>, {}> {
 
   onClick = () => this.props.onClick ? this.props.onClick() : ''
 
   renderMedia() {
-    const props: CardMediaProps = {
-      className: this.props.classes.media
-    }
+    const image =
+      this.props.image || (this.props.media ? this.props.media?.fields?.file?.url + "?w=600" :
+        'https://www.blakleysflooring.com/wp-content/uploads/2016/03/Placeholder-768x768.png')
     
-    if (this.props.image) {
-      props.image = this.props.image
-    } else if (this.props.media) {
-      props.image = this.props.media.fields.file.url + "?w=600"
-    } else {
-      props.image = '//via.placeholder.com/1'
-    }
-    
-    return (<CardMedia {...props} />)
+    return (<CardMedia className={this.props.classes.media} image={image} height={195} component="img" />)
   }
 
   render() {
@@ -67,11 +53,11 @@ class Card extends React.PureComponent<CardProps, {}> {
 
     return (
       <MuiCard className={this.props.classes.root}>
-        <ButtonBase className={this.props.classes.action} {...buttonBaseProps} to={this.props.link} href={this.props.link} onClick={this.onClick}>
+        <CardActionArea {...buttonBaseProps} to={this.props.link} href={this.props.link} onClick={this.onClick}>
           { this.renderMedia() }
           <CardHeader title={this.props.title} subheader={ this.props.subtitle }></CardHeader>
           <CardContent>{this.props.children}</CardContent>
-        </ButtonBase>
+        </CardActionArea>
       </MuiCard>
     )
   }

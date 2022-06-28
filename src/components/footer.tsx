@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
-import { Theme, Typography, Paper } from '@material-ui/core'
+import { createStyles, withStyles, WithStyles } from '@mui/styles'
+import { Theme, Typography, Paper } from '@mui/material'
 import Button from './button'
 import * as Links from './links'
 import { DynamicLinks } from '../contentful/dynamic-links'

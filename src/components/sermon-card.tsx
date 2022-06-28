@@ -1,7 +1,7 @@
-import { Typography } from '@material-ui/core'
-import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
+import { Typography } from '@mui/material'
+import { createStyles, withStyles, WithStyles } from '@mui/styles'
 import moment from 'moment'
-import React, { FunctionComponent } from 'react'
+import { FunctionComponent } from 'react'
 import { getImageUrl, Sermon } from '../models/sermon'
 import Card from './card'
 

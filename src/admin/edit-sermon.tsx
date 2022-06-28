@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import moment from 'moment'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { match, Redirect } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import { SecurePage } from './secure-page'
 import { Form, TextField, List, Submit } from '../forms'
 import { sermonSelectors } from '../store/index'
@@ -11,13 +11,11 @@ import { PartialSermon } from '../models/sermon'
 import { save } from '../services/sermon'
 import { ErrorDialog } from '../components/error'
 
-interface MatchParams { id: string }
-
 interface EditSermonProps {
   disableDate: boolean
   onLoad: () => void
   refresh: () => void
-  match: match<MatchParams>
+  id?: string
   initialData?: PartialSermon
 }
 
@@ -50,7 +48,7 @@ export class BaseEditSermon extends React.PureComponent<EditSermonProps, EditSer
 
   render() {
     return this.state.submitted ?
-      (<Redirect to="/admin/sermons" />) :
+      (<Navigate to="/admin/sermons" />) :
       (
         <SecurePage>
           <Form onSubmit={this.submit} initialData={this.props.initialData}>
@@ -76,7 +74,7 @@ export class BaseEditSermon extends React.PureComponent<EditSermonProps, EditSer
 }
 
 const mapStateToProps = (state: any, ownProps: EditSermonProps) => {
-  const data = sermonSelectors.date(state)(ownProps.match.params.id)
+  const data = sermonSelectors.date(state)(ownProps.id || '')
   return ({ initialData: data })
 }
 
@@ -87,6 +85,12 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
   })
 
 export const EditSermon = connect(mapStateToProps, mapDispatchToProps)(BaseEditSermon)
+
+export const EditSermonFromPath: FunctionComponent<{}> =
+  () => {
+    const { id }  = useParams()
+    return (<EditSermon id={id} disableDate onLoad={() => {}} refresh={() => {}} />)
+  }
 
 const mapStateToPropsForNew = (state: any) => (
   {

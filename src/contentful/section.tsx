@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState, useEffect } from 'react'
 import { Entry, EntryFields } from 'contentful'
-import Box from '../components/box'
+import { Box }from '../components/box'
 import { CardList } from '../components/card-list'
 import { CardData, LatestSermonCardData, ContentfulCard } from './card'
 import { ContentfulRichText } from './rich-text'

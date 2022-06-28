@@ -1,4 +1,5 @@
-import { createStyles, makeStyles, Theme } from '@material-ui/core'
+import { Theme } from '@mui/material'
+import { createStyles, makeStyles } from '@mui/styles'
 import { Asset, Entry, EntryFields } from 'contentful'
 import { FunctionComponent, useEffect, useState } from 'react'
 import { Hero, HeroMedia } from '../components/hero'
@@ -11,13 +12,13 @@ const useStyes = makeStyles((theme: Theme) =>
     center: { textAlign: 'center' },
     right: {
       alignSelf: 'right',
-      padding: `0 ${theme.spacing(4)}px`,
+      padding: `0 ${theme.spacing(4)}`,
       [theme.breakpoints.up('md')]: { maxWidth: '45%' }
     },
 
     left: {
       textAlign: 'left',
-      padding: `0 ${theme.spacing(4)}px`,
+      padding: `0 ${theme.spacing(4)}`,
       [theme.breakpoints.up('md')]: { maxWidth: '45%' }
     },
 

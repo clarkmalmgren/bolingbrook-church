@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
-import { Paper, Fab, Typography, Icon } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
+import { Paper, Fab, Typography, Icon } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import { FieldProps, partial } from './props'
 import { mergeArray } from './merge'
 import ListItem from './list-item'

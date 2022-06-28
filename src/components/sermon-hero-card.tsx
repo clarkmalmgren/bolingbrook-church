@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { createStyles, withStyles, WithStyles } from '@material-ui/styles';
+import { createStyles, withStyles, WithStyles } from '@mui/styles';
 import { Sermon, getImageUrl, isToday } from '../models/sermon'
 import Card from './card'
 import { load } from '../store/sermons/actions'

@@ -1,4 +1,4 @@
-import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
+import { createStyles, withStyles, WithStyles } from '@mui/styles'
 import React, { FunctionComponent } from 'react'
 import Isomorphic from './isomorphic'
 

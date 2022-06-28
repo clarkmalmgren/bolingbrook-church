@@ -1,7 +1,7 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/styles'
+import React, { PropsWithChildren } from 'react'
+import { makeStyles } from '@mui/styles'
 import classNames from 'classnames'
-import Box from './box'
+import { Box }from './box'
 
 type TLength = string | 0
 
@@ -29,7 +29,7 @@ const styles = makeStyles({
   }
 })
 
-const Isomorphic: React.FunctionComponent<Props> = props => {
+const Isomorphic: React.FunctionComponent<PropsWithChildren<Props>> = props => {
   const classes = styles(props)
   return (
     <Box className={classNames(classes.outer, props.className)}>

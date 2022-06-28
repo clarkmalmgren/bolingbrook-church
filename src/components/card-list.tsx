@@ -1,5 +1,5 @@
-import React, { FunctionComponent } from 'react'
-import { createStyles, makeStyles } from '@material-ui/styles'
+import { FunctionComponent, PropsWithChildren } from 'react'
+import { createStyles, makeStyles } from '@mui/styles'
 
 type Props = {}
 
@@ -12,7 +12,7 @@ const useStyles = makeStyles(
     }
   }))
 
-export const CardList: FunctionComponent<Props> =
+export const CardList: FunctionComponent<PropsWithChildren<Props>> =
   ({ children }) => {
     const classes = useStyles()
 

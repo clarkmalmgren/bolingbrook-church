@@ -1,6 +1,7 @@
-import React, { FunctionComponent } from 'react'
+import { FunctionComponent } from 'react'
 import { Entry, EntryFields } from 'contentful'
-import { createStyles, withStyles, WithStyles, Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
+import { createStyles, makeStyles } from '@mui/styles'
 import { ContentfulRichText } from './rich-text'
 
 export interface LyricsData {
@@ -8,18 +9,19 @@ export interface LyricsData {
   lyrics: EntryFields.RichText
 }
 
-const styles = createStyles({
+const useStyles = makeStyles(() => createStyles({
   lyrics: {
     whiteSpace: 'pre'
   }
-})
+}))
 
-interface Props extends WithStyles<typeof styles> {
+type Props = {
   entry: Entry<LyricsData>
 }
 
-const UnstyledLyrics: FunctionComponent<Props> =
-  ({entry, classes}) => {
+export const Lyrics: FunctionComponent<Props> =
+  ({entry}) => {
+    const classes = useStyles()
     return (
       <div>
         <Typography variant="h3">{entry.fields.title}</Typography>
@@ -27,5 +29,3 @@ const UnstyledLyrics: FunctionComponent<Props> =
       </div>
     )
   }
-
-export const Lyrics = withStyles(styles)(UnstyledLyrics)

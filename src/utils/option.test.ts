@@ -9,7 +9,7 @@ test('TruthyOption chain', () => {
 
   const output =
     TruthyOption('#/this/is/a/long/hash/path/with?query=param')
-      .map(_ => _.substr(1))
+      .map(_ => _.substring(1))
       .getOrElse('/admin')
 
   expect(output).toEqual('/this/is/a/long/hash/path/with?query=param')
