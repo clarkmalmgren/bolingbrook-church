@@ -1,8 +1,8 @@
 import React, { PropsWithChildren } from 'react'
 import { Link } from 'react-router-dom'
-import { Theme, CardContent, Card as MuiCard, ButtonBase, CardActionArea } from '@mui/material'
+import { Theme, CardContent, Card as MuiCard, CardActionArea } from '@mui/material'
 import CardHeader from '@mui/material/CardHeader'
-import CardMedia, { CardMediaProps } from '@mui/material/CardMedia'
+import CardMedia from '@mui/material/CardMedia'
 import { createStyles, withStyles, WithStyles } from '@mui/styles'
 import { Asset } from '../services/contentful'
 
