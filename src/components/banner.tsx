@@ -1,13 +1,13 @@
-import { Icon, IconButton, SwipeableDrawer } from '@material-ui/core'
-import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
+import { Icon, IconButton, SwipeableDrawer } from '@mui/material'
+import { createStyles, withStyles, WithStyles } from '@mui/styles'
 import { Entry, EntryFields } from 'contentful'
 import moment from 'moment'
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import { FunctionComponent, useEffect, useState } from 'react'
 import { ContentfulRichText } from '../contentful/rich-text'
 import { client } from '../services/contentful'
 import { Option } from '../utils/option'
-import Box from './box'
-import { useLocation } from 'react-router'
+import { Box } from './box'
+import { useLocation } from 'react-router-dom'
 
 const styles = createStyles({
   root: {

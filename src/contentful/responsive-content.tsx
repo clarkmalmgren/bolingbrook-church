@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react'
-import { makeStyles, createStyles, Theme } from '@material-ui/core'
+import { Theme } from '@mui/material'
+import { createStyles, makeStyles } from '@mui/styles'
 import { Entry, EntryFields } from 'contentful'
 import { ContentfulRichText } from './rich-text'
 

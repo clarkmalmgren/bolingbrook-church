@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
-import { TextField as MuiTextField } from '@material-ui/core'
-import { TextFieldProps as MuiTextFieldProps } from '@material-ui/core/TextField'
+import { TextField as MuiTextField } from '@mui/material'
+import { TextFieldProps as MuiTextFieldProps } from '@mui/material/TextField'
 import { FieldProps, partial } from './props'
 import { styles } from './styles'
 
@@ -26,7 +26,7 @@ const TextField: FunctionComponent<TextFieldProps> =
       autoComplete: props.autoComplete,
       type: props.dataType,
       multiline: props.multiline,
-      rowsMax: props.rowsMax
+      maxRows: props.rowsMax
     }
 
     if (props.dataType === "date" || props.dataType === "time") {

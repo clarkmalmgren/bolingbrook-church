@@ -1,5 +1,5 @@
 import { FunctionComponent, useEffect } from 'react'
-import { useLocation } from 'react-router'
+import { useLocation } from 'react-router-dom'
 
 /* Component that watches for any location updates and then scrolls to the top smoothly */
 export const NavWatcher: FunctionComponent<{}> =

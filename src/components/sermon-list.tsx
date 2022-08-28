@@ -1,6 +1,5 @@
-import { createStyles, Divider, Paper, WithStyles } from '@material-ui/core'
-import { Pagination } from '@material-ui/lab'
-import { withStyles } from '@material-ui/styles'
+import { Divider, Paper, Pagination } from '@mui/material'
+import { createStyles, makeStyles } from '@mui/styles'
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
@@ -8,9 +7,9 @@ import SermonCard from '../components/sermon-card'
 import { Sermon } from '../models/sermon'
 import { sermonSelectors } from '../store/index'
 import { load } from '../store/sermons/actions'
-import Box from './box'
+import { Box } from './box'
 
-const styles = createStyles({
+const useStyles = makeStyles(() => createStyles({
   root: {
     display: 'flex',
     flexFlow: 'row wrap',
@@ -31,9 +30,9 @@ const styles = createStyles({
   divider: {
     flex: '100%'
   }
-})
+}))
 
-interface Props extends WithStyles<typeof styles> {
+type Props = {
   sermons?: Sermon[]
   onLoad?: () => void
   linkRoot?: string
@@ -42,8 +41,9 @@ interface Props extends WithStyles<typeof styles> {
 
 const PAGE_SIZE = 9
 
-const SermonList: FunctionComponent<Props> =
-  ({ sermons, onLoad, linkRoot, classes }) => {
+const DisconnectedSermonList: FunctionComponent<Props> =
+  ({ sermons, onLoad, linkRoot }) => {
+    const classes = useStyles()
     const [page, setPage] = useState(1)
     useEffect(() => { if (onLoad) { onLoad() } }, [onLoad])
 
@@ -83,4 +83,4 @@ function mapDispatchToProps(dispatch: Dispatch): any {
   }
 }
 
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(SermonList))
+export const SermonList = connect(mapStateToProps, mapDispatchToProps)(DisconnectedSermonList)

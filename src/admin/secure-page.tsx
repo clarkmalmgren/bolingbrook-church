@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { authSelectors } from '../store/index'
-import { Redirect } from 'react-router';
+import { Navigate } from 'react-router-dom'
 
 interface SecurePageProps {
   loggedIn: boolean
@@ -12,7 +12,7 @@ interface SecurePageProps {
 const BaseSecurePage: React.FunctionComponent<SecurePageProps> =
   (props) => props.loggedIn ?
     (<div className={props.className}>{props.children}</div>) :
-    (<Redirect to={`/admin/login#${window.location.pathname}`} />)
+    (<Navigate to={`/admin/login#${window.location.pathname}`} />)
 
 const mapStateToProps = (state: any) =>
   ({ loggedIn: authSelectors.loggedIn(state)() })

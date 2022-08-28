@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react'
-import { Fab, Icon } from '@material-ui/core'
-import * as colors from '@material-ui/core/colors'
-import { makeStyles } from '@material-ui/styles'
+import { Fab, Icon } from '@mui/material'
+import * as colors from '@mui/material/colors'
+import { makeStyles } from '@mui/styles'
 import { FieldProps, ProvidedFieldProps } from './props'
 import { merge } from './merge'
 

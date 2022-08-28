@@ -1,5 +1,5 @@
-import { Typography } from '@material-ui/core'
-import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
+import { Typography } from '@mui/material'
+import { createStyles, withStyles, WithStyles } from '@mui/styles'
 import moment from 'moment'
 import * as React from 'react'
 import { connect } from 'react-redux'
@@ -7,7 +7,7 @@ import { Dispatch } from 'redux'
 import { Sermon } from '../models/sermon'
 import { sermonSelectors } from '../store/index'
 import { load } from '../store/sermons/actions'
-import Box from './box'
+import { Box } from './box'
 import YouTube from './youtube'
 
 const styles = createStyles({

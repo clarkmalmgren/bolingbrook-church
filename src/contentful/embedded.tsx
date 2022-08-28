@@ -6,13 +6,14 @@ import { client } from '../services/contentful'
 import { Lyrics, LyricsData } from './lyrics'
 import { IFrame, IFrameData } from './iframe'
 import { ResponsiveContent, ResponsiveContentData } from './responsive-content'
-import { makeStyles, createStyles, Theme } from '@material-ui/core'
+import { Theme } from '@mui/material'
+import { createStyles, makeStyles } from '@mui/styles'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     button: {
-      marginBottom: theme.spacing(1),
-      marginRight: theme.spacing(1)
+      marginBottom: `${theme.spacing(1)} !important`,
+      marginRight: `${theme.spacing(1)} !important`
     }
   }))
 

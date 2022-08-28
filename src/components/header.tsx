@@ -1,6 +1,7 @@
 import { FunctionComponent, useState, MouseEvent } from 'react'
-import { createStyles, makeStyles, Theme, AppBar, Toolbar, IconButton, Icon, useTheme } from '@material-ui/core'
-import { Link, useHistory } from 'react-router-dom'
+import { Theme, AppBar, Toolbar, IconButton, Icon, useTheme } from '@mui/material'
+import { createStyles, makeStyles } from '@mui/styles'
+import { Link, useNavigate } from 'react-router-dom'
 import Button from './button'
 import Nav from './nav'
 import { Logo } from '../assets/images/Logo'
@@ -12,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      padding: '5px 12px',
+      padding: '5px 12px !important',
       backgroundColor: 'white',
       left: '0',
       right: '0',
@@ -51,29 +52,29 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     linkButton: {
-      color: 'black'
+      color: 'black !important'
     }
 
   }))
 
 type Props = {}
 
+
 export const Header: FunctionComponent<Props> =
   () => {
     const classes = useStyles()
     const theme = useTheme()
+    const navigate = useNavigate()
     const [ opened, setOpened ] = useState(false)
     const [ clickCount, setClickCount ] = useState(0)
-    const history = useHistory()
     
     const onHomeClick = (event: MouseEvent) => {
-      const next = clickCount + 1
-      if (next >= 10) {
-        history.push("/admin/login")
+      if (clickCount >= 10) {
         event.preventDefault()
+        navigate('/admin/login')
         setClickCount(0)
       } else {
-        setClickCount(next)
+        setClickCount(clickCount + 1)
       }
     }
 
@@ -93,7 +94,7 @@ export const Header: FunctionComponent<Props> =
 
           <div>
             <Button className={classes.linkButton} variant="contained" color="secondary" link="/giving">Give</Button>
-            <IconButton onClick={() => setOpened(true)}>
+            <IconButton onClick={() => setOpened(true)} sx={{ml: 1}}>
               <Icon>menu</Icon>
             </IconButton>
           </div>

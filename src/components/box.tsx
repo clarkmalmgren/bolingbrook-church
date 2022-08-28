@@ -1,9 +1,9 @@
-import * as React from 'react'
+import { FunctionComponent, PropsWithChildren } from 'react'
 import classNames from 'classnames';
 
-import { createStyles, withStyles } from '@material-ui/styles'
+import { createStyles, makeStyles } from '@mui/styles'
 
-const styles = createStyles({
+const useStyles = makeStyles(() => createStyles({
   section: {
     width: '95%',
     maxWidth: '840px',
@@ -13,32 +13,17 @@ const styles = createStyles({
     width: '95%',
     margin: '20px auto'
   }
-})
+}))
 
-export interface BoxProps {
+export type BoxProps = {
   className?: string
-  classes?: any
-  variant: 'section' | 'wide-section'
+  variant?: 'section' | 'wide-section'
 }
 
-class Box extends React.PureComponent<BoxProps, {}> {
+export const Box: FunctionComponent<PropsWithChildren<BoxProps>> =
+  ({ className, variant, children }) => {
+    const classes = useStyles()
+    const cname = classNames(className, classes[variant || 'section'])
 
-  static defaultProps: BoxProps = {
-    variant: 'section'
+    return (<div className={cname}>{children}</div>)
   }
-
-  private clazz: string = classNames(
-    this.props.className,
-    this.props.classes[this.props.variant]
-  )
-
-  render() {
-    return (
-      <div className={this.clazz}>
-        {this.props.children}
-      </div>
-    )
-  }
-}
-
-export default withStyles(styles)(Box)

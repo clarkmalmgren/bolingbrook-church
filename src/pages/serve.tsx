@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { Redirect } from 'react-router'
-import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
+import { Navigate } from 'react-router-dom'
+import { createStyles, withStyles, WithStyles } from '@mui/styles'
 import { ContentfulSection } from '../contentful/section'
 import { ErrorDialog } from '../components/error'
 import { Form, Checkboxes, CheckboxOption, TextField, Header, Submit } from '../forms'
@@ -41,7 +41,7 @@ class Serve extends React.PureComponent<WithStyles<typeof styles>, ServeState> {
 
   render() {
     return this.state.submitted ?
-      (<Redirect to="/thank-you" />) :
+      (<Navigate to="/thank-you" />) :
       (
         <div>
           <ContentfulHero name="serve" />
@@ -66,6 +66,9 @@ class Serve extends React.PureComponent<WithStyles<typeof styles>, ServeState> {
               <CheckboxOption>Associate Safety Officer (ages 18-21)</CheckboxOption>
               <CheckboxOption>Junior Safety Officer (ages 16-18)</CheckboxOption>
               <CheckboxOption>Usher</CheckboxOption>
+              <CheckboxOption>Connection Sabbath</CheckboxOption>
+              <CheckboxOption>Serve Sabbath</CheckboxOption>
+              <CheckboxOption>Discipletown</CheckboxOption>
             </Checkboxes>
             <TextField id="other">Other</TextField>
   

@@ -1,5 +1,5 @@
-import { Paper } from '@material-ui/core'
-import { createStyles, withStyles, WithStyles } from '@material-ui/styles'
+import { Paper } from '@mui/material'
+import { createStyles, withStyles, WithStyles } from '@mui/styles'
 import React, { PureComponent } from 'react'
 import { merge } from './merge'
 import { ProvidedFieldProps } from './props'

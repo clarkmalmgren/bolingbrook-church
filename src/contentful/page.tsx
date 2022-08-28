@@ -4,9 +4,9 @@ import { Loading } from '../components/loading'
 import { client } from '../services/contentful'
 import { ContentfulHero, HeroData } from './hero'
 import { CardSectionData, ContentfulSection, ContentSectionData } from './section'
-import { Typography } from '@material-ui/core'
-import { useLocation } from 'react-router'
-import Box from '../components/box'
+import { Typography } from '@mui/material'
+import { useLocation } from 'react-router-dom'
+import { Box }from '../components/box'
 
 export interface PageData {
   name: string
@@ -23,11 +23,11 @@ interface ContentfulPageProps {
 export const ContentfulPage: FunctionComponent<ContentfulPageProps> =
   (props) => {
     const [data, setData] = useState(props.data)
-    const [initialized, setInitialized] = useState(false)
+    const [initialized, setInitialized] = useState(!!props.data)
     const locationPath = useLocation().pathname
 
     useEffect(() => {
-      if (!initialized && !data) {
+      if (!initialized || data?.fields?.path !== props.path) {
         client
           .getEntries<PageData>({ content_type: 'page', 'fields.path': (props.path || locationPath ) })
           .then(collection => {
@@ -35,7 +35,7 @@ export const ContentfulPage: FunctionComponent<ContentfulPageProps> =
             setInitialized(true)
           })
       }
-    })
+    }, [ props.path, initialized, data, locationPath ])
 
     if (data) {
       return (

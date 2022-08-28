@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import { FieldProps, partialNoId } from './props'
 import { styles } from './styles'
 

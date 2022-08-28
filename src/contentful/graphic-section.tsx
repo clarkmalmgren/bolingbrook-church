@@ -1,6 +1,7 @@
 import React, { CSSProperties, FunctionComponent } from 'react'
 import { Entry, EntryFields, Asset } from 'contentful'
-import { createStyles, makeStyles, Theme, ButtonBase } from '@material-ui/core'
+import { Theme, ButtonBase } from '@mui/material'
+import { createStyles, makeStyles } from '@mui/styles'
 import { ContentfulRichText } from './rich-text'
 import { Link } from 'react-router-dom'
 import classNames from 'classnames'

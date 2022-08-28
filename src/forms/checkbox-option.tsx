@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import { Checkbox as MuiCheckbox, FormControlLabel } from '@material-ui/core'
+import { Checkbox as MuiCheckbox, FormControlLabel } from '@mui/material'
 import { styles } from './styles'
 import { FieldProps, partialNoId } from './props'
 

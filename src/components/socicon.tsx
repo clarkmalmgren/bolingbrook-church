@@ -1,5 +1,5 @@
 import React from 'react'
-import { createStyles, withStyles, WithStyles } from '@material-ui/styles';
+import { createStyles, withStyles, WithStyles } from '@mui/styles';
 import classNames from 'classnames'
 
 const styles = createStyles({

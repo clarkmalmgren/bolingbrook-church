@@ -1,13 +1,13 @@
-import { Button as MuiButton } from '@material-ui/core';
-import { createStyles, withStyles, WithStyles } from '@material-ui/styles';
-import classNames from 'classnames';
-import React, { FunctionComponent } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Button as MuiButton } from '@mui/material'
+import { createStyles, withStyles, WithStyles } from '@mui/styles'
+import classNames from 'classnames'
+import { FunctionComponent, PropsWithChildren } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
 
 const styles = createStyles({
   root: {
     fontSize: '18px',
-    padding: '4px 22px',
+    padding: '4px 22px !important',
     textDecoration: 'none',
     
     '&.align-left': {
@@ -30,7 +30,7 @@ export interface ButtonProps extends WithStyles<typeof styles> {
   link?: string
 }
 
-const Button: FunctionComponent<ButtonProps> =
+const Button: FunctionComponent<PropsWithChildren<ButtonProps>> =
   (props) => {
     const muiProps: any =
     {
@@ -45,8 +45,10 @@ const Button: FunctionComponent<ButtonProps> =
     
     if (props.link && props.link.match(/^(https|http|tel):/)) {
       muiProps.component = 'a'
+      muiProps.href = props.link
     } else if (props.link) {
       muiProps.component = RouterLink
+      muiProps.to = props.link
     }
 
     const classes =
@@ -59,7 +61,7 @@ const Button: FunctionComponent<ButtonProps> =
       )
 
     return (
-      <MuiButton className={classes} to={props.link} href={props.link} {...muiProps}></MuiButton>
+      <MuiButton className={classes} {...muiProps}></MuiButton>
     )
   }
 

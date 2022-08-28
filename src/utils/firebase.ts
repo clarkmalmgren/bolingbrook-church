@@ -1,6 +1,6 @@
-import firebase from 'firebase/app'
-import 'firebase/auth'
-import 'firebase/analytics'
+import { initializeApp, FirebaseApp } from 'firebase/app'
+import { getAuth } from 'firebase/auth'
+import { getAnalytics, logEvent, Analytics as FirebaseAnalytics } from 'firebase/analytics'
 
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -13,13 +13,13 @@ const config = {
   measurementId: process.env.REACT_APP_MEASUREMENT_ID
 }
 
-const app: firebase.app.App = firebase.initializeApp(config)
-const analytics: firebase.analytics.Analytics = firebase.analytics()
-const auth = firebase.auth
+const app: FirebaseApp = initializeApp(config)
+const analytics: FirebaseAnalytics = getAnalytics(app)
+const auth = getAuth(app)
 
-export type App = firebase.app.App
-export type Analytics = firebase.analytics.Analytics
+export type App = FirebaseApp
+export type Analytics = FirebaseAnalytics
 
-analytics.logEvent('session_start')
+logEvent(analytics, 'session_start')
 
 export { app, analytics, auth }

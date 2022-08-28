@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Redirect } from 'react-router'
+import { Navigate } from 'react-router-dom'
 import { Form, TextField, Header, Checkboxes, CheckboxOption, Submit } from '../forms'
 import { ErrorDialog } from '../components/error'
 
@@ -27,7 +27,7 @@ export default class Connect extends React.PureComponent<{}, ConnectState> {
 
   render() {
     return this.state.submitted ?
-      (<Redirect to="/thank-you" />) :
+      (<Navigate to="/thank-you" />) :
       (
         <div>
           <Form onSubmit={this.submit}>

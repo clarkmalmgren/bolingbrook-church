@@ -1,8 +1,8 @@
-import { Fab, Icon } from '@material-ui/core'
-import { createStyles, makeStyles } from '@material-ui/styles'
+import { Fab, Icon } from '@mui/material'
+import { createStyles, makeStyles } from '@mui/styles'
 import React from 'react'
 import { Link, LinkProps } from 'react-router-dom'
-import SermonList from '../components/sermon-list'
+import { SermonList } from '../components/sermon-list'
 import { ContentfulHero } from '../contentful/hero'
 import { SecurePage } from './secure-page'
 

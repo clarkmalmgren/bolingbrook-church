@@ -1,7 +1,6 @@
 import { SAVE_LOGIN, LOGOUT, SaveLoginAction, AuthActions } from './actions'
 import { Reduxer } from '../reduxer'
-import { GoogleToken } from './token';
-import { Option } from '../../utils/option'
+import { GoogleToken } from './token'
 import { readFromLocalStorage, saveToLocalStorage, deleteFromLocalStorage } from './effects'
 
 export interface State {
@@ -47,9 +46,7 @@ export class AuthReduxer implements Reduxer<State, AuthActions> {
 
     loggedIn: (state: State) => () => state.loggedIn,
 
-    credentials: (state: State) => () => state.credentials,
-
-    accessToken: (state: State) => () => Option(state.credentials).prop("accessToken")
+    credentials: (state: State) => () => state.credentials
 
   }
 }
