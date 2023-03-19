@@ -104,7 +104,7 @@ const usePageWidthStyles = makeStyles((theme: Theme) =>
       minHeight: '30vh',
       marginTop: theme.spacing(2),
 
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         flexFlow: 'column nowrap'
       },
 
@@ -117,7 +117,7 @@ const usePageWidthStyles = makeStyles((theme: Theme) =>
       backgroundSize: 'cover',
       position: 'relative',
 
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         flex: '300px'
       }
     },
@@ -134,7 +134,7 @@ const usePageWidthStyles = makeStyles((theme: Theme) =>
       "&.left": { left: -1, transform: 'scaleX(-1)' },
       "&.right": { right: -1 },
 
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         top: 'initial', width: 'initial',
         left: 0, right: 0,
         height: '30%',

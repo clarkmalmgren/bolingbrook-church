@@ -1,4 +1,4 @@
-import { Link, Typography } from '@mui/material'
+import { Link, Theme, Typography } from '@mui/material'
 import { createStyles, withStyles, WithStyles } from '@mui/styles'
 import classNames from 'classnames'
 import { EntryFields, RichTextContent } from 'contentful'
@@ -9,7 +9,7 @@ import { Unknown } from './unknown'
 
 type MarkType =  'bold' | 'italic' | 'underline' | 'code'
 
-const styles = createStyles({
+const styles = (theme: Theme) => createStyles({
   bold: { fontWeight: 'bold' },
   italic: { fontStyle: 'italic' },
   underline: { textDecoration: 'underline' },
@@ -25,7 +25,12 @@ const styles = createStyles({
 
   hr: {
     border: 'solid black 0.5px'
+  },
+
+  img: {
+    maxWidth: `calc(100% - ${theme.spacing(2)})`
   }
+
 })
 
 interface Props extends WithStyles<typeof styles> {
@@ -42,7 +47,7 @@ function renderNode(node: RichTextContent, classes: Props['classes'], key: strin
     }
   }
 
-  switch (node.nodeType) {
+  switch (node.nodeType as string) {
     case "heading-1":
     case "heading-2":
     case "heading-3":
@@ -87,6 +92,15 @@ function renderNode(node: RichTextContent, classes: Props['classes'], key: strin
 
     case 'embedded-entry-inline':
       return node.data.target?.sys.id ? (<EmbeddedEntry key={key} id={node.data.target.sys.id} />) : null
+
+    case 'embedded-asset-block':
+      const fields = (node.data.target as any)?.fields
+      return <img
+                key={key}
+                src={fields?.file?.url}
+                alt={fields?.title}
+                className={classes.img}
+              />
       
     default:
       return (<Unknown data={node} />)

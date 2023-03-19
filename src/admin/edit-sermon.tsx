@@ -23,6 +23,7 @@ interface EditSermonState {
   data: PartialSermon
   submitted: boolean
   failed: boolean
+  sumbittable: boolean
 }
 
 export class BaseEditSermon extends React.PureComponent<EditSermonProps, EditSermonState> {
@@ -32,11 +33,20 @@ export class BaseEditSermon extends React.PureComponent<EditSermonProps, EditSer
   state = {
     data: this.props.initialData || {},
     submitted: false,
-    failed: false
+    failed: false,
+    sumbittable: false
   }
 
   componentDidMount() {
     this.props.onLoad()
+  }
+
+  changed = (data: any) => {
+    const sumbittable =
+      data.date && data.title && data.services && data.services.length > 0 &&
+        !data.services.find((s: any) => !s.identifier || !s.start || !s.youtube)
+
+    this.setState({ sumbittable })
   }
 
   submit = (data: any) => {
@@ -51,20 +61,20 @@ export class BaseEditSermon extends React.PureComponent<EditSermonProps, EditSer
       (<Navigate to="/admin/sermons" />) :
       (
         <SecurePage>
-          <Form onSubmit={this.submit} initialData={this.props.initialData}>
-            <TextField id="date" dataType="date" disabled={this.props.disableDate}>Date</TextField>
-            <TextField id="title">Title</TextField>
+          <Form onChange={this.changed} onSubmit={this.submit} initialData={this.props.initialData}>
+            <TextField required id="date" dataType="date" disabled={this.props.disableDate}>Date</TextField>
+            <TextField required id="title">Title</TextField>
             <TextField id="series">Series</TextField>
             <TextField id="speaker">Speaker</TextField>
             <TextField id="description" multiline>Description</TextField>
 
             <List id="services" title="Services">
-              <TextField id="identifier">Identifier</TextField>
-              <TextField id="start" dataType="time">Start</TextField>
-              <TextField id="youtube">Youtube ID</TextField>
+              <TextField required id="identifier">Identifier</TextField>
+              <TextField required id="start" dataType="time">Start</TextField>
+              <TextField required id="youtube">Youtube ID</TextField>
             </List>
 
-            <Submit>Submit</Submit>
+            <Submit disabled={!this.state.sumbittable}>Submit</Submit>
           </Form>
 
           <ErrorDialog open={this.state.failed} onClose={() => this.setState({ failed: false })} />

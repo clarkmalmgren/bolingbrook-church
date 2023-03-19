@@ -36,11 +36,8 @@ class Card extends React.PureComponent<PropsWithChildren<CardProps>, {}> {
   onClick = () => this.props.onClick ? this.props.onClick() : ''
 
   renderMedia() {
-    const image =
-      this.props.image || (this.props.media ? this.props.media?.fields?.file?.url + "?w=600" :
-        'https://www.blakleysflooring.com/wp-content/uploads/2016/03/Placeholder-768x768.png')
-    
-    return (<CardMedia className={this.props.classes.media} image={image} height={195} component="img" />)
+    const image = this.props.image || (this.props.media ? this.props.media?.fields?.file?.url + "?w=600" : undefined)
+    return image ? <CardMedia className={this.props.classes.media} image={image} height={195} component="img" /> : null
   }
 
   render() {

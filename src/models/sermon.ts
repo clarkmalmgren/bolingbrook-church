@@ -17,7 +17,11 @@ export interface Sermon {
 }
 
 export function getImageUrl(sermon: Sermon): string {
-  return `https://i.ytimg.com/vi/${sermon.services[0].youtube}/hqdefault.jpg`
+  if (sermon?.services?.[0]) {
+    return `https://i.ytimg.com/vi/${sermon.services[0].youtube}/hqdefault.jpg`
+  } else {
+    return ''
+  }
 }
 
 export function isToday(sermon: Sermon): boolean {

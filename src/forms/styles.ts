@@ -7,7 +7,7 @@ export const styles = makeStyles((theme: Theme) => ({
     margin: '3px 10px !important',
     flex: '1 !important',
 
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       margin: '3px 0',
       flex: '0 0 100%',
       minWidth: 'auto'
