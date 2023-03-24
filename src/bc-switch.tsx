@@ -16,7 +16,7 @@ export const BCSwitch: FunctionComponent<{}> =
             setPages(collection.items.map(e => e.fields.path))
           })
       }
-    })
+    }, [pages])
 
     if (pages.length === 0) {
       return null
@@ -45,12 +45,10 @@ export const BCSwitch: FunctionComponent<{}> =
         <Route path="/admin/sermons/:id"     element={<BCRoutes.EditSermonFromPath />} />
 
         {
-          pages.map(path => (<Route key={path} path={path}  element={<ContentfulPage path={path} />} />))
+          pages.map(path => (<Route key={path} path={path} element={<ContentfulPage path={path} />} />))
         }
 
-        <Route                                     element={<ContentfulPage />} />
-    </Routes>
+        <Route                               element={<ContentfulPage />} />
+      </Routes>
     )
-
-
   }

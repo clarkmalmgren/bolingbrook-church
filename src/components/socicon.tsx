@@ -1,25 +1,23 @@
-import React from 'react'
-import { createStyles, withStyles, WithStyles } from '@mui/styles';
-import classNames from 'classnames'
+import { Box, SxProps, Theme } from '@mui/material'
+import { FunctionComponent } from 'react'
+import { sxes } from '../utils/sxes'
 
-const styles = createStyles({
-  root: {
-    fontFamily: `'Socicon' !important`,
-    speak: 'none',
-    fontStyle: 'normal',
-    fontWeight: 'normal',
-    fontVariant: 'normal',
-    textTransform: 'none',
-    lineHeight: 1,
-    webkitFontSmoothing: 'antialiased',
-    mozOsxFontSmoothing: 'grayscale',
-    margin: '0 8px'
-  }
-})
+const BaseSx: SxProps<Theme> = {
+  fontFamily: `'Socicon' !important`,
+  speak: 'none',
+  fontStyle: 'normal',
+  fontWeight: 'normal',
+  fontVariant: 'normal',
+  textTransform: 'none',
+  lineHeight: 1,
+  webkitFontSmoothing: 'antialiased',
+  mozOsxFontSmoothing: 'grayscale',
+  margin: '0 8px'
+}
 
-export interface SociconProps extends WithStyles<typeof styles> {
+export type SociconProps = {
   name: string
-  className?: string
+  sx?: SxProps<Theme>
 }
 
 function lookup(key: string): number {
@@ -40,17 +38,9 @@ function lookup(key: string): number {
   }
 }
 
-class Socicon extends React.PureComponent<SociconProps, {}> {
-
-  private classes = classNames(this.props.className, this.props.classes.root)
-
-  render() {
-    return (
-      <div className={this.classes}>
-        { String.fromCodePoint(lookup(this.props.name)) }
-      </div>
-    )
-  }
-}
-
-export default withStyles(styles)(Socicon)
+export const Socicon: FunctionComponent<SociconProps> =
+  ({ sx, name }) => (
+    <Box sx={sxes([BaseSx, sx])}>
+      { String.fromCodePoint(lookup(name)) }
+    </Box>
+  )

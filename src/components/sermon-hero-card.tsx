@@ -1,53 +1,19 @@
-import * as React from 'react'
-import { Dispatch } from 'redux'
-import { connect } from 'react-redux'
-import { createStyles, withStyles, WithStyles } from '@mui/styles';
-import { Sermon, getImageUrl, isToday } from '../models/sermon'
-import Card from './card'
-import { load } from '../store/sermons/actions'
-import { sermonSelectors } from '../store/index' 
+import { FunctionComponent } from 'react'
+import { getImageUrl, isToday } from '../models/sermon'
+import { useCurrentSermon } from '../services/sermon'
+import { Card } from './card'
 
-const styles = createStyles({
-  root: {}
-})
+export const SermonHeroCard: FunctionComponent<{}> =
+  () => {
+    const sermon = useCurrentSermon().value
 
-interface SermonHeroCardProps extends WithStyles<typeof styles> {
-  sermon?: Sermon
-  onload: () => void
-}
-
-class SermonHeroCard extends React.PureComponent<SermonHeroCardProps, {}> {
-
-  componentDidMount() {
-    this.props.onload()
-  }
-
-  render() {
-    if (!this.props.sermon) {
-      return (<Card title="" image="" link="#" />)
-    } else {
-      return (
-        <Card title={ isToday(this.props.sermon ) ? "Today's Sermon" : "Latest Sermon" }
-              subtitle={ this.props.sermon.title }
-              image={ getImageUrl(this.props.sermon) }
-              link={ `/sermons/${this.props.sermon.date}` }/>
+    return sermon ?
+      (
+        <Card title={ isToday(sermon ) ? "Today's Sermon" : "Latest Sermon" }
+          subtitle={ sermon.title }
+          image={ getImageUrl(sermon) }
+          link={ `/sermons/${sermon.date}` }/>
+      ) : (
+        <Card title="" image="" link="#" />
       )
-    }
   }
-}
-
-function mapStateToProps(state: any): Pick<SermonHeroCardProps, 'sermon'> {
-  return {
-    sermon: sermonSelectors.current(state)()
-  }
-}
-
-function mapDispatchToProps(dispatch: Dispatch): Pick<SermonHeroCardProps, 'onload'> {
-  return {
-    onload: () => {
-      dispatch(load())
-    }
-  }
-}
-
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(SermonHeroCard))

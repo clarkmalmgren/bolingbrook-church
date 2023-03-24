@@ -1,10 +1,8 @@
-import React, { FunctionComponent } from 'react'
+import { FunctionComponent } from 'react'
 
-interface UnknownProps {
+type UnknownProps = {
   data: any
 }
 
 export const Unknown: FunctionComponent<UnknownProps> =
-  ({data}) => {
-    return (<pre key={data?.sys?.id}>{JSON.stringify(data, undefined, 2)}</pre>)
-  }
+  ({data}) => (<pre key={data?.sys?.id}>{JSON.stringify(data, undefined, 2)}</pre>)

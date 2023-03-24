@@ -1,28 +1,12 @@
 import { Icon, IconButton, SwipeableDrawer } from '@mui/material'
-import { createStyles, withStyles, WithStyles } from '@mui/styles'
 import { Entry, EntryFields } from 'contentful'
 import moment from 'moment'
 import { FunctionComponent, useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { ContentfulRichText } from '../contentful/rich-text'
 import { client } from '../services/contentful'
 import { Option } from '../utils/option'
-import { Box } from './box'
-import { useLocation } from 'react-router-dom'
-
-const styles = createStyles({
-  root: {
-    textAlign: 'center',
-    zIndex: '1600 !important' as any
-  },
-  close: {
-    position: 'absolute',
-    top: '0px',
-    right: '0px'
-  }
-})
-
-interface BannerProps extends WithStyles<typeof styles>{
-}
+import { BCBox } from './box'
 
 interface BannerData {
   name: string
@@ -54,8 +38,8 @@ function getActiveBanner(): Promise<Entry<BannerData> | undefined> {
     }
 }
 
-const UnstyledBanner: FunctionComponent<BannerProps> =
-  ({classes}) => {
+export const Banner: FunctionComponent<{}> =
+  () => {
     const [entry, setEntry] = useState<Entry<BannerData> | undefined>()
     const [open, setOpen] = useState(false)
     const location = useLocation()
@@ -76,13 +60,23 @@ const UnstyledBanner: FunctionComponent<BannerProps> =
     if (!entry) { return null }
 
     return (
-      <SwipeableDrawer className={classes.root} anchor="top" open={open} onClose={() => setOpen(false)} onOpen={() => setOpen(true)} >
-        <IconButton className={classes.close} onClick={() => setOpen(false)}><Icon>close</Icon></IconButton>
-        <Box variant="section" >
+      <SwipeableDrawer
+        sx={{
+          textAlign: 'center',
+          zIndex: '1600 !important'
+        }}
+        anchor="top"
+        open={open}
+        onClose={() => setOpen(false)}
+        onOpen={() => setOpen(true)}
+      >
+        <IconButton sx={{position: 'absolute', top: '0px', right: '0px'}} onClick={() => setOpen(false)}>
+          <Icon>close</Icon>
+        </IconButton>
+        <BCBox variant="section" >
           <ContentfulRichText content={entry.fields.content} />
-        </Box>
+        </BCBox>
       </SwipeableDrawer>
     )
   }
 
-export default withStyles(styles)(UnstyledBanner)

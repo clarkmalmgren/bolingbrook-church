@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react'
 import { useParams } from 'react-router-dom'
 import { SermonList } from '../components/sermon-list'
-import SermonPlayback from '../components/sermon-playback'
+import { SermonPlayback } from '../components/sermon-playback'
 import { Typography } from '@mui/material';
 
 export const Sermon: FunctionComponent<{}> =

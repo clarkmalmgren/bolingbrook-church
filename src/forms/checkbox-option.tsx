@@ -1,7 +1,7 @@
-import React, { FunctionComponent } from 'react'
 import { Checkbox as MuiCheckbox, FormControlLabel } from '@mui/material'
-import { styles } from './styles'
+import { FunctionComponent } from 'react'
 import { FieldProps, partialNoId } from './props'
+import { styles } from './styles'
 
 export interface CheckboxOptionProps extends FieldProps<boolean> {
   children: string

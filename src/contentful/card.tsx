@@ -1,7 +1,7 @@
-import React, { FunctionComponent, useState, useEffect } from 'react'
-import { Entry, Asset, EntryFields } from 'contentful'
-import Card from '../components/card'
-import SermonHeroCard from '../components/sermon-hero-card'
+import { Asset, Entry, EntryFields } from 'contentful'
+import { FunctionComponent, useEffect, useState } from 'react'
+import { Card } from '../components/card'
+import { SermonHeroCard } from '../components/sermon-hero-card'
 import { client } from '../services/contentful'
 import { ContentfulRichText } from './rich-text'
 

@@ -1,21 +1,12 @@
+import { useTheme } from '@mui/material'
 import { Entry } from 'contentful'
-import  { FunctionComponent, useEffect, useState } from 'react'
-import Button, { ButtonProps } from '../components/button'
-import Youtube from '../components/youtube'
+import { FunctionComponent, useEffect, useState } from 'react'
+import { Button, ButtonProps } from '../components/button'
+import { Youtube } from '../components/youtube'
 import { client } from '../services/contentful'
-import { Lyrics, LyricsData } from './lyrics'
 import { IFrame, IFrameData } from './iframe'
+import { Lyrics, LyricsData } from './lyrics'
 import { ResponsiveContent, ResponsiveContentData } from './responsive-content'
-import { Theme } from '@mui/material'
-import { createStyles, makeStyles } from '@mui/styles'
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    button: {
-      marginBottom: `${theme.spacing(1)} !important`,
-      marginRight: `${theme.spacing(1)} !important`
-    }
-  }))
 
 export interface YoutubeData {
   name: string
@@ -42,7 +33,7 @@ type EmbeddableTypes = ButtonData | LyricsData | YoutubeData | IFrameData | Resp
 export const EmbeddedEntry: FunctionComponent<Props> =
   ({ id }) => {
     const [entry, setEntry] = useState(undefined as undefined | Entry<EmbeddableTypes>)
-    const classes = useStyles()
+    const theme = useTheme()
 
     useEffect(() => {
       if (!entry) {
@@ -64,7 +55,7 @@ export const EmbeddedEntry: FunctionComponent<Props> =
           variant: bd.variant,
           color: bd.color,
           align: bd.align,
-          className: classes.button
+          sx: { marginBottom: `${theme.spacing(1)} !important`, marginRight: `${theme.spacing(1)} !important` }
         } as ButtonProps
         return (
           <Button key={entry.sys.id} {...bdProps}>

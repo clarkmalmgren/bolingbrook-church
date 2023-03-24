@@ -1,29 +1,24 @@
 import { FunctionComponent, PropsWithChildren } from 'react'
-import classNames from 'classnames';
+import { Box, SxProps, Theme } from '@mui/material'
+import { sxes } from '../utils/sxes'
 
-import { createStyles, makeStyles } from '@mui/styles'
+const SectionSx: SxProps<Theme> = {
+  width: '95%',
+  maxWidth: '840px',
+  margin: '20px auto'
+}
 
-const useStyles = makeStyles(() => createStyles({
-  section: {
-    width: '95%',
-    maxWidth: '840px',
-    margin: '20px auto'
-  },
-  'wide-section': {
-    width: '95%',
-    margin: '20px auto'
-  }
-}))
+const WideSectionSx: SxProps<Theme> = {
+  width: '95%',
+  margin: '20px auto'
+}
 
 export type BoxProps = {
-  className?: string
+  sx?: SxProps<Theme>
   variant?: 'section' | 'wide-section'
 }
 
-export const Box: FunctionComponent<PropsWithChildren<BoxProps>> =
-  ({ className, variant, children }) => {
-    const classes = useStyles()
-    const cname = classNames(className, classes[variant || 'section'])
-
-    return (<div className={cname}>{children}</div>)
+export const BCBox: FunctionComponent<PropsWithChildren<BoxProps>> =
+  ({ sx, variant, children }) => {
+    return (<Box sx={sxes([variant === 'wide-section' ? WideSectionSx : SectionSx, sx ])}>{children}</Box>)
   }

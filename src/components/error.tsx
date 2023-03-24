@@ -1,50 +1,44 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import React from 'react';
+import { FunctionComponent, useEffect, useRef } from 'react'
 
-interface ErrorDialogProps {
+type ErrorDialogProps = {
   open: boolean
   onClose: () => void
-  duration: number
+  duration?: number
 }
 
-interface ErrorDialogState {
-  timeout: any
-}
+export const ErrorDialog: FunctionComponent<ErrorDialogProps> =
+  ({ open, onClose, duration : propsDuration }) => {
+    const duration = propsDuration || 3000
+    const lastOpenState = useRef(open)
+    const timeout = useRef(undefined as any)
 
-export class ErrorDialog extends React.PureComponent<ErrorDialogProps, ErrorDialogState> {
-
-  static defaultProps: Pick<ErrorDialogProps, 'duration'> = {
-    duration: 3000
-  }
-
-  componentDidUpdate(prevProps: ErrorDialogProps) {
-    if (!prevProps.open && this.props.open) {
-      const timeout = setTimeout(this.close, this.props.duration)
-      this.setState({ timeout })
+    const close = () => {
+      onClose()
+      if (timeout.current) {
+        clearTimeout(timeout.current)
+        timeout.current = undefined
+      }
     }
-  }
 
-  close = () => {
-    this.props.onClose()
-    if (this.state.timeout) {
-      clearTimeout(this.state.timeout)
-      this.setState({ timeout: undefined })
-    }
-  }
+    useEffect(() => {
+      if (!lastOpenState.current && open) {
+        timeout.current = setTimeout(close, duration)
+      }
+      lastOpenState.current = open
+    }, [ open, lastOpenState, timeout ]) // eslint-disable-line
 
-  render() {
     return (
-      <Dialog open={this.props.open} onClose={() => this.props.onClose()}>
+      <Dialog open={open} onClose={close}>
         <DialogTitle>Failed to Submit</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Please try again. Sorry for the inconvenience.
           </DialogContentText>
           <DialogActions>
-            <Button onClick={() => this.props.onClose()}>OK</Button>
+            <Button onClick={close}>OK</Button>
           </DialogActions>
         </DialogContent>
       </Dialog>
     )
   }
-}

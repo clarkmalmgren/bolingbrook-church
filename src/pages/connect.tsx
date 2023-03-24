@@ -1,36 +1,28 @@
-import * as React from 'react'
+import { FunctionComponent, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import { Form, TextField, Header, Checkboxes, CheckboxOption, Submit } from '../forms'
 import { ErrorDialog } from '../components/error'
 
-interface ConnectState {
-  submitted: boolean
-  failed: boolean
-}
+export const Connect: FunctionComponent<{}> =
+  () => {
+    const [ submitted, setSubmitted ] = useState(false)
+    const [ failed, setFailed ] = useState(false)
 
-export default class Connect extends React.PureComponent<{}, ConnectState> {
+    const submit = (data: any) => {
+      fetch(`${process.env.REACT_APP_API_URL}/connect`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      .then(() => setSubmitted(true))
+      .catch(() => setFailed(true))
+    }
 
-  state = {
-    submitted: false,
-    failed: false
-  }
-
-  submit = (data: any) => {
-    fetch(`${process.env.REACT_APP_API_URL}/connect`, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: { 'Content-Type': 'application/json' }
-    })
-    .then(() => this.setState({ submitted: true }))
-    .catch(() => this.setState({ failed: true }))
-  }
-
-  render() {
-    return this.state.submitted ?
+    return submitted ?
       (<Navigate to="/thank-you" />) :
       (
         <div>
-          <Form onSubmit={this.submit}>
+          <Form onSubmit={submit}>
             <Header id="_h1" variant="h1">Get Connected</Header>
             <Header id="_h2" variant="h2">Step 1: Tell us about yourself</Header>
 
@@ -55,8 +47,7 @@ export default class Connect extends React.PureComponent<{}, ConnectState> {
 
           </Form>
           
-          <ErrorDialog open={this.state.failed} onClose={() => this.setState({ failed: false })} />
+          <ErrorDialog open={failed} onClose={() => setFailed(false)} />
         </div>
       )
   }
-}

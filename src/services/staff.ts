@@ -1,6 +1,6 @@
 import { query, Asset } from './contentful'
 
-export interface StaffInfo {
+export type StaffInfo = {
   name: string
   title: string
   email: string
@@ -11,7 +11,7 @@ export interface StaffInfo {
 
 export function list(): Promise<StaffInfo[]> {
   return query<StaffInfo>({content_type: 'staffCard'})
-  .then(staff => {
-    return staff.sort((a, b) => a.order - b.order)
-  })
+    .then(staff => {
+      return staff.sort((a, b) => a.order - b.order)
+    })
 }

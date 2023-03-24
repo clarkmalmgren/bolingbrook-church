@@ -1,7 +1,6 @@
-import React, { CSSProperties, FunctionComponent } from 'react'
+import { CSSProperties, FunctionComponent } from 'react'
 import { Entry, EntryFields, Asset } from 'contentful'
-import { Theme, ButtonBase } from '@mui/material'
-import { createStyles, makeStyles } from '@mui/styles'
+import { Theme, ButtonBase, SxProps, Box } from '@mui/material'
 import { ContentfulRichText } from './rich-text'
 import { Link } from 'react-router-dom'
 import classNames from 'classnames'
@@ -18,39 +17,34 @@ export interface GraphicSectionData {
   imagePosition?: string
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      position: 'relative',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      color: 'white',
-      maxWidth: '800px',
-      margin: '20px auto 0'
-    },
+const BaseStyles: { [name: string]: SxProps<Theme> } = {
+  root: {
+    position: 'relative',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    color: 'white',
+    maxWidth: '800px',
+    margin: '20px auto 0'
+  },
 
-    image: {
-      width: '100%'
-    },
+  fullContent: {
+    position: 'absolute',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    width: '100%',
+  },
 
-    fullContent: {
-      position: 'absolute',
-      top: '50%',
-      transform: 'translateY(-50%)',
-      width: '100%',
-    },
-
-    fullShade: {
-      position: 'absolute',
-      top: 0,
-      bottom: 0,
-      width: '100%'
-    },
-    
-    content: {
-      padding: '40px'
-    }
-  }))
+  fullShade: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    width: '100%'
+  },
+  
+  content: {
+    padding: '40px'
+  }
+}
 
 type Props = {
   entry: Entry<GraphicSectionData>
@@ -58,7 +52,6 @@ type Props = {
 
 export const GraphicSection: FunctionComponent<Props> =
   ({ entry }) => {
-    const classes = useStyles()
     const url = entry.fields.image.fields.file.url + '?w=800'
 
     if (entry.fields.displayStyle === 'Full') {
@@ -69,94 +62,82 @@ export const GraphicSection: FunctionComponent<Props> =
         buttonBaseProps.component = Link
       }
 
-      
       return (
-        <div className={classes.root}>
+        <Box sx={BaseStyles.root}>
           <ButtonBase {...buttonBaseProps} to={entry.fields.link} href={entry.fields.link} >
-            <img className={classes.image} src={url} alt={entry.fields.name} />
-            <div className={classes.fullShade} style={{backgroundColor: `rgba(0,0,0,${entry.fields.shade})`}}></div>
-            <div className={classes.fullContent}>
-              <ContentfulRichText className={classes.content} content={entry.fields.content}/>
-            </div>
+            <img style={{ width: '100%' }} src={url} alt={entry.fields.name} />
+            <Box sx={BaseStyles.fullShade} style={{backgroundColor: `rgba(0,0,0,${entry.fields.shade})`}}></Box>
+            <Box sx={BaseStyles.fullContent}>
+              <ContentfulRichText sx={BaseStyles.content} content={entry.fields.content}/>
+            </Box>
           </ButtonBase>
-        </div>
+        </Box>
       )
     } else if (entry.fields.displayStyle === 'Page Width') {
       return (<PageWidthGraphicsSection url={url} entry={entry} />)
     } else {
       return (
-      <div className={classes.root} style={{backgroundImage: `url(${url})`}}>
+      <Box sx={BaseStyles.root} style={{backgroundImage: `url(${url})`}}>
         <div style={{backgroundColor: `rgba(0,0,0,${entry.fields.shade})`}}>
-          <ContentfulRichText className={classes.content} content={entry.fields.content}/>
+          <ContentfulRichText sx={BaseStyles.content} content={entry.fields.content}/>
         </div>
-      </div>
+      </Box>
       )
     }
   }
 
+function fadeGradient(deg: number, rgb: number): { background: string } {
+  return { background: `linear-gradient(${deg}deg, rgba(${rgb},${rgb},${rgb},0) 0%, rgba(${rgb},${rgb},${rgb},1) 100%)` }
+}
 
-const usePageWidthStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: 'flex',
-      width: '100%',
-      flexFlow: 'row nowrap',
-      minHeight: '30vh',
-      marginTop: theme.spacing(2),
+const PageWidthStyles: { [name: string]: SxProps<Theme> } = {
+  root: {
+    display: 'flex',
+    width: '100%',
+    flexFlow: { xs: 'column nowrap', sm: 'row nowrap' },
+    minHeight: '30vh',
+    mt: 2,
 
-      [theme.breakpoints.down('sm')]: {
-        flexFlow: 'column nowrap'
-      },
+    "&.black": { background: 'black' },
+    overflow: 'hidden'
+  },
 
-      "&.black": { background: 'black' },
-      overflow: 'hidden'
+  image: {
+    flex: { xs: '300px', sm: 6 },
+    backgroundSize: 'cover',
+    position: 'relative'
+  },
+
+  fade: {
+    position: 'absolute',
+    top: { xs: 'initial', sm: 0 },
+    bottom: 0,
+    left: -1,
+    right: { xs: 0, sm: 'initial' },
+    width: { xs: 'initial', sm: '30%' },
+    height: { xs: '30%', sm: 'initial' },
+    alignSelf: 'center',
+
+    "&.black": { xs: fadeGradient(180, 0), sm: fadeGradient(90, 0) },
+    "&.white": { xs: fadeGradient(180, 255), sm: fadeGradient(90, 255) },
+
+    "&.left": { transform: 'scaleX(-1)' },
+    "&.right": {
+      right: -1,
+      left: { xs: 0, sm: 'initial' }
     },
-
-    image: {
-      flex: 6,
-      backgroundSize: 'cover',
-      position: 'relative',
-
-      [theme.breakpoints.down('sm')]: {
-        flex: '300px'
-      }
-    },
-
-    fade: {
-      position: 'absolute',
-      top: 0, bottom: 0,
-      width: '30%',
-      alignSelf: 'center',
-
-      "&.black": { background: 'linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%)' },
-      "&.white": { background: 'linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)' },
-
-      "&.left": { left: -1, transform: 'scaleX(-1)' },
-      "&.right": { right: -1 },
-
-      [theme.breakpoints.down('sm')]: {
-        top: 'initial', width: 'initial',
-        left: 0, right: 0,
-        height: '30%',
-
-        "&.black": { background: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%)' },
-        "&.white": { background: 'linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)' }
-      }
-    },
+  },
+  
+  content: {
+    flex: 4,
+    p: 2,
+    alignSelf: 'center',
     
-    content: {
-      flex: 4,
-      padding: theme.spacing(2),
-      alignSelf: 'center',
-      
-      "&.white": { color: 'black', background: 'white' },
-      "&.black": { color: 'white', background: 'black' },
-      "&.left": {
-        [theme.breakpoints.up('sm')]: { order: -1 }
-      }
-    }
-
-  }))
+    "&.white": { color: 'black', background: 'white' },
+    "&.black": { color: 'white', background: 'black' },
+    "&.left": { order: { xs: 'initial', sm: -1 } }
+  }
+}
 
 type PageWidthProps = {
   entry: Entry<GraphicSectionData>
@@ -165,7 +146,6 @@ type PageWidthProps = {
 
 const PageWidthGraphicsSection: FunctionComponent<PageWidthProps> =
   ({ entry, url }) => {
-    const classes = usePageWidthStyles()
     const bgColor = entry.fields.colorScheme === 'black on white' ? 'white' : 'black'
     const alignment = entry.fields.alignment || 'left'
     const style: CSSProperties = {
@@ -174,11 +154,11 @@ const PageWidthGraphicsSection: FunctionComponent<PageWidthProps> =
     }
 
     return (
-      <div className={classNames(classes.root, bgColor)}>
-        <div className={classes.image} style={style}>
-          <div className={classNames(classes.fade, bgColor, alignment)} />
-        </div>
-        <ContentfulRichText className={classNames(classes.content, bgColor, alignment)} content={entry.fields.content}/>
-      </div>
+      <Box sx={PageWidthStyles.root} className={bgColor}>
+        <Box sx={PageWidthStyles.image} style={style}>
+          <Box sx={PageWidthStyles.fade} className={classNames(bgColor, alignment)} />
+        </Box>
+        <ContentfulRichText sx={PageWidthStyles.content} className={classNames(bgColor, alignment)} content={entry.fields.content}/>
+      </Box>
     )
   }

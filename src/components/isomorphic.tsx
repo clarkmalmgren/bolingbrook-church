@@ -1,44 +1,35 @@
-import React, { PropsWithChildren } from 'react'
-import { makeStyles } from '@mui/styles'
-import classNames from 'classnames'
-import { Box }from './box'
+import { SxProps, Theme } from '@mui/material'
+import { FunctionComponent, PropsWithChildren } from 'react'
+import { sxes } from '../utils/sxes'
+import { BCBox }from './box'
 
 type TLength = string | 0
 
 interface Props {
-  className?: string
+  sx?: SxProps<Theme>
   maxWidth?: TLength
   aspectRatio: number
 }
 
-const styles = makeStyles({
-  outer: (props: Props) => ({
-    maxWidth: props.maxWidth
-  }),
-  inner: (props: Props) => ({
-    width: '100%',
-    paddingTop: `${100/props.aspectRatio}%`,
-    position: 'relative'
-  }),
-  content: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0
+export const Isomorphic: FunctionComponent<PropsWithChildren<Props>> =
+  ({ sx, maxWidth, aspectRatio, children }) => {
+    return (
+      <BCBox sx={sxes([ { maxWidth }, sx ])}>
+        <BCBox sx={{
+          width: '100%',
+          paddingTop: `${100/aspectRatio}%`,
+          position: 'relative'
+        }}>
+          <BCBox sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0
+          }}>
+            {children}
+          </BCBox>
+        </BCBox>
+      </BCBox>
+    )
   }
-})
-
-const Isomorphic: React.FunctionComponent<PropsWithChildren<Props>> = props => {
-  const classes = styles(props)
-  return (
-    <Box className={classNames(classes.outer, props.className)}>
-      <Box className={classes.inner}>
-        <Box className={classes.content}> {props.children} </Box>
-      </Box>
-    </Box>
-  )
-}
-
-export default Isomorphic
-

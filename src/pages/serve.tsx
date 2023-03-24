@@ -1,53 +1,38 @@
-import * as React from 'react'
+import { FunctionComponent, useState } from 'react'
 import { Navigate } from 'react-router-dom'
-import { createStyles, withStyles, WithStyles } from '@mui/styles'
-import { ContentfulSection } from '../contentful/section'
 import { ErrorDialog } from '../components/error'
-import { Form, Checkboxes, CheckboxOption, TextField, Header, Submit } from '../forms'
 import { ContentfulHero } from '../contentful/hero'
+import { ContentfulSection } from '../contentful/section'
+import { Checkboxes, CheckboxOption, Form, Header, Submit, TextField } from '../forms'
 
-const styles = createStyles({
-  header: {
-    color: 'white'
-  }
-})
+export const Serve: FunctionComponent<{}> =
+  () => {
+    const [ submitted, setSubmitted ] = useState(false)
+    const [ failed, setFailed ] = useState(false)
 
-interface ServeState {
-  submitted: boolean
-  failed: boolean
-}
+    const submit = (data: any) => {
+      // If there is an "other" selected, add it to interests
+      if (data.other) {
+        data.interests = [...data.interests, data.other]
+      }
 
-class Serve extends React.PureComponent<WithStyles<typeof styles>, ServeState> {
-
-  state = {
-    submitted: false,
-    failed: false
-  }
-
-  submit = (data: any) => {
-    // If there is an "other" selected, add it to interests
-    if (data.other) {
-      data.interests = [...data.interests, data.other]
+      fetch(`${process.env.REACT_APP_API_URL}/serve`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      .then(() => setSubmitted(true))
+      .catch(() => setFailed(true))
     }
 
-    fetch(`${process.env.REACT_APP_API_URL}/serve`, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: { 'Content-Type': 'application/json' }
-    })
-    .then(() => this.setState({ submitted: true }))
-    .catch(() => this.setState({ failed: true }))
-  }
-
-  render() {
-    return this.state.submitted ?
+    return submitted ?
       (<Navigate to="/thank-you" />) :
       (
         <div>
           <ContentfulHero name="serve" />
           <ContentfulSection type="contentSection" name="Serve" />
 
-          <Form onSubmit={this.submit}>
+          <Form onSubmit={submit}>
             <Header variant="h2">Register Here</Header>
   
             <TextField id="first_name" autoComplete="given-name" required>First Name</TextField>
@@ -75,10 +60,7 @@ class Serve extends React.PureComponent<WithStyles<typeof styles>, ServeState> {
             <Submit>Submit</Submit>
           </Form>
           
-          <ErrorDialog open={this.state.failed} onClose={() => this.setState({ failed: false })} />
+          <ErrorDialog open={failed} onClose={() => setFailed(false)} />
         </div>
       )
   }
-}
-
-export default withStyles(styles)(Serve)

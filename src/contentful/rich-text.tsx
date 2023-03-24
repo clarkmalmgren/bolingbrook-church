@@ -1,47 +1,40 @@
-import { Link, Theme, Typography } from '@mui/material'
-import { createStyles, withStyles, WithStyles } from '@mui/styles'
-import classNames from 'classnames'
+import { Box, Link, SxProps, Theme, Typography } from '@mui/material'
 import { EntryFields, RichTextContent } from 'contentful'
-import { FunctionComponent, forwardRef } from 'react'
+import { forwardRef, FunctionComponent } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
+import { sxes } from '../utils/sxes'
 import { EmbeddedEntry } from './embedded'
 import { Unknown } from './unknown'
 
-type MarkType =  'bold' | 'italic' | 'underline' | 'code'
-
-const styles = (theme: Theme) => createStyles({
+const SxMarks: { [ mark: string ]: SxProps<Theme> } = {
   bold: { fontWeight: 'bold' },
   italic: { fontStyle: 'italic' },
   underline: { textDecoration: 'underline' },
-  code: { fontFamily: 'monospace' },
-
-  list: {
-    paddingInlineStart: '25px',
-
-    '& li:not(:first-child)': {
-      marginTop: '6px'
-    }
-  },
-
-  hr: {
-    border: 'solid black 0.5px'
-  },
-
-  img: {
-    maxWidth: `calc(100% - ${theme.spacing(2)})`
-  }
-
-})
-
-interface Props extends WithStyles<typeof styles> {
-  content?: EntryFields.RichText
-  className?: string
+  code: { fontFamily: 'monospace' }
 }
 
-function renderNode(node: RichTextContent, classes: Props['classes'], key: string, dense?: boolean): JSX.Element | null {
+function marks2Sx(marks?: RichTextContent['marks']): SxProps<Theme> {
+  return sxes((marks || []).map(m => SxMarks[m.type]).filter(c => !!c))
+}
+
+const ListStyle: SxProps<Theme> = {
+  paddingInlineStart: '25px',
+
+  '& li:not(:first-of-type)': {
+    marginTop: '6px'
+  }
+}
+
+type Props = {
+  content?: EntryFields.RichText
+  className?: string
+  sx?: SxProps<Theme>
+}
+
+function renderNode(node: RichTextContent, key: string, dense?: boolean): JSX.Element | null {
   const children = (dense?: boolean) => {
     if (node.content) {
-      return node.content.map((c: any, index: number) => renderNode(c, classes, `${key}.${index}`, dense))
+      return node.content.map((c: any, index: number) => renderNode(c, `${key}.${index}`, dense))
     } else {
       return null
     }
@@ -61,14 +54,13 @@ function renderNode(node: RichTextContent, classes: Props['classes'], key: strin
       return (<Typography key={key} variant={dense ? 'inherit' : 'body2'}>{children()}</Typography>)
 
     case 'text':
-      const textClassList = (node.marks || []).map((m: {type: MarkType}) => classes[m.type])
-      return (<span key={key} className={classNames(textClassList)}>{node.value}</span>)
+      return (<Box component="span" key={key} sx={marks2Sx(node.marks)}>{node.value}</Box>)
 
     case 'unordered-list':
-      return (<ul key={key} className={classes.list}>{children()}</ul>)
+      return (<Box component="ul" key={key} sx={ListStyle}>{children()}</Box>)
 
     case 'ordered-list':
-      return (<ol type="1" key={key} className={classes.list}>{children()}</ol>)
+      return (<Box component="ol" type="1" key={key} sx={ListStyle}>{children()}</Box>)
 
     case 'list-item':
       return (
@@ -77,15 +69,14 @@ function renderNode(node: RichTextContent, classes: Props['classes'], key: strin
       )
 
     case 'hyperlink':
-      const linkClassList = (node.marks || []).map((m: {type: MarkType}) => classes[m.type])
       const linkProps: any = (node.data.uri?.match(/^(https|http|tel|mailto):/)) ?
         { href: node.data.uri } :
         { component: forwardRef((props: any, ref) => { return (<RouterLink to={node.data.uri as string} {...props} ref={ref}/>) }) }
 
-      return (<Link key={key} className={classNames(linkClassList)} {...linkProps}>{children()}</Link>)
+      return (<Link key={key} sx={marks2Sx(node.marks)} {...linkProps}>{children()}</Link>)
 
     case 'hr':
-      return (<hr key={key} className={classes.hr} />)
+      return (<hr key={key} style={{ border: 'solid black 0.5px' }} />)
 
     case 'embedded-entry-block':
       return node.data.target?.sys.id ? (<EmbeddedEntry key={key} id={node.data.target.sys.id} />) : null
@@ -95,11 +86,12 @@ function renderNode(node: RichTextContent, classes: Props['classes'], key: strin
 
     case 'embedded-asset-block':
       const fields = (node.data.target as any)?.fields
-      return <img
+      return <Box
+                component="img"
                 key={key}
                 src={fields?.file?.url}
                 alt={fields?.title}
-                className={classes.img}
+                sx={{ maxWidth: (theme) => `calc(100% - ${theme.spacing(2)})` }}
               />
       
     default:
@@ -107,15 +99,13 @@ function renderNode(node: RichTextContent, classes: Props['classes'], key: strin
   }
 }
 
-const UnstyledContentfulRichText: FunctionComponent<Props> =
-  ({content, classes, className}) => {
+export const ContentfulRichText: FunctionComponent<Props> =
+  ({content, sx, className}) => {
     if (!content) { return null }
 
     return (
-      <div key='0' className={className}>
-        { content.content.map((c, i) => renderNode(c, classes, `0.${i}`)) }
-      </div>
+      <Box key='0' className={className} sx={sx} >
+        { content.content.map((c, i) => renderNode(c, `0.${i}`)) }
+      </Box>
     )
   }
-
-export const ContentfulRichText = withStyles(styles)(UnstyledContentfulRichText)

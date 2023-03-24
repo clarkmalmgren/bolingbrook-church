@@ -1,51 +1,19 @@
-import { Divider, Paper, Pagination } from '@mui/material'
-import { createStyles, makeStyles } from '@mui/styles'
-import React, { FunctionComponent, useEffect, useState } from 'react'
-import { connect } from 'react-redux'
-import { Dispatch } from 'redux'
-import SermonCard from '../components/sermon-card'
-import { Sermon } from '../models/sermon'
-import { sermonSelectors } from '../store/index'
-import { load } from '../store/sermons/actions'
-import { Box } from './box'
-
-const useStyles = makeStyles(() => createStyles({
-  root: {
-    display: 'flex',
-    flexFlow: 'row wrap',
-    justifyContent: 'center'
-  },
-
-  pagination: {
-    flex: '0 auto',
-    margin: '10px',
-    alignSelf: 'center'
-  },
-
-  spacer: {
-    flex: '1 1',
-    minWidth: '1px'
-  },
-
-  divider: {
-    flex: '100%'
-  }
-}))
+import { Box, Divider, Pagination, Paper } from '@mui/material'
+import { FunctionComponent, useState } from 'react'
+import { SermonCard } from '../components/sermon-card'
+import { useSermons } from '../services/sermon'
+import { BCBox } from './box'
 
 type Props = {
-  sermons?: Sermon[]
-  onLoad?: () => void
   linkRoot?: string
-  all?: boolean
 }
 
 const PAGE_SIZE = 9
 
-const DisconnectedSermonList: FunctionComponent<Props> =
-  ({ sermons, onLoad, linkRoot }) => {
-    const classes = useStyles()
+export const SermonList: FunctionComponent<Props> =
+  ({ linkRoot }) => {
+    const sermons = useSermons().value || []
     const [page, setPage] = useState(1)
-    useEffect(() => { if (onLoad) { onLoad() } }, [onLoad])
 
     const pageCount = sermons ? Math.ceil(sermons.length / PAGE_SIZE) : 0
     const start = (page - 1) * PAGE_SIZE
@@ -56,31 +24,29 @@ const DisconnectedSermonList: FunctionComponent<Props> =
     }
 
     return (
-      <Box variant="wide-section">
-        <Paper className={classes.root}>
+      <BCBox variant="wide-section">
+        <Paper
+          sx={{
+            display: 'flex',
+            flexFlow: 'row wrap',
+            justifyContent: 'center'
+          }}
+        >
           { visibleSermons.map(s => (<SermonCard sermon={s} key={s.date} linkRoot={linkRoot || '/sermons'}/>)) }
 
-          <Divider className={classes.divider} />
-          <div className={classes.spacer} />
-          <Pagination className={classes.pagination} count={pageCount} page={page} onChange={selectPage} />
+          <Divider sx={{ flex: '100%' }} />
+          <Box sx={{ flex: '1 1', minWidth: '1px' }} />
+          <Pagination
+            sx={{
+              flex: '0 auto',
+              margin: '10px',
+              alignSelf: 'center'
+            }}
+            count={pageCount}
+            page={page}
+            onChange={selectPage}
+          />
         </Paper>
-      </Box>
+      </BCBox>
     )
   }
-
-const mapStateToProps = (state: any, ownState: Props) => {
-  const selector = ownState.all ? sermonSelectors.all : sermonSelectors.published
-  return {
-    sermons: selector(state)()
-  }
-}
-
-function mapDispatchToProps(dispatch: Dispatch): any {
-  return {
-    onLoad: () => {
-      dispatch(load())
-    }
-  }
-}
-
-export const SermonList = connect(mapStateToProps, mapDispatchToProps)(DisconnectedSermonList)
