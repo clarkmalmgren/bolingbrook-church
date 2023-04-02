@@ -3,7 +3,6 @@ import { Entry, EntryFields, Asset } from 'contentful'
 import { Theme, ButtonBase, SxProps, Box } from '@mui/material'
 import { ContentfulRichText } from './rich-text'
 import { Link } from 'react-router-dom'
-import classNames from 'classnames'
 
 export interface GraphicSectionData {
   name: string
@@ -152,13 +151,14 @@ const PageWidthGraphicsSection: FunctionComponent<PageWidthProps> =
       backgroundImage: `url(${url})`,
       backgroundPosition: entry.fields.imagePosition || 'center'
     }
+    const className = `${bgColor} ${alignment}`
 
     return (
       <Box sx={PageWidthStyles.root} className={bgColor}>
         <Box sx={PageWidthStyles.image} style={style}>
-          <Box sx={PageWidthStyles.fade} className={classNames(bgColor, alignment)} />
+          <Box sx={PageWidthStyles.fade} className={className} />
         </Box>
-        <ContentfulRichText sx={PageWidthStyles.content} className={classNames(bgColor, alignment)} content={entry.fields.content}/>
+        <ContentfulRichText sx={PageWidthStyles.content} className={className} content={entry.fields.content}/>
       </Box>
     )
   }
