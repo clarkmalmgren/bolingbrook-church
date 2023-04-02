@@ -41,6 +41,10 @@ export function useSaveSermon(): (data: Sermon) => Promise<any> {
       }
     }
 
-    return fetch(`${process.env.REACT_APP_API_URL}/sermons`, init)
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/sermons`, init)
+
+    if (!response.ok) {
+      throw new Error(`Failed to save sermon, got a failed response from the server`)
+    }
   }
 }

@@ -1,7 +1,6 @@
 import moment from 'moment'
-import { FunctionComponent, useState } from 'react'
-import { Navigate, useParams } from 'react-router-dom'
-import { ErrorDialog } from '../components/error'
+import { FunctionComponent } from 'react'
+import { useParams } from 'react-router-dom'
 import { Form, List, Submit, TextField } from '../forms'
 import { PartialSermon } from '../models/sermon'
 import { useSaveSermon, useSermon } from '../services/sermon'
@@ -12,52 +11,29 @@ type BaseEditSermonProps = {
   initialData?: PartialSermon
 }
 
-function isValid(data: PartialSermon): boolean {
-  return !!data.date &&
-    !!data.title &&
-    !!data.services &&
-    data.services.length > 0 &&
-    !data.services.find((s: any) => !s.identifier || !s.start || !s.youtube)
-}
-
 export const BaseEditSermon: FunctionComponent<BaseEditSermonProps> =
   ({ disableDate, initialData }) => {
-    const [ submitted, setSubmitted ] = useState(false)
-    const [ failed, setFailed ] = useState(false)
-    const [ sumbittable, setSumbittable ] = useState(isValid(initialData || {}))
     const save = useSaveSermon()
 
-    const changed = (data: any) => { setSumbittable(isValid(data as PartialSermon)) }
+    return (
+      <SecurePage>
+        <Form onSubmit={save} defaultValues={initialData}>
+          <TextField required name="date" type="date" disabled={disableDate} label="Date" />
+          <TextField required name="title" label="Title" />
+          <TextField name="series" label="Series" />
+          <TextField name="speaker" label="Speaker" />
+          <TextField name="description" multiline label="Description" />
 
-    const submit = (data: any) => {
-      save(data)
-        .then(() => setSubmitted(true))
-        .catch(() => setFailed(true))
-    }
+          <List name="services" title="Services" >
+            <TextField required name="identifier" label="Identifier" />
+            <TextField required name="start" type="time" label="Start" />
+            <TextField required name="youtube" label="YoutubeID" />
+          </List>
 
-    return submitted ?
-      (<Navigate to="/admin/sermons" />) :
-      (
-        <SecurePage>
-          <Form onChange={changed} onSubmit={submit} initialData={initialData}>
-            <TextField required id="date" dataType="date" disabled={disableDate}>Date</TextField>
-            <TextField required id="title">Title</TextField>
-            <TextField id="series">Series</TextField>
-            <TextField id="speaker">Speaker</TextField>
-            <TextField id="description" multiline>Description</TextField>
-
-            <List id="services" title="Services">
-              <TextField required id="identifier">Identifier</TextField>
-              <TextField required id="start" dataType="time">Start</TextField>
-              <TextField required id="youtube">Youtube ID</TextField>
-            </List>
-
-            <Submit disabled={!sumbittable}>Submit</Submit>
-          </Form>
-
-          <ErrorDialog open={failed} onClose={() => setFailed(false)} />
-        </SecurePage>
-      ) 
+          <Submit>Submit</Submit>
+        </Form>
+      </SecurePage>
+    ) 
   }
 
 export const EditSermon: FunctionComponent<{ id: string }> =

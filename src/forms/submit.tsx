@@ -1,21 +1,23 @@
-import React, { FunctionComponent } from 'react'
-import { Button } from '@mui/material'
-import { FieldProps, partialNoId } from './props'
-import { styles } from './styles'
+import { FunctionComponent, PropsWithChildren } from 'react'
+import { Button, ButtonProps } from '@mui/material'
+import { FullWidthSx } from './styles'
+import { UseFormReturn } from 'react-hook-form'
 
-interface SubmitProps extends FieldProps<void> {
-  disabled?: boolean
-  children: JSX.Element | JSX.Element[] | string
-}
+type SubmitProps = ButtonProps & { methods?: UseFormReturn }
 
-const Submit: FunctionComponent<SubmitProps> =
-  (props) => (
-    <Button
-      disabled={props.disabled}
-      key={props.id}
-      className={styles(props).full}
-      variant="contained"
-      onClick={() => props.onSubmit()}>{props.children}</Button>
-  )
+export const Submit: FunctionComponent<PropsWithChildren<SubmitProps>> =
+  ({children, methods, ...props}) => {
+    if (!methods) { throw new Error("Only use Submit as a direct child of Form") }
 
-export default partialNoId(Submit)
+    return (
+      <Button
+        sx={FullWidthSx}
+        variant="contained"
+        type="submit"
+        disabled={!methods.formState.isValid}
+        {...props}
+      >
+        { children }
+      </Button>
+    )
+  }

@@ -1,82 +1,82 @@
-import { Paper } from '@mui/material'
-import { createStyles, withStyles, WithStyles } from '@mui/styles'
-import React, { PureComponent } from 'react'
-import { merge } from './merge'
-import { ProvidedFieldProps } from './props'
+import { Brush } from '@mui/icons-material'
+import { Badge, Paper } from '@mui/material'
+import { cloneElement, isValidElement, PropsWithChildren, ReactElement, ReactNode, useRef, useState } from 'react'
+import { DeepPartial, FieldValues, RegisterOptions, useForm, UseFormReturn } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+import { ErrorDialog } from '../components/error'
 
-const styles = createStyles({
-  root: {
-    display: 'flex',
-    flexFlow: 'row wrap',
-    maxWidth: '800px',
-    padding: '22px',
-    margin: '15px auto'
-  }
-})
-
-interface FormProps<T> extends WithStyles<typeof styles> {
-  initialData?: T
-  onChange?: (data: T) => any | void
-  onSubmit?: (data: T) => any | void
-  children: JSX.Element[]
+export type FormProps<T extends FieldValues> = {
+  onSubmit: (data: T) => (Promise<any> | any | void)
+  defaultValues?: DeepPartial<T>
+  children?: ReactElement[]
+  navOnSubmitted?: string
+  showRenderCount?: boolean
 }
 
-interface FormState<T> {
-  value: T
+export function renderChild<T extends FieldValues>(methods: UseFormReturn<T>, child: ReactNode, index: number) {
+  if (isValidElement(child)) {
+    const key = child.key || child.props.key || child.props.id || child.props.name || index
+    const propsWithMethods = { methods, key, ...child.props }
+    return cloneElement(child, propsWithMethods)
+  }
 }
 
-class Form<T> extends PureComponent<FormProps<T>, FormState<T>> {
+export function Form<T extends FieldValues>(props: PropsWithChildren<FormProps<T>>): JSX.Element {
+  const { onSubmit, children, defaultValues, navOnSubmitted, showRenderCount } = props
+  const methods = useForm<T>({ defaultValues: defaultValues as any })
+  const navigate = useNavigate()
+  const [ failed, setFailed ] = useState(false)
+  const renderCount = useRef(0)
 
-  state = {
-    value: this.props.initialData || {} as T
-  }
-  
-  // If the initial data populates for the first time, update state now
-  componentDidUpdate(prevProps: FormProps<T>) {
-    if (!prevProps.initialData && this.props.initialData) {
-      this.setState({ value: this.props.initialData } )
-    }
-  }
-  
-  // Common update logic
-  update<K extends keyof T>(id: K, data: T[K]): void {
-    const updated = merge(this.state.value, { [id]: data })
+  renderCount.current = renderCount.current + 1
 
-    this.setState({ value: updated })
-    if (this.props.onChange) {
-      this.props.onChange(updated)
-    }
-  }
+  const doNav = () => navOnSubmitted && navigate(navOnSubmitted)
 
-  submit() {
-    if (this.props.onSubmit) {
-      this.props.onSubmit(this.state.value)
-    }
-  }
-
-  renderChild(child: JSX.Element, index: number): JSX.Element | JSX.Element[] | undefined {
-    if (React.isValidElement(child)) {
-      const id: keyof T = (child.props as any).id
-      const providedProps: ProvidedFieldProps<any> & { key: string } = {
-        key: id as string || `__forms__.${index}`,
-        value: this.state.value[id],
-        onChange: (data) => this.update(id, data),
-        onSubmit: () => this.submit()
+  const trySubmit = (data: T) => {
+    try {
+      const response = onSubmit(data)
+      if (typeof response.then === 'function') {
+        response.then(
+          () => doNav(),
+          () => setFailed(true)
+        )
+      } else {
+        doNav()
       }
-
-      return React.cloneElement(child, providedProps)
+    } catch {
+      setFailed(true)
     }
   }
 
-  formComponent = (props: any) => (<form {...props}/>)
-
-  render() {
-    return (
-      <Paper className={this.props.classes.root} component={this.formComponent}>
-        { this.props.children.map((child, index) => this.renderChild(child, index)) }
+  return (
+    <>
+      <Paper
+        onSubmit={methods.handleSubmit(trySubmit)}
+        sx={{
+          position: 'relative',
+          display: 'flex',
+          flexFlow: 'row wrap',
+          maxWidth: '800px',
+          padding: '22px',
+          margin: '15px auto'
+        }}
+        component="form"
+      >
+        { showRenderCount &&
+          <Badge
+            sx={{position: 'absolute', right: 16, top: 16 }}
+            color="secondary"
+            badgeContent={renderCount.current} max={99}
+          >
+            <Brush />
+          </Badge>
+        }
+        { children?.map((c, i) => renderChild(methods, c, i)) }
       </Paper>
-    )
-  }
+
+      <ErrorDialog open={failed} onClose={() => setFailed(false)} />
+    </>
+  )
 }
 
-export default withStyles(styles)(Form)
+export type FormElement<T> = T & { name: string, methods?: UseFormReturn, options?: RegisterOptions }
