@@ -1,6 +1,6 @@
 {
   "name": "bolingbrook-church",
-  "version": "2.4.2",
+  "version": "2.5.0",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.9.3",
