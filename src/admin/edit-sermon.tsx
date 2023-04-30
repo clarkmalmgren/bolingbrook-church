@@ -1,123 +1,66 @@
-import React, { FunctionComponent } from 'react'
 import moment from 'moment'
-import { Dispatch } from 'redux'
-import { connect } from 'react-redux'
-import { Navigate, useParams } from 'react-router-dom'
-import { SecurePage } from './secure-page'
-import { Form, TextField, List, Submit } from '../forms'
-import { sermonSelectors } from '../store/index'
-import { load, refresh } from '../store/sermons/actions'
+import { FunctionComponent } from 'react'
+import { useParams } from 'react-router-dom'
+import { Form, List, Submit, TextField } from '../forms'
 import { PartialSermon } from '../models/sermon'
-import { save } from '../services/sermon'
-import { ErrorDialog } from '../components/error'
+import { useSaveSermon, useSermon } from '../services/sermon'
+import { SecurePage } from './secure-page'
 
-interface EditSermonProps {
-  disableDate: boolean
-  onLoad: () => void
-  refresh: () => void
-  id?: string
+type BaseEditSermonProps = {
+  disableDate?: boolean
   initialData?: PartialSermon
 }
 
-interface EditSermonState {
-  data: PartialSermon
-  submitted: boolean
-  failed: boolean
-  sumbittable: boolean
-}
+export const BaseEditSermon: FunctionComponent<BaseEditSermonProps> =
+  ({ disableDate, initialData }) => {
+    const save = useSaveSermon()
 
-export class BaseEditSermon extends React.PureComponent<EditSermonProps, EditSermonState> {
+    return (
+      <SecurePage>
+        <Form onSubmit={save} defaultValues={initialData}>
+          <TextField required name="date" type="date" disabled={disableDate} label="Date" />
+          <TextField required name="title" label="Title" />
+          <TextField name="series" label="Series" />
+          <TextField name="speaker" label="Speaker" />
+          <TextField name="description" multiline label="Description" />
 
-  static defaultProps: Partial<EditSermonProps> = { disableDate: true }
+          <List name="services" title="Services" >
+            <TextField required name="identifier" label="Identifier" />
+            <TextField required name="start" type="time" label="Start" />
+            <TextField required name="youtube" label="YoutubeID" />
+          </List>
 
-  state = {
-    data: this.props.initialData || {},
-    submitted: false,
-    failed: false,
-    sumbittable: false
+          <Submit>Submit</Submit>
+        </Form>
+      </SecurePage>
+    ) 
   }
 
-  componentDidMount() {
-    this.props.onLoad()
+export const EditSermon: FunctionComponent<{ id: string }> =
+  ({ id }) => {
+    const initialData = useSermon(id).value
+    return initialData ? <BaseEditSermon initialData={initialData} disableDate /> : null
   }
-
-  changed = (data: any) => {
-    const sumbittable =
-      data.date && data.title && data.services && data.services.length > 0 &&
-        !data.services.find((s: any) => !s.identifier || !s.start || !s.youtube)
-
-    this.setState({ sumbittable })
-  }
-
-  submit = (data: any) => {
-    save(data)
-      .then(() => this.props.refresh())
-      .then(() => this.setState({ submitted: true }))
-      .catch(() => this.setState({ failed: true }))
-  }
-
-  render() {
-    return this.state.submitted ?
-      (<Navigate to="/admin/sermons" />) :
-      (
-        <SecurePage>
-          <Form onChange={this.changed} onSubmit={this.submit} initialData={this.props.initialData}>
-            <TextField required id="date" dataType="date" disabled={this.props.disableDate}>Date</TextField>
-            <TextField required id="title">Title</TextField>
-            <TextField id="series">Series</TextField>
-            <TextField id="speaker">Speaker</TextField>
-            <TextField id="description" multiline>Description</TextField>
-
-            <List id="services" title="Services">
-              <TextField required id="identifier">Identifier</TextField>
-              <TextField required id="start" dataType="time">Start</TextField>
-              <TextField required id="youtube">Youtube ID</TextField>
-            </List>
-
-            <Submit disabled={!this.state.sumbittable}>Submit</Submit>
-          </Form>
-
-          <ErrorDialog open={this.state.failed} onClose={() => this.setState({ failed: false })} />
-        </SecurePage>
-      ) 
-  }
-}
-
-const mapStateToProps = (state: any, ownProps: EditSermonProps) => {
-  const data = sermonSelectors.date(state)(ownProps.id || '')
-  return ({ initialData: data })
-}
-
-const mapDispatchToProps = (dispatch: Dispatch) =>
-  ({
-    onLoad: () => dispatch(load()),
-    refresh: () => dispatch(refresh())
-  })
-
-export const EditSermon = connect(mapStateToProps, mapDispatchToProps)(BaseEditSermon)
 
 export const EditSermonFromPath: FunctionComponent<{}> =
   () => {
     const { id }  = useParams()
-    return (<EditSermon id={id} disableDate onLoad={() => {}} refresh={() => {}} />)
+    return id ? <EditSermon id={id} /> : null
   }
 
-const mapStateToPropsForNew = (state: any) => (
-  {
-    initialData: {
-      date: moment().startOf('week').add(6, 'd').format('YYYY-MM-DD'),
-      services: [
-        {
-          identifier: "Morning",
-          start: "10:30:00"
-        },
-        {
-          identifier: "Afternoon",
-          start: "12:30:00"
-        },
-      ]
+const NewInitialData: PartialSermon = {
+  date: moment().startOf('week').add(6, 'd').format('YYYY-MM-DD'),
+  services: [
+    {
+      identifier: "Morning",
+      start: "10:30:00"
     },
-    disableDate: false
-  })
+    {
+      identifier: "Afternoon",
+      start: "12:30:00"
+    },
+  ]
+}
 
-export const NewSermon = connect(mapStateToPropsForNew, mapDispatchToProps)(BaseEditSermon)
+export const NewSermon: FunctionComponent<{}> =
+  () => (<BaseEditSermon initialData={NewInitialData} />)

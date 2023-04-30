@@ -1,41 +1,46 @@
-import React, { Fragment, FunctionComponent } from 'react'
-import { FieldProps, ProvidedFieldProps, partial } from './props'
-import { CheckboxOptionProps } from './checkbox-option'
+import { Checkbox as MuiCheckbox, FormControlLabel } from '@mui/material'
+import { FunctionComponent, ReactElement, useState } from 'react'
+import { FormElement } from './form'
+import { DefaultSx } from './styles'
 
-interface CheckboxesProps extends FieldProps<string[]> {
-  children: JSX.Element[]
-}
+export type CheckboxesOption = string | { id: string, label: string }
 
-const Checkboxes: FunctionComponent<CheckboxesProps> =
-  (props) => {
-    const update = (id: string, checked: boolean) => {
-      const original = (props.value || []).filter(s => s !== id)
+export type CheckboxesProps = FormElement<{
+  name: string
+  values: CheckboxesOption[]
+}>
 
-      if (checked) {
-        props.onChange([id, ...original])
-      } else {
-        props.onChange(original)
+export const Checkboxes: FunctionComponent<CheckboxesProps> =
+  ({ name, methods, values }) => {
+    const [ selected, setSelected ] = useState<string[]>([])
+    if (!methods) { throw new Error("Only use Checkboxes as a direct child of Form or List") }
+
+    const childOnChange = (id: string, checked: boolean) => {
+      const rest = selected.filter(i => i !== id)
+      const updated = checked ? [ id, ...rest ] : rest
+      if (selected.length !== updated.length) {
+        setSelected(updated)
+        methods.setValue(name, updated)
       }
     }
 
-    const renderChild = (child: JSX.Element) => {
-      if (React.isValidElement(child)) {
-        const childProps = child.props as CheckboxOptionProps
-        const id: string = childProps.children
-        const providedProps: ProvidedFieldProps<boolean> & { key: string } = {
-          key: id,
-          value: (props.value || []).includes(id),
-          onChange: (checked) => update(id, checked),
-          onSubmit: () => props.onSubmit()
-        }
+    const renderChild = (child: CheckboxesOption) => {
+      const [ id, label ] = typeof child === 'string' ? [ child, child ] : [ child.id, child.label ]
+      const checked = selected.includes(id)
 
-        return React.cloneElement(child, providedProps)
-      }
+      return (
+        <FormControlLabel
+          sx={DefaultSx}
+          key={id}
+          control={<MuiCheckbox value={id} checked={checked} onChange={(event) => childOnChange(id, event.target.checked)} />}
+          label={label}
+        />
+      )
     }
 
     return (
-      <Fragment>{props.children.map(child => renderChild(child))}</Fragment>
+      <>{values.map(child => renderChild(child))}</>
     )
   }
 
-export default partial(Checkboxes)
+export type CheckboxesElementType = ReactElement<CheckboxesProps, typeof Checkboxes>

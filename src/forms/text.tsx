@@ -1,45 +1,31 @@
-import React, { FunctionComponent } from 'react';
 import { TextField as MuiTextField } from '@mui/material'
 import { TextFieldProps as MuiTextFieldProps } from '@mui/material/TextField'
-import { FieldProps, partial } from './props'
-import { styles } from './styles'
+import { FunctionComponent, ReactElement } from 'react'
+import { FormElement } from './form'
+import { DefaultSx } from './styles'
 
-interface TextFieldProps extends FieldProps<string> {
-  disabled?: boolean
-  autoComplete?: string
-  required?: boolean
-  dataType?: string
-  multiline?: boolean
-  rowsMax?: number
-  children: string
-}
+type TextFieldProps = FormElement<MuiTextFieldProps>
 
-const TextField: FunctionComponent<TextFieldProps> =
-  (props) => {
-    const muiProps: MuiTextFieldProps = {
-      id: props.id,
-      label: props.children,
-      className: styles(props).default,
-      value: props.value || '',
-      disabled: props.disabled,
-      required: props.required,
-      autoComplete: props.autoComplete,
-      type: props.dataType,
-      multiline: props.multiline,
-      maxRows: props.rowsMax
-    }
+export const TextField: FunctionComponent<TextFieldProps> =
+  ({ name, methods, options, ...props }) => {
+    if (!methods) { throw new Error("Only use TextField as a direct child of Form or List") }
 
-    if (props.dataType === "date" || props.dataType === "time") {
-      muiProps.InputLabelProps = { shrink: true }
+    const opts = props.required ? { ...options, required: true } : options
+    const registration = methods.register(name, opts)
+
+    if (['date', 'time'].includes(props.type || '')) {
+      props.InputLabelProps = { ...props.InputLabelProps, shrink: true }
     }
 
     return (
       <MuiTextField
-        key={props.id}
-        onChange={(event) => { props.onChange(event.target.value) }}
-        {...muiProps}
+        sx={DefaultSx}
+        name={name}
+        {...props}
+        inputProps={{...registration}}
       />
     )
+
   }
 
-export default partial(TextField)
+export type TextFieldElementType = ReactElement<TextFieldProps, typeof TextField>

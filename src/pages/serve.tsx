@@ -1,84 +1,50 @@
-import * as React from 'react'
-import { Navigate } from 'react-router-dom'
-import { createStyles, withStyles, WithStyles } from '@mui/styles'
-import { ContentfulSection } from '../contentful/section'
-import { ErrorDialog } from '../components/error'
-import { Form, Checkboxes, CheckboxOption, TextField, Header, Submit } from '../forms'
+import { FunctionComponent } from 'react'
 import { ContentfulHero } from '../contentful/hero'
+import { ContentfulSection } from '../contentful/section'
+import { Checkboxes, Form, Header, Submit, TextField } from '../forms'
+import { ServeRequest, submitServe } from '../services/signup'
 
-const styles = createStyles({
-  header: {
-    color: 'white'
-  }
-})
+type FormServeRequest = ServeRequest & { other?: string }
 
-interface ServeState {
-  submitted: boolean
-  failed: boolean
-}
+export const Serve: FunctionComponent<{}> =
+  () => {
 
-class Serve extends React.PureComponent<WithStyles<typeof styles>, ServeState> {
+    const submit = async (data: FormServeRequest) => {
+      // If there is an "other" selected, add it to interests
+      const { other, ...req } = data
+      if (other) {
+        req.interests = [...(req.interests || []), other]
+      }
 
-  state = {
-    submitted: false,
-    failed: false
-  }
-
-  submit = (data: any) => {
-    // If there is an "other" selected, add it to interests
-    if (data.other) {
-      data.interests = [...data.interests, data.other]
+      await submitServe(req)
     }
 
-    fetch(`${process.env.REACT_APP_API_URL}/serve`, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: { 'Content-Type': 'application/json' }
-    })
-    .then(() => this.setState({ submitted: true }))
-    .catch(() => this.setState({ failed: true }))
+    return (
+      <>
+        <ContentfulHero name="serve" />
+        <ContentfulSection type="contentSection" name="Serve" />
+
+        <Form onSubmit={submit}>
+          <Header variant="h2">Register Here</Header>
+
+          <TextField name="first_name" autoComplete="given-name" required label="First Name" />
+          <TextField name="last_name" autoComplete="family-name" required label="Last Name" />
+          <TextField name="phone" autoComplete="tel-national" required label="Phone Number" />
+          <TextField name="email" autoComplete="email" label="Email" />
+
+          <Header variant="h2">Choose a Team</Header>
+
+          <Checkboxes
+            name="interests"
+            values={[
+              'Greeter', 'Media', 'Prayer Team', 'Sabbath Cafe', 'Safety Officer (ages 21+)',
+              'Associate Safety Officer (ages 18-21)', 'Junior Safety Officer (ages 16-18)',
+              'Usher', 'Connection Sabbath', 'Serve Sabbath', 'Discipletown'
+          ]} />
+          <TextField name="other" label="Other" />
+
+          <Submit>Submit</Submit>
+        </Form>
+      </>
+    )
   }
-
-  render() {
-    return this.state.submitted ?
-      (<Navigate to="/thank-you" />) :
-      (
-        <div>
-          <ContentfulHero name="serve" />
-          <ContentfulSection type="contentSection" name="Serve" />
-
-          <Form onSubmit={this.submit}>
-            <Header variant="h2">Register Here</Header>
-  
-            <TextField id="first_name" autoComplete="given-name" required>First Name</TextField>
-            <TextField id="last_name" autoComplete="family-name" required>Last Name</TextField>
-            <TextField id="phone" autoComplete="tel-national" required>Phone Number</TextField>
-            <TextField id="email" autoComplete="email">Email</TextField>
-  
-            <Header variant="h2">Choose a Team</Header>
-  
-            <Checkboxes id="interests">
-              <CheckboxOption>Greeter</CheckboxOption>
-              <CheckboxOption>Media</CheckboxOption>
-              <CheckboxOption>Prayer Team</CheckboxOption>
-              <CheckboxOption>Sabbath Cafe</CheckboxOption>
-              <CheckboxOption>Safety Officer (ages 21+)</CheckboxOption>
-              <CheckboxOption>Associate Safety Officer (ages 18-21)</CheckboxOption>
-              <CheckboxOption>Junior Safety Officer (ages 16-18)</CheckboxOption>
-              <CheckboxOption>Usher</CheckboxOption>
-              <CheckboxOption>Connection Sabbath</CheckboxOption>
-              <CheckboxOption>Serve Sabbath</CheckboxOption>
-              <CheckboxOption>Discipletown</CheckboxOption>
-            </Checkboxes>
-            <TextField id="other">Other</TextField>
-  
-            <Submit>Submit</Submit>
-          </Form>
-          
-          <ErrorDialog open={this.state.failed} onClose={() => this.setState({ failed: false })} />
-        </div>
-      )
-  }
-}
-
-export default withStyles(styles)(Serve)

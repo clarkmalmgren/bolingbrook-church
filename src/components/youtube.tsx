@@ -1,30 +1,25 @@
-import { createStyles, withStyles, WithStyles } from '@mui/styles'
-import React, { FunctionComponent } from 'react'
-import Isomorphic from './isomorphic'
+import { FunctionComponent } from 'react'
+import { Isomorphic } from './isomorphic'
 
-const styles = createStyles({
-  frame: {
-    width: '100%',
-    height: '100%'
-  }
-})
-
-interface Props extends WithStyles<typeof styles> {
+type Props = {
   id: string
   aspectRatio?: number
   className?: string
 }
 
-const UnstyledYoutube: FunctionComponent<Props> =
+export const Youtube: FunctionComponent<Props> =
   (props) => {
     const aspectRatio = props.aspectRatio || (4 / 3)
     const url = `https://www.youtube.com/embed/${props.id}?enablejsapi=1`
 
     return (
       <Isomorphic aspectRatio={aspectRatio} maxWidth='800px'>
-        <iframe title="Youtube Video" className={props.classes.frame} src={url} frameBorder="0" allowFullScreen={true} />
+        <iframe
+          title="Youtube Video"
+          style={{ width: '100%', height: '100%' }}
+          src={url}
+          frameBorder="0"
+          allowFullScreen={true} />
       </Isomorphic>
     )
   }
-
-export default withStyles(styles)(UnstyledYoutube)

@@ -1,26 +1,9 @@
-import React, { PropsWithChildren } from 'react'
+import { Card as MuiCard, CardActionArea, CardContent, CardHeader, CardMedia } from '@mui/material'
+import { FunctionComponent, PropsWithChildren } from 'react'
 import { Link } from 'react-router-dom'
-import { Theme, CardContent, Card as MuiCard, CardActionArea } from '@mui/material'
-import CardHeader from '@mui/material/CardHeader'
-import CardMedia from '@mui/material/CardMedia'
-import { createStyles, withStyles, WithStyles } from '@mui/styles'
 import { Asset } from '../services/contentful'
 
-const styles = (theme: Theme) => createStyles({
-  root: {
-    maxWidth: '350px',
-    margin: '12px',
-    flex: '100%',
-    textDecoration: 'none'
-  },
-
-  media: {
-    height: '195px'
-  },
-
-})
-
-interface CardProps extends WithStyles<typeof styles> {
+type CardProps = {
   title: string
   subtitle?: string
   
@@ -31,33 +14,28 @@ interface CardProps extends WithStyles<typeof styles> {
   onClick?: () => void
 }
 
-class Card extends React.PureComponent<PropsWithChildren<CardProps>, {}> {
+export const Card: FunctionComponent<PropsWithChildren<CardProps>> =
+  ({ title, subtitle, image, media, link, onClick, children }) => {
 
-  onClick = () => this.props.onClick ? this.props.onClick() : ''
+    function renderMedia() {
+      const img = image || (media ? media.fields?.file?.url + "?w=600" : undefined)
+      return img ? <CardMedia sx={{ height: '195px' }} image={img} height={195} component="img" /> : null
+    }
 
-  renderMedia() {
-    const image = this.props.image || (this.props.media ? this.props.media?.fields?.file?.url + "?w=600" : undefined)
-    return image ? <CardMedia className={this.props.classes.media} image={image} height={195} component="img" /> : null
-  }
-
-  render() {
     const buttonBaseProps: any = { }
-    if ((this.props.link && this.props.link.match(/^(https|http|tel|mailto):/)) || this.props.onClick) {
+    if ((link && link.match(/^(https|http|tel|mailto):/)) || onClick) {
       buttonBaseProps.component = 'a'
-    } else if (this.props.link) {
+    } else if (link) {
       buttonBaseProps.component = Link
     }
 
     return (
-      <MuiCard className={this.props.classes.root}>
-        <CardActionArea {...buttonBaseProps} to={this.props.link} href={this.props.link} onClick={this.onClick}>
-          { this.renderMedia() }
-          <CardHeader title={this.props.title} subheader={ this.props.subtitle }></CardHeader>
-          <CardContent>{this.props.children}</CardContent>
+      <MuiCard sx={{ maxWidth: '350px', margin: '12px', flex: '100%', textDecoration: 'none' }}>
+        <CardActionArea {...buttonBaseProps} to={link} href={link} onClick={() => onClick && onClick()}>
+          { renderMedia() }
+          <CardHeader title={title} subheader={ subtitle }></CardHeader>
+          <CardContent>{children}</CardContent>
         </CardActionArea>
       </MuiCard>
     )
   }
-}
-
-export default withStyles(styles)(Card)

@@ -1,12 +1,12 @@
 import moment from 'moment'
 
-export interface Service {
+export type Service = {
   identifier: string
   start: string
   youtube: string
 }
 
-export interface Sermon {
+export type Sermon = {
   date: string
   series: string
   title: string

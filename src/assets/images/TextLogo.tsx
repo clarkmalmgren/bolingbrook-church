@@ -2,14 +2,19 @@ import { FunctionComponent } from 'react'
 
 type Props = {
   color?: string
-  className?: string
+  marginLeft?: number
+  height?: number
 }
 
 export const TextLogo: FunctionComponent<Props> =
-  ({ color, className }) => {
+  ({ color, marginLeft, height }) => {
+    const style = {
+      marginLeft: `${marginLeft || 12}px`,
+      height: `${height || 25}px`
+    }
     
     return (
-      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 465 97" preserveAspectRatio="xMidYMid meet" className={className}>
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 465 97" preserveAspectRatio="xMidYMid meet" style={style}>
         <g fill={color || "#ffffff"} fillRule="evenodd">
           <path d="M209.2 91.5 C192.5 85 195.9 58.9 213.8 57.2 C221.9 56.4 230.2 60.4 228 63.9 C227.2 65.2 226.5 65 223.1 63.2 C217.3 59.9 211.9 60.2 207.5 64 C201.7 69.1 200.9 76.7 205.4 83.6 C209.1 89.1 218.1 90.4 223.9 86.2 C226.6 84.1 229 84.3 229 86.5 C229 88.5 222.5 91.9 217.5 92.5 C214.7 92.8 211.5 92.4 209.2 91.5 "/>
           <path d="M288.6 92.1 C280.3 89 279 86 279 70 C279 58.6 279.1 58 281 58 C282.8 58 283 58.6 283 69.5 C283 82.2 284 85.7 288.4 87.8 C292.8 89.8 296.6 89.2 300.2 86 L303.5 83.1 303.8 70.5 C304.1 58.7 304.3 58 306.2 58 C308.1 58 308.2 58.5 307.8 70.8 C307.4 84.6 306.5 87.4 301.4 90.4 C298.3 92.4 291.6 93.2 288.6 92.1 "/>

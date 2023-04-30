@@ -1,20 +1,20 @@
 import React, { FunctionComponent, useState, useEffect } from 'react'
 import { Entry, EntryFields } from 'contentful'
-import { Box }from '../components/box'
+import { BCBox }from '../components/box'
 import { CardList } from '../components/card-list'
 import { CardData, LatestSermonCardData, ContentfulCard } from './card'
 import { ContentfulRichText } from './rich-text'
 import { Loading } from '../components/loading'
-import { client } from '../services/contentful'
+import { useContentfulClient } from '../services/contentful'
 import { GraphicSectionData, GraphicSection } from './graphic-section'
 import { IFrame, IFrameData } from './iframe'
 
-export interface CardSectionData {
+export type CardSectionData = {
   name: string
   cards: Entry<CardData | LatestSermonCardData>[]
 }
 
-export interface ContentSectionData {
+export type ContentSectionData = {
   name: string
   content: EntryFields.RichText
   alignment?: 'left' | 'center' | 'right'
@@ -47,13 +47,15 @@ type Props = {
 export const ContentfulSection: FunctionComponent<Props> =
   ({ entry: initialEntry, name, type }) => {
     const [entry, setEntry] = useState(initialEntry)
+    const client = useContentfulClient()
+    
     useEffect(() => {
       if (type && name && !entry) {
         client
           .getEntries<SectionData>({ content_type: type, 'fields.name': name })
           .then(c => setEntry(c.items[0]))
       }
-    }, [name, type, entry])
+    }, [name, type, entry, client])
 
     if (entry && isCards(entry)) {
       return (
@@ -64,11 +66,11 @@ export const ContentfulSection: FunctionComponent<Props> =
     } else if (entry && isContent(entry)) {
       const alignment = entry.fields.alignment || 'left'
       return (
-        <Box variant="section">
+        <BCBox variant="section">
           <div style={{ textAlign: alignment }}>
           <ContentfulRichText content={entry.fields.content} />
           </div>
-        </Box>
+        </BCBox>
       )
     } else if (entry && isGraphic(entry)) {
       return (<GraphicSection entry={entry} />)

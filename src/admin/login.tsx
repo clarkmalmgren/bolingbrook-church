@@ -1,52 +1,23 @@
 import { FunctionComponent } from 'react'
-import { Dispatch } from 'redux'
-import { connect } from 'react-redux'
-import { createStyles, makeStyles } from '@mui/styles'
-import { Card, Typography, CardContent, CardActions, CardMedia } from '@mui/material'
-import { GoogleToken } from '../store/auth/token'
-import { save } from '../store/auth/actions'
-import { authSelectors } from '../store/index'
+import { Button, Card, Typography, CardContent, CardActions, CardMedia } from '@mui/material'
 import { Navigate, useLocation } from 'react-router-dom'
 import { TruthyOption } from '../utils/option'
-import { GoogleLogin } from '../components/google-login'
+import { useIsLoggedIn, useAuthActions } from '../services/auth'
 
-
-const useStyles = makeStyles(() => createStyles({
-  card: {
-    margin: '12px auto',
-    maxWidth: '300px',
-  },
-
-  image: {
-    height: '100px'
-  },
-
-  login: {
-    margin: '0 auto 10px',
-    backgroundColor: 'white'
-  }
-}))
-
-type LoginProps = {
-  loggedIn: boolean
-  onSuccess: (token: GoogleToken) => void
-}
-
-const Login: FunctionComponent<LoginProps> =
-  ({loggedIn, onSuccess}) => {
-    const classes = useStyles()
+export const Login: FunctionComponent<{}> =
+  () => {
+    const loggedIn = useIsLoggedIn()
+    const { login } = useAuthActions()
     const hash = useLocation().hash
-
+    
     const redirectTo: string = TruthyOption(hash).map(_ => _.substring(1)).getOrElse("/admin")
-
-    const onFailure = (e: Error) => console.error(e)
 
     if (loggedIn) {
       return ( <Navigate to={redirectTo} /> )
     } else {
       return (
-        <Card className={classes.card}>
-          <CardMedia className={classes.image} image="https://www.blakleysflooring.com/wp-content/uploads/2016/03/Placeholder-768x768.png" />
+        <Card sx={{ m: '12px auto', maxWidth: '300px' }}>
+          <CardMedia sx={{ height: '100px' }} image="https://www.blakleysflooring.com/wp-content/uploads/2016/03/Placeholder-768x768.png" />
           <CardContent>
             <Typography variant="h2">Login</Typography>
             <Typography>
@@ -55,16 +26,20 @@ const Login: FunctionComponent<LoginProps> =
             </Typography>
           </CardContent>
           <CardActions >
-            <GoogleLogin className={classes.login} onSuccess={(token) => onSuccess(token)} onFailure={onFailure} />
+            <Button onClick={login} variant="contained" sx={{ margin: '0 auto 10px', backgroundColor: 'white' }}>
+              <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" style={{ marginRight: '5px' }}>
+                <g fill="#000" fillRule="evenodd">
+                  <path d="M9 3.48c1.69 0 2.83.73 3.48 1.34l2.54-2.48C13.46.89 11.43 0 9 0 5.48 0 2.44 2.02.96 4.96l2.91 2.26C4.6 5.05 6.62 3.48 9 3.48z" fill="#EA4335"></path>
+                  <path d="M17.64 9.2c0-.74-.06-1.28-.19-1.84H9v3.34h4.96c-.1.83-.64 2.08-1.84 2.92l2.84 2.2c1.7-1.57 2.68-3.88 2.68-6.62z" fill="#4285F4"></path>
+                  <path d="M3.88 10.78A5.54 5.54 0 0 1 3.58 9c0-.62.11-1.22.29-1.78L.96 4.96A9.008 9.008 0 0 0 0 9c0 1.45.35 2.82.96 4.04l2.92-2.26z" fill="#FBBC05"></path>
+                  <path d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.84-2.2c-.76.53-1.78.9-3.12.9-2.38 0-4.4-1.57-5.12-3.74L.97 13.04C2.45 15.98 5.48 18 9 18z" fill="#34A853"></path>
+                  <path fill="none" d="M0 0h18v18H0z"></path>
+                </g>
+              </svg>
+              Sign in with Google
+            </Button>
           </CardActions>
         </Card>
       )
     }
   }
-
-const mapStateToProps = (state: any) => ({ loggedIn: authSelectors.loggedIn(state)() })
-
-const mapDispatchToProps = (dispatch: Dispatch) =>
-  ({ onSuccess: (token: GoogleToken) => dispatch(save(token)) })
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login)

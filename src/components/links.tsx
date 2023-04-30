@@ -1,49 +1,38 @@
-import React, { PropsWithChildren } from 'react'
-import { createStyles, withStyles, WithStyles } from '@mui/styles'
+import { FunctionComponent, PropsWithChildren } from 'react'
 import { Icon } from '@mui/material'
-import Button from './button'
-import Socicon from './socicon'
+import { Button } from './button'
+import { Socicon } from './socicon'
 
-
-const styles = createStyles({
-  root: {
-    margin: '3px 0 !important',
-    color: 'black !important',
-    '& .icon': {
-      marginRight: '8px'
-    }
-  }
-})
-
-interface LinkProps extends WithStyles<typeof styles> {
+type LinkProps = {
   link: string
   icon: string
   socicon?: boolean
 }
 
-class BaseLink extends React.PureComponent<PropsWithChildren<LinkProps>, {}> {
-  
-  renderIcon() {
-    return this.props.socicon ?
-      (<Socicon className="icon" name={this.props.icon}/>) :
-      (<Icon className="icon">{this.props.icon}</Icon>)
-  }
+export const Link: FunctionComponent<PropsWithChildren<LinkProps>> =
+  ({ link, icon, socicon, children }) => {
+    function renderIcon() {
+      return socicon ?
+        (<Socicon sx={{ marginRight: '8px' }} name={icon}/>) :
+        (<Icon sx={{ marginRight: '8px' }}>{icon}</Icon>)
+    }
 
-  render() {
     return (
-      <Button className={this.props.classes.root}
-              fullWidth={true}
-              variant="text"
-              align="left"
-              link={this.props.link}>
-        { this.renderIcon() }
-        { this.props.children }
+      <Button
+        fullWidth={true}
+        variant="text"
+        align="left"
+        link={link}
+        sx={{
+          margin: '3px 0 !important',
+          color: 'black !important'
+        }}
+      >
+        { renderIcon() }
+        { children }
       </Button>
     )
   }
-}
-
-export const Link = withStyles(styles)(BaseLink)
 
 // Internal Links
 export const Home         = () => (<Link link="/" icon="home">Home</Link>)

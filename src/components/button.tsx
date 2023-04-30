@@ -1,36 +1,22 @@
-import { Button as MuiButton } from '@mui/material'
-import { createStyles, withStyles, WithStyles } from '@mui/styles'
-import classNames from 'classnames'
+import { Button as MuiButton, SxProps, Theme } from '@mui/material'
 import { FunctionComponent, PropsWithChildren } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
+import { sxes } from '../utils/sxes'
 
-const styles = createStyles({
-  root: {
-    fontSize: '18px',
-    padding: '4px 22px !important',
-    textDecoration: 'none',
-    
-    '&.align-left': {
-      textAlign: 'left',
-      justifyContent: 'left'
-    }
-  }
-})
-
-export interface ButtonProps extends WithStyles<typeof styles> {
+export type ButtonProps = {
   disabled?: boolean
   fullWidth?: boolean
   size?: 'small' | 'medium' | 'large'
   type?: string
   variant?: 'text' | 'flat' | 'outlined' | 'contained' | 'raised' | 'fab' | 'extendedFab'
-  className?: string
+  sx?: SxProps<Theme>
   color?: 'inherit' | 'primary' | 'secondary' | 'default'
   
   align?: 'left' | 'center' | 'right'
   link?: string
 }
 
-const Button: FunctionComponent<PropsWithChildren<ButtonProps>> =
+export const Button: FunctionComponent<PropsWithChildren<ButtonProps>> =
   (props) => {
     const muiProps: any =
     {
@@ -51,18 +37,13 @@ const Button: FunctionComponent<PropsWithChildren<ButtonProps>> =
       muiProps.to = props.link
     }
 
-    const classes =
-      classNames(
-        props.classes.root,
-        {
-          [`align-${props.align}`]: props.align,
-          [`${props.className}`]: props.className,
-        }
-      )
+    const sx = sxes([
+      { fontSize: '18px', padding: '4px 22px !important', textDecoration: 'none' },
+      props.align === 'left' && { textAlign: 'left', justifyContent: 'left' },
+      props.sx
+    ])
 
     return (
-      <MuiButton className={classes} {...muiProps}></MuiButton>
+      <MuiButton sx={sx} {...muiProps}></MuiButton>
     )
   }
-
-export default withStyles(styles)(Button)

@@ -1,38 +1,6 @@
-import { Theme } from '@mui/material'
-import { createStyles, makeStyles } from '@mui/styles'
-import { CSSProperties, FunctionComponent, useEffect, useRef, useState, PropsWithChildren } from 'react'
+import { Box, useTheme } from '@mui/material'
+import { FunctionComponent, PropsWithChildren, useEffect, useRef, useState } from 'react'
 import { Asset } from '../services/contentful'
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      position: 'relative',
-      overflow: 'hidden',
-      display: 'flex',
-      alignItems: 'center',
-      padding: `${theme.spacing(4)} 0`
-    },
-
-    video: {
-      width: '100%',
-      height: '100%',
-      objectFit: 'cover',
-      objectPosition: 'middle center'
-    },
-
-    background: {
-      position: 'absolute',
-      top: 0, bottom: 0, right: 0, left: 0,
-      backgroundSize: 'cover',
-      zIndex: -100
-    },
-
-    shade: {
-      position: 'absolute',
-      top: 0, bottom: 0, right: 0, left: 0,
-      zIndex: -90
-    }
-  }))
 
 export type HeroMedia = {
   name: string
@@ -50,9 +18,9 @@ export type HeroProps = {
 
 export const Hero: FunctionComponent<PropsWithChildren<HeroProps>> =
   ({ media, height, shade, justify, shadeColor, children, imagePosition }) => {
-    const classes = useStyles()
     const [ heightInPx, setHeightInPx ]  = useState((window.innerHeight - 60) * height)
     const ref = useRef<HTMLDivElement>(null)
+    const theme = useTheme()
 
     const updateHeight = () => {
       const top = ref.current?.offsetTop || 60
@@ -70,17 +38,25 @@ export const Hero: FunctionComponent<PropsWithChildren<HeroProps>> =
       const file = media.media[0].fields.file
       if (file.contentType.startsWith("video")) {
         return (
-          <video autoPlay muted loop className={classes.video}>
+          <video autoPlay muted loop
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'middle center'}}>
             <source src={file.url} type={file.contentType} />
           </video>
         )
       } else {
-        const style: CSSProperties = {
-          backgroundImage: `url(${file.url + "?w=" + window.screen.width})`,
-          backgroundPosition: imagePosition || 'center',
-        }
         return (
-          <div className={classes.background} style={style} />
+          <Box sx={{
+            position: 'absolute',
+            top: 0, bottom: 0, right: 0, left: 0,
+            backgroundSize: 'cover',
+            zIndex: -100,
+            backgroundImage: `url(${file.url + "?w=" + window.screen.width})`,
+            backgroundPosition: imagePosition || 'center'
+          }} />
         )
       }
     }
@@ -89,21 +65,31 @@ export const Hero: FunctionComponent<PropsWithChildren<HeroProps>> =
       if (!shade) {
         return null
       } else {
-        const style: CSSProperties = { backgroundColor: shadeColor || 'black', opacity: shade }
-        return (<div className={classes.shade} style={style}/>)
+        return (
+          <Box sx={{
+            position: 'absolute',
+            top: 0, bottom: 0, right: 0, left: 0,
+            zIndex: -90,
+            backgroundColor: shadeColor || 'black',
+            opacity: shade
+          }}/>
+        )
       }
     }
 
-    const style: CSSProperties = {
-      minHeight: heightInPx + 'px',
-      justifyContent: justify || 'center'
-    }
-
     return (
-      <div ref={ref} className={classes.root} style={style}>
+      <Box ref={ref} sx={{
+        position: 'relative',
+        overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'center',
+        padding: `${theme.spacing(4)} 0`,
+        minHeight: heightInPx + 'px',
+        justifyContent: justify || 'center'
+      }}>
         {background()}
         {renderShade()}
         {children}
-      </div>
+      </Box>
     )
   }

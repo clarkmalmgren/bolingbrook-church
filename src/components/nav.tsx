@@ -1,34 +1,20 @@
 import { FunctionComponent } from 'react'
-import { Dispatch } from 'redux'
-import { connect } from 'react-redux'
-import { Theme, Drawer, Divider, Button, IconButton, Icon } from '@mui/material'
-import { createStyles, makeStyles } from '@mui/styles'
+import { Drawer, Divider, Button, IconButton, Icon, Box, useTheme } from '@mui/material'
 import * as Links from './links'
-import { authSelectors } from '../store/index'
-import { logout as logoutAction } from '../store/auth/actions'
 import { DynamicLinks } from '../contentful/dynamic-links'
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    space: {
-      height: '74px',
-      display: 'flex',
-      justifyContent: 'flex-end',
-      alignItems: 'center',
-      marginRight: theme.spacing(1)
-    },
-  }))
+import { useAuthActions, useIsLoggedIn } from '../services/auth'
 
 type NavProps = {
-  loggedIn: boolean
   opened?: boolean
   onToggle?: (active: boolean) => void
-  logout: () => void
 }
 
-const Nav: FunctionComponent<NavProps> =
-  ({ loggedIn, opened, onToggle, logout }) => {
-    const classes = useStyles()
+export const Nav: FunctionComponent<NavProps> =
+  ({ opened, onToggle }) => {
+    const { logout } = useAuthActions()
+    const loggedIn = useIsLoggedIn()
+    const theme = useTheme()
+
     function close() {
       if (onToggle) { onToggle(false) }
     }
@@ -45,11 +31,17 @@ const Nav: FunctionComponent<NavProps> =
 
     return (
       <Drawer anchor="right" open={opened} onClose={() => close()} onClick={() => close()}>
-        <div className={classes.space}>
+        <Box sx={{
+          height: '74px',
+          display: 'flex',
+          justifyContent: 'flex-end',
+          alignItems: 'center',
+          marginRight: theme.spacing(1)
+        }}>
           <IconButton onClick={() => close()}>
             <Icon>close</Icon>
           </IconButton>
-        </div>
+        </Box>
         
         <Divider />
 
@@ -75,8 +67,3 @@ const Nav: FunctionComponent<NavProps> =
       </Drawer>
     )
   }
-
-const mapStateToProps = (state: any) => ({ loggedIn: authSelectors.loggedIn(state)() })
-const mapDispatchToProps = (dispatch: Dispatch) => ({ logout: () => dispatch(logoutAction) })
-
-export default connect(mapStateToProps, mapDispatchToProps)(Nav)
