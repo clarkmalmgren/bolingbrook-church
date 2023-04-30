@@ -5,7 +5,7 @@ import { CardList } from '../components/card-list'
 import { CardData, LatestSermonCardData, ContentfulCard } from './card'
 import { ContentfulRichText } from './rich-text'
 import { Loading } from '../components/loading'
-import { client } from '../services/contentful'
+import { useContentfulClient } from '../services/contentful'
 import { GraphicSectionData, GraphicSection } from './graphic-section'
 import { IFrame, IFrameData } from './iframe'
 
@@ -47,13 +47,15 @@ type Props = {
 export const ContentfulSection: FunctionComponent<Props> =
   ({ entry: initialEntry, name, type }) => {
     const [entry, setEntry] = useState(initialEntry)
+    const client = useContentfulClient()
+    
     useEffect(() => {
       if (type && name && !entry) {
         client
           .getEntries<SectionData>({ content_type: type, 'fields.name': name })
           .then(c => setEntry(c.items[0]))
       }
-    }, [name, type, entry])
+    }, [name, type, entry, client])
 
     if (entry && isCards(entry)) {
       return (

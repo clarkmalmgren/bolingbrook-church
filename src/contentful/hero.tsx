@@ -2,7 +2,7 @@ import { SxProps, Theme } from '@mui/material'
 import { Asset, Entry, EntryFields } from 'contentful'
 import { FunctionComponent, useEffect, useState } from 'react'
 import { Hero, HeroMedia } from '../components/hero'
-import { client } from '../services/contentful'
+import { useContentfulClient } from '../services/contentful'
 import { ContentfulRichText } from './rich-text'
 import { Loading } from '../components/loading'
 import { sxes } from '../utils/sxes'
@@ -46,6 +46,8 @@ type ContentfulHeroProps = {
 export const ContentfulHero: FunctionComponent<ContentfulHeroProps> =
   ({ entry, name }) => {
     const [data, setData] = useState(entry?.fields)
+    const client = useContentfulClient()
+    
     useEffect(() => {
       if (!data && name) {
         client

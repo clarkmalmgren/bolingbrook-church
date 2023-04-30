@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useState, Fragment } from 'react'
 import { Link } from '../components/links'
-import { query } from '../services/contentful'
+import { useContentfulClient, runQuery } from '../services/contentful'
 
 type DisplayType = 'Side Bar' | 'About' | 'Get Involved' | 'Connect' | 'Listen'
 
@@ -20,9 +20,11 @@ export const DynamicLinks: FunctionComponent<Props> =
   ({display}) => {
     // Data control to download and then filter the links that are applicable to this location
     const [links, setLinks] = useState(undefined as LinkData[] | undefined)
+    const client = useContentfulClient()
+
     useEffect(() => {
       if (!links) {
-        query<LinkData>({content_type: 'link'})
+        runQuery<LinkData>(client, {content_type: 'link'})
           .then(result => {
             const applicable = result.filter(l => l.display.includes(display))
             setLinks(applicable)

@@ -2,7 +2,7 @@ import { Asset, Entry, EntryFields } from 'contentful'
 import { FunctionComponent, useEffect, useState } from 'react'
 import { Card } from '../components/card'
 import { SermonHeroCard } from '../components/sermon-hero-card'
-import { client } from '../services/contentful'
+import { useContentfulClient } from '../services/contentful'
 import { ContentfulRichText } from './rich-text'
 
 export interface CardData {
@@ -28,13 +28,15 @@ interface Props {
 export const ContentfulCard: FunctionComponent<Props> =
   ({entry}) => {
     const [data, setData] = useState(entry.fields)
+    const client = useContentfulClient()
+    
     useEffect(() => {
       if (!data) {
         client
           .getEntry<CardData | LatestSermonCardData>(entry.sys.id)
           .then(d => setData(d.fields))
       }
-    }, [entry, data])
+    }, [entry, data, client])
 
     if (!data) {
       return (<Card key={entry.sys.id} title="" />)

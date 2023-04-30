@@ -3,7 +3,7 @@ import { Entry } from 'contentful'
 import { FunctionComponent, useEffect, useState } from 'react'
 import { Button, ButtonProps } from '../components/button'
 import { Youtube } from '../components/youtube'
-import { client } from '../services/contentful'
+import { useContentfulClient } from '../services/contentful'
 import { IFrame, IFrameData } from './iframe'
 import { Lyrics, LyricsData } from './lyrics'
 import { ResponsiveContent, ResponsiveContentData } from './responsive-content'
@@ -34,12 +34,13 @@ export const EmbeddedEntry: FunctionComponent<Props> =
   ({ id }) => {
     const [entry, setEntry] = useState(undefined as undefined | Entry<EmbeddableTypes>)
     const theme = useTheme()
+    const client = useContentfulClient()
 
     useEffect(() => {
       if (!entry) {
         client.getEntry<EmbeddableTypes>(id).then(setEntry)
       }
-    }, [entry, id])
+    }, [entry, id, client])
 
     switch (entry?.sys.contentType?.sys.id) {
       case 'youtubeVideo':

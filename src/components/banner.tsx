@@ -1,10 +1,10 @@
 import { Icon, IconButton, SwipeableDrawer } from '@mui/material'
-import { Entry, EntryFields } from 'contentful'
+import { ContentfulClientApi, Entry, EntryFields } from 'contentful'
 import moment from 'moment'
 import { FunctionComponent, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { ContentfulRichText } from '../contentful/rich-text'
-import { client } from '../services/contentful'
+import { useContentfulClient } from '../services/contentful'
 import { Option } from '../utils/option'
 import { BCBox } from './box'
 
@@ -19,7 +19,7 @@ interface BannerData {
 
 let cached: Option<Entry<BannerData>> | undefined = undefined
 
-function getActiveBanner(): Promise<Entry<BannerData> | undefined> {
+function getActiveBanner(client: ContentfulClientApi): Promise<Entry<BannerData> | undefined> {
   if (cached) {
     return Promise.resolve(cached.getOrUndefined())
   } else {
@@ -43,14 +43,15 @@ export const Banner: FunctionComponent<{}> =
     const [entry, setEntry] = useState<Entry<BannerData> | undefined>()
     const [open, setOpen] = useState(false)
     const location = useLocation()
+    const client = useContentfulClient()
 
     /* Download data */
     useEffect(() => {
-      getActiveBanner().then(e => {
+      getActiveBanner(client).then(e => {
         setEntry(e)
         setOpen(!!e)
       })
-    }, [])
+    }, [ client ])
 
     /* Re-display on each location change */
     useEffect(() => {

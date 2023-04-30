@@ -4,7 +4,7 @@ import { FunctionComponent, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { BCBox } from '../components/box'
 import { Loading } from '../components/loading'
-import { client } from '../services/contentful'
+import { useContentfulClient } from '../services/contentful'
 import { ContentfulHero, HeroData } from './hero'
 import { CardSectionData, ContentfulSection, ContentSectionData } from './section'
 
@@ -25,6 +25,7 @@ export const ContentfulPage: FunctionComponent<ContentfulPageProps> =
     const [data, setData] = useState(props.data)
     const [initialized, setInitialized] = useState(!!props.data)
     const locationPath = useLocation().pathname
+    const client = useContentfulClient()
 
     useEffect(() => {
       if (!initialized || data?.fields?.path !== props.path) {
@@ -35,7 +36,7 @@ export const ContentfulPage: FunctionComponent<ContentfulPageProps> =
             setInitialized(true)
           })
       }
-    }, [ props.path, initialized, data, locationPath ])
+    }, [ props.path, initialized, data, locationPath, client ])
 
     if (data) {
       return (

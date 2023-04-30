@@ -2,11 +2,13 @@ import { FunctionComponent, useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { ContentfulPage, PageData } from './contentful/page'
 import * as BCRoutes from './pages/index'
-import { client } from './services/contentful'
+import { Preview } from './pages/preview'
+import { useContentfulClient } from './services/contentful'
 
 export const BCSwitch: FunctionComponent<{}> =
   () => {
     const [pages, setPages] = useState([] as string[])
+    const client = useContentfulClient()
 
     useEffect(() => {
       if (!pages.length) {
@@ -16,7 +18,7 @@ export const BCSwitch: FunctionComponent<{}> =
             setPages(collection.items.map(e => e.fields.path))
           })
       }
-    }, [pages])
+    }, [pages, client])
 
     if (pages.length === 0) {
       return null
@@ -43,6 +45,8 @@ export const BCSwitch: FunctionComponent<{}> =
         <Route path="/admin/sermons"         element={<BCRoutes.EditSermons />} />
         <Route path="/admin/sermons/new"     element={<BCRoutes.NewSermon />} />
         <Route path="/admin/sermons/:id"     element={<BCRoutes.EditSermonFromPath />} />
+
+        <Route path="/preview/:id"           element={<Preview />} />
 
         {
           pages.map(path => (<Route key={path} path={path} element={<ContentfulPage path={path} />} />))
