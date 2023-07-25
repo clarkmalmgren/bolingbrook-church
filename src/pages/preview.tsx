@@ -10,6 +10,9 @@ import { ResponsiveContent } from '../contentful/responsive-content'
 import { Unknown } from '../contentful/unknown'
 import { useContentfulClient } from '../services/contentful'
 import { Lyrics } from '../contentful/lyrics'
+import { Banner } from '../components/banner'
+import { EmbeddedEntry } from '../contentful/embedded'
+import { SermonHeroCard } from '../components/sermon-hero-card'
 
 export const Preview: FunctionComponent<{}> =
   () => {
@@ -41,6 +44,12 @@ export const Preview: FunctionComponent<{}> =
       case 'page':              return <ContentfulPage data={data} path={data.fields.path} />
       case 'responsiveContent': return <ResponsiveContent entry={data} />
       case 'songLyrics':        return <Lyrics entry={data} />
+      case 'banner':            return <Banner forceOpen preloadedEntry={data} />
+      case 'latestSermonCard':  return <SermonHeroCard />
+
+      case 'button':
+      case 'youtubeVideo':
+        return <EmbeddedEntry id={data.sys.id} />
 
       case 'cardSection':
       case 'contentSection':

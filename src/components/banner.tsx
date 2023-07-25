@@ -38,18 +38,25 @@ function getActiveBanner(client: ContentfulClientApi): Promise<Entry<BannerData>
     }
 }
 
-export const Banner: FunctionComponent<{}> =
-  () => {
-    const [entry, setEntry] = useState<Entry<BannerData> | undefined>()
-    const [open, setOpen] = useState(false)
+export type Props = {
+  forceOpen?: boolean
+  preloadedEntry?: Entry<BannerData>
+}
+
+export const Banner: FunctionComponent<Props> =
+  ({ forceOpen, preloadedEntry }) => {
+    const [entry, setEntry] = useState<Entry<BannerData> | undefined>(preloadedEntry)
+    const [open, setOpen] = useState(!!forceOpen)
     const location = useLocation()
     const client = useContentfulClient()
 
     /* Download data */
     useEffect(() => {
       getActiveBanner(client).then(e => {
-        setEntry(e)
-        setOpen(!!e)
+        if (e && !entry) {
+          setEntry(e)
+          setOpen(!!e)
+        }
       })
     }, [ client ])
 
