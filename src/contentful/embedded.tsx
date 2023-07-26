@@ -7,6 +7,7 @@ import { useContentfulClient } from '../services/contentful'
 import { IFrame, IFrameData } from './iframe'
 import { Lyrics, LyricsData } from './lyrics'
 import { ResponsiveContent, ResponsiveContentData } from './responsive-content'
+import { ContentfulControlledImage, ControlledImageData } from './controlled-image'
 
 export interface YoutubeData {
   name: string
@@ -28,7 +29,7 @@ interface Props {
   id: string
 }
 
-type EmbeddableTypes = ButtonData | LyricsData | YoutubeData | IFrameData | ResponsiveContentData
+type EmbeddableTypes = ButtonData | LyricsData | YoutubeData | IFrameData | ResponsiveContentData | ControlledImageData
 
 export const EmbeddedEntry: FunctionComponent<Props> =
   ({ id }) => {
@@ -72,6 +73,9 @@ export const EmbeddedEntry: FunctionComponent<Props> =
 
       case 'responsiveContent':
         return (<ResponsiveContent key={entry.sys.id} entry={entry as Entry<ResponsiveContentData>} />)
+
+      case 'controlledImage':
+        return (<ContentfulControlledImage key={entry.sys.id} id={entry.sys.id} entry={entry as Entry<ControlledImageData>} />)
 
       default:
         return (<span>`Unknown content type: ${entry?.sys.contentType?.sys.id}`</span>)

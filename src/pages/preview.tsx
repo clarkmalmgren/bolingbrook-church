@@ -49,6 +49,7 @@ export const Preview: FunctionComponent<{}> =
 
       case 'button':
       case 'youtubeVideo':
+      case 'controlledImage':
         return <EmbeddedEntry id={data.sys.id} />
 
       case 'cardSection':
