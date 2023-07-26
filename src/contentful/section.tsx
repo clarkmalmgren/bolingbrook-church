@@ -8,6 +8,7 @@ import { Loading } from '../components/loading'
 import { useContentfulClient } from '../services/contentful'
 import { GraphicSectionData, GraphicSection } from './graphic-section'
 import { IFrame, IFrameData } from './iframe'
+import { Box, useTheme } from '@mui/material'
 
 export type CardSectionData = {
   name: string
@@ -18,6 +19,8 @@ export type ContentSectionData = {
   name: string
   content: EntryFields.RichText
   alignment?: 'left' | 'center' | 'right'
+  theme?: 'black on white' | 'white on orange' | 'white on black'
+  showWhiteMargins?: boolean
 }
 
 type SectionData = CardSectionData | ContentSectionData | GraphicSectionData | IFrameData
@@ -48,6 +51,7 @@ export const ContentfulSection: FunctionComponent<Props> =
   ({ entry: initialEntry, name, type }) => {
     const [entry, setEntry] = useState(initialEntry)
     const client = useContentfulClient()
+    const theme = useTheme()
     
     useEffect(() => {
       if (type && name && !entry) {
@@ -65,12 +69,29 @@ export const ContentfulSection: FunctionComponent<Props> =
       )
     } else if (entry && isContent(entry)) {
       const alignment = entry.fields.alignment || 'left'
+      const textColor = entry.fields.theme?.match(/^white/) ? 'white' : undefined
+      let bgColor: string | undefined = undefined
+      if (entry.fields.theme?.match(/on white$/)) {
+        bgColor = 'white'
+      } else if (entry.fields.theme?.match(/on black$/)) {
+        bgColor = 'black'
+      } else  if (entry.fields.theme?.match(/on orange$/)) {
+        bgColor = theme.palette.primary.main
+      }
+
       return (
-        <BCBox variant="section">
-          <div style={{ textAlign: alignment }}>
-          <ContentfulRichText content={entry.fields.content} />
-          </div>
-        </BCBox>
+        <Box
+          paddingTop="2px"
+          paddingBottom="2px"
+          color={textColor}
+          bgcolor={entry.fields.showWhiteMargins ? undefined : bgColor}
+        >
+          <BCBox variant="section">
+            <Box textAlign={alignment} bgcolor={bgColor} p={entry.fields.showWhiteMargins ? 2 : 0}>
+              <ContentfulRichText content={entry.fields.content} />
+            </Box>
+          </BCBox>
+        </Box>
       )
     } else if (entry && isGraphic(entry)) {
       return (<GraphicSection entry={entry} />)
