@@ -1,14 +1,14 @@
-import React, { FunctionComponent, useState, useEffect } from 'react'
-import { Entry, EntryFields } from 'contentful'
-import { BCBox }from '../components/box'
-import { CardList } from '../components/card-list'
-import { CardData, LatestSermonCardData, ContentfulCard } from './card'
-import { ContentfulRichText } from './rich-text'
-import { Loading } from '../components/loading'
-import { useContentfulClient } from '../services/contentful'
-import { GraphicSectionData, GraphicSection } from './graphic-section'
-import { IFrame, IFrameData } from './iframe'
 import { Box, useTheme } from '@mui/material'
+import { Entry, EntryFields } from 'contentful'
+import { FunctionComponent } from 'react'
+import { BCBox } from '../components/box'
+import { CardList } from '../components/card-list'
+import { Loading } from '../components/loading'
+import { useQueryOne } from '../services/contentful'
+import { CardData, ContentfulCard, LatestSermonCardData } from './card'
+import { GraphicSection, GraphicSectionData } from './graphic-section'
+import { IFrame, IFrameData } from './iframe'
+import { ContentfulRichText } from './rich-text'
 
 export type CardSectionData = {
   name: string
@@ -44,22 +44,17 @@ function isIFrame(entry: Entry<SectionData>): entry is Entry<IFrameData> {
 type Props = {
   entry?: Entry<SectionData>
   name?: string
-  type?: 'cardSection' | 'contentSection'
+  type?: 'cardSection' | 'contentSection' | 'graphicSection'
 }
 
 export const ContentfulSection: FunctionComponent<Props> =
-  ({ entry: initialEntry, name, type }) => {
-    const [entry, setEntry] = useState(initialEntry)
-    const client = useContentfulClient()
+  ({ entry: init, name, type }) => {
     const theme = useTheme()
-    
-    useEffect(() => {
-      if (type && name && !entry) {
-        client
-          .getEntries<SectionData>({ content_type: type, 'fields.name': name })
-          .then(c => setEntry(c.items[0]))
-      }
-    }, [name, type, entry, client])
+    const query = {
+      content_type: type || init?.sys?.contentType?.sys?.id,
+      'fields.name': name || init?.fields?.name
+    }
+    const { entry } = useQueryOne(query, init)
 
     if (entry && isCards(entry)) {
       return (

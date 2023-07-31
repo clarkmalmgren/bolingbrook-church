@@ -1,29 +1,24 @@
 import { Typography } from '@mui/material'
-import { FunctionComponent, useEffect, useState } from 'react'
+import { FunctionComponent } from 'react'
 import { useParams } from 'react-router-dom'
+import { Banner } from '../components/banner'
 import { Loading } from '../components/loading'
+import { SermonHeroCard } from '../components/sermon-hero-card'
 import { ContentfulCard } from '../contentful/card'
-import { ContentfulSection } from '../contentful/section'
+import { EmbeddedEntry } from '../contentful/embedded'
 import { ContentfulHero } from '../contentful/hero'
+import { Lyrics } from '../contentful/lyrics'
 import { ContentfulPage } from '../contentful/page'
 import { ResponsiveContent } from '../contentful/responsive-content'
+import { ContentfulSection } from '../contentful/section'
 import { Unknown } from '../contentful/unknown'
-import { useContentfulClient } from '../services/contentful'
-import { Lyrics } from '../contentful/lyrics'
-import { Banner } from '../components/banner'
-import { EmbeddedEntry } from '../contentful/embedded'
-import { SermonHeroCard } from '../components/sermon-hero-card'
+import { useEntry } from '../services/contentful'
 
 export const Preview: FunctionComponent<{}> =
   () => {
     const { id } = useParams()
-    const [ data, setData ] = useState<any>(undefined)
-    const [ failed, setFailed ] = useState<any>(undefined)
-    const client = useContentfulClient()
-
-    useEffect(() => {
-      id && client.getEntry(id).then(setData, setFailed)
-    }, [ id, client ])
+    const { entry } = useEntry<any>(id || '')
+    const failed = undefined // TODO: add this back in eventually
 
     if (!id) {
       return <Typography variant="h1">ID Required</Typography>
@@ -34,31 +29,31 @@ export const Preview: FunctionComponent<{}> =
           <pre>{JSON.stringify(failed, undefined, 2)}</pre>
         </>
       )
-    } else if (!data) {
+    } else if (!entry) {
       return <Loading />
     }
     
-    switch (data.sys.contentType.sys.id) {
-      case 'card':              return <ContentfulCard entry={data} />
-      case 'hero':              return <ContentfulHero entry={data} />
-      case 'page':              return <ContentfulPage data={data} path={data.fields.path} />
-      case 'responsiveContent': return <ResponsiveContent entry={data} />
-      case 'songLyrics':        return <Lyrics entry={data} />
-      case 'banner':            return <Banner forceOpen preloadedEntry={data} />
+    switch (entry.sys.contentType.sys.id) {
+      case 'card':              return <ContentfulCard entry={entry} />
+      case 'hero':              return <ContentfulHero entry={entry} />
+      case 'page':              return <ContentfulPage data={entry} path={entry.fields.path} />
+      case 'responsiveContent': return <ResponsiveContent entry={entry} />
+      case 'songLyrics':        return <Lyrics entry={entry} />
+      case 'banner':            return <Banner forceOpen preloadedEntry={entry} />
       case 'latestSermonCard':  return <SermonHeroCard />
 
       case 'button':
       case 'youtubeVideo':
       case 'controlledImage':
-        return <EmbeddedEntry id={data.sys.id} />
+        return <EmbeddedEntry id={entry.sys.id} />
 
       case 'cardSection':
       case 'contentSection':
       case 'graphicSection':
       case 'iframe':
-        return <ContentfulSection entry={data} />
+        return <ContentfulSection entry={entry} />
 
       default:
-        return <Unknown data={data} />
+        return <Unknown data={entry} />
     }
   }

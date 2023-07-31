@@ -34,7 +34,8 @@ export const List: FunctionComponent<ListProps> =
     useEffect(() => {
       const length = methods.getValues(name)?.length || 0
       validateAndUpdateLength(length)
-    }, [ name, methods ])
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ name, methods ]) // don't include validateAndUpdateLength
 
     const add = () => {
       validateAndUpdateLength(count + 1)

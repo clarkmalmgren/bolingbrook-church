@@ -1,7 +1,7 @@
 import { Card as MuiCard, CardActionArea, CardContent, CardHeader, CardMedia } from '@mui/material'
 import { FunctionComponent, PropsWithChildren } from 'react'
 import { Link } from 'react-router-dom'
-import { Asset } from '../services/contentful'
+import { Asset } from 'contentful'
 
 type CardProps = {
   title: string

@@ -1,29 +1,18 @@
-import { FunctionComponent, PropsWithChildren, useEffect, useState } from 'react'
+import { FunctionComponent, PropsWithChildren } from 'react'
 import { Outlet, Route, Routes } from 'react-router-dom'
 import { ContentfulPage, PageData } from './contentful/page'
 import * as BCRoutes from './pages/index'
 import { Preview } from './pages/preview'
-import { useContentfulClient } from './services/contentful'
+import { useEntries } from './services/contentful'
 import { Header } from './components/header'
 import { Banner } from './components/banner'
 import { Footer } from './components/footer'
 
 export const BCSwitch: FunctionComponent<{}> =
   () => {
-    const [pages, setPages] = useState([] as string[])
-    const client = useContentfulClient()
+    const { data: pages } = useEntries<PageData>({ content_type: 'page' })
 
-    useEffect(() => {
-      if (!pages.length) {
-        client
-          .getEntries<PageData>({ content_type: 'page' })
-          .then(collection => {
-            setPages(collection.items.map(e => e.fields.path))
-          })
-      }
-    }, [pages, client])
-
-    if (pages.length === 0) {
+    if (!pages) {
       return null
     }
 
@@ -53,7 +42,7 @@ export const BCSwitch: FunctionComponent<{}> =
           <Route path="/admin/sermons/:id"     element={<BCRoutes.EditSermonFromPath />} />
 
           {
-            pages.map(path => (<Route key={path} path={path} element={<ContentfulPage path={path} />} />))
+            pages.map(({ path }) => (<Route key={path} path={path} element={<ContentfulPage path={path} />} />))
           }
 
           <Route                               element={<ContentfulPage />} />

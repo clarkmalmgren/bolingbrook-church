@@ -1,13 +1,13 @@
 import { useTheme } from '@mui/material'
 import { Entry } from 'contentful'
-import { FunctionComponent, useEffect, useState } from 'react'
+import { FunctionComponent } from 'react'
 import { Button, ButtonProps } from '../components/button'
 import { Youtube } from '../components/youtube'
-import { useContentfulClient } from '../services/contentful'
+import { useEntry } from '../services/contentful'
+import { ContentfulControlledImage, ControlledImageData } from './controlled-image'
 import { IFrame, IFrameData } from './iframe'
 import { Lyrics, LyricsData } from './lyrics'
 import { ResponsiveContent, ResponsiveContentData } from './responsive-content'
-import { ContentfulControlledImage, ControlledImageData } from './controlled-image'
 
 export interface YoutubeData {
   name: string
@@ -33,15 +33,8 @@ type EmbeddableTypes = ButtonData | LyricsData | YoutubeData | IFrameData | Resp
 
 export const EmbeddedEntry: FunctionComponent<Props> =
   ({ id }) => {
-    const [entry, setEntry] = useState(undefined as undefined | Entry<EmbeddableTypes>)
+    const { entry } = useEntry<EmbeddableTypes>(id)
     const theme = useTheme()
-    const client = useContentfulClient()
-
-    useEffect(() => {
-      if (!entry) {
-        client.getEntry<EmbeddableTypes>(id).then(setEntry)
-      }
-    }, [entry, id, client])
 
     switch (entry?.sys.contentType?.sys.id) {
       case 'youtubeVideo':

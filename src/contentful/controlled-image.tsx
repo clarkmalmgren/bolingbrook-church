@@ -1,9 +1,9 @@
-import { Asset, Entry } from 'contentful'
-import { FunctionComponent, useEffect, useState } from 'react'
-import { useContentfulClient } from '../services/contentful'
-import { Loading } from '../components/loading'
 import { Box, ButtonBase } from '@mui/material'
+import { Asset, Entry } from 'contentful'
+import { FunctionComponent } from 'react'
 import { Link } from 'react-router-dom'
+import { Loading } from '../components/loading'
+import { useEntry } from '../services/contentful'
 
 type Props = {
   name?: string
@@ -51,16 +51,7 @@ type ContentfulControlledImageProps = {
 
 export const ContentfulControlledImage: FunctionComponent<ContentfulControlledImageProps> =
   ({ id, entry }) => {
-    const [ data, setData ] = useState(entry?.fields)
-    const client = useContentfulClient()
-
-    useEffect(() => {
-      if (!data && id) {
-        client
-          .getEntry<ControlledImageData>(id)
-          .then(e => setData(e.fields))
-      }
-    }, [ client, id, data, setData ])
+    const { data } = useEntry(id, null, entry)
 
     if (!!data) {
       return (
