@@ -1,6 +1,6 @@
 import { Box, useTheme } from '@mui/material'
 import { FunctionComponent, PropsWithChildren, useEffect, useRef, useState } from 'react'
-import { Asset } from '../services/contentful'
+import { Asset } from 'contentful'
 
 export type HeroMedia = {
   name: string

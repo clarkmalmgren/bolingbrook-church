@@ -5,7 +5,7 @@ import { submitConnect } from '../services/signup'
 export const Connect: FunctionComponent<{}> =
   () => {
     return (
-      <Form onSubmit={submitConnect}>
+      <Form onSubmit={submitConnect} navOnSubmitted="/thank-you">
         <Header variant="h1">Get Connected</Header>
         <Header variant="h2">Step 1: Tell us about yourself</Header>
 

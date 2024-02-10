@@ -1,3 +1,4 @@
+import { redirect } from 'react-router-dom'
 
 export type ConnectionRequest = {
   first_name: string
@@ -21,6 +22,8 @@ export async function submitConnect(request: ConnectionRequest): Promise<void> {
   if (!response.ok) {
     throw new Error(`Failed to submit connection requst, got a failed response from the server`)
   }
+
+  redirect('/thank-you')
 }
 
 export type ServeRequest = {
@@ -41,4 +44,6 @@ export async function submitServe(request: ServeRequest): Promise<void> {
   if (!response.ok) {
     throw new Error(`Failed to submit connection requst, got a failed response from the server`)
   }
+
+  redirect('/thank-you')
 }

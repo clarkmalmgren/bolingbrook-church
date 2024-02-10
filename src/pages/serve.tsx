@@ -24,7 +24,7 @@ export const Serve: FunctionComponent<{}> =
         <ContentfulHero name="serve" />
         <ContentfulSection type="contentSection" name="Serve" />
 
-        <Form onSubmit={submit}>
+        <Form onSubmit={submit} navOnSubmitted="/thank-you">
           <Header variant="h2">Register Here</Header>
 
           <TextField name="first_name" autoComplete="given-name" required label="First Name" />

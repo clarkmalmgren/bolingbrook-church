@@ -1,12 +1,12 @@
 import { Typography } from '@mui/material'
 import { Entry } from 'contentful'
-import { FunctionComponent, useEffect, useState } from 'react'
+import { FunctionComponent } from 'react'
 import { useLocation } from 'react-router-dom'
 import { BCBox } from '../components/box'
 import { Loading } from '../components/loading'
-import { useContentfulClient } from '../services/contentful'
+import { useQueryOne } from '../services/contentful'
 import { ContentfulHero, HeroData } from './hero'
-import { CardSectionData, ContentfulSection, ContentSectionData } from './section'
+import { CardSectionData, ContentSectionData, ContentfulSection } from './section'
 
 export type PageData = {
   name: string
@@ -21,33 +21,26 @@ type ContentfulPageProps = {
 }
 
 export const ContentfulPage: FunctionComponent<ContentfulPageProps> =
-  (props) => {
-    const [data, setData] = useState(props.data)
-    const [initialized, setInitialized] = useState(!!props.data)
+  ({ path, data: init }) => {
     const locationPath = useLocation().pathname
-    const client = useContentfulClient()
+    const { entry, initialized } =
+      useQueryOne(
+        { content_type: 'page', 'fields.path': (path || locationPath ) },
+        init
+      )
 
-    useEffect(() => {
-      if (!initialized || data?.fields?.path !== props.path) {
-        client
-          .getEntries<PageData>({ content_type: 'page', 'fields.path': (props.path || locationPath ) })
-          .then(collection => {
-            setData(collection.items[0])
-            setInitialized(true)
-          })
-      }
-    }, [ props.path, initialized, data, locationPath, client ])
-
-    if (data) {
+    if (entry) {
       return (
-        <div key={data.sys.id}>
-          <ContentfulHero entry={data.fields.hero} />
-          { data.fields.sections.map(s => { return (<ContentfulSection key={s.sys.id} entry={s} />) }) }
+        <div key={entry.sys.id}>
+          <ContentfulHero entry={entry.fields.hero} />
+          { entry.fields.sections.map(s => { return (
+            <ContentfulSection key={s.sys.id} entry={s} />
+          ) }) }
         </div>
       )
     } else if (!initialized) {
       return (
-        <Loading key={props.path} />
+        <Loading key={path} />
       )
     } else {
       return (

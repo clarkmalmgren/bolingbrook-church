@@ -1,11 +1,10 @@
 import { Icon, IconButton, SwipeableDrawer } from '@mui/material'
-import { ContentfulClientApi, Entry, EntryFields } from 'contentful'
+import { Entry, EntryFields } from 'contentful'
 import moment from 'moment'
-import { FunctionComponent, useEffect, useState } from 'react'
+import { FunctionComponent, useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { ContentfulRichText } from '../contentful/rich-text'
-import { useContentfulClient } from '../services/contentful'
-import { Option } from '../utils/option'
+import { useQueryOne } from '../services/contentful'
 import { BCBox } from './box'
 
 interface BannerData {
@@ -17,48 +16,46 @@ interface BannerData {
   persistent?: boolean
 }
 
-let cached: Option<Entry<BannerData>> | undefined = undefined
-
-function getActiveBanner(client: ContentfulClientApi): Promise<Entry<BannerData> | undefined> {
-  if (cached) {
-    return Promise.resolve(cached.getOrUndefined())
-  } else {
-    return client
-      .getEntries<BannerData>({ content_type: 'banner', 'fields.active': true })
-      .then(collection => {
+function useActiveBanner(forceOpen: boolean, init?: Entry<BannerData>): BannerData | undefined {
+  return useQueryOne(
+    { content_type: 'banner', 'fields.active': true },
+    init,
+    (collection) => {
+      if (forceOpen) {
+        return collection?.items?.[0]
+      } else {
         const now = moment()
-        const found = collection.items.find((e) => {
-          const b = e.fields
+        return collection?.items?.find(({ fields: b }) => {
           return (!b.start || moment(b.start).isBefore(now)) && (!b.end || moment(b.end).isAfter(now))
         })
-        cached = Option(found)
-
-        return found
-      })
+      }
     }
+  ).data
 }
 
-export const Banner: FunctionComponent<{}> =
-  () => {
-    const [entry, setEntry] = useState<Entry<BannerData> | undefined>()
-    const [open, setOpen] = useState(false)
-    const location = useLocation()
-    const client = useContentfulClient()
+export type Props = {
+  forceOpen?: boolean
+  preloadedEntry?: Entry<BannerData>
+}
 
-    /* Download data */
-    useEffect(() => {
-      getActiveBanner(client).then(e => {
-        setEntry(e)
-        setOpen(!!e)
-      })
-    }, [ client ])
+export const Banner: FunctionComponent<Props> =
+  ({ forceOpen, preloadedEntry }) => {
+    const initialized = useRef(false)
+    const [ open, setOpen ] = useState(!!forceOpen)
+    const data = useActiveBanner(!!forceOpen, preloadedEntry)
+    const location = useLocation()
 
     /* Re-display on each location change */
     useEffect(() => {
-      setOpen(!!entry?.fields.persistent)
-    }, [location, entry])
+      setOpen(!!data?.persistent)
+    }, [location, data])
 
-    if (!entry) { return null }
+    if (!data) { return null }
+
+    if (!open && !initialized.current) {
+      initialized.current = true
+      setOpen(true)
+    }
 
     return (
       <SwipeableDrawer
@@ -75,9 +72,8 @@ export const Banner: FunctionComponent<{}> =
           <Icon>close</Icon>
         </IconButton>
         <BCBox variant="section" >
-          <ContentfulRichText content={entry.fields.content} />
+          <ContentfulRichText content={data.content} />
         </BCBox>
       </SwipeableDrawer>
     )
   }
-

@@ -1,11 +1,11 @@
 import { SxProps, Theme } from '@mui/material'
 import { Asset, Entry, EntryFields } from 'contentful'
-import { FunctionComponent, useEffect, useState } from 'react'
+import { FunctionComponent } from 'react'
 import { Hero, HeroMedia } from '../components/hero'
-import { useContentfulClient } from '../services/contentful'
-import { ContentfulRichText } from './rich-text'
 import { Loading } from '../components/loading'
+import { useQueryOne } from '../services/contentful'
 import { sxes } from '../utils/sxes'
+import { ContentfulRichText } from './rich-text'
 
 const Styles: { [name: string]: SxProps<Theme> } = {
   center: { textAlign: 'center' },
@@ -45,18 +45,7 @@ type ContentfulHeroProps = {
 
 export const ContentfulHero: FunctionComponent<ContentfulHeroProps> =
   ({ entry, name }) => {
-    const [data, setData] = useState(entry?.fields)
-    const client = useContentfulClient()
-    
-    useEffect(() => {
-      if (!data && name) {
-        client
-          .getEntries<HeroData>(({ content_type: 'hero', 'fields.name': name }))
-          .then(c => {
-            setData(c.items[0].fields)
-          })
-      }
-    })
+    const { data } = useQueryOne({ content_type: 'hero', 'fields.name': name || entry?.fields?.name }, entry)
 
     if (data) {
       const mediaData = {

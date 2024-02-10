@@ -1,9 +1,10 @@
 import { useTheme } from '@mui/material'
 import { Entry } from 'contentful'
-import { FunctionComponent, useEffect, useState } from 'react'
+import { FunctionComponent } from 'react'
 import { Button, ButtonProps } from '../components/button'
 import { Youtube } from '../components/youtube'
-import { useContentfulClient } from '../services/contentful'
+import { useEntry } from '../services/contentful'
+import { ContentfulControlledImage, ControlledImageData } from './controlled-image'
 import { IFrame, IFrameData } from './iframe'
 import { Lyrics, LyricsData } from './lyrics'
 import { ResponsiveContent, ResponsiveContentData } from './responsive-content'
@@ -28,19 +29,12 @@ interface Props {
   id: string
 }
 
-type EmbeddableTypes = ButtonData | LyricsData | YoutubeData | IFrameData | ResponsiveContentData
+type EmbeddableTypes = ButtonData | LyricsData | YoutubeData | IFrameData | ResponsiveContentData | ControlledImageData
 
 export const EmbeddedEntry: FunctionComponent<Props> =
   ({ id }) => {
-    const [entry, setEntry] = useState(undefined as undefined | Entry<EmbeddableTypes>)
+    const { entry } = useEntry<EmbeddableTypes>(id)
     const theme = useTheme()
-    const client = useContentfulClient()
-
-    useEffect(() => {
-      if (!entry) {
-        client.getEntry<EmbeddableTypes>(id).then(setEntry)
-      }
-    }, [entry, id, client])
 
     switch (entry?.sys.contentType?.sys.id) {
       case 'youtubeVideo':
@@ -72,6 +66,9 @@ export const EmbeddedEntry: FunctionComponent<Props> =
 
       case 'responsiveContent':
         return (<ResponsiveContent key={entry.sys.id} entry={entry as Entry<ResponsiveContentData>} />)
+
+      case 'controlledImage':
+        return (<ContentfulControlledImage key={entry.sys.id} id={entry.sys.id} entry={entry as Entry<ControlledImageData>} />)
 
       default:
         return (<span>`Unknown content type: ${entry?.sys.contentType?.sys.id}`</span>)
