@@ -28,6 +28,12 @@ export const theme = createTheme({
   },
   typography: {
     fontFamily: metropolis.style.fontFamily,
-    fontSize: 21
+    fontSize: 18,
+    h1: { fontSize: 43, fontWeight: '700', textTransform: 'uppercase' },
+    h2: { fontSize: 35, fontWeight: '700', textTransform: 'uppercase' },
+    h3: { fontSize: 32, fontWeight: '700' },
+    h4: { fontSize: 32 },
+    h5: { fontSize: 25 },
+    h6: { fontSize: 18, fontWeight: '700' },
   },
 })
