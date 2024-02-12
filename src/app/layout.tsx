@@ -1,9 +1,9 @@
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter'
+import { ThemeProvider } from '@mui/material/styles'
 import type { Metadata } from 'next'
-import { Roboto } from 'next/font/google'
-import './globals.css'
 import { FunctionComponent, PropsWithChildren } from 'react'
-
-const roboto = Roboto({ weight: '500', subsets: ['latin'] });
+import { theme } from '../theme'
+import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -13,7 +13,13 @@ export const metadata: Metadata = {
 const RootLayout: FunctionComponent<PropsWithChildren<{}>> =
   ({ children }) => (
     <html lang="en">
-      <body className={roboto.className}>{children}</body>
+        <body>
+          <AppRouterCacheProvider>
+            <ThemeProvider theme={theme}>
+              {children}
+            </ThemeProvider>
+          </AppRouterCacheProvider>
+        </body>
     </html>
   )
 
