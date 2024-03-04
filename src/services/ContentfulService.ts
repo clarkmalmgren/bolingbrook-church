@@ -1,8 +1,8 @@
 import { ContentfulLivePreview } from '@contentful/live-preview'
 import { isEqualReactSimple } from '@react-hookz/deep-equal'
-import { ContentfulClientApi, Entry, EntryCollection, createClient } from 'contentful'
+import { ContentfulClientApi, Entry, EntryCollection, EntrySkeletonType, createClient } from 'contentful'
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { usePathname } from 'next/navigation'
 
 // TODO: Figure out how to add in errors for downloads
 
@@ -18,13 +18,13 @@ const previewClient = createClient({
 })
 
 export function useIsPreview(): boolean {
-  return useLocation().pathname.startsWith('/preview')
+  return usePathname().startsWith('/preview')
 }
 
 // Used to track whether or not we have initialized the live preview (should be done exactly once)
 let livePreviewInitialized: boolean = false
 
-function useContentfulClient(): ContentfulClientApi {
+function useContentfulClient(): ContentfulClientApi<any> {
   if (useIsPreview()) {
     if (!livePreviewInitialized) {
       livePreviewInitialized = true
@@ -38,7 +38,7 @@ function useContentfulClient(): ContentfulClientApi {
 
 type Unsubscribe = () => void
 
-function useWatchedState<T, S extends Entry<T> | EntryCollection<T>>(init: S | undefined): [S | undefined, Dispatch<SetStateAction<S | undefined>>] {
+function useWatchedState<T extends EntrySkeletonType, S extends Entry<T> | EntryCollection<T>>(init: S | undefined): [S | undefined, Dispatch<SetStateAction<S | undefined>>] {
   const [ e, setE ] = useState(init)
   const watching = useRef(false)
 
@@ -57,9 +57,9 @@ function useWatchedState<T, S extends Entry<T> | EntryCollection<T>>(init: S | u
   return [ e, setE ]
 }
 
-export type UseEntryResponse<T> = { initialized: boolean, data?: T, entry?: Entry<T> }
+export type UseEntryResponse<T extends EntrySkeletonType> = { initialized: boolean, data?: T['fields'], entry?: Entry<T> }
 
-export function useEntry<T>(id: string, query?: any, init?: Entry<T>): UseEntryResponse<T> {
+export function useEntry<T extends EntrySkeletonType>(id: string, query?: any, init?: Entry<T>): UseEntryResponse<T> {
   const [ initialized, setInitialized ] = useState(false)
   const [ entry, setEntry ] = useWatchedState<T, Entry<T>>(init)
   const client = useContentfulClient()
@@ -86,9 +86,9 @@ export function useEntry<T>(id: string, query?: any, init?: Entry<T>): UseEntryR
   return { initialized, entry, data: entry?.fields }
 }
 
-export type UseEntriesResponse<T> = { initialized: boolean, data?: T[], entries?: Entry<T>[], collection?: EntryCollection<T> }
+export type UseEntriesResponse<T extends EntrySkeletonType> = { initialized: boolean, data?: T['fields'][], entries?: Entry<T>[], collection?: EntryCollection<T> }
 
-export function useEntries<T>(query: any, init?: EntryCollection<T>): UseEntriesResponse<T> {
+export function useEntries<T extends EntrySkeletonType>(query: any, init?: EntryCollection<T>): UseEntriesResponse<T> {
   const [ initialized, setInitialized ] = useState(!!init?.total)
   const [ collection, setCollection ] = useWatchedState<T, EntryCollection<T>>(init)
   const client = useContentfulClient()
@@ -111,22 +111,22 @@ export function useEntries<T>(query: any, init?: EntryCollection<T>): UseEntries
   return { initialized, collection, entries: collection?.items, data: collection?.items?.map(e => e.fields) }
 }
 
-export type EntrySelector<T> = (c?: EntryCollection<T>) => Entry<T> | undefined
+export type EntrySelector<T extends EntrySkeletonType> = (c?: EntryCollection<T>) => Entry<T> | undefined
 
-function DefaultEntrySelector<T>(c?: EntryCollection<T>): Entry<T> | undefined {
+function DefaultEntrySelector<T extends EntrySkeletonType>(c?: EntryCollection<T>): Entry<T> | undefined {
   return c?.items[0]
 }
 
-export function useQueryOne<T>(query: any, init?: Entry<T>, selector?: EntrySelector<T>): UseEntryResponse<T> {
+export function useQueryOne<T extends EntrySkeletonType>(query: any, init?: Entry<T>, selector?: EntrySelector<T>): UseEntryResponse<T> {
   const { initialized, collection } = useEntries(query, InitEntryCollection.maybe(init))
   const actualSelector = selector || DefaultEntrySelector
   const entry = actualSelector(collection)
   return { initialized, entry, data: entry?.fields }
 }
 
-export class InitEntryCollection<T> implements EntryCollection<T> {
+export class InitEntryCollection<T extends EntrySkeletonType> implements EntryCollection<T> {
 
-  static maybe<T>(init?: Entry<T>): EntryCollection<T> | undefined {
+  static maybe<T extends EntrySkeletonType>(init?: Entry<T>): EntryCollection<T> | undefined {
     return init ? new InitEntryCollection([init]) : undefined
   }
 

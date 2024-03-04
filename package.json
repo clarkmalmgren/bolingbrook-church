@@ -1,6 +1,6 @@
 {
   "name": "bolingbrook-church",
-  "version": "0.1.0",
+  "version": "3.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,12 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@contentful/live-preview": "^2.17.3",
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@fontsource/metropolis": "^5.0.7",
     "@mui/material": "^5.15.9",
     "@mui/material-nextjs": "^5.15.9",
+    "@react-hookz/deep-equal": "^2.0.2",
+    "contentful": "^10.6.21",
+    "firebase": "^10.8.0",
+    "moment": "^2.30.1",
+    "moment-timezone": "^0.5.45",
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18"

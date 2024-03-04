@@ -1,9 +1,11 @@
+'use client'
+
 import { Box, SxProps, Theme } from '@mui/material'
 import { FunctionComponent } from 'react'
-import { sxes } from '../utils/sxes'
+import { sxes } from '@/services/utils/sxes'
+import { fonts } from '@/theme'
 
 const BaseSx: SxProps<Theme> = {
-  fontFamily: `'Socicon' !important`,
   speak: 'none',
   fontStyle: 'normal',
   fontWeight: 'normal',
@@ -40,7 +42,7 @@ function lookup(key: string): number {
 
 export const Socicon: FunctionComponent<SociconProps> =
   ({ sx, name }) => (
-    <Box sx={sxes([BaseSx, sx])}>
+    <Box sx={sxes([BaseSx, sx])} className={fonts.socicon.className}>
       { String.fromCodePoint(lookup(name)) }
     </Box>
   )

@@ -1,8 +1,8 @@
-import { GoogleToken } from '../models/token'
-import { Option } from '../utils/option'
-import { auth } from '../utils/firebase'
 import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth'
 import { useEffect, useState } from 'react'
+import { GoogleToken } from './models/token'
+import { auth } from './utils/Firebase'
+import { Option } from './utils/Option'
 
 export type AuthActions = {
   login: () => Promise<GoogleToken>
@@ -34,13 +34,19 @@ const expiresWithinAnHour = (token: GoogleToken) => {
 
 class Auth {
 
-  static readonly singleton: Auth =
-    new Auth(
-      Option(localStorage.getItem(LOCAL_STORAGE_KEY))
-        .map(JSON.parse)
-        .noneIf(expiresWithinAnHour)
-        .getOrUndefined()
-    )
+  static readonly singleton: Auth = (() => {
+    try {
+      return new Auth(
+        Option(localStorage)
+          .map(s => s.getItem(LOCAL_STORAGE_KEY))
+          .map(JSON.parse)
+          .noneIf(expiresWithinAnHour)
+          .getOrUndefined()
+      )
+    } catch {
+      return new Auth(undefined)
+    }
+  })()
 
   private _token: GoogleToken | undefined
   private listeners: { [id: number]: () => void } = {}

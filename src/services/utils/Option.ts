@@ -3,7 +3,7 @@ export interface Option<T> {
   
   readonly isDefined: boolean
 
-  map<S>(fn: (value: T) => S): Option<S>
+  map<S>(fn: (value: T) => S): Option<NonNullable<S>>
 
   prop<K extends keyof T>(k: K): Option<T[K]>
 

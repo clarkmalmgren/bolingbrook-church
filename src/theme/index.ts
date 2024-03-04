@@ -1,25 +1,27 @@
 'use client'
 
-import { Roboto } from 'next/font/google'
 import LocalFont from 'next/font/local'
 import { createTheme } from '@mui/material/styles'
 import { orange, teal } from '@mui/material/colors'
 
-const roboto = Roboto({
-  weight: ['300', '400', '500', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-})
-
 const metropolis = LocalFont({
   src: [
-    { weight: '400', style: 'normal', path: './metropolis.regular.otf' },
-    { weight: '700', style: 'normal', path: './metropolis.bold.otf' },
-    { weight: '400', style: 'italic', path: './metropolis.regular-italic.otf' }
+    { weight: '400', style: 'normal', path: './fonts/metropolis.regular.otf' },
+    { weight: '700', style: 'normal', path: './fonts/metropolis.bold.otf' },
+    { weight: '400', style: 'italic', path: './fonts/metropolis.regular-italic.otf' }
   ]
 })
 
-export type SizeVariant = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+const socicon = LocalFont({
+  src: [
+    { path: './fonts/Socicon.eot' },
+    { path: './fonts/Socicon.woff2' },
+    { path: './fonts/Socicon.ttf' },
+    { path: './fonts/Socicon.woff' }
+  ]
+})
+
+export const fonts = { metropolis, socicon }
 
 export const theme = createTheme({
   palette: {

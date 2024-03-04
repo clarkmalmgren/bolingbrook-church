@@ -1,6 +1,6 @@
-import { database } from '../utils/firebase'
-import { ref, onValue, Unsubscribe } from 'firebase/database'
+import { Unsubscribe, onValue, ref } from 'firebase/database'
 import { useEffect, useState } from 'react'
+import { database } from './utils/Firebase'
 
 export class Data<T> {
 

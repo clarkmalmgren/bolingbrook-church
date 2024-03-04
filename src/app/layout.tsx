@@ -4,6 +4,8 @@ import type { Metadata } from 'next'
 import { FunctionComponent, PropsWithChildren } from 'react'
 import { theme } from '../theme'
 import './globals.css'
+import { Footer } from '@/components/Footer'
+import { Header } from '@/components/Header'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,7 +18,9 @@ const RootLayout: FunctionComponent<PropsWithChildren<{}>> =
         <body>
           <AppRouterCacheProvider>
             <ThemeProvider theme={theme}>
+              <Header />
               {children}
+              <Footer />
             </ThemeProvider>
           </AppRouterCacheProvider>
         </body>

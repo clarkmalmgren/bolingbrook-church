@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // The user is authenticated, has a verified email, and the email is listed as an admin
+    function isAdmin() {
+      return request.auth.token.email_verified && get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.admin == true;
+    }
+  
+    allow read: if true;
+    allow write: if false;
+    
+    match /users/{user=**} {
+      allow read: if isAdmin();
+    }
+
+    match /cdn/{rest=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}

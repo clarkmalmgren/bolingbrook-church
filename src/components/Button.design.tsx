@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { FunctionComponent } from 'react'
 import { Button } from './Button'
 import { Example } from './Example.design'
@@ -15,9 +15,16 @@ export const ButtonDesign: FunctionComponent<{}> =
         to the page about what groups might exist.
       </Typography>
       <Example>
-        <Button size="large">Large Button</Button>
-        <Button size="medium">Medium Button</Button>
-        <Button size="small">Small Button</Button>
+        <Box>
+          <Button size="large">Large Button</Button>
+          <Button size="medium">Medium Button</Button>
+          <Button size="small">Small Button</Button>
+        </Box>
+        <Box>
+          <Button link="tel:8675309">Call Me</Button>
+          <Button link=".">I'm a Link</Button>
+          <Button cancel>Cancel</Button>
+        </Box>
       </Example>
     </>
   )

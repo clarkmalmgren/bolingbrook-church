@@ -1,7 +1,7 @@
 import moment from 'moment'
-import { Sermon } from '../models/sermon'
-import { useAuthToken } from './auth'
-import { Data, useData } from './data'
+import { Sermon } from './models/sermon'
+import { useAuthToken } from './AuthService'
+import { Data, useData } from './DataService'
 
 export function useSermon(date: string): Data<Sermon> {
   return useData(`data/sermons_v2/${date}`)

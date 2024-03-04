@@ -1,5 +1,5 @@
 
-export interface GoogleToken {
+export type GoogleToken = {
   tokenId: string
   expiresAt: number
 
