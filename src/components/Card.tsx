@@ -1,6 +1,8 @@
-import { Card as MuiCard, CardActionArea, CardContent, CardHeader, CardMedia, Box } from '@mui/material'
+import { ContentOf, useContents } from '@/services/ContentService'
+import { Card as MuiCard, CardActionArea, CardContent as MuiCardContent, CardHeader, CardMedia, Box } from '@mui/material'
 import Link from 'next/link'
 import { FunctionComponent, PropsWithChildren } from 'react'
+import { DynamicComponent } from './DynamicComponent'
 
 type CardProps = {
   title: string
@@ -23,7 +25,7 @@ export const Card: FunctionComponent<PropsWithChildren<CardProps>> =
         <CardActionArea {...actionProps}>
           { image && <CardMedia sx={{ height: '195px' }} image={image} height={195} component="img" /> }
           <CardHeader title={title} subheader={ subtitle }></CardHeader>
-          <CardContent>{children}</CardContent>
+          <MuiCardContent>{children}</MuiCardContent>
         </CardActionArea>
       </MuiCard>
     )
@@ -35,3 +37,14 @@ export const CardList: FunctionComponent<PropsWithChildren<{}>> =
       { children }
     </Box>
   )
+
+export const CardContent: FunctionComponent<ContentOf<CardProps, 'card'>> =
+  ({ title, subtitle, image, link, children }) => {
+    const childContents = useContents(children)
+
+    return (
+      <Card title={title} subtitle={subtitle} image={image} link={link} >
+        { childContents?.map(child => (<DynamicComponent content={child} />)) }
+      </Card>
+    )
+  }

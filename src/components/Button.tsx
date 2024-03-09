@@ -1,3 +1,4 @@
+import { ContentOf } from '@/services/ContentService'
 import { Box, SxProps, Theme } from '@mui/material'
 import ButtonBase, { ButtonProps as ButtonBaseProps } from '@mui/material/Button'
 import Link from 'next/link'
@@ -34,3 +35,6 @@ export const Button: FunctionComponent<PropsWithChildren<ButtonProps>> =
       </ButtonBase>
     )
   }
+
+export const ButtonContent: FunctionComponent<ContentOf<ButtonProps, 'button'> & { text: string }> =
+  (props) => (<Button {...props}>{props.text}</Button>)
