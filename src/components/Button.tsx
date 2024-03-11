@@ -36,5 +36,7 @@ export const Button: FunctionComponent<PropsWithChildren<ButtonProps>> =
     )
   }
 
-export const ButtonContent: FunctionComponent<ContentOf<ButtonProps, 'button'> & { text: string }> =
+export type ButtonContentProps =  ContentOf<ButtonProps> & { text: string }
+
+export const ButtonContent: FunctionComponent<ButtonContentProps> =
   (props) => (<Button {...props}>{props.text}</Button>)

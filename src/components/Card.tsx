@@ -1,5 +1,5 @@
-import { ContentOf, useContents } from '@/services/ContentService'
-import { Card as MuiCard, CardActionArea, CardContent as MuiCardContent, CardHeader, CardMedia, Box } from '@mui/material'
+import { ContentWithChildrenOf, useContents } from '@/services/ContentService'
+import { Box, CardActionArea, CardHeader, CardMedia, Card as MuiCard, CardContent as MuiCardContent } from '@mui/material'
 import Link from 'next/link'
 import { FunctionComponent, PropsWithChildren } from 'react'
 import { DynamicComponent } from './DynamicComponent'
@@ -38,7 +38,9 @@ export const CardList: FunctionComponent<PropsWithChildren<{}>> =
     </Box>
   )
 
-export const CardContent: FunctionComponent<ContentOf<CardProps, 'card'>> =
+export type CardContentProps = ContentWithChildrenOf<CardProps>
+
+export const CardContent: FunctionComponent<CardContentProps> =
   ({ title, subtitle, image, link, children }) => {
     const childContents = useContents(children)
 

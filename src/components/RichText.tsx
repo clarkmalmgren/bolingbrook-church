@@ -28,5 +28,7 @@ export type RichTextProps = {
 export const RichText: FunctionComponent<RichTextProps> =
   ({ data }) => (<>{ data?.blocks.map(b => <RichBlock key={b.id} block={b} />) }</>)
 
-export const RichTextContent: FunctionComponent<ContentOf<RichTextProps, "richtext">> =
+export type RichTextContentProps = ContentOf<RichTextProps>
+
+export const RichTextContent: FunctionComponent<RichTextContentProps> =
   ({ data }) => (<RichText data={data} />)

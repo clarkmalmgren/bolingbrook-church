@@ -5,7 +5,7 @@ import { DropdownAvailableTypes, TypeSpecificFields, TypeToName } from '@/compon
 import { DataState, Form } from '@/forms/Form'
 import { TextFormField } from '@/forms/FormField'
 import { FormSelect } from '@/forms/FormSelect'
-import { ContentMeta, saveContent, useContent } from '@/services/ContentService'
+import { Content, saveContent, useContent } from '@/services/ContentService'
 import { ChevronLeft } from '@mui/icons-material'
 import { Box, CircularProgress, IconButton, Paper, Typography } from '@mui/material'
 import Link from 'next/link'
@@ -19,23 +19,20 @@ type EditorPageProps = {
 
 const EditorPage: FunctionComponent<EditorPageProps> =
   ({ params: { id } }) => {
-    const [ data, setData ] = useState<ContentMeta<any>>()
+    const [ content, setContent ] = useState<Content>()
     const initial = useContent(id)
 
     useEffect(() => {
-      if (!data && initial) { setData(initial) }
-    }, [ data, initial ])
+      if (!content && initial) { setContent(initial) }
+    }, [ content, initial ])
 
-    if (!data) {
+    if (!content) {
       return (
         <Box height="80vh" width="100%" textAlign="center">
           <CircularProgress sx={{ position: 'absolute', top: '50%' }} />
         </Box>
       )
     }
-
-    const initalFormData: DataState = {}
-    Object.keys(data).forEach((k) => initalFormData[k] = { value: (data as any)[k] })
 
     return (
       <>
@@ -45,8 +42,8 @@ const EditorPage: FunctionComponent<EditorPageProps> =
           </IconButton>
           <Typography display="inline-block" color="#ccc">/</Typography>
           <Box ml={2}>
-            <Typography color="#555" fontSize="15px">{TypeToName[data.type]}</Typography>
-            <Typography><b>{data.name}</b></Typography>
+            <Typography color="#555" fontSize="15px">{TypeToName[content.meta.type]}</Typography>
+            <Typography><b>{content.meta.name}</b></Typography>
           </Box>
         </Paper>
         <Box display="flex" alignItems="top">
@@ -56,18 +53,18 @@ const EditorPage: FunctionComponent<EditorPageProps> =
             open={true}
             submit={(d) => saveContent(id, d as any)}
             title="Edit Component"
-            onChange={(d) => setData(d as any)}
-            initialData={initalFormData}
+            onChange={(d) => setContent(d as any)}
+            initialData={{ state: content }}
             sx={{ m: 2, p: 2, flex: '33%' }}
             keepDataOnSuccess
           >
-            <TextFormField id="id" label="ID" disabled />
-            <FormSelect id="type" label="Type" options={DropdownAvailableTypes} disabled />
-            <TextFormField id="name" label="Name" />
-            <TypeSpecificFields type={data.type} />
+            <TextFormField id={['meta', 'id']}   label="ID"   disabled />
+            <FormSelect    id={['meta', 'type']} label="Type" disabled options={DropdownAvailableTypes}  />
+            <TextFormField id={['meta', 'name']} label="Name" />
+            <TypeSpecificFields type={content.meta.type} />
           </Form>
           <Box flex="67%" p={2}>
-            { data && <DynamicComponent content={data} /> }
+            { content && <DynamicComponent content={content} /> }
           </Box>
         </Box>
       </>

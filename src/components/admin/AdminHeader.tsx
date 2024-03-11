@@ -1,14 +1,17 @@
 'use client'
 
-import { AppBar, Box, Toolbar, useTheme } from '@mui/material'
+import { AppBar, Box, Button, Toolbar, useTheme } from '@mui/material'
 import Link from 'next/link'
 import { FunctionComponent } from 'react'
 import { Logo } from '../../../public/Logo'
 import { TextLogo } from '../../../public/TextLogo'
+import { useAuthState, useLogout } from '@/services/FirebaseAuthService'
 
 export const AdminHeader: FunctionComponent<{}> =
   () => {
     const theme = useTheme()
+    const auth = useAuthState()
+    const logout = useLogout()
 
     return (
       <AppBar position="relative">
@@ -31,6 +34,8 @@ export const AdminHeader: FunctionComponent<{}> =
             <Logo color={theme.palette.primary.main} />
             <TextLogo color="black" />
           </Box>
+          <Box flex="1" />
+          { auth && <Button onClick={() => logout()}>Logout</Button> }
         </Toolbar>
       </AppBar>
     )

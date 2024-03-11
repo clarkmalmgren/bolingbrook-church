@@ -1,20 +1,20 @@
-import { ContentMeta } from '@/services/ContentService'
+import { Content, ContentMeta } from '@/services/ContentService'
 import { FunctionComponent } from 'react'
-import { CardContent } from './Card'
-import { RichTextContent } from './RichText'
-import { ButtonContent } from './Button'
+import { CardContent, CardContentProps } from './Card'
+import { RichTextContent, RichTextContentProps } from './RichText'
+import { ButtonContent, ButtonContentProps } from './Button'
 
-type DynamicProvider = (content: ContentMeta<string>) => JSX.Element
+type DynamicProvider<T extends {}> = (content: Content<T>) => JSX.Element
 
-const Providers: { [type: string]: DynamicProvider } = {
-  button: (c) => <ButtonContent {...c as any} />,
-  card: (c) => <CardContent {...c as any} />,
-  richtext: (c) => <RichTextContent {...c as any} />
+const Providers: { [type: string]: DynamicProvider<any> } = {
+  button:   (c: Content<ButtonContentProps>)    => <ButtonContent {...c.data} />,
+  card:     (c: Content<CardContentProps>)      => <CardContent {...c.data} />,
+  richtext: (c: Content<RichTextContentProps>)  => <RichTextContent {...c.data} />
 }
 
 type DynamicComponentProps = {
-  content: ContentMeta<string>
+  content: Content
 }
 
 export const DynamicComponent: FunctionComponent<DynamicComponentProps> =
-  ({ content }) => Providers[content.type](content)
+  ({ content }) => Providers[content.meta.type](content)

@@ -1,9 +1,9 @@
-import { FunctionComponent, ReactElement, useContext } from 'react'
-import { FormContext } from './Form'
 import { TextField } from '@mui/material'
+import { FunctionComponent, ReactElement } from 'react'
+import { useFormField } from './Form'
 
 type BaseFieldProps<T> = {
-  id: string
+  id: string | string[]
   required?: boolean
   label: string
   disabled?: boolean
@@ -11,7 +11,7 @@ type BaseFieldProps<T> = {
 }
 
 type FormFieldProps<T> = {
-  id: string
+  id: string | string[]
   required?: boolean
   label: string
   disabled?: boolean
@@ -22,11 +22,12 @@ type FormFieldProps<T> = {
 
 function FormField<T>(props: FormFieldProps<T>): ReactElement<any, any> {
   const { id, required, label, toValue, type, disabled, isValid } = props
-  const { data, setValue } = useContext(FormContext)
-  const update = (s: string) => {
+  const { value, update, flat } = useFormField(id)
+
+  const _update = (s: string) => {
     const value = toValue(s)
     const invalid = !isValid(value)
-    setValue(id, value, invalid)
+    update(value, invalid)
   }
 
   return (
@@ -36,12 +37,12 @@ function FormField<T>(props: FormFieldProps<T>): ReactElement<any, any> {
       fullWidth
       required={required}
       label={label}
-      id={id}
-      name={id}
-      value={data[id]?.value || (type === 'number' ? 0 : '')}
+      id={flat}
+      name={flat}
+      value={value || (type === 'number' ? 0 : '')}
       type={type}
       disabled={disabled}
-      onChange={ (e) => update(e.target.value) }
+      onChange={ (e) => _update(e.target.value) }
     />
   )
 }

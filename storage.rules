@@ -6,7 +6,8 @@ rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
     match /{allPaths=**} {
-      allow read, write: if false;
+      allow read: if true;
+      allow write: if request.auth.token.email_verified && firestore.get(/databases/(default)/documents/users/$(request.auth.token.email)).data.admin == true;
     }
   }
 }

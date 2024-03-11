@@ -21,14 +21,14 @@ export const TypeSpecificFields: FunctionComponent<{ type: string }> =
       case 'button':
         return (
           <>
-            <TextFormField id="text" label="Text" required />
-            <TextFormField id="link" label="link" />
-            <FormSelect id="size" label="Size" options={[ 'small', 'medium', 'large' ]}/>
+            <TextFormField id={['data', 'text']} label="Text" required />
+            <TextFormField id={['data', 'link']} label="link" />
+            <FormSelect    id={['data', 'size']} label="Size" options={[ 'small', 'medium', 'large' ]}/>
           </>
         )
 
       case 'richtext':
-        return (<FormEditor id="data" label="Rich Text Blocks" />)
+        return (<FormEditor id={['data', 'data']} label="Rich Text Blocks" />)
 
 
       default: 

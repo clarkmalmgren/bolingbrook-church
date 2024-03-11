@@ -2,6 +2,7 @@ import { initializeApp, FirebaseApp } from 'firebase/app'
 import { getAuth, connectAuthEmulator } from 'firebase/auth'
 import { getDatabase, connectDatabaseEmulator } from 'firebase/database'
 import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore'
+import { getStorage, connectStorageEmulator } from 'firebase/storage'
 
 const config = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -18,6 +19,7 @@ const app: FirebaseApp = initializeApp(config)
 const auth = getAuth(app)
 const database = getDatabase(app)
 const firestore = getFirestore(app)
+const storage = getStorage(app)
 
 // Check to see if the emulators should be attached
 export const useEmulators = process.env.NODE_ENV === 'development'
@@ -26,7 +28,8 @@ if (useEmulators) {
   connectFirestoreEmulator(firestore, 'localhost', 8080)
   connectAuthEmulator(auth, 'http://localhost:9099')
   connectDatabaseEmulator(database, 'localhost', 9001)
+  connectStorageEmulator(storage, 'localhost', 9199)
 }
 
 export type App = FirebaseApp
-export { app, auth, database, firestore }
+export { app, auth, database, firestore, storage }

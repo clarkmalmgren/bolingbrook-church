@@ -2,11 +2,11 @@ import { Random } from '@/services/utils/Random'
 import EditorJS, { OutputData } from '@editorjs/editorjs'
 import Header from '@editorjs/header'
 import { Box, FormControl, InputLabel } from '@mui/material'
-import { FunctionComponent, useContext, useEffect, useRef, useState } from 'react'
-import { FormContext } from './Form'
+import { FunctionComponent, useEffect, useRef, useState } from 'react'
+import { useFormField } from './Form'
 
 type EditorProps = {
-  id: string
+  id: string | string[]
   label: string
 }
 
@@ -14,8 +14,7 @@ export const FormEditorClient: FunctionComponent<EditorProps> =
   ({ id, label }) => {
     const editor = useRef<EditorJS | undefined>()
     const [ holderId ] = useState('editorjs_holder_' + Random.string(8))
-    const { data, setValue } = useContext(FormContext)
-    const initial: OutputData = data[id]?.value
+    const { value, update } = useFormField<OutputData | undefined>(id)
 
     useEffect(() => {
       if (typeof window === 'undefined') {
@@ -28,10 +27,10 @@ export const FormEditorClient: FunctionComponent<EditorProps> =
         tools: {
           header: Header
         },
-        data: initial,
-        onChange: async (api, event) => {
+        data: value,
+        onChange: async () => {
           const out = await editor.current?.save()
-          setValue(id, out)
+          update(out)
         }
       })
     }, [])
