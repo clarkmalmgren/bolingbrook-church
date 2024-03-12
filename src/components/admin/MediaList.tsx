@@ -1,17 +1,13 @@
 'use client'
 
-import { DeleteContent } from '@/components/admin/DeleteContent'
-import { DropdownAvailableTypes, TypeToName } from '@/components/admin/EditorTypeFields'
 import { Form } from '@/forms/Form'
 import { TextFormField } from '@/forms/FormField'
-import { FormSelect } from '@/forms/FormSelect'
 import { FormPhoto } from '@/forms/FormUpload'
-import { uploadMedia, useAllMedia } from '@/services/MediaService'
+import { MediaRef, uploadMedia, useAllMedia } from '@/services/MediaService'
 import { Random } from '@/services/utils/Random'
 import { Add } from '@mui/icons-material'
-import { Box, Button, CircularProgress, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
+import { Box, Button, CircularProgress, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { FunctionComponent, useState } from 'react'
 import { DeleteMedia } from './DeleteMedia'
 import { MediaItem } from './MediaItem'
@@ -43,28 +39,7 @@ export const MediaList: FunctionComponent<{}> =
             Add <Add />
           </Button>
         </Box>
-        <TableContainer>
-          <Table >
-            <TableHead>
-              <TableRow>
-                <TableCell><b>Name</b></TableCell>
-                <TableCell width={1} />
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {media.map(m => (
-                <TableRow key={m.id} hover >
-                  <TableCell>
-                    <MediaItem media={m} />
-                  </TableCell>
-                  <TableCell>
-                    <DeleteMedia media={m} />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <MediaTable all={media} showDelete />
         <Form
           open={open}
           onClose={() => setOpen(false)}
@@ -82,3 +57,26 @@ export const MediaList: FunctionComponent<{}> =
     )
   }
 
+type MediaTableProps = {
+  all: MediaRef[]
+  onClick?: (m: MediaRef) => void
+  showDelete?: boolean
+}
+
+export const MediaTable: FunctionComponent<MediaTableProps> =
+  ({ all, onClick, showDelete }) => (
+    <TableContainer>
+      <Table >
+        <TableBody>
+          {all.map(m => (
+            <TableRow key={m.id} hover onClick={() => onClick?.(m)}>
+              <TableCell>
+                <MediaItem media={m} />
+              </TableCell>
+              { showDelete && <TableCell width={1}><DeleteMedia media={m} /></TableCell> }
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  )

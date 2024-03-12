@@ -1,8 +1,10 @@
-import { ContentWithChildrenOf, useContents } from '@/services/ContentService'
+import { ContentOf } from '@/services/ContentService'
+import { useMedia } from '@/services/MediaService'
+import { OutputData } from '@editorjs/editorjs'
 import { Box, CardActionArea, CardHeader, CardMedia, Card as MuiCard, CardContent as MuiCardContent } from '@mui/material'
 import Link from 'next/link'
 import { FunctionComponent, PropsWithChildren } from 'react'
-import { DynamicComponent } from './DynamicComponent'
+import { RichText } from './RichText'
 
 type CardProps = {
   title: string
@@ -38,15 +40,18 @@ export const CardList: FunctionComponent<PropsWithChildren<{}>> =
     </Box>
   )
 
-export type CardContentProps = ContentWithChildrenOf<CardProps>
+export type CardContentProps = ContentOf<CardProps> & {
+  mediaRef?: string
+  body?: OutputData
+}
 
 export const CardContent: FunctionComponent<CardContentProps> =
-  ({ title, subtitle, image, link, children }) => {
-    const childContents = useContents(children)
+  ({ title, subtitle, image, link, mediaRef, body }) => {
+    const media = useMedia(mediaRef)
 
     return (
-      <Card title={title} subtitle={subtitle} image={image} link={link} >
-        { childContents?.map(child => (<DynamicComponent content={child} />)) }
+      <Card title={title} subtitle={subtitle} image={media?.url || image} link={link} >
+        <RichText data={body} />
       </Card>
     )
   }

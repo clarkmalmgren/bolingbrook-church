@@ -2,7 +2,7 @@
 
 import { DynamicComponent } from '@/components/DynamicComponent'
 import { DropdownAvailableTypes, TypeSpecificFields, TypeToName } from '@/components/admin/EditorTypeFields'
-import { DataState, Form } from '@/forms/Form'
+import { Form } from '@/forms/Form'
 import { TextFormField } from '@/forms/FormField'
 import { FormSelect } from '@/forms/FormSelect'
 import { Content, saveContent, useContent } from '@/services/ContentService'
@@ -42,7 +42,7 @@ const EditorPage: FunctionComponent<EditorPageProps> =
           </IconButton>
           <Typography display="inline-block" color="#ccc">/</Typography>
           <Box ml={2}>
-            <Typography color="#555" fontSize="15px">{TypeToName[content.meta.type]}</Typography>
+            <Typography color="#555" fontSize="15px">{TypeToName[content.meta.type]} (id: {content.meta.id})</Typography>
             <Typography><b>{content.meta.name}</b></Typography>
           </Box>
         </Paper>
@@ -58,8 +58,10 @@ const EditorPage: FunctionComponent<EditorPageProps> =
             sx={{ m: 2, p: 2, flex: '33%' }}
             keepDataOnSuccess
           >
-            <TextFormField id={['meta', 'id']}   label="ID"   disabled />
-            <FormSelect    id={['meta', 'type']} label="Type" disabled options={DropdownAvailableTypes}  />
+            <Box display="none">
+              <TextFormField id={['meta', 'id']}   label="ID"   disabled />
+              <FormSelect    id={['meta', 'type']} label="Type" disabled options={DropdownAvailableTypes}  />
+            </Box>
             <TextFormField id={['meta', 'name']} label="Name" />
             <TypeSpecificFields type={content.meta.type} />
           </Form>

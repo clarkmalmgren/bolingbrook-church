@@ -1,11 +1,17 @@
 'use client'
 
-import { AppBar, Box, Button, Toolbar, useTheme } from '@mui/material'
+import { useAuthState, useLogout } from '@/services/FirebaseAuthService'
+import { AppBar, Box, Toolbar, useTheme } from '@mui/material'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { FunctionComponent } from 'react'
 import { Logo } from '../../../public/Logo'
 import { TextLogo } from '../../../public/TextLogo'
-import { useAuthState, useLogout } from '@/services/FirebaseAuthService'
+
+export const Logout = dynamic(
+  () => import('./Logout'),
+  { ssr: false }
+)
 
 export const AdminHeader: FunctionComponent<{}> =
   () => {
@@ -35,7 +41,7 @@ export const AdminHeader: FunctionComponent<{}> =
             <TextLogo color="black" />
           </Box>
           <Box flex="1" />
-          { auth && <Button onClick={() => logout()}>Logout</Button> }
+          <Logout />
         </Toolbar>
       </AppBar>
     )

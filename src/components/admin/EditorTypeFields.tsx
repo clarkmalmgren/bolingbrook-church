@@ -2,11 +2,13 @@ import { FormEditor } from '@/forms/FormEditor'
 import { TextFormField } from '@/forms/FormField'
 import { FormSelect } from '@/forms/FormSelect'
 import { FunctionComponent } from 'react'
+import { MediaSelector } from './MediaSelector'
 
 
 export const TypeToName: Record<string, string> = {
+  button: 'Button',
+  card: 'Card',
   richtext: 'Rich Text',
-  button: 'Button'
 }
 
 export const DropdownAvailableTypes: { value: string, label: string }[] =
@@ -24,6 +26,18 @@ export const TypeSpecificFields: FunctionComponent<{ type: string }> =
             <TextFormField id={['data', 'text']} label="Text" required />
             <TextFormField id={['data', 'link']} label="link" />
             <FormSelect    id={['data', 'size']} label="Size" options={[ 'small', 'medium', 'large' ]}/>
+          </>
+        )
+
+      case 'card':
+        return (
+          <>
+            <TextFormField id={['data', 'title']} label="Title" required />
+            <TextFormField id={['data', 'subtitle']} label="Subtitle" />
+            <TextFormField id={['data', 'image']} label="Image" />
+            <MediaSelector id={['data', 'mediaRef']} label="Media" />
+            <TextFormField id={['data', 'link']} label="Link" />
+            <FormEditor    id={['data', 'body']} label="Body" />
           </>
         )
 
