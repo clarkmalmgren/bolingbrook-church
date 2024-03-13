@@ -26,7 +26,7 @@ function FormField<T>(props: FormFieldProps<T>): ReactElement<any, any> {
 
   const _update = (s: string) => {
     const value = toValue(s)
-    const invalid = !isValid(value)
+    const invalid = required && !isValid(value)
     update(value, invalid)
   }
 

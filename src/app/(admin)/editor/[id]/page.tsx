@@ -62,7 +62,7 @@ const EditorPage: FunctionComponent<EditorPageProps> =
               <TextFormField id={['meta', 'id']}   label="ID"   disabled />
               <FormSelect    id={['meta', 'type']} label="Type" disabled options={DropdownAvailableTypes}  />
             </Box>
-            <TextFormField id={['meta', 'name']} label="Name" />
+            <TextFormField id={['meta', 'name']} label="Name" required />
             <TypeSpecificFields type={content.meta.type} />
           </Form>
           <Box flex="67%" p={2}>

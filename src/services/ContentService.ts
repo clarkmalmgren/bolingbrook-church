@@ -30,7 +30,7 @@ export function useContent<T extends Content>(id?: string): Content | undefined 
   return useSharedHook(
     ContentService,
     (data) => id ? data[id] as T | undefined : undefined,
-    [id]
+    [ id ]
   )
 }
 
@@ -38,7 +38,7 @@ export function useContents<T extends Content>(ids?: string[]): T[] | undefined 
   return useSharedHook(
     ContentService,
     (data) => ids ? ids.map(id => data[id] as T) : undefined,
-    ids
+    [ ids ]
   )
 }
 
@@ -48,6 +48,20 @@ export function useAllContent(): Content[] | undefined {
     (data) => Object.values(data).sort((a, b) => a.meta.name?.localeCompare(b.meta.name)),
     []
   )
+}
+
+export function useFilteredContent(types?: string | string[]): Content[] | undefined {
+  const all = useAllContent()
+  
+  if (!all || !types) {
+    return all
+  }
+
+  if (typeof types === 'string') {
+    return all.filter((c) => c.meta.type === types)
+  } else {
+    return all.filter((c) => types.includes(c.meta.type))
+  }
 }
 
 export async function saveContent(id: string, data: Content): Promise<FormResponse> {

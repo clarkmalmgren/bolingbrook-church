@@ -4,7 +4,7 @@ import { DeleteContent } from '@/components/admin/DeleteContent'
 import { DropdownAvailableTypes, TypeToName } from '@/components/admin/EditorTypeFields'
 import { Form } from '@/forms/Form'
 import { FormSelect } from '@/forms/FormSelect'
-import { saveContent, useAllContent } from '@/services/ContentService'
+import { Content, saveContent, useAllContent } from '@/services/ContentService'
 import { Random } from '@/services/utils/Random'
 import { Add } from '@mui/icons-material'
 import { Box, Button, CircularProgress, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
@@ -40,28 +40,11 @@ export const ContentList: FunctionComponent<{}> =
             Add <Add />
           </Button>
         </Box>
-        <TableContainer>
-          <Table >
-            <TableHead>
-              <TableRow>
-                <TableCell><b>Name</b></TableCell>
-                <TableCell width={120} ><b>Type</b></TableCell>
-                <TableCell width={1} />
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {content.map(c => (
-                <TableRow key={c.meta.id} hover role="link" onClick={ () => router.push(`/editor/${c.meta.id}`) } sx={{ cursor: 'pointer' }}>
-                  <TableCell>{c.meta.name}</TableCell>
-                  <TableCell>{TypeToName[c.meta.type]}</TableCell>
-                  <TableCell>
-                    <DeleteContent content={c} />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <ContentTable
+          all={content}
+          onClick={(c) => router.push(`/editor/${c.meta.id}`)}
+          showDelete
+        />
         <Form
           open={open}
           onClose={() => setOpen(false)}
@@ -82,3 +65,32 @@ export const ContentList: FunctionComponent<{}> =
     )
   }
 
+type ContentTableProps = {
+  all: Content[]
+  onClick?: (c: Content) => void
+  showDelete?: boolean
+}
+
+export const ContentTable: FunctionComponent<ContentTableProps> =
+  ({ all, onClick, showDelete }) => (
+    <TableContainer>
+      <Table >
+        <TableHead>
+          <TableRow>
+            <TableCell><b>Name</b></TableCell>
+            <TableCell width={120} ><b>Type</b></TableCell>
+            { showDelete && <TableCell width={1} /> }
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {all.map(c => (
+            <TableRow key={c.meta.id} hover role="link" onClick={() => onClick?.(c) } sx={{ cursor: 'pointer' }}>
+              <TableCell>{c.meta.name}</TableCell>
+              <TableCell>{TypeToName[c.meta.type]}</TableCell>
+              { showDelete && <TableCell><DeleteContent content={c} /></TableCell> }
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  )

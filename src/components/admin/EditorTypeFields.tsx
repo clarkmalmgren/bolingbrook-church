@@ -3,11 +3,13 @@ import { TextFormField } from '@/forms/FormField'
 import { FormSelect } from '@/forms/FormSelect'
 import { FunctionComponent } from 'react'
 import { MediaSelector } from './MediaSelector'
+import { ChildSelector } from './ChildSelector'
 
 
 export const TypeToName: Record<string, string> = {
   button: 'Button',
   card: 'Card',
+  cardlist: 'Card List',
   richtext: 'Rich Text',
 }
 
@@ -38,6 +40,13 @@ export const TypeSpecificFields: FunctionComponent<{ type: string }> =
             <MediaSelector id={['data', 'mediaRef']} label="Media" />
             <TextFormField id={['data', 'link']} label="Link" />
             <FormEditor    id={['data', 'body']} label="Body" />
+          </>
+        )
+
+      case 'cardlist':
+        return (
+          <>
+            <ChildSelector id={['data', 'children']} label="Cards" onlyTypes="card" />
           </>
         )
 

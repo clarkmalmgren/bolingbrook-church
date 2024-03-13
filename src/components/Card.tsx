@@ -1,7 +1,7 @@
 import { ContentOf } from '@/services/ContentService'
 import { useMedia } from '@/services/MediaService'
 import { OutputData } from '@editorjs/editorjs'
-import { Box, CardActionArea, CardHeader, CardMedia, Card as MuiCard, CardContent as MuiCardContent } from '@mui/material'
+import { CardActionArea, CardHeader, CardMedia, Card as MuiCard, CardContent as MuiCardContent } from '@mui/material'
 import Link from 'next/link'
 import { FunctionComponent, PropsWithChildren } from 'react'
 import { RichText } from './RichText'
@@ -32,13 +32,6 @@ export const Card: FunctionComponent<PropsWithChildren<CardProps>> =
       </MuiCard>
     )
   }
-
-export const CardList: FunctionComponent<PropsWithChildren<{}>> =
-  ({ children }) => (
-    <Box sx={{ display: 'flex', flexFlow: 'row wrap', justifyContent: 'center' }}>
-      { children }
-    </Box>
-  )
 
 export type CardContentProps = ContentOf<CardProps> & {
   mediaRef?: string
