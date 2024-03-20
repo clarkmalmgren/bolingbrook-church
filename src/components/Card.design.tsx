@@ -2,7 +2,8 @@
 
 import { Typography } from '@mui/material'
 import { FunctionComponent } from 'react'
-import { Card, CardList } from './Card'
+import { Card } from './Card'
+import { CardList } from './CardList'
 import { Example } from './Example.design'
 import { Lorem } from './Text.design'
 

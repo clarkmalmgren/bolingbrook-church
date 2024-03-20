@@ -1,4 +1,4 @@
-import { FormResponse } from '@/forms/Form'
+import { FormResponse, tryResponse } from '@/forms/Form'
 import { SharedCollectionListenerService, useSharedHook } from '@/services/FirestoreSharedHooks'
 import { firestore as db } from '@/services/utils/Firebase'
 import { deleteDoc, doc, setDoc } from 'firebase/firestore'
@@ -22,7 +22,7 @@ export type Content<T extends {} = { [k: string]: any }> = {
 
 const ContentService = new class extends SharedCollectionListenerService<Content> {
   constructor() {
-    super(db, `cdn/${process.env.NODE_ENV}/content`)
+    super(db, `cms/${process.env.NODE_ENV}/content`)
   }
 }
 
@@ -64,22 +64,20 @@ export function useFilteredContent(types?: string | string[]): Content[] | undef
   }
 }
 
-export async function saveContent(id: string, data: Content): Promise<FormResponse> {
-  const ref = doc(db, `cdn/${process.env.NODE_ENV}/content/${id}`)
-  await setDoc(ref, data)
-  return {
-    ok: true,
-    bodyString: async () => { return '' },
-    json: async () => { return data }
-  }
+export async function saveContent(id: string, data: Content): Promise<FormResponse<Content>> {
+  const ref = doc(db, `cms/${process.env.NODE_ENV}/content/${id}`)
+
+  return tryResponse(async () => {
+    await setDoc(ref, data)
+    return data
+  })
 }
 
-export async function deleteContent(id: string): Promise<FormResponse> {
-  const ref = doc(db, `cdn/${process.env.NODE_ENV}/content/${id}`)
-  await deleteDoc(ref)
-  return {
-    ok: true,
-    bodyString: async () => { return '' },
-    json: async () => { return { meta: { id } } }
-  }
+export async function deleteContent(id: string): Promise<FormResponse<{ meta: { id: string } }>> {
+  const ref = doc(db, `cms/${process.env.NODE_ENV}/content/${id}`)
+
+  return tryResponse(async () => {
+    await deleteDoc(ref)
+    return { meta: { id } }
+  })
 }

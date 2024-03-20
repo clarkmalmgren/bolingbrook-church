@@ -47,6 +47,20 @@ export const FormPhoto: FunctionComponent<CommonFormUploadProps> =
     )
   }
 
+
+export const FormVideo: FunctionComponent<CommonFormUploadProps> = 
+  ({ id, label, disabled }) => {
+    return (
+      <FormUpload
+        id={id} label={label} disabled={disabled}
+        header="[Drag Image Here]"
+        acceptedType={'video/*'}
+        allowedExtensions={['mov', 'quicktime', 'mpeg', 'mp4', 'webm']}
+      />
+    )
+  }
+
+
 export const FormCsv: FunctionComponent<CommonFormUploadProps> = 
   ({ id, label, disabled }) => {
     return (

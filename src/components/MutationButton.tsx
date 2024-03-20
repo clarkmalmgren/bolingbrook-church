@@ -1,22 +1,34 @@
 import { Box, CircularProgress } from '@mui/material'
-import { FunctionComponent, PropsWithChildren } from 'react'
+import { FunctionComponent, PropsWithChildren, useState } from 'react'
 import { ButtonProps, Button } from './Button'
 
-type MutationButtonProps = Omit<ButtonProps, 'link' | 'onclick'> & {
-  loading: boolean
+type MutationButtonProps = Omit<ButtonProps, 'link' | 'onClick'> & {
   submit: () => Promise<any>
   onDone?: () => any | void
+  spinForMs?: number
 }
 
 export const MutationButton: FunctionComponent<PropsWithChildren<MutationButtonProps>> =
-  ({ disabled, fullWidth, cancel, size, loading, submit, onDone, children }) => {
+  ({ submit, onDone, children, spinForMs, ...rest }) => {
+    const [ loading, setLoading ] = useState(false)
+
     async function onClick() {
+      setLoading(true)
+
+      const start = new Date().getTime()
       if (!loading) { await submit() }
-      if (onDone) { onDone() }
+      const taken = new Date().getTime() - start
+
+      const remaining = 
+
+      setTimeout(() => {
+        setLoading(false)
+        onDone?.()
+      }, Math.max(0, (spinForMs || 500) - taken))
     }
 
     return (
-      <Button disabled={disabled} fullWidth={fullWidth} cancel={cancel} size={size} onClick={onClick}>
+      <Button {...rest} onClick={onClick}>
         <Box position="relative">
           <Box sx={{ opacity: loading ? 0 : 1, transition: 'opacity 200ms' }}>
             { children }

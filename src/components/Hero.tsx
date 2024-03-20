@@ -1,30 +1,32 @@
+'use client'
+
+import { ContentOf } from '@/services/ContentService'
+import { MediaRef, useMedia, useResizedImageUrl } from '@/services/MediaService'
 import { Box, useTheme } from '@mui/material'
 import { FunctionComponent, PropsWithChildren, useEffect, useRef, useState } from 'react'
-import { Asset } from 'contentful'
-
-export type HeroMedia = {
-  name: string
-  media: Asset[]
-}
+import { DynamicComponent, ComponentById } from './DynamicComponent'
+import { OutputData } from '@editorjs/editorjs'
+import { RichText } from './RichText'
 
 export type HeroProps = {
-  media: HeroMedia
-  height: number
+  media?: { url: string, video: boolean }
+  height?: number
   shade?: number
-  shadeColor?: 'black' | 'white',
-  justify?: 'flex-start' | 'center' | 'flex-end' 
+  shadeColor?: 'black' | 'white'
+  justify?: 'flex-start' | 'center' | 'flex-end' | 'space-evenly'
   imagePosition?: string
 }
 
 export const Hero: FunctionComponent<PropsWithChildren<HeroProps>> =
   ({ media, height, shade, justify, shadeColor, children, imagePosition }) => {
-    const [ heightInPx, setHeightInPx ]  = useState((window.innerHeight - 60) * height)
+    const _height = height || 0.2
+    const [ heightInPx, setHeightInPx ]  = useState((window.innerHeight - 60) * _height)
     const ref = useRef<HTMLDivElement>(null)
     const theme = useTheme()
 
     const updateHeight = () => {
       const top = ref.current?.offsetTop || 60
-      setHeightInPx((window.innerHeight - top) * height)
+      setHeightInPx((window.innerHeight - top) * _height)
     }
 
     useEffect(() => {
@@ -35,8 +37,9 @@ export const Hero: FunctionComponent<PropsWithChildren<HeroProps>> =
     }, [ height ])
 
     function background() {
-      const file = media.media[0].fields.file
-      if (file.contentType.startsWith("video")) {
+      if (!media) {
+        return null
+      } else if (media.video) {
         return (
           <video autoPlay muted loop
             style={{
@@ -44,7 +47,7 @@ export const Hero: FunctionComponent<PropsWithChildren<HeroProps>> =
               height: '100%',
               objectFit: 'cover',
               objectPosition: 'middle center'}}>
-            <source src={file.url} type={file.contentType} />
+            <source src={media.url} />
           </video>
         )
       } else {
@@ -54,7 +57,7 @@ export const Hero: FunctionComponent<PropsWithChildren<HeroProps>> =
             top: 0, bottom: 0, right: 0, left: 0,
             backgroundSize: 'cover',
             zIndex: -100,
-            backgroundImage: `url(${file.url + "?w=" + window.screen.width})`,
+            backgroundImage: `url(${media.url})`,
             backgroundPosition: imagePosition || 'center'
           }} />
         )
@@ -85,11 +88,33 @@ export const Hero: FunctionComponent<PropsWithChildren<HeroProps>> =
         alignItems: 'center',
         padding: `${theme.spacing(4)} 0`,
         minHeight: heightInPx + 'px',
-        justifyContent: justify || 'center'
+        justifyContent: justify || 'center',
+        color: (shadeColor === 'white' ? 'black' : 'white') + ' !important'
       }}>
         {background()}
         {renderShade()}
         {children}
       </Box>
+    )
+  }
+
+export type HeroContentProps = ContentOf<HeroProps> & {
+  mediaRef?: string
+  body?: OutputData
+  children?: string[]
+}
+
+export const HeroContent: FunctionComponent<HeroContentProps> =
+  ({ mediaRef, body, children, ...rest }) => {
+    const mr = useMedia(mediaRef)
+    const mu = useResizedImageUrl(mr, 1500)
+
+    const media = mr ? { video: !!mr.video, url: mu || mr.url } : rest.media
+
+    return (
+      <Hero {...rest} media={media}>
+        <RichText data={body} />
+        { children?.map((c, i) => <ComponentById key={i} id={c} />) }
+      </Hero>
     )
   }

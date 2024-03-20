@@ -1,5 +1,5 @@
 import { ContentOf } from '@/services/ContentService'
-import { useMedia } from '@/services/MediaService'
+import { useMedia, useResizedImageUrl } from '@/services/MediaService'
 import { OutputData } from '@editorjs/editorjs'
 import { CardActionArea, CardHeader, CardMedia, Card as MuiCard, CardContent as MuiCardContent } from '@mui/material'
 import Link from 'next/link'
@@ -41,9 +41,10 @@ export type CardContentProps = ContentOf<CardProps> & {
 export const CardContent: FunctionComponent<CardContentProps> =
   ({ title, subtitle, image, link, mediaRef, body }) => {
     const media = useMedia(mediaRef)
+    const mediaUrl = useResizedImageUrl(media, 750)
 
     return (
-      <Card title={title} subtitle={subtitle} image={media?.url || image} link={link} >
+      <Card title={title} subtitle={subtitle} image={mediaUrl || image} link={link} >
         <RichText data={body} />
       </Card>
     )

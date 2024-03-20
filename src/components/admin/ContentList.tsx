@@ -1,7 +1,8 @@
 'use client'
 
 import { DeleteContent } from '@/components/admin/DeleteContent'
-import { DropdownAvailableTypes, TypeToName } from '@/components/admin/EditorTypeFields'
+import { DropdownAvailableTypes } from "./EditorTypeFields"
+import { TypeToName } from "./EditorTypeFields"
 import { Form } from '@/forms/Form'
 import { FormSelect } from '@/forms/FormSelect'
 import { Content, saveContent, useAllContent } from '@/services/ContentService'

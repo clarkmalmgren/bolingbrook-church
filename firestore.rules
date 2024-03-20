@@ -13,7 +13,7 @@ service cloud.firestore {
       allow read: if isAdmin();
     }
 
-    match /cdn/{rest=**} {
+    match /cms/{rest=**} {
       allow read: if true;
       allow write: if isAdmin();
     }

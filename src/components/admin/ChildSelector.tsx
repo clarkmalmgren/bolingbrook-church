@@ -6,7 +6,7 @@ import { Add, Remove } from '@mui/icons-material'
 import { Box, Dialog, DialogContent, FormControl, IconButton, InputLabel, List, ListItem, Typography } from '@mui/material'
 import { FunctionComponent, useState } from 'react'
 import { ContentTable } from './ContentList'
-import { TypeToName } from './EditorTypeFields'
+import { TypeToName } from "./EditorTypeFields"
 
 type ChildSelectorProps = {
   id: string | string[]
@@ -46,7 +46,7 @@ export const ChildSelector: FunctionComponent<ChildSelectorProps> =
             }}>{label}</InputLabel>
           <List sx={{ border: "1px solid rgba(0, 0, 0, 0.23)", borderRadius: 4, p: 1 }} >
             {selected?.map((c, i) => (
-              <ListItem key={c.meta.id}>
+              <ListItem key={i}>
                 <Typography>{TypeToName[c.meta.type]} / {c.meta.name}</Typography>
                 <Box flex="1" />
                 <IconButton onClick={() => remove(i)} color="warning">

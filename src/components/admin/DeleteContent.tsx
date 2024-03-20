@@ -3,7 +3,7 @@ import { DialogContentText, IconButton } from '@mui/material'
 import { FunctionComponent, useState } from 'react'
 import { Content, deleteContent } from '@/services/ContentService'
 import { Form } from '@/forms/Form'
-import { TypeToName } from './EditorTypeFields'
+import { TypeToName } from "./EditorTypeFields"
 import { TextFormField } from '@/forms/FormField'
 
 type Props = {

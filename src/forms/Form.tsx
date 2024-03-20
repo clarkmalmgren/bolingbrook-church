@@ -33,15 +33,39 @@ export const FormContext = createContext<FormContextData>({
   setValue: () => {}
 })
 
-export type FormResponse = {
-  ok: boolean
-  code?: number
-  json(): Promise<any>
+type SuccessFormResponse<T> = {
+  ok: true
+  json(): Promise<T>
+}
+
+type FailedFormResponse = {
+  ok: false
   bodyString(): Promise<string>
+}
+
+export type FormResponse<T = any> = (SuccessFormResponse<T> | FailedFormResponse) & {
+  code?: number | string
 }
 
 export type ErrorOutput = { message: string, severity: 'error' | 'warning' }
 export type ErrorMapper = (response: FormResponse, message?: string) => ErrorOutput
+
+export async function tryResponse<T>(fn: () => Promise<T>): Promise<FormResponse<T>> {
+  try {
+    const value = await fn()
+    return {
+      ok: true,
+      json: () => Promise.resolve(value)
+    }
+  } catch (e) {
+    const msg = `${e}`
+    return {
+      ok: false,
+      code: msg,
+      bodyString: () => Promise.resolve(msg)
+    }
+  }
+}
 
 export type FormProps = {
   open: boolean
@@ -71,13 +95,11 @@ const DefaultErrorMapper: ErrorMapper =
 
 const EmptyFailedResponse: FormResponse = {
   ok: false,
-  bodyString: async () => { return '' },
-  json: async () => { return {} }
+  bodyString: async () => { return '' }
 }
 
 export const EmptySuccessResponse: FormResponse = {
   ok: true,
-  bodyString: async () => { return '' },
   json: async () => { return {} }
 }
 
@@ -201,8 +223,7 @@ export const Form: FunctionComponent<PropsWithChildren<FormProps>> =
             
             <Box textAlign="right" sx={{ mt: 1 }}>
               <MutationButton
-                cancel={props.destructive}
-                loading={props.loading}
+                color={props.destructive ? 'error' : 'primary'}
                 submit={save}
                 disabled={disabled}
               >
@@ -225,8 +246,7 @@ export const Form: FunctionComponent<PropsWithChildren<FormProps>> =
               <Button variant="contained" color={props.destructive ? 'inherit' : 'error'} onClick={() => props.onClose?.()}>Cancel</Button>
               <Box flex="1"/>
               <MutationButton
-                cancel={props.destructive}
-                loading={props.loading}
+                color={props.destructive ? 'error' : 'primary'}
                 submit={save}
                 disabled={disabled}
               >

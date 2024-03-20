@@ -1,5 +1,5 @@
 import { ContentOf } from '@/services/ContentService'
-import { Box, SxProps, Theme } from '@mui/material'
+import { Box, SxProps, Theme, Typography, TypographyOwnProps } from '@mui/material'
 import ButtonBase, { ButtonProps as ButtonBaseProps } from '@mui/material/Button'
 import Link from 'next/link'
 import { FunctionComponent, PropsWithChildren } from 'react'
@@ -7,30 +7,34 @@ import { FunctionComponent, PropsWithChildren } from 'react'
 export type ButtonProps = {
   disabled?: boolean
   fullWidth?: boolean
-  cancel?: boolean
+  color?: ButtonBaseProps['color']
   size?: 'small' | 'medium' | 'large'
+  variant?: 'text' | 'contained' | 'outlined'
+  textSize?: TypographyOwnProps['variant']
+  textColor?: TypographyOwnProps['color']
   
   link?: string
   onClick?: () => any
 }
 
 export const Button: FunctionComponent<PropsWithChildren<ButtonProps>> =
-  ({ children, disabled, fullWidth, size, cancel, link, onClick }) => {
+  ({ children, disabled, variant, fullWidth, size, color, link, textSize, textColor, onClick }) => {
     const props: ButtonBaseProps = {
       disabled, fullWidth, size, onClick,
-      variant: 'contained',
-      color: cancel ? 'error' : 'primary',
+      variant: variant || 'contained',
+      color: color || 'primary',
       href: link
     }
     if (link) { props.component = Link }
     
     const sx: SxProps<Theme> = { m: 1, borderRadius: 80 }
-    if (!cancel) { sx.color = 'black' }
     
     return (
-      <ButtonBase {...props} sx={sx}>
+      <ButtonBase {...props} sx={sx} >
         <Box position="relative" top="2px">
-          {children}
+          { textSize ? <Typography variant={textSize} color={textColor}>{children}</Typography>
+                     : children
+          }
         </Box>
       </ButtonBase>
     )

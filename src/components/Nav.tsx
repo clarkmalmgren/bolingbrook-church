@@ -1,7 +1,7 @@
+import { useAuthState, useLogout } from '@/services/FirebaseAuthService'
+import { Box, Button, Divider, Drawer, Icon, IconButton, useTheme } from '@mui/material'
 import { FunctionComponent } from 'react'
-import { Drawer, Divider, Button, IconButton, Icon, Box, useTheme } from '@mui/material'
 import * as Links from './MenuLink'
-import { useAuthActions, useIsLoggedIn } from '../services/AuthService'
 
 type NavProps = {
   opened?: boolean
@@ -10,8 +10,8 @@ type NavProps = {
 
 export const Nav: FunctionComponent<NavProps> =
   ({ opened, onToggle }) => {
-    const { logout } = useAuthActions()
-    const loggedIn = useIsLoggedIn()
+    const logout = useLogout()
+    const loggedIn = !!useAuthState()
     const theme = useTheme()
 
     function close() {

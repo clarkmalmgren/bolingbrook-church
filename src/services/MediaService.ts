@@ -1,19 +1,24 @@
-import { FormResponse } from '@/forms/Form'
+import { FormResponse, tryResponse } from '@/forms/Form'
 import { SharedCollectionListenerService, useSharedHook } from '@/services/FirestoreSharedHooks'
 import { firestore as db, storage } from '@/services/utils/Firebase'
 import { deleteDoc, doc, setDoc, getDoc } from 'firebase/firestore'
 import { ref as storageRef, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
+import { useEffect, useState } from 'react'
 
 export type MediaRef = {
   id: string
   name: string
   url: string
   fullPath: string
+  video?: boolean
 }
+
+export type ImageSize = 50 | 350 | 750 | 1500
+const ImageSizes: ImageSize[] = [ 50, 350, 750, 1500 ]
 
 const MediaService = new class extends SharedCollectionListenerService<MediaRef> {
   constructor() {
-    super(db, `cdn/${process.env.NODE_ENV}/media`)
+    super(db, `cms/${process.env.NODE_ENV}/media`)
   }
 }
 
@@ -41,9 +46,9 @@ export function useAllMedia(): MediaRef[] | undefined {
   )
 }
 
-export async function uploadMedia(id: string, name: string, file: File): Promise<FormResponse> {
-  const dataRef = doc(db, `cdn/${process.env.NODE_ENV}/media/${id}`)
-  const mediaRef = storageRef(storage, `cdn/${process.env.NODE_ENV}/media/${id}`)
+export async function uploadMedia(id: string, name: string, file: File, video?: boolean): Promise<FormResponse> {
+  const dataRef = doc(db, `cms/${process.env.NODE_ENV}/media/${id}`)
+  const mediaRef = storageRef(storage, `cms/${process.env.NODE_ENV}/media/${id}`)
   
   const snap = await uploadBytes(mediaRef, file)
 
@@ -51,31 +56,58 @@ export async function uploadMedia(id: string, name: string, file: File): Promise
     id,
     name,
     url: await getDownloadURL(mediaRef),
-    fullPath: mediaRef.fullPath
+    fullPath: mediaRef.fullPath,
+    video: !!video
   }
 
-  await setDoc(dataRef, data)
-  return {
-    ok: true,
-    bodyString: async () => { return '' },
-    json: async () => { return data }
-  }
+  return tryResponse(async () => {
+    await setDoc(dataRef, data)
+    return data
+  })
 }
 
 export async function deleteMedia(id: string): Promise<FormResponse> {
-  const dataRef = doc(db, `cdn/${process.env.NODE_ENV}/media/${id}`)
+  const dataRef = doc(db, `cms/${process.env.NODE_ENV}/media/${id}`)
   const snap = await getDoc(dataRef)
   const data = snap.data() as MediaRef
 
   if (!data) { throw new Error(`Can't delete missing node`) }
 
-  const mediaRef = storageRef(storage, data.fullPath)
-  await deleteObject(mediaRef)
-  await deleteDoc(dataRef)
-
-  return {
-    ok: true,
-    bodyString: async () => { return '' },
-    json: async () => { return data }
+  if (!data.video) {
+    for (let size of ImageSizes) {
+      try {
+        const sr = storageRef(storage, `${data.fullPath}_${size}x${size}`)
+        await deleteObject(sr)
+      } catch {}
+    }
   }
+
+  return tryResponse(async () => {
+    const mediaRef = storageRef(storage, data.fullPath)
+    await deleteObject(mediaRef)
+    await deleteDoc(dataRef)
+    return data
+  })
+}
+
+
+export function useResizedImageUrl(ref: MediaRef | undefined, size: ImageSize): string | undefined {
+  const [ url, setUrl ] = useState<string>()
+
+  const update = async (retries: number) => {
+    if (!ref || ref.video || retries <= 0) { return }
+    try {
+      const sr = storageRef(storage, `${ref.fullPath}_${size}x${size}`)
+      const url = await getDownloadURL(sr)
+      setUrl(url)
+    } catch {
+      setTimeout(() => update(retries - 1), 200)
+    }
+  }
+
+  useEffect(() => {
+    update(10)
+  }, [ref, size])
+
+  return url
 }
