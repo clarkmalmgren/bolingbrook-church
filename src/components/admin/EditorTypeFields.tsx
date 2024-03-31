@@ -4,8 +4,9 @@ import { CardEditor } from '../Card.editor'
 import { CardListEditor } from '../CardList.editor'
 import { HeroEditor } from '../Hero.editor'
 import { RichTextEditor } from '../RichText.editor'
+import { FlexEditor } from '../Flex.editor'
 
-const entries = [ ButtonEditor, CardEditor, CardListEditor, HeroEditor, RichTextEditor ]
+const entries = [ ButtonEditor, CardEditor, CardListEditor, FlexEditor, HeroEditor, RichTextEditor ]
 
 export const TypeToName: Record<string, string> = {}
 export const DropdownAvailableTypes: { value: string; label: string; }[] = []

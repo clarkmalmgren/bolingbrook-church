@@ -50,7 +50,7 @@ export type FormResponse<T = any> = (SuccessFormResponse<T> | FailedFormResponse
 export type ErrorOutput = { message: string, severity: 'error' | 'warning' }
 export type ErrorMapper = (response: FormResponse, message?: string) => ErrorOutput
 
-export async function tryResponse<T>(fn: () => Promise<T>): Promise<FormResponse<T>> {
+export async function tryResponse<T>(fn: () => T | Promise<T>): Promise<FormResponse<T>> {
   try {
     const value = await fn()
     return {
