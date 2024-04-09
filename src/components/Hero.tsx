@@ -1,6 +1,6 @@
 'use client'
 
-import { ContentOf } from '@/services/ContentService'
+import { ContentOf } from '@/services/models/Content'
 import { MediaRef, useMedia, useResizedImageUrl } from '@/services/MediaService'
 import { Box, useTheme } from '@mui/material'
 import { FunctionComponent, PropsWithChildren, useEffect, useRef, useState } from 'react'

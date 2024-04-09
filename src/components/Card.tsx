@@ -1,4 +1,4 @@
-import { ContentOf } from '@/services/ContentService'
+import { ContentOf } from '@/services/models/Content'
 import { useMedia, useResizedImageUrl } from '@/services/MediaService'
 import { OutputData } from '@editorjs/editorjs'
 import { CardActionArea, CardHeader, CardMedia, Card as MuiCard, CardContent as MuiCardContent } from '@mui/material'

@@ -1,10 +1,12 @@
 import { DeleteForever } from '@mui/icons-material'
 import { DialogContentText, IconButton } from '@mui/material'
 import { FunctionComponent, useState } from 'react'
-import { Content, deleteContent } from '@/services/ContentService'
+import { deleteContent } from '@/services/ContentService'
+import { Content } from '@/services/models/Content'
 import { Form } from '@/forms/Form'
 import { TypeToName } from "./EditorTypeFields"
 import { TextFormField } from '@/forms/FormField'
+import { deleteStagedContent } from '@/services/StagedContentService'
 
 type Props = {
   disabled?: boolean
@@ -29,7 +31,10 @@ export const DeleteContent: FunctionComponent<Props> =
           onClose={() => setOpen(false)}
           loading={false}
           title={`Delete ${content.meta.name}?`}
-          submit={() => deleteContent(content.meta.id)}
+          submit={async () => {
+            await deleteStagedContent(content.meta.id)
+            return deleteContent(content.meta.id)
+          }}
           submitText="Delete"
           initialData={{ state: { name: '' }, invalid: { name: true } }}
           destructive

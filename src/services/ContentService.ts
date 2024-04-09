@@ -2,23 +2,9 @@ import { FormResponse, tryResponse } from '@/forms/Form'
 import { SharedCollectionListenerService, useSharedHook } from '@/services/FirestoreSharedHooks'
 import { firestore as db } from '@/services/utils/Firebase'
 import { deleteDoc, doc, setDoc } from 'firebase/firestore'
-
-export type ContentMeta = {
-  id: string
-  type: string
-  name: string
-}
-
-export type ContentOf<T> = {
-  [ K in keyof T as T[K] extends (Function | undefined) ? never : K ]: T[K]
-}
-
-export type ContentWithChildrenOf<T> = ContentOf<T> & { children?: string[] }
-
-export type Content<T extends {} = { [k: string]: any }> = {
-  meta: ContentMeta
-  data: T
-}
+import { useAuthState } from './FirebaseAuthService'
+import { Content, ContentMap } from './models/Content'
+import { createContext, useContext } from 'react'
 
 const ContentService = new class extends SharedCollectionListenerService<Content> {
   constructor() {
@@ -26,28 +12,27 @@ const ContentService = new class extends SharedCollectionListenerService<Content
   }
 }
 
-export function useContent<T extends Content>(id?: string): Content | undefined {
-  return useSharedHook(
-    ContentService,
-    (data) => id ? data[id] as T | undefined : undefined,
-    [ id ]
-  )
+export const ContentOverrides = createContext<ContentMap>({})
+
+export function useContentMap(): ContentMap | undefined {
+  const overrides = useContext(ContentOverrides)
+  const base = useSharedHook(ContentService, (data) => data, [])
+  return (typeof base === 'undefined') ? undefined : { ...base, ...overrides }
+}
+
+export function useContent(id?: string): Content | undefined {
+  const map = useContentMap()
+  return id ? map?.[id] : undefined
 }
 
 export function useContents<T extends Content>(ids?: string[]): T[] | undefined {
-  return useSharedHook(
-    ContentService,
-    (data) => ids ? ids.map(id => data[id] as T) : undefined,
-    [ ids ]
-  )
+  const map = useContentMap()
+  return map ? ids?.map(i => map[i] as T) : undefined
 }
 
 export function useAllContent(): Content[] | undefined {
-  return useSharedHook(
-    ContentService,
-    (data) => Object.values(data).sort((a, b) => a.meta.name?.localeCompare(b.meta.name)),
-    []
-  )
+  const map = useContentMap()
+  return map ? Object.values(map).sort((a, b) => a.meta.name?.localeCompare(b.meta.name)) : undefined
 }
 
 export function useFilteredContent(types?: string | string[]): Content[] | undefined {
@@ -64,13 +49,36 @@ export function useFilteredContent(types?: string | string[]): Content[] | undef
   }
 }
 
-export async function saveContent(id: string, data: Content): Promise<FormResponse<Content>> {
-  const ref = doc(db, `cms/${process.env.NODE_ENV}/content/${id}`)
-
-  return tryResponse(async () => {
-    await setDoc(ref, data)
-    return data
+export function useContentSearch(search: string): Content[] | undefined {
+  const all = useAllContent()
+  if (!all || !search) { return all }
+  
+  const terms = search.toLowerCase().split(/ +/)
+  return all.filter(c => {
+    const s = [c.meta.name,  c.meta.type, c.meta.author, c.meta.updated_by].join(' ').toLowerCase()
+    return terms.findIndex(t => !s.includes(t)) < 0
   })
+}
+
+export function useSaveContent(): (id: string, data: Content) => Promise<FormResponse<Content>> {
+  const auth = useAuthState()
+
+  return async (id: string, data: Content) => {
+    // Populate author and created if they don't already exist...
+    if (!data.meta.author) { data.meta.author = auth?.name || auth?.email }
+    if (!data.meta.created) { data.meta.created = new Date().getTime() }
+
+    // Always update the updated time and updated by...
+    data.meta.updated = new Date().getTime()
+    data.meta.updated_by = auth?.name || auth?.email
+
+    const ref = doc(db, `cms/${process.env.NODE_ENV}/content/${id}`)
+
+    return tryResponse(async () => {
+      await setDoc(ref, data)
+      return data
+    })
+  }
 }
 
 export async function deleteContent(id: string): Promise<FormResponse<{ meta: { id: string } }>> {

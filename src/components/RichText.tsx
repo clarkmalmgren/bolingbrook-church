@@ -1,4 +1,4 @@
-import { ContentOf } from '@/services/ContentService'
+import { ContentOf } from '@/services/models/Content'
 import { OutputBlockData, OutputData } from '@editorjs/editorjs'
 import { Typography } from '@mui/material'
 import { FunctionComponent } from 'react'

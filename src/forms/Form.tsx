@@ -68,18 +68,18 @@ export async function tryResponse<T>(fn: () => T | Promise<T>): Promise<FormResp
 }
 
 export type FormProps = {
-  open: boolean
+  open?: boolean
   onChange?: (data: { [key: string]: any }, invalid: InvalidityTree | undefined) => void
   onClose?: () => void
   onSuccess?: () => void
   redirectOnSuccess?: (data: { [key: string]: any }, json: { [key: string]: any }) => string | undefined
   keepDataOnSuccess?: boolean
-  loading: boolean
+  loading?: boolean
   requireAuth?: boolean
   authMessage?: string
-  title: string
+  title?: string
   initialData?: DataState
-  submit: (data: { [key: string]: any }) => Promise<FormResponse>
+  submit?: (data: { [key: string]: any }) => Promise<FormResponse>
   errorMapper?: ErrorMapper
   errorTimeout?: number
   submitText?: string
@@ -159,7 +159,6 @@ export const Form: FunctionComponent<PropsWithChildren<FormProps>> =
   (props) => {
     const router = useRouter()
     const [ error, setError ] = useState<ErrorOutput | undefined>(undefined)
-    // const [ data, setData ] = useState<DataState>(props.initialData || {})
     const [ x, setX ] = useState<number>(0)
     const data = useRef<DataState>(props.initialData || EmptyDataSate)
 
@@ -191,7 +190,7 @@ export const Form: FunctionComponent<PropsWithChildren<FormProps>> =
     }
 
     async function save() {
-      if (disabled || props.loading) { return }
+      if (disabled || props.loading || !props.submit) { return }
       setError(undefined)
       try {
         const response = await props.submit(data.current.state)
@@ -217,27 +216,29 @@ export const Form: FunctionComponent<PropsWithChildren<FormProps>> =
       return (
         <FormContext.Provider value={ctx}>
           <Paper component="form" sx={props.sx} >
-            <Typography variant="h4" sx={{ mb: 2 }}>{props.title}</Typography>
+            { props.title && <Typography variant="h4" sx={{ mb: 2 }}>{props.title}</Typography> }
             { props.children }
             { error && <Alert severity={error.severity}>{error.message}</Alert> }
             
-            <Box textAlign="right" sx={{ mt: 1 }}>
-              <MutationButton
-                color={props.destructive ? 'error' : 'primary'}
-                submit={save}
-                disabled={disabled}
-              >
-                { props.submitText || 'Submit' }
-              </MutationButton>
-            </Box>
+            { props.submit &&
+              <Box textAlign="right" sx={{ mt: 1 }}>
+                <MutationButton
+                  color={props.destructive ? 'error' : 'primary'}
+                  submit={save}
+                  disabled={disabled}
+                >
+                  { props.submitText || 'Submit' }
+                </MutationButton>
+              </Box>
+            }
           </Paper>
         </FormContext.Provider>
       )
     } else {
       return (
         <FormContext.Provider value={ctx}>
-          <Dialog open={props.open} onClose={props.onClose} component="form">
-            <DialogTitle>{props.title}</DialogTitle>
+          <Dialog open={!!props.open} onClose={props.onClose} component="form">
+            { props.title && <DialogTitle>{props.title}</DialogTitle> }
             <DialogContent>
               { props.children }
               { error && <Alert severity={error.severity}>{error.message}</Alert> }
@@ -245,13 +246,16 @@ export const Form: FunctionComponent<PropsWithChildren<FormProps>> =
             <DialogActions sx={{ p: 3, pt: 0 }}>
               <Button variant="contained" color={props.destructive ? 'inherit' : 'error'} onClick={() => props.onClose?.()}>Cancel</Button>
               <Box flex="1"/>
-              <MutationButton
-                color={props.destructive ? 'error' : 'primary'}
-                submit={save}
-                disabled={disabled}
-              >
-                { props.submitText || 'Submit' }
-              </MutationButton>
+
+              { props.submit &&
+                <MutationButton
+                  color={props.destructive ? 'error' : 'primary'}
+                  submit={save}
+                  disabled={disabled}
+                >
+                  { props.submitText || 'Submit' }
+                </MutationButton>
+              }
             </DialogActions>
           </Dialog>
         </FormContext.Provider>

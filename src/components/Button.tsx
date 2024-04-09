@@ -1,4 +1,5 @@
-import { ContentOf } from '@/services/ContentService'
+import { ContentOf } from '@/services/models/Content'
+import { sxes } from '@/services/utils/sxes'
 import { Box, SxProps, Theme, Typography, TypographyOwnProps } from '@mui/material'
 import ButtonBase, { ButtonProps as ButtonBaseProps } from '@mui/material/Button'
 import Link from 'next/link'
@@ -12,13 +13,14 @@ export type ButtonProps = {
   variant?: 'text' | 'contained' | 'outlined'
   textSize?: TypographyOwnProps['variant']
   textColor?: TypographyOwnProps['color']
+  sx?: SxProps<Theme>
   
   link?: string
-  onClick?: () => any
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => any
 }
 
 export const Button: FunctionComponent<PropsWithChildren<ButtonProps>> =
-  ({ children, disabled, variant, fullWidth, size, color, link, textSize, textColor, onClick }) => {
+  ({ children, disabled, variant, fullWidth, size, color, link, textSize, textColor, sx, onClick }) => {
     const props: ButtonBaseProps = {
       disabled, fullWidth, size, onClick,
       variant: variant || 'contained',
@@ -27,10 +29,8 @@ export const Button: FunctionComponent<PropsWithChildren<ButtonProps>> =
     }
     if (link) { props.component = Link }
     
-    const sx: SxProps<Theme> = { m: 1, borderRadius: 80 }
-    
     return (
-      <ButtonBase {...props} sx={sx} >
+      <ButtonBase {...props} sx={sxes([ { m: 1, borderRadius: 80 }, sx ])} >
         <Box position="relative" top="2px">
           { textSize ? <Typography variant={textSize} color={textColor}>{children}</Typography>
                      : children

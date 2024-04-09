@@ -18,9 +18,7 @@ export const MutationButton: FunctionComponent<PropsWithChildren<MutationButtonP
       const start = new Date().getTime()
       if (!loading) { await submit() }
       const taken = new Date().getTime() - start
-
-      const remaining = 
-
+      
       setTimeout(() => {
         setLoading(false)
         onDone?.()

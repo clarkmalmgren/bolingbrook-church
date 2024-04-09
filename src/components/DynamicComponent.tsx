@@ -1,4 +1,5 @@
-import { Content, useContent } from '@/services/ContentService'
+import { useContent } from '@/services/ContentService'
+import { Content } from '@/services/models/Content'
 import { FunctionComponent } from 'react'
 import { ButtonContent, ButtonContentProps } from './Button'
 import { CardContent, CardContentProps } from './Card'
