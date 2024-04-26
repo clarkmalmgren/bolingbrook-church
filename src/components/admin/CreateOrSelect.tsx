@@ -6,18 +6,18 @@ import { FunctionComponent, useState } from 'react'
 import { TypeToName, filteredTypes } from './EditorTypeFields'
 import { createNewContent } from '@/services/StagedContentService'
 
+export enum ActionType { Created, Selected, Custom }
 
 export type CreateOrSelectProps = {
-  onAdd: (id: string, created?: boolean) => any
+  onAdd: (id: string, action: ActionType) => any
   types?: string[]
+  custom?: string[]
 }
 
-enum State {
-  Closed, Menu, Choose
-}
+enum State { Closed, Menu, Choose }
 
 export const CreateOrSelect: FunctionComponent<CreateOrSelectProps> =
-  ({ onAdd, types }) => {
+  ({ onAdd, types, custom }) => {
     const [ el, setEl ] = useState<HTMLElement | null>(null)
     const [state, setState] = useState<State>(State.Closed)
     const all = useFilteredContent(types)
@@ -53,14 +53,24 @@ export const CreateOrSelect: FunctionComponent<CreateOrSelectProps> =
               horizontal: 'center',
             }}
           >
-            <MenuItem onClick={() => { setState(State.Choose); setEl(null) }}>Select Existing</MenuItem>
+            <MenuItem onClick={() => { setState(State.Choose); setEl(null) }}>Existing Content</MenuItem>
+            { custom?.map(c =>
+              <MenuItem
+                key={c}
+                onClick={() => {
+                  onAdd(c, ActionType.Custom)
+                  setEl(null)
+                  setState(State.Closed)
+                }}
+              >{c}</MenuItem>
+            ) }
             <Divider />
             <MenuItem disabled>Create New...</MenuItem>
             {filteredTypes(types).map(t => (
               <MenuItem
                 key={t.value}
                 onClick={() => {
-                  onAdd(createNewContent(t.value), true)
+                  onAdd(createNewContent(t.value), ActionType.Created)
                   setEl(null)
                   setState(State.Closed)
                 }}
@@ -81,7 +91,7 @@ export const CreateOrSelect: FunctionComponent<CreateOrSelectProps> =
             options={all?.map(c => ({ id: c.meta.id, label: `${TypeToName[c.meta.type]} / ${c.meta.name}` })) || []}
             onChange={(e, v) => {
               if (!v) { return }
-              onAdd(v.id)
+              onAdd(v.id, ActionType.Selected)
               setState(State.Closed)
             }}
             renderInput={(params) => (

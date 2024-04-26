@@ -1,17 +1,18 @@
 'use client'
 
-import { Form, tryResponse, useFormField } from '@/forms/Form'
+import { Form, useFormField } from '@/forms/Form'
 import { FormEditor } from '@/forms/FormEditor'
 import { NumberFormField, TextFormField } from '@/forms/FormField'
 import { FormSelect } from '@/forms/FormSelect'
+import { FormSwitch } from '@/forms/FormSwitch'
 import { EditorEntry } from '@/services/EditorEntry'
-import { Add, Edit, Remove } from '@mui/icons-material'
-import { Box, FormControl, IconButton, InputLabel, List, ListItem, Typography } from '@mui/material'
+import { ExpandMore } from '@mui/icons-material'
+import { Accordion, AccordionActions, AccordionDetails, AccordionSummary, Box, Button, FormControl, InputLabel, Typography } from '@mui/material'
+import { usePathname, useRouter } from 'next/navigation'
 import { FunctionComponent, useState } from 'react'
 import { FlexChild } from './Flex'
-import { ChildSelector } from './admin/ChildSelector'
+import { ActionType, CreateOrSelect } from './admin/CreateOrSelect'
 import { MediaSelector } from './admin/MediaSelector'
-import { FormSwitch } from '@/forms/FormSwitch'
 
 export const FlexEditor: EditorEntry = {
   key: 'flex',
@@ -31,10 +32,10 @@ type FormFlexProps = {
 
 export const FormFlex: FunctionComponent<FormFlexProps> =
   ({ id }) => {
-    const [ newOpen, setNewOpen ] = useState(false)
     const [ open, setOpen ] = useState(false)
-    const [ child, setChild ] = useState<[FlexChild, number] | undefined>()
     const { value, update } = useFormField<FlexChild[] | undefined>(id)
+    const router = useRouter()
+    const path = usePathname()
 
     const save = (child: FlexChild, index: number) => {
       const next = value ? [ ...value ] : []
@@ -48,6 +49,29 @@ export const FormFlex: FunctionComponent<FormFlexProps> =
       update(next, false)
     }
 
+    const add = (id: string, action: ActionType) => {
+      const index = value?.length || 0
+      if (action === ActionType.Custom) {
+        const next = { type: id.toLowerCase() } as FlexChild
+        save(next, index)
+      } else {
+        save({ type: 'content', ref: id }, index)
+        if (action === ActionType.Created) {
+          router.push(`${path}/${id}`)
+        }
+      }
+    }
+
+    const move = (index: number, offset: number) => {
+      if (!value) { return }
+      const next = [ ...value ]
+      const a = next[index]
+      const b = next[index + offset]
+      next[index] = b
+      next[index + offset] = a
+      update(next, false)
+    }
+
     return (
       <>
         <FormControl fullWidth variant="outlined" sx={{ mt: 1, mb: 1 }}>
@@ -58,82 +82,59 @@ export const FormFlex: FunctionComponent<FormFlexProps> =
               pl: 1,
               pr: 1
             }}>Contents</InputLabel>
-          <List sx={{ border: "1px solid rgba(0, 0, 0, 0.23)", borderRadius: 4, p: 1 }} >
-            {value?.map((c, i) => (
-              <ListItem key={i}>
-                <Typography>{ c.type }</Typography>
-                <Box flex="1" />
-
-                <IconButton onClick={() => {
-                  setChild([c, i])
-                  setOpen(true)
-                }}>
-                  <Edit />
-                </IconButton>
-                <IconButton onClick={() => remove(i)} color="warning">
-                  <Remove />
-                </IconButton>
-              </ListItem>
-            ))}
-            <ListItem
-              sx={{
-                cursor: 'pointer',
-                height: 50,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-              onClick={() => setNewOpen(true) }
-            >
-              <Add />
-            </ListItem>
-          </List>
+          <Box sx={{ border: "1px solid rgba(0, 0, 0, 0.23)", borderRadius: 4, p: 1 }} >
+            { value?.map((c, i) =>
+              <FlexChildEditor
+                key={i}
+                child={c}
+                onChange={(c) => save(c, i)}
+                onDelete={() => remove(i)}
+                onMove={(o) => move(i, o)}
+                first={i === 0}
+                last={i === value.length - 1}
+              />
+            )}
+            <CreateOrSelect custom={[ 'Media', 'Text', 'Break' ]} onAdd={add} />
+          </Box>
         </FormControl>
-
-        <Form
-          open={newOpen}
-          loading={false}
-          title="Add New Flex Child"
-          submit={(c) => tryResponse(() => {  
-            const next = [ c as FlexChild, value?.length || 0 ] as [ FlexChild, number ]
-            save(...next)
-            setNewOpen(false)
-
-            if (next[0].type !== 'break') {
-              setOpen(true)
-              setChild(next)
-            }
-          })}
-          onClose={() => setNewOpen(false)}
-        >
-          <FormSelect id="type" label="Type" required options={[ 'content', 'media', 'text', 'break' ]} />
-        </Form>
-
-        { child &&
-          <Form
-            open={open}
-            loading={false}
-            title="Edit Flex Child"
-            initialData={{ state: child[0] }}
-            submit={(c) => tryResponse(() => {
-              save(c as FlexChild, child[1])
-              setOpen(false)
-              setChild(undefined)
-            })}
-            onClose={() => {
-              setOpen(false)
-              setChild(undefined)
-            }}
-          >
-            <FormSelect id="type" label="Type" required disabled options={[ 'content', 'media', 'text', 'break' ]} />
-            <TextFormField id="flex" label="Flex" />
-            <NumberFormField id="minWidth" label="Minimum Width (px)" />
-
-            { child[0].type === 'content' && <ChildSelector id="refs" label="Component(s)" /> }
-            { child[0].type === 'media'   && <MediaSelector id="ref"  label="Media" /> }
-            { child[0].type === 'text'    && <FormEditor    id="body" label="Body" /> }
-          </Form>
-        }
       </>
     )
   }
+
+type FlexChildEditorProps = {
+  child: FlexChild
+  onChange: (child: FlexChild) => void
+  onDelete: () => void
+  onMove: (offset: number) => void
+  first?: boolean
+  last?: boolean
+}
+
+const FlexChildEditor: FunctionComponent<FlexChildEditorProps> =
+  ({ child, onChange, onDelete, onMove, first, last }) => (
+    <Accordion>
+      <AccordionSummary expandIcon={<ExpandMore />}>
+        <Typography>{ child.type }</Typography>
+      </AccordionSummary>
+      <AccordionDetails>
+        <Form
+          initialData={{ state: child }}
+          onChange={(c) => onChange(c as any)}
+          variant="box"
+          nested
+        >
+          <TextFormField id="flex" label="Flex" />
+          <NumberFormField id="minWidth" label="Minimum Width (px)" />
+
+          { child.type === 'content' && <Typography>{child.ref}</Typography> }
+          { child.type === 'media'   && <MediaSelector id="ref"  label="Media" /> }
+          { child.type === 'text'    && <FormEditor    id="body" label="Body" /> }
+        </Form>
+      </AccordionDetails>
+      <AccordionActions>
+        {!first && <Button onClick={() => onMove(-1)}>Move Up</Button> }
+        {!last && <Button onClick={() => onMove(1)}>Move Down</Button> }
+        <Button color="error" onClick={onDelete}>Delete</Button>
+      </AccordionActions>
+    </Accordion>
+  )

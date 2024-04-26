@@ -23,6 +23,7 @@ export const DeleteContent: FunctionComponent<Props> =
           disabled={disabled}
           color="error"
           onClick={() => setOpen(true)}
+          sx={{ p: 0 }}
         >
           <DeleteForever />
         </IconButton>

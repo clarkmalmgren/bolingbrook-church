@@ -7,7 +7,7 @@ import { Box, FormControl, IconButton, InputLabel, List, ListItem, Typography } 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { FunctionComponent } from 'react'
-import { CreateOrSelect } from './CreateOrSelect'
+import { ActionType, CreateOrSelect } from './CreateOrSelect'
 import { TypeToName } from "./EditorTypeFields"
 
 type ChildSelectorProps = {
@@ -59,9 +59,11 @@ export const ChildSelector: FunctionComponent<ChildSelectorProps> =
                 </IconButton>
               </ListItem>
             ))}
-            <CreateOrSelect types={types} onAdd={(id, created) => {
+            <CreateOrSelect types={types} onAdd={(id, action) => {
               add(id)
-              created && router.push(`${path}/${id}`)
+              if (action === ActionType.Created) {
+                router.push(`${path}/${id}`)
+              }
             }} />
           </List>
         </FormControl>

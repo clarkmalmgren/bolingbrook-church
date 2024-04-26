@@ -30,7 +30,7 @@ export const theme = createTheme({
   },
   typography: {
     fontFamily: metropolis.style.fontFamily,
-    fontSize: 18,
+    fontSize: 16,
     h1: { fontSize: 43, fontWeight: '700', textTransform: 'uppercase' },
     h2: { fontSize: 35, fontWeight: '700', textTransform: 'uppercase' },
     h3: { fontSize: 32, fontWeight: '700' },

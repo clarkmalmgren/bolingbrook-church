@@ -5,13 +5,22 @@ import { CardListEditor } from '../CardList.editor'
 import { HeroEditor } from '../Hero.editor'
 import { RichTextEditor } from '../RichText.editor'
 import { FlexEditor } from '../Flex.editor'
+import { GridEditor } from '../Grid.editor'
 
 export type LabeledType = {
   value: string
   label: string
 }
 
-const entries = [ ButtonEditor, CardEditor, CardListEditor, FlexEditor, HeroEditor, RichTextEditor ]
+const entries = [
+  ButtonEditor,
+  CardEditor,
+  CardListEditor,
+  FlexEditor,
+  GridEditor,
+  HeroEditor,
+  RichTextEditor
+]
 
 export const TypeToName: Record<string, string> = {}
 export const DropdownAvailableTypes: LabeledType[] = []

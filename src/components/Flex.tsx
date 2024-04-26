@@ -4,7 +4,7 @@ import { CSSProperties, FunctionComponent } from 'react'
 import { ComponentById, MediaById } from './DynamicComponent'
 import { RichText } from './RichText'
 
-export type ContentChild = { type: 'content', refs: string[]  }
+export type ContentChild = { type: 'content', ref: string  }
 export type MediaChild = { type: 'media', ref: string }
 export type TextChild = { type: 'text', body: OutputData }
 export type Break = { type: 'break' }
@@ -43,7 +43,7 @@ export const Flex: FunctionComponent<FlexProps> =
           <div key={i} style={{ flex: c.flex, minWidth: c.minWidth }}>
             { c.type === 'media'   && <MediaById id={c.ref} /> }
             { c.type === 'text'    && <RichText data={c.body} />}
-            { c.type === 'content' &&  <>{ c.refs.map((r, i) => <ComponentById key={i} id={r} />) }</>}
+            { c.type === 'content' && <ComponentById key={i} id={c.ref} />}
           </div>
         )
       })}

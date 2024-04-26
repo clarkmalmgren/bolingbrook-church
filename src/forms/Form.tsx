@@ -2,7 +2,7 @@
 
 import { MutationButton } from '@/components/MutationButton'
 import { Random } from '@/services/utils/Random'
-import { Alert, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Paper, SxProps, Typography } from '@mui/material'
+import { Alert, Box, BoxProps, Button, Dialog, DialogActions, DialogContent, DialogTitle, Paper, PaperOwnProps, PaperProps, SxProps, Typography } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import { FunctionComponent, PropsWithChildren, createContext, useContext, useRef, useState } from 'react'
 
@@ -83,7 +83,8 @@ export type FormProps = {
   errorMapper?: ErrorMapper
   errorTimeout?: number
   submitText?: string
-  variant?: 'dialog' | 'paper'
+  variant?: 'dialog' | 'paper' | 'box'
+  nested?: boolean
   sx?: SxProps
 
   /* If set, this flips the colors in the form to indicate the "submit" action is red  */
@@ -211,33 +212,13 @@ export const Form: FunctionComponent<PropsWithChildren<FormProps>> =
         onError(EmptyFailedResponse, '' + e)
       }
     }
+
+    const component = props.nested ? undefined : 'form'
     
-    if (props.variant === 'paper') {
+    if (props.variant === 'dialog' || typeof props.variant === 'undefined') {
       return (
         <FormContext.Provider value={ctx}>
-          <Paper component="form" sx={props.sx} >
-            { props.title && <Typography variant="h4" sx={{ mb: 2 }}>{props.title}</Typography> }
-            { props.children }
-            { error && <Alert severity={error.severity}>{error.message}</Alert> }
-            
-            { props.submit &&
-              <Box textAlign="right" sx={{ mt: 1 }}>
-                <MutationButton
-                  color={props.destructive ? 'error' : 'primary'}
-                  submit={save}
-                  disabled={disabled}
-                >
-                  { props.submitText || 'Submit' }
-                </MutationButton>
-              </Box>
-            }
-          </Paper>
-        </FormContext.Provider>
-      )
-    } else {
-      return (
-        <FormContext.Provider value={ctx}>
-          <Dialog open={!!props.open} onClose={props.onClose} component="form">
+          <Dialog open={!!props.open} onClose={props.onClose} component={component}>
             { props.title && <DialogTitle>{props.title}</DialogTitle> }
             <DialogContent>
               { props.children }
@@ -260,5 +241,30 @@ export const Form: FunctionComponent<PropsWithChildren<FormProps>> =
           </Dialog>
         </FormContext.Provider>
       )
+    } else {
+      return (
+        <FormContext.Provider value={ctx}>
+          <Container component={component} sx={props.sx} >
+            { props.title && <Typography variant="h4" sx={{ mb: 2 }}>{props.title}</Typography> }
+            { props.children }
+            { error && <Alert severity={error.severity}>{error.message}</Alert> }
+            
+            { props.submit &&
+              <Box textAlign="right" sx={{ mt: 1 }}>
+                <MutationButton
+                  color={props.destructive ? 'error' : 'primary'}
+                  submit={save}
+                  disabled={disabled}
+                >
+                  { props.submitText || 'Submit' }
+                </MutationButton>
+              </Box>
+            }
+          </Container>
+        </FormContext.Provider>
+      )
     }
   }
+
+const Container: FunctionComponent<{ variant: 'paper' | 'box'} & any> =
+  ({ variant, ...rest }) => (variant === 'paper') ? <Paper {...rest} />: <Box {...rest} />

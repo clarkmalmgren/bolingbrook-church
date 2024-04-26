@@ -8,6 +8,7 @@ import { RichTextContent, RichTextContentProps } from './RichText'
 import { HeroContent, HeroContentProps } from './Hero'
 import { FlexProps, Flex } from './Flex'
 import { useMedia } from '@/services/MediaService'
+import { Grid, GridProps } from './Grid'
 
 type DynamicProvider<T extends {}> = (content: Content<T>) => JSX.Element
 
@@ -16,6 +17,7 @@ const Providers: { [type: string]: DynamicProvider<any> } = {
   card:     (c: Content<CardContentProps>)      => <CardContent     {...c.data} />,
   cardlist: (c: Content<CardListContentProps>)  => <CardListContent {...c.data} />,
   flex:     (c: Content<FlexProps>)             => <Flex            {...c.data} />,
+  grid:     (c: Content<GridProps>)             => <Grid            {...c.data} />,
   hero:     (c: Content<HeroContentProps>)      => <HeroContent     {...c.data} />,
   richtext: (c: Content<RichTextContentProps>)  => <RichTextContent {...c.data} />,
 }
@@ -51,6 +53,6 @@ export const MediaById: FunctionComponent<{ id: string }> =
         </video>
       )
     } else {
-      return <img src={ref.url} />
+      return <img style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} src={ref.url} />
     }
   }

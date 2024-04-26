@@ -8,7 +8,7 @@ export type MarkedTextProps = {
 
 export const MarkedText: FunctionComponent<MarkedTextProps> =
   ({ text }) => {
-    text = text.replaceAll('&nbsp;', '\xA0')
+    text = text.replaceAll('&nbsp;', '\xA0').replaceAll('&amp;', '&')
     const start = text.match(/<(b|a|i)( href="(.*?)")?>/)
     if (!start || typeof start.index == 'undefined') { return text }
     
