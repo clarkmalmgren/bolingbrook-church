@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "emulators": "firebase emulators:start  --import=.firebase_data --export-on-exit .firebase_data "
   },
   "dependencies": {
     "@editorjs/editorjs": "^2.29.0",

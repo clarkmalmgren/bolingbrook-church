@@ -5,8 +5,9 @@ import { deleteDoc, doc, setDoc } from 'firebase/firestore'
 import { useAuthState } from './FirebaseAuthService'
 import { Content, ContentMap } from './models/Content'
 import { createContext, useContext } from 'react'
+import { PageProps } from '@/components/Page'
 
-const ContentService = new class extends SharedCollectionListenerService<Content> {
+export const ContentService = new class extends SharedCollectionListenerService<Content> {
   constructor() {
     super(db, `cms/${process.env.NODE_ENV}/content`)
   }
@@ -88,4 +89,29 @@ export async function deleteContent(id: string): Promise<FormResponse<{ meta: { 
     await deleteDoc(ref)
     return { meta: { id } }
   })
+}
+
+export type UsePage = {
+  page?: Content<PageProps>
+  loading?: boolean
+}
+
+export function usePage(path: string | string[] | undefined): UsePage {
+  const all = useAllContent()
+
+  let fullPath = '/'
+  if (Array.isArray(path)) {
+    fullPath += path.join('/')
+  } else if (typeof path === 'string') {
+    fullPath += path
+  }
+
+  if (!all) {
+    return { loading: true }
+  } else {
+    return {
+      loading: false,
+      page: all.find(c => c.meta.type === 'page' && c.data.path === fullPath) as (Content<PageProps> | undefined)
+    }
+  }
 }

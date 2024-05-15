@@ -1,7 +1,7 @@
 'use client'
 
 import { FunctionComponent, useState } from 'react'
-import { AppBar, Button as MuiButton, Toolbar, IconButton, Icon, useTheme, Box } from '@mui/material'
+import { AppBar, Toolbar, IconButton, Icon, useTheme, Box } from '@mui/material'
 import { Nav } from './Nav'
 import { Logo } from '../../public/Logo'
 import { TextLogo } from '../../public/TextLogo'
@@ -14,7 +14,7 @@ export const Header: FunctionComponent<{}> =
     const [ opened, setOpened ] = useState(false)
 
     return (
-      <AppBar position="relative" >
+      <AppBar position="relative">
         <Toolbar sx={{
           display: 'flex',
           alignItems: 'center',
@@ -40,9 +40,9 @@ export const Header: FunctionComponent<{}> =
             flex: 'auto',
             justifyContent: 'center'
           }}>
-            <MuiButton sx={{ color: 'black !important', padding: '0 8px' }} variant="text" href="/visit">Visit</MuiButton>
-            <MuiButton sx={{ color: 'black !important', padding: '0 8px' }} variant="text" href="/sermons">Sermons</MuiButton>
-            <MuiButton sx={{ color: 'black !important', padding: '0 8px' }} variant="text" href="/connect">Connect</MuiButton>
+            <Button sx={{ color: 'black !important', padding: '0 8px' }} variant="text" link="/visit">Visit</Button>
+            <Button sx={{ color: 'black !important', padding: '0 8px' }} variant="text" link="/sermons">Sermons</Button>
+            <Button sx={{ color: 'black !important', padding: '0 8px' }} variant="text" link="/connect">Connect</Button>
           </Box>
 
           <div>

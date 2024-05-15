@@ -1,11 +1,7 @@
-import { Button } from '../../components/Button'
 import { FunctionComponent } from 'react'
+import DynamicPage from './[...path]/page'
 
 const Home: FunctionComponent<{}> =
-  () => (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Button>Testing</Button>
-    </main>
-  )
+  () => <DynamicPage params={{ path: [] }} />
 
 export default Home

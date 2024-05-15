@@ -34,3 +34,5 @@ type DeepPartial<T> = {
 }
 
 export type PartialSermon = DeepPartial<Sermon>
+
+export type SermonMap = { [ date: string ]: Sermon }

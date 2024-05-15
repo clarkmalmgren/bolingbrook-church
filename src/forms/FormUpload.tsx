@@ -21,7 +21,6 @@ export const FormUpload: FunctionComponent<FormUploadProps> =
     return (
       <ReactMuiFileuploader
         title={label}
-        maxFileSize={10}
         maxUploadFiles={1}
         header={header}
         acceptedType={acceptedType}

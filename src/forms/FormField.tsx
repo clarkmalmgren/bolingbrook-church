@@ -1,9 +1,9 @@
-import { TextField } from '@mui/material'
+import { InputLabelProps, TextField } from '@mui/material'
 import { FunctionComponent, ReactElement } from 'react'
-import { useFormField } from './Form'
+import { KeyType, useFormField } from './Form'
 
 type BaseFieldProps<T> = {
-  id: string | string[]
+  id: KeyType
   required?: boolean
   label: string
   disabled?: boolean
@@ -12,18 +12,20 @@ type BaseFieldProps<T> = {
 }
 
 type FormFieldProps<T> = {
-  id: string | string[]
+  id: KeyType
   required?: boolean
   label: string
   disabled?: boolean
-  type?: 'number' | 'date'
+  type?: 'number' | 'date' | 'time'
   toValue: (v: string) => T
   isValid: (v: T) => boolean
   helperText?: string
+  multiline?: boolean
+  InputLabelProps?: Partial<InputLabelProps>
 }
 
 function FormField<T>(props: FormFieldProps<T>): ReactElement<any, any> {
-  const { id, required, label, toValue, type, disabled, isValid, helperText } = props
+  const { id, toValue, isValid, required, type, ...rest } = props
   const { value, update, flat } = useFormField(id)
 
   const _update = (s: string) => {
@@ -32,29 +34,32 @@ function FormField<T>(props: FormFieldProps<T>): ReactElement<any, any> {
     update(value, invalid)
   }
 
+  if (['date', 'time'].includes(type || '')) {
+    rest.InputLabelProps = { ...props.InputLabelProps, shrink: true }
+  }
+
   return (
     <TextField
       margin="dense"
       size="small"
       fullWidth
-      required={required}
-      label={label}
+      value={value || (type === 'number' ? 0 : '')}
+      onChange={ (e) => _update(e.target.value) }
       id={flat}
       name={flat}
-      value={value || (type === 'number' ? 0 : '')}
+      required={required}
       type={type}
-      disabled={disabled}
-      onChange={ (e) => _update(e.target.value) }
-      helperText={helperText}
+
+      {...rest}
     />
   )
 }
 
 const DefaultTextIsValid = (v: string) => !!v
 
-export const TextFormField: FunctionComponent<BaseFieldProps<string>> =
-  ({ id, required, label, isValid, disabled, helperText }) => {
-    return (<FormField id={id} required={required} helperText={helperText} disabled={disabled} label={label} toValue={s => s} isValid={isValid || DefaultTextIsValid} />)
+export const TextFormField: FunctionComponent<BaseFieldProps<string> & { multiline?: boolean }> =
+  ({ id, required, label, isValid, disabled, helperText, multiline }) => {
+    return (<FormField id={id} required={required} helperText={helperText} disabled={disabled} label={label} toValue={s => s} isValid={isValid || DefaultTextIsValid} multiline={multiline} />)
   }
 
 const DefaultNumberIsValid = (v: number) => Number.isFinite(v)
@@ -67,4 +72,9 @@ export const NumberFormField: FunctionComponent<BaseFieldProps<number>> =
 export const DateFormField: FunctionComponent<BaseFieldProps<string>> =
   ({ id, required, label, isValid, disabled, helperText }) => {
     return (<FormField id={id} required={required} helperText={helperText} disabled={disabled} label={label} type="date" toValue={s => s} isValid={isValid || DefaultTextIsValid} />)
+  }
+
+export const TimeFormField: FunctionComponent<BaseFieldProps<string>> =
+  ({ id, required, label, isValid, disabled, helperText }) => {
+    return (<FormField id={id} required={required} helperText={helperText} disabled={disabled} label={label} type="time" toValue={s => s} isValid={isValid || DefaultTextIsValid} />)
   }

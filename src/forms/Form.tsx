@@ -4,7 +4,7 @@ import { MutationButton } from '@/components/MutationButton'
 import { Random } from '@/services/utils/Random'
 import { Alert, Box, BoxProps, Button, Dialog, DialogActions, DialogContent, DialogTitle, Paper, PaperOwnProps, PaperProps, SxProps, Typography } from '@mui/material'
 import { useRouter } from 'next/navigation'
-import { FunctionComponent, PropsWithChildren, createContext, useContext, useRef, useState } from 'react'
+import { FormEvent, FunctionComponent, PropsWithChildren, createContext, useContext, useRef, useState } from 'react'
 
 export type InvalidityTree = {
   [ key: string ]: boolean | InvalidityTree
@@ -21,10 +21,12 @@ export function toDataState(state: { [key: string]: any } | undefined): DataStat
   return state ? { state } : EmptyDataSate
 }
 
+export type KeyType = (string | number) | (string | number)[]
+
 export type FormContextData = {
   data: DataState
-  getValue: (key: string | string[]) => any
-  setValue: (key: string | string[], value: any, invalid?: boolean) => void
+  getValue: (key: KeyType) => any
+  setValue: (key: KeyType, value: any, invalid?: boolean) => void
 }
 
 export const FormContext = createContext<FormContextData>({
@@ -104,12 +106,10 @@ export const EmptySuccessResponse: FormResponse = {
   json: async () => { return {} }
 }
 
-function seek(key: string | string[], target: any): any {
+function seek(key: KeyType, target: any): any {
   if (!target) {
     return undefined
-  } else if (typeof key === 'string') {
-    return target[key]
-  } else {
+  } else if (Array.isArray(key)) {
     const head = key[0]
     const tail = key.slice(1)
     if (tail.length === 0) {
@@ -117,20 +117,32 @@ function seek(key: string | string[], target: any): any {
     } else {
       return seek(tail, target[head])
     }
+  } else {
+    return target[key]
   }
 }
 
-function merge(key: string | string[], value: any, target: any): any {
+function spread(key: string | number, target: any, value: any): any {
   if (typeof key === 'string') {
     return { ...target, [key]: value }
   } else {
+    const next = Array.isArray(target) ? [ ...target ] : []
+    next[key] = value
+    return next
+  }
+}
+
+function merge(key: KeyType, value: any, target: any): any {
+  if (Array.isArray(key)) {
     const head = key[0]
     const tail = key.slice(1)
     if (tail.length === 0) {
-      return { ...target, [head]: value }
+      return spread(head, target, value)
     } else {
-      return { ...target, [head]: merge(tail, value, target[head] || {}) }
+      return spread(head, target, merge(tail, value, target[head]))
     }
+  } else if (typeof key === 'string') {
+    return spread(key, target, value)
   }
 }
 
@@ -147,10 +159,10 @@ function isInvalid(tree?: InvalidityTree): boolean {
   return false
 }
 
-export function useFormField<T>(key: string | string[]): { flat: string, value: T, update: (value: T, invalid?: boolean) => void } {
+export function useFormField<T>(key: KeyType): { flat: string, value: T, update: (value: T, invalid?: boolean) => void } {
   const ctx = useContext(FormContext)
   return {
-    flat: typeof key === 'string' ? key : key.join('/'),
+    flat: Array.isArray(key) ? key.join('/') : '' + key,
     value: ctx.getValue(key),
     update: (v, i) => ctx.setValue(key, v, i)
   }
@@ -165,8 +177,8 @@ export const Form: FunctionComponent<PropsWithChildren<FormProps>> =
 
     const ctx: FormContextData = {
       data: data.current,
-      getValue: (key: string | string[]) => seek(key, data.current.state),
-      setValue: (key: string | string[], value: any, invalid?: boolean) => {
+      getValue: (key: KeyType) => seek(key, data.current.state),
+      setValue: (key: KeyType, value: any, invalid?: boolean) => {
         const next: DataState =  {
           state: merge(key, value, data.current.state),
           invalid: merge(key, !!invalid, data.current.invalid || {})
@@ -213,12 +225,18 @@ export const Form: FunctionComponent<PropsWithChildren<FormProps>> =
       }
     }
 
+    function onSubmit(e: FormEvent<any>): void {
+      save()
+      e.preventDefault()
+      e.stopPropagation()
+    }
+
     const component = props.nested ? undefined : 'form'
     
     if (props.variant === 'dialog' || typeof props.variant === 'undefined') {
       return (
         <FormContext.Provider value={ctx}>
-          <Dialog open={!!props.open} onClose={props.onClose} component={component}>
+          <Dialog open={!!props.open} onClose={props.onClose} component={component} onSubmit={onSubmit}>
             { props.title && <DialogTitle>{props.title}</DialogTitle> }
             <DialogContent>
               { props.children }
@@ -244,7 +262,7 @@ export const Form: FunctionComponent<PropsWithChildren<FormProps>> =
     } else {
       return (
         <FormContext.Provider value={ctx}>
-          <Container component={component} sx={props.sx} >
+          <Container component={component} sx={props.sx} onSubmit={onSubmit}>
             { props.title && <Typography variant="h4" sx={{ mb: 2 }}>{props.title}</Typography> }
             { props.children }
             { error && <Alert severity={error.severity}>{error.message}</Alert> }

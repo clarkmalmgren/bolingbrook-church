@@ -1,18 +1,32 @@
 import moment from 'moment'
-import { Sermon } from './models/sermon'
-import { useAuthToken } from './AuthService'
-import { Data, useData } from './DataService'
+import { Sermon, SermonMap } from './models/sermon'
+import { SharedCollectionListenerService, useSharedHook } from './FirestoreSharedHooks'
+import { firestore as db } from '@/services/utils/Firebase'
+import { deleteDoc, doc, setDoc } from 'firebase/firestore'
+import { FormResponse, tryResponse } from '@/forms/Form'
 
-export function useSermon(date: string): Data<Sermon> {
-  return useData(`data/sermons_v2/${date}`)
+const SermonService = new class extends SharedCollectionListenerService<Sermon> {
+  constructor() {
+    super(db, `cms/${process.env.NODE_ENV}/sermons`)
+  }
 }
 
-export function useSermonMap(): Data<{ [date: string]: Sermon }> {
-  return useData('data/sermons_v2')
+export function useSermonMap(): SermonMap | undefined {
+  return useSharedHook(SermonService, (d) => d, [])
 }
 
-export function useSermons(): Data<Sermon[]> {
-  return useSermonMap().map(m => Object.values(m).sort((a, b) => {
+export function useSermon(date: string): Sermon | undefined {
+  return useSharedHook(SermonService, (d) => d[date], [ date ])
+}
+
+
+export function useSermons(): Sermon[] | undefined {
+  const map = useSermonMap()
+  if (typeof map === 'undefined') {
+    return undefined
+  }
+
+  return Object.values(map).sort((a, b) => {
     if (a.date === b.date) {
       return 0
     } else if (a.date < b.date) {
@@ -20,31 +34,19 @@ export function useSermons(): Data<Sermon[]> {
     } else {
       return -1
     }
-  }))
+  })
 }
 
-export function useCurrentSermon(): Data<Sermon | undefined> {
+export function useCurrentSermon(): Sermon | undefined {
   const today = moment().startOf('day')
-  return useSermons().map(l => l.find(s =>  moment(s.date).isSameOrBefore(today)))
+  return useSermons()?.find(s =>  moment(s.date).isSameOrBefore(today))
 }
 
-export function useSaveSermon(): (data: Sermon) => Promise<any> {
-  const token = useAuthToken()
+export async function saveSermon(data: Sermon): Promise<FormResponse<Sermon>> {
+  const ref = doc(db, `cms/${process.env.NODE_ENV}/sermons/${data.date}`)
 
-  return async (data: Sermon) => {
-    const init = {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token?.tokenId}`
-      }
-    }
-
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/sermons`, init)
-
-    if (!response.ok) {
-      throw new Error(`Failed to save sermon, got a failed response from the server`)
-    }
-  }
+  return tryResponse(async () => {
+    setDoc(ref, data)
+    return data
+  })
 }

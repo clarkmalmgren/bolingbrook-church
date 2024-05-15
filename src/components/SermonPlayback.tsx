@@ -1,34 +1,35 @@
 import { Box, Typography } from '@mui/material'
 import moment from 'moment'
 import { FunctionComponent } from 'react'
-import { useSermon } from '../services/sermon'
-import { BCBox } from './box'
-import { Youtube }  from './youtube'
+import { useSermon } from '@/services/SermonService'
+import { Youtube }  from './Youtube'
 
 type Props = { date: string }
 
 export const SermonPlayback: FunctionComponent<Props> =
   ({ date }) => {
-    const sermon = useSermon(date).value
+    const sermon = useSermon(date)
 
     return sermon ?
       (
-        <BCBox>
-          { sermon.services.map(s => <Youtube key={s.youtube} id={s.youtube} />) }
-          <Box display="flex">
-            <BCBox>
+        <Box display="flex" flexDirection="column" alignItems="center">
+          { sermon.services.map((s, i) => <Youtube key={i} id={s.youtube} />) }
+          <Box display="flex" flexWrap="wrap" p={2}>
+            <Box>
               <Typography variant="h4">{sermon.title}</Typography>
               <Typography variant="h5">{sermon.speaker}</Typography>
-            </BCBox>
-            <BCBox>
+            </Box>
+            <Box flex="1" />
+            <Box>
               <Typography variant="h5">{ moment(sermon.date).format("MMMM D, YYYY") }</Typography>
-            </BCBox>
+            </Box>
+            <Box flex="100%" height="0" />
+            <Typography>{sermon.description}</Typography>
           </Box>
-          <Typography>{sermon.description}</Typography>
-        </BCBox>
+        </Box>
       ) : (
-        <BCBox>
+        <Box>
           <Typography variant="h2">Loading...</Typography>
-        </BCBox>
+        </Box>
       )
   }

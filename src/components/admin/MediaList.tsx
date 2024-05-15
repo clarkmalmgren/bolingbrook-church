@@ -10,8 +10,9 @@ import { Box, Button, CircularProgress, Paper, Table, TableBody, TableCell, Tabl
 import Link from 'next/link'
 import { FunctionComponent, useState } from 'react'
 import { DeleteMedia } from './DeleteMedia'
-import { MediaItem } from './MediaItem'
+import { MediaCard, MediaItem } from './MediaItem'
 import { FormSwitch } from '@/forms/FormSwitch'
+import { CardList } from '../CardList'
 
 export const MediaList: FunctionComponent<{}> =
   () => {
@@ -31,7 +32,9 @@ export const MediaList: FunctionComponent<{}> =
           <Typography variant="h3">Media</Typography>
           <UploadMediaForm />
         </Box>
-        <MediaTable all={media} showDelete />
+        <CardList>
+          { media?.map((m, i) => <MediaCard media={m} key={i} /> )}
+        </CardList>
       </Paper>
     )
   }
@@ -84,11 +87,12 @@ const UploadMediaForm: FunctionComponent<{}> =
           submit={async (d) => { 
             const id = Random.string(10)
             setVideo(false)
-            return uploadMedia(id, d.name, d.file)
+            return uploadMedia(id, d.name, d.description, d.file)
           }}
           loading={false}
         >
           <TextFormField id="name" label="Name" required />
+          <TextFormField id="description" label="Description" multiline />
           <FormSwitch id="video" label="Is Video?" />
           { !video && <FormPhoto id="file" label="Upload Image" /> }
           {  video && <FormVideo id="file" label="Upload Video" /> }

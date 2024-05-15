@@ -24,14 +24,14 @@ export const MarkedText: FunctionComponent<MarkedTextProps> =
 
     switch (start[1]) {
       case 'b':
-        marked = (<b><MarkedText text={content}/></b>)
+        marked = (<b key="m"><MarkedText text={content}/></b>)
         break
       case 'i':
-        marked = (<i><MarkedText text={content}/></i>)
+        marked = (<i key="m"><MarkedText text={content}/></i>)
         break
       case 'a':
         marked = (
-          <Link component={NextLink} href={start[3]}>
+          <Link key="m" component={NextLink} href={start[3]}>
             <MarkedText text={content}/>
           </Link>
         )
@@ -41,6 +41,6 @@ export const MarkedText: FunctionComponent<MarkedTextProps> =
     return [
       before,
       marked,
-      <MarkedText text={after} />
+      <MarkedText key="a" text={after} />
     ]
   }

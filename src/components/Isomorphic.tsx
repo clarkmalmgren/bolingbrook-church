@@ -1,7 +1,6 @@
-import { SxProps, Theme } from '@mui/material'
+import { sxes } from '@/services/utils/sxes'
+import { Box, SxProps, Theme } from '@mui/material'
 import { FunctionComponent, PropsWithChildren } from 'react'
-import { sxes } from '../utils/sxes'
-import { BCBox }from './box'
 
 type TLength = string | 0
 
@@ -14,13 +13,13 @@ interface Props {
 export const Isomorphic: FunctionComponent<PropsWithChildren<Props>> =
   ({ sx, maxWidth, aspectRatio, children }) => {
     return (
-      <BCBox sx={sxes([ { maxWidth }, sx ])}>
-        <BCBox sx={{
+      <Box sx={sxes([ { maxWidth }, sx ])}>
+        <Box sx={{
           width: '100%',
           paddingTop: `${100/aspectRatio}%`,
           position: 'relative'
         }}>
-          <BCBox sx={{
+          <Box sx={{
             position: 'absolute',
             top: 0,
             left: 0,
@@ -28,8 +27,8 @@ export const Isomorphic: FunctionComponent<PropsWithChildren<Props>> =
             right: 0
           }}>
             {children}
-          </BCBox>
-        </BCBox>
-      </BCBox>
+          </Box>
+        </Box>
+      </Box>
     )
   }

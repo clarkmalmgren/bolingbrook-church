@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react'
-import { Isomorphic } from './isomorphic'
+import { Box } from '@mui/material'
 
 type Props = {
   id: string
@@ -13,13 +13,13 @@ export const Youtube: FunctionComponent<Props> =
     const url = `https://www.youtube.com/embed/${props.id}?enablejsapi=1`
 
     return (
-      <Isomorphic aspectRatio={aspectRatio} maxWidth='800px'>
+      <Box width="800px" height="400px" mt={2} >
         <iframe
           title="Youtube Video"
           style={{ width: '100%', height: '100%' }}
           src={url}
           frameBorder="0"
           allowFullScreen={true} />
-      </Isomorphic>
+      </Box>
     )
   }

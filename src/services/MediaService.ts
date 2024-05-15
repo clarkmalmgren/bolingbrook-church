@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 export type MediaRef = {
   id: string
   name: string
+  description?: string
   url: string
   fullPath: string
   video?: boolean
@@ -46,7 +47,7 @@ export function useAllMedia(): MediaRef[] | undefined {
   )
 }
 
-export async function uploadMedia(id: string, name: string, file: File, video?: boolean): Promise<FormResponse> {
+export async function uploadMedia(id: string, name: string, description: string | undefined, file: File, video?: boolean): Promise<FormResponse> {
   const dataRef = doc(db, `cms/${process.env.NODE_ENV}/media/${id}`)
   const mediaRef = storageRef(storage, `cms/${process.env.NODE_ENV}/media/${id}`)
   
@@ -59,6 +60,8 @@ export async function uploadMedia(id: string, name: string, file: File, video?: 
     fullPath: mediaRef.fullPath,
     video: !!video
   }
+
+  if (description) { data.description = description }
 
   return tryResponse(async () => {
     await setDoc(dataRef, data)

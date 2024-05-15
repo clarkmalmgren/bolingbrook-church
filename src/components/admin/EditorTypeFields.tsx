@@ -2,10 +2,12 @@ import { FunctionComponent } from 'react'
 import { ButtonEditor } from '../Button.editor'
 import { CardEditor } from '../Card.editor'
 import { CardListEditor } from '../CardList.editor'
-import { HeroEditor } from '../Hero.editor'
-import { RichTextEditor } from '../RichText.editor'
 import { FlexEditor } from '../Flex.editor'
 import { GridEditor } from '../Grid.editor'
+import { HeroEditor } from '../Hero.editor'
+import { PageEditor } from '../Page.editor'
+import { RichTextEditor } from '../RichText.editor'
+import { GraphicSectionEditor } from '../GraphicSection.editor'
 
 export type LabeledType = {
   value: string
@@ -17,8 +19,10 @@ const entries = [
   CardEditor,
   CardListEditor,
   FlexEditor,
+  GraphicSectionEditor,
   GridEditor,
   HeroEditor,
+  PageEditor,
   RichTextEditor
 ]
 

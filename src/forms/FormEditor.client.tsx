@@ -4,6 +4,7 @@ import Header from '@editorjs/header'
 import { Box, FormControl, InputLabel } from '@mui/material'
 import { FunctionComponent, useEffect, useRef, useState } from 'react'
 import { useFormField } from './Form'
+import { ChildContent } from '@/services/editorjs/plugins/ChildContent'
 
 type EditorProps = {
   id: string | string[]
@@ -25,13 +26,15 @@ export const FormEditorClient: FunctionComponent<EditorProps> =
       editor.current = new EditorJS({
         holder: holderId,
         tools: {
-          header: Header
+          header: Header,
+          child: ChildContent
         },
         data: value,
         onChange: async () => {
           const out = await editor.current?.save()
           update(out)
-        }
+        },
+        minHeight: 30
       })
     }, [])
 

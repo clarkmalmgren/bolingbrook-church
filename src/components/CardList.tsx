@@ -20,7 +20,7 @@ export const CardListContent: FunctionComponent<CardListContentProps> =
 
     return (
       <CardList>
-        { childContents?.map(cc => <DynamicComponent content={cc} />) }
+        { childContents?.map((cc, i) => <DynamicComponent key={i} content={cc} />) }
       </CardList>
     )
   }

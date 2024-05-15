@@ -7,7 +7,7 @@ import { useSaveContent } from './ContentService'
 import { Content, ContentMap } from './models/Content'
 import { Random } from './utils/Random'
 
-const StagedContentService = new class extends SharedCollectionListenerService<Content> {
+export const StagedContentService = new class extends SharedCollectionListenerService<Content> {
   constructor() {
     super(db, `cms/${process.env.NODE_ENV}/staged`)
   }

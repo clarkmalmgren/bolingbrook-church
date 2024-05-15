@@ -1,16 +1,16 @@
-import { CSSProperties, FunctionComponent } from 'react'
-import { Entry, EntryFields, Asset } from 'contentful'
-import { Theme, ButtonBase, SxProps, Box } from '@mui/material'
-import { ContentfulRichText } from './rich-text'
-import { Link } from 'react-router-dom'
+import { OutputData } from '@editorjs/editorjs'
+import { Box, ButtonBase, SxProps, Theme } from '@mui/material'
+import Link from 'next/link'
+import { FunctionComponent } from 'react'
+import { BackgroundMediaById, MediaById } from './DynamicComponent'
+import { RichText } from './RichText'
 
-export interface GraphicSectionData {
-  name: string
-  image: Asset
+export type GraphicSectionProps = {
+  image: string
   displayStyle: 'Collapse' | 'Full' | 'Page Width'
-  content: EntryFields.RichText
+  content: OutputData
   shade: number
-  link: string
+  link?: string
   colorScheme?: 'black on white' | 'white on black'
   alignment?: 'left' | 'right'
   imagePosition?: string
@@ -45,42 +45,42 @@ const BaseStyles: { [name: string]: SxProps<Theme> } = {
   }
 }
 
-type Props = {
-  entry: Entry<GraphicSectionData>
-}
+export const GraphicSection: FunctionComponent<GraphicSectionProps> =
+  (props) => {
+    const { image, displayStyle, content, shade, link, colorScheme, alignment, imagePosition } = props
 
-export const GraphicSection: FunctionComponent<Props> =
-  ({ entry }) => {
-    const url = entry.fields.image.fields.file.url + '?w=800'
-
-    if (entry.fields.displayStyle === 'Full') {
+    if (displayStyle === 'Full') {
       const buttonBaseProps: any = { }
-      if ((entry.fields.link && entry.fields.link.match(/^(https|http|tel|mailto):/))) {
+      if (link?.match(/^(https|http|tel|mailto):/)) {
         buttonBaseProps.component = 'a'
-      } else if (entry.fields.link) {
+      } else if (link) {
         buttonBaseProps.component = Link
       }
 
       return (
         <Box sx={BaseStyles.root}>
-          <ButtonBase {...buttonBaseProps} to={entry.fields.link} href={entry.fields.link} >
-            <img style={{ width: '100%' }} src={url} alt={entry.fields.name} />
-            <Box sx={BaseStyles.fullShade} style={{backgroundColor: `rgba(0,0,0,${entry.fields.shade})`}}></Box>
+          <ButtonBase {...buttonBaseProps} to={link} href={link} >
+            <MediaById id={image} style={{ width: '100%' }} />
+            <Box sx={BaseStyles.fullShade} style={{backgroundColor: `rgba(0,0,0,${shade})`}}></Box>
             <Box sx={BaseStyles.fullContent}>
-              <ContentfulRichText sx={BaseStyles.content} content={entry.fields.content}/>
+              <Box sx={BaseStyles.content}>
+                <RichText data={content} />
+              </Box>
             </Box>
           </ButtonBase>
         </Box>
       )
-    } else if (entry.fields.displayStyle === 'Page Width') {
-      return (<PageWidthGraphicsSection url={url} entry={entry} />)
+    } else if (displayStyle === 'Page Width') {
+      return (<PageWidthGraphicsSection {...props} />)
     } else {
       return (
-      <Box sx={BaseStyles.root} style={{backgroundImage: `url(${url})`}}>
-        <div style={{backgroundColor: `rgba(0,0,0,${entry.fields.shade})`}}>
-          <ContentfulRichText sx={BaseStyles.content} content={entry.fields.content}/>
+      <BackgroundMediaById sx={BaseStyles.root} id={image}>
+        <div style={{backgroundColor: `rgba(0,0,0,${shade})`}}>
+          <Box sx={BaseStyles.content}>
+            <RichText data={content} />
+          </Box>
         </div>
-      </Box>
+      </BackgroundMediaById>
       )
     }
   }
@@ -138,27 +138,22 @@ const PageWidthStyles: { [name: string]: SxProps<Theme> } = {
   }
 }
 
-type PageWidthProps = {
-  entry: Entry<GraphicSectionData>
-  url: string
-}
+type PageWidthGraphicsSectionProps = Pick<GraphicSectionProps, 'colorScheme' | 'alignment' | 'image' | 'imagePosition' | 'content'>
 
-const PageWidthGraphicsSection: FunctionComponent<PageWidthProps> =
-  ({ entry, url }) => {
-    const bgColor = entry.fields.colorScheme === 'black on white' ? 'white' : 'black'
-    const alignment = entry.fields.alignment || 'left'
-    const style: CSSProperties = {
-      backgroundImage: `url(${url})`,
-      backgroundPosition: entry.fields.imagePosition || 'center'
-    }
-    const className = `${bgColor} ${alignment}`
+const PageWidthGraphicsSection: FunctionComponent<PageWidthGraphicsSectionProps> =
+  ({ colorScheme, alignment, image, imagePosition, content }) => {
+    const bgColor = colorScheme === 'black on white' ? 'white' : 'black'
+    const align = alignment || 'left'
+    const className = `${bgColor} ${align}`
 
     return (
       <Box sx={PageWidthStyles.root} className={bgColor}>
-        <Box sx={PageWidthStyles.image} style={style}>
+        <BackgroundMediaById id={image} sx={{ ...PageWidthStyles.image, backgroundPosition: imagePosition || 'center' }}>
           <Box sx={PageWidthStyles.fade} className={className} />
+        </BackgroundMediaById>
+        <Box sx={PageWidthStyles.content} className={className}>
+          <RichText data={content} />
         </Box>
-        <ContentfulRichText sx={PageWidthStyles.content} className={className} content={entry.fields.content}/>
       </Box>
     )
   }

@@ -104,6 +104,10 @@ export abstract class SharedListenerService<T> {
     }
   }
 
+  onePromise(): Promise<T> {
+    return new Promise((resolve) => { this.oneTime((data) => resolve(data)) })
+  }
+
   get debug(): string {
     return `[state=${this.state}, listenerCount=${Object.keys(this.listeners).length}, hasData=${!!this.lastValue}]`
   }

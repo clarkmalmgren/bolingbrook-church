@@ -2,6 +2,7 @@
 
 import { ContentList } from '@/components/admin/ContentList'
 import { MediaList } from '@/components/admin/MediaList'
+import { SermonAdmin } from '@/components/admin/SermonAdmin'
 import { Box, Tab, Tabs } from '@mui/material'
 import { FunctionComponent, useState } from 'react'
 
@@ -18,6 +19,7 @@ export const EditorListPage: FunctionComponent<{}> =
         </Tabs>
         { tab === 0 && <ContentList /> }
         { tab === 1 && <MediaList /> }
+        { tab === 2 && <SermonAdmin /> }
       </>
     )
   }

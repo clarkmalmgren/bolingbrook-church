@@ -1,11 +1,11 @@
 import { FunctionComponent } from 'react'
-import { getImageUrl, isToday } from '../models/sermon'
-import { useCurrentSermon } from '../services/sermon'
-import { Card } from './card'
+import { getImageUrl, isToday } from '@/services/models/sermon'
+import { useCurrentSermon } from '@/services/SermonService'
+import { Card } from './Card'
 
 export const SermonHeroCard: FunctionComponent<{}> =
   () => {
-    const sermon = useCurrentSermon().value
+    const sermon = useCurrentSermon()
 
     return sermon ?
       (

@@ -86,7 +86,7 @@ export const Hero: FunctionComponent<PropsWithChildren<HeroProps>> =
         overflow: 'hidden',
         display: 'flex',
         alignItems: 'center',
-        padding: `${theme.spacing(4)} 0`,
+        padding: 4,
         minHeight: heightInPx + 'px',
         justifyContent: justify || 'center',
         color: (shadeColor === 'white' ? 'black' : 'white') + ' !important'
@@ -113,7 +113,9 @@ export const HeroContent: FunctionComponent<HeroContentProps> =
 
     return (
       <Hero {...rest} media={media}>
-        <RichText data={body} />
+        <div>
+          <RichText data={body} />
+        </div>
         { children?.map((c, i) => <ComponentById key={i} id={c} />) }
       </Hero>
     )

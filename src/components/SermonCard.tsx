@@ -1,23 +1,26 @@
 import { Typography } from '@mui/material'
 import moment from 'moment'
 import { FunctionComponent } from 'react'
-import { getImageUrl, Sermon } from '../models/sermon'
-import { Card } from './card'
+import { getImageUrl, Sermon } from '@/services/models/sermon'
+import { Card } from './Card'
 
 export type SermonCardProps = {
   sermon: Sermon
-  linkRoot: string
+  onClick?: (sermon: Sermon) => void
 }
 
 export const SermonCard: FunctionComponent<SermonCardProps> =
-  ({ sermon, linkRoot }) => {
+  ({ sermon, onClick }) => {
     const dateString: string = moment(sermon.date).format("MMMM D, YYYY")
 
     return (
-      <Card title={sermon.title}
-            subtitle={dateString}
-            image={getImageUrl(sermon)}
-            link={`${linkRoot}/${sermon.date}`}>
+      <Card
+        title={sermon.title}
+        subtitle={dateString}
+        image={ getImageUrl(sermon) }
+        link={ onClick ? undefined : `/sermons/${sermon.date}` }
+        onClick={ () => onClick?.(sermon) }
+      >
         <Typography
           sx={{
             overflow: 'hidden',
