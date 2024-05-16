@@ -8,6 +8,7 @@ import { HeroEditor } from '../Hero.editor'
 import { PageEditor } from '../Page.editor'
 import { RichTextEditor } from '../RichText.editor'
 import { GraphicSectionEditor } from '../GraphicSection.editor'
+import { IframeEditor } from '../Iframe.editor'
 
 export type LabeledType = {
   value: string
@@ -22,6 +23,7 @@ const entries = [
   GraphicSectionEditor,
   GridEditor,
   HeroEditor,
+  IframeEditor,
   PageEditor,
   RichTextEditor
 ]

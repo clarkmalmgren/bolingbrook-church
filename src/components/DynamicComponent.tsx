@@ -11,8 +11,10 @@ import { useMedia } from '@/services/MediaService'
 import { Grid, GridProps } from './Grid'
 import { Page, PageProps } from './Page'
 import { Section } from './Section'
-import { Box, SxProps, Theme } from '@mui/material'
+import { Alert, Box, SxProps, Theme } from '@mui/material'
 import { GraphicSection, GraphicSectionProps } from './GraphicSection'
+import { IFrame, IframeProps } from './Iframe'
+import { useDetectLoop } from '@/services/UseDetectLoop'
 
 type DynamicProvider<T extends {}> = (content: Content<T>) => JSX.Element
 
@@ -22,14 +24,18 @@ const AutopadExclusions: { [type: string]: boolean } = {
   graphicSection: true
 }
 
+// The Provider list looks ugly without this ¯\_(ツ)_/¯
+const gs = "graphicSection"
+
 const Providers: { [type: string]: DynamicProvider<any> } = {
   button:   (c: Content<ButtonContentProps>)    => <ButtonContent   {...c.data} />,
   card:     (c: Content<CardContentProps>)      => <CardContent     {...c.data} />,
   cardlist: (c: Content<CardListContentProps>)  => <CardListContent {...c.data} />,
   flex:     (c: Content<FlexProps>)             => <Flex            {...c.data} />,
-  graphicSection: (c: Content<GraphicSectionProps>) => <GraphicSection {...c.data} />,
+  [gs]:     (c: Content<GraphicSectionProps>)   => <GraphicSection  {...c.data} />,
   grid:     (c: Content<GridProps>)             => <Grid            {...c.data} />,
   hero:     (c: Content<HeroContentProps>)      => <HeroContent     {...c.data} />,
+  iframe:   (c: Content<IframeProps>)           => <IFrame          {...c.data} />,
   page:     (c: Content<PageProps>)             => <Page            {...c.data} />,
   richtext: (c: Content<RichTextContentProps>)  => <RichTextContent {...c.data} />,
 }
@@ -49,9 +55,14 @@ type ComponentByIdProps = {
 export const ComponentById: FunctionComponent<ComponentByIdProps> =
   ({ id, autopad }) => {
     const content = useContent(id)
+    const looped = useDetectLoop(id)
+
     if (!content) {
       return null
+    } else if (looped) {
+      return <Alert severity="warning">Loop Detected in Content Management System</Alert>
     }
+
     const child = Providers[content.meta.type]?.(content)
 
     if (!child) {
