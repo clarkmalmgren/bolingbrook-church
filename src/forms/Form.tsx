@@ -262,7 +262,7 @@ export const Form: FunctionComponent<PropsWithChildren<FormProps>> =
     } else {
       return (
         <FormContext.Provider value={ctx}>
-          <Container component={component} sx={props.sx} onSubmit={onSubmit}>
+          <Container component={component} sx={props.sx} onSubmit={onSubmit} variant={props.variant} >
             { props.title && <Typography variant="h4" sx={{ mb: 2 }}>{props.title}</Typography> }
             { props.children }
             { error && <Alert severity={error.severity}>{error.message}</Alert> }

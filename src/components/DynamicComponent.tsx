@@ -15,6 +15,7 @@ import { Alert, Box, SxProps, Theme } from '@mui/material'
 import { GraphicSection, GraphicSectionProps } from './GraphicSection'
 import { IFrame, IframeProps } from './Iframe'
 import { useDetectLoop } from '@/services/UseDetectLoop'
+import { UserForm, UserFormProps } from './UserForm'
 
 type DynamicProvider<T extends {}> = (content: Content<T>) => JSX.Element
 
@@ -32,6 +33,7 @@ const Providers: { [type: string]: DynamicProvider<any> } = {
   card:     (c: Content<CardContentProps>)      => <CardContent     {...c.data} />,
   cardlist: (c: Content<CardListContentProps>)  => <CardListContent {...c.data} />,
   flex:     (c: Content<FlexProps>)             => <Flex            {...c.data} />,
+  form:     (c: Content<UserFormProps>)         => <UserForm        {...c.data} />,
   [gs]:     (c: Content<GraphicSectionProps>)   => <GraphicSection  {...c.data} />,
   grid:     (c: Content<GridProps>)             => <Grid            {...c.data} />,
   hero:     (c: Content<HeroContentProps>)      => <HeroContent     {...c.data} />,

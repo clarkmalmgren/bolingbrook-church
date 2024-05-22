@@ -15,18 +15,13 @@
         "function": "connect"
       },
       {
-        "source": "/api/serve",
-        "function": "serve"
-      },
-      {
-        "source": "/api/sermons",
-        "function": "sermons"
-      },
-      {
         "source": "**",
         "destination": "/index.html"
       }
     ]
+  },
+  "functions": {
+    "source": "functions"
   },
   "emulators": {
     "auth": {
@@ -34,6 +29,10 @@
     },
     "firestore": {
       "port": 8080
+    },
+    "functions": {
+      "port": 5001,
+      "host": "0.0.0.0"
     },
     "hosting": {
       "port": 3001

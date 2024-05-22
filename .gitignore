@@ -34,6 +34,7 @@ firestore-debug.log
 
 # local env files
 .env*.local
+/functions/.runtimeconfig.json
 
 # vercel
 .vercel

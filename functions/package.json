@@ -1,0 +1,23 @@
+{
+  "name": "bc-functions",
+  "scripts": {
+    "build": "tsc",
+    "deploy": "firebase deploy --only functions"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^12.1.0",
+    "firebase-functions": "^5.0.1",
+    "mailgun.js": "^10.2.1"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.2.0",
+    "typescript": "^5.4.5"
+  },
+  "private": true,
+  "version": "0.0.0",
+  "license": "MIT"
+}

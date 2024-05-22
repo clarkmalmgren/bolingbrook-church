@@ -9,6 +9,7 @@ import { PageEditor } from '../Page.editor'
 import { RichTextEditor } from '../RichText.editor'
 import { GraphicSectionEditor } from '../GraphicSection.editor'
 import { IframeEditor } from '../Iframe.editor'
+import { UserFormEditor } from '../UserForm.editor'
 
 export type LabeledType = {
   value: string
@@ -25,7 +26,8 @@ const entries = [
   HeroEditor,
   IframeEditor,
   PageEditor,
-  RichTextEditor
+  RichTextEditor,
+  UserFormEditor
 ]
 
 export const TypeToName: Record<string, string> = {}
