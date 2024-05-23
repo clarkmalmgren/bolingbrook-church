@@ -9,6 +9,7 @@ export type FormCheckboxesProps = {
   required?: boolean
   label: string
   disabled?: boolean
+  narrow?: boolean
   options: FormOption[]
 }
 
@@ -17,7 +18,7 @@ function optionValue(o: FormOption): string {
 }
 
 export const FormCheckboxes: FunctionComponent<FormCheckboxesProps> =
-  ({ id, required, label, disabled, options }) => {
+  ({ id, required, label, disabled, narrow, options }) => {
     const { value, update } = useFormField<string[]>(id, nonEmptyArray(required))
     const checks = options.map(optionValue).map(o => value?.includes(o))
 
@@ -31,14 +32,10 @@ export const FormCheckboxes: FunctionComponent<FormCheckboxesProps> =
 
     return (
       <>
-        <Typography variant="h3">{label}</Typography>
+        <Typography variant="h3" flex="100%" mt={2} >{label}{ required ? ' *' : '' }</Typography>
         { options.map((o, i) =>
           <FormControlLabel
-            sx={{
-              minWidth: { xs: 'auto', sm: '250px !important' },
-              margin: { xs: '3px 0', sm: '3px 10px !important' },
-              flex: { xs:'0 0 100%', sm: '1 !important' }
-            }}
+            sx={ narrow ? { flex: '1', minWidth: 350 } : { flex: '100%' } }
             key={i}
             label={typeof o === 'string' ? o : o.label}
             control={

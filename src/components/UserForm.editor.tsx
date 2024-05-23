@@ -1,19 +1,14 @@
 'use client'
 
 import { Form } from '@/forms/Form'
-import { useFormField } from '@/forms/useFormField'
-import { FormEditor } from '@/forms/FormEditor'
-import { NumberFormField, TextFormField } from '@/forms/FormField'
+import { TextFormField } from '@/forms/FormField'
 import { FormSelect } from '@/forms/FormSelect'
 import { FormSwitch } from '@/forms/FormSwitch'
+import { useFormField } from '@/forms/useFormField'
 import { EditorEntry } from '@/services/EditorEntry'
 import { Add, ExpandMore } from '@mui/icons-material'
 import { Accordion, AccordionActions, AccordionDetails, AccordionSummary, Box, Button, FormControl, InputLabel, ListItem, Typography } from '@mui/material'
-import { usePathname, useRouter } from 'next/navigation'
-import { FunctionComponent, useState } from 'react'
-import { ActionType, CreateOrSelect } from './admin/CreateOrSelect'
-import { MediaSelector } from './admin/MediaSelector'
-import { GridChild } from './Grid'
+import { FunctionComponent } from 'react'
 import { Prompt } from './UserForm'
 
 export const UserFormEditor: EditorEntry = {
@@ -117,6 +112,7 @@ const PromptEditor: FunctionComponent<PromptEditorProps> =
           <FormSelect id="type" label="type" options={[ 'string', 'number', 'checkbox' ]} />
           <TextFormField id="key" label="Key" helperText="Form Field Name" />
           <FormSwitch id="required" label="Required" />
+          <FormSwitch id="narrow" label="Narrow" />
 
           { value.type === 'checkbox' &&
             <TextFormField

@@ -3,9 +3,12 @@
   "version": "3.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "start:local": "NEXT_PUBLIC_SIM=true && next dev",
+    "start:beta": "next dev",
+    "start:prod": "next start",
+    "build:local": "NODE_ENV=development && NEXT_PUBLIC_SIM=true && next build",
+    "build:beta": "NODE_ENV=development && next build",
+    "build:prod": "next build",
     "lint": "next lint",
     "emulators": "firebase emulators:start  --import=.firebase_data --export-on-exit .firebase_data "
   },

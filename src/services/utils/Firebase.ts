@@ -22,7 +22,7 @@ const firestore = getFirestore(app)
 const storage = getStorage(app)
 
 // Check to see if the emulators should be attached
-export const useEmulators = process.env.NODE_ENV === 'development'
+export const useEmulators = process.env.NEXT_PUBLIC_SIM === 'true'
 if (useEmulators) {
   console.log(`Using Firebase Emulators`)
   connectFirestoreEmulator(firestore, 'localhost', 8080)

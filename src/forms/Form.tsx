@@ -263,7 +263,7 @@ export const Form: FunctionComponent<PropsWithChildren<FormProps>> =
             { error && <Alert severity={error.severity}>{error.message}</Alert> }
             
             { props.submit &&
-              <Box textAlign="right" sx={{ mt: 1 }}>
+              <Box textAlign="right" sx={{ mt: 1, flex: "100%" }}>
                 <MutationButton
                   color={props.destructive ? 'error' : 'primary'}
                   submit={save}
@@ -286,8 +286,14 @@ type ContainerProps = {
   variant: 'paper' | 'box'
 }
 
-const Container: FunctionComponent<ContainerProps> =
+const DefaultSx: SxProps<Theme> = {
+  display: 'flex',
+  flexWrap: 'wrap',
+  columnGap: 2
+}
+
+const Container: FunctionComponent<PropsWithChildren<ContainerProps>> =
   ({ sx, variant, ...rest }) =>
     (variant === 'paper')
-      ? <Paper {...rest} sx={sxes([{ p: 2 }, sx])} />
-      : <Box {...rest as any} sx={sx} />
+      ? <Paper {...rest}      sx={sxes([DefaultSx, { p: 2 }, sx])} />
+      : <Box {...rest as any} sx={sxes([DefaultSx, sx])} />
