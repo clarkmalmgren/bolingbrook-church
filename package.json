@@ -9,8 +9,10 @@
     "build:local": "NODE_ENV=development && NEXT_PUBLIC_SIM=true && next build",
     "build:beta": "NODE_ENV=development && next build",
     "build:prod": "next build",
-    "lint": "next lint",
-    "emulators": "firebase emulators:start  --import=.firebase_data --export-on-exit .firebase_data "
+    "deploy:beta": "firebase use bolingbrook-church-beta && env-cmd -f .env.beta firebase deploy",
+    "deploy:prod": "firebase use bolingbrook-church && firebase deploy",
+    "emulators": "firebase use bolingbrook-church-beta && firebase emulators:start --import=.firebase_data --export-on-exit .firebase_data",
+    "lint": "next lint"
   },
   "dependencies": {
     "@editorjs/editorjs": "^2.29.0",
@@ -38,6 +40,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
+    "env-cmd": "^10.1.0",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
     "postcss": "^8",

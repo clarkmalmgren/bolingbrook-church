@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "bolingbrook-church-beta"
-  }
+  },
+  "targets": {},
+  "etags": {
+    "bolingbrook-church-beta": {
+      "extensionInstances": {
+        "storage-resize-images": "efd1c7aae8e5da7299d80b53d2b8dba65e9394b6351a38e5e566da9097d1b388"
+      }
+    }
+  },
+  "dataconnectEmulatorConfig": {}
 }
