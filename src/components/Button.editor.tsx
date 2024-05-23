@@ -23,7 +23,7 @@ export const ButtonEditor: EditorEntry = {
         Can either be the same as the options for color (primary, secondary, ...) or any CSS compatible
         color value. For example,
         a <Link component={NextLink} href="https://www.w3schools.com/cssref/css_colors.php">color name</Link> like
-        "white" or a hex code like "#efefef" (quotes not required).
+        &quot;white&quot; or a hex code like &quot;#efefef&quot; (quotes not required).
       </Typography>
     </>
   )

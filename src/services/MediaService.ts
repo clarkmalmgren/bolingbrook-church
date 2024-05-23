@@ -97,18 +97,18 @@ export async function deleteMedia(id: string): Promise<FormResponse> {
 export function useResizedImageUrl(ref: MediaRef | undefined, size: ImageSize): string | undefined {
   const [ url, setUrl ] = useState<string>()
 
-  const update = async (retries: number) => {
-    if (!ref || ref.video || retries <= 0) { return }
-    try {
-      const sr = storageRef(storage, `${ref.fullPath}_${size}x${size}`)
-      const url = await getDownloadURL(sr)
-      setUrl(url)
-    } catch {
-      setTimeout(() => update(retries - 1), 200)
-    }
-  }
-
   useEffect(() => {
+    async function update(retries: number): Promise<void> {
+      if (!ref || ref.video || retries <= 0) { return }
+      try {
+        const sr = storageRef(storage, `${ref.fullPath}_${size}x${size}`)
+        const url = await getDownloadURL(sr)
+        setUrl(url)
+      } catch {
+        setTimeout(() => update(retries - 1), 200)
+      }
+    }
+
     update(10)
   }, [ref, size])
 

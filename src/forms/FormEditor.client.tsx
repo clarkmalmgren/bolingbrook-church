@@ -17,6 +17,8 @@ export const FormEditorClient: FunctionComponent<EditorProps> =
     const [ holderId ] = useState('editorjs_holder_' + Random.string(8))
     const { value, update } = useFormField<OutputData | undefined>(id)
 
+    // This really needs to be done exactly once
+    /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
       if (typeof window === 'undefined') {
         return
@@ -36,7 +38,13 @@ export const FormEditorClient: FunctionComponent<EditorProps> =
         },
         minHeight: 30
       })
+
+      return () => {
+        editor.current?.destroy?.()
+        editor.current = undefined
+      }
     }, [])
+    /* eslint-enable react-hooks/exhaustive-deps */
 
     return (
       <FormControl fullWidth variant="outlined" sx={{ mt: 1, mb: 1 }}>

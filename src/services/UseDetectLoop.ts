@@ -13,7 +13,7 @@ export function useDetectLoop(id: string, max: number = 10): boolean {
         delete data[id]
       }
     }
-  }, [])
+  }, [id])
 
   return data[id] > max
 }

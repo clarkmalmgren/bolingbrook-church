@@ -14,7 +14,7 @@ export const CardDesign: FunctionComponent<{}> =
     <>
       <Typography variant="h1">Card</Typography>
       <Typography variant="body1">
-        Used to represent a "thing". Usually there are more than one. For example, a sermon,
+        Used to represent a &quot;thing&quot;. Usually there are more than one. For example, a sermon,
         a blog post, a get together, a mechanism for donating, etc.
       </Typography>
       <Example>

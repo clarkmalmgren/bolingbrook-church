@@ -28,9 +28,10 @@ function isValid<T>(value: T, vc?: ValidityCheck<T>): boolean {
 }
 
 export function useFormField<T>(key: KeyType, vc?: ValidityCheck<T>): UseFormField<T> {
-  const ctx = useContext(FormContext);
+  const ctx = useContext(FormContext)
 
-  /* We only do this once on load to update the validity state for */
+  /* We only do this once on load to update the validity state only onload, all other times will be done on write */
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     const initValue = ctx.getValue(key);
     const initValid = ctx.getValid(key);
@@ -38,11 +39,12 @@ export function useFormField<T>(key: KeyType, vc?: ValidityCheck<T>): UseFormFie
     if (initValid !== nextValid) {
       ctx.setValue(key, initValue, !nextValid);
     }
-  }, []);
+  }, [])
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   return {
     flat: Array.isArray(key) ? key.join('/') : '' + key,
     value: ctx.getValue(key),
     update: (v) => ctx.setValue(key, v, !isValid(v, vc))
-  };
+  }
 }

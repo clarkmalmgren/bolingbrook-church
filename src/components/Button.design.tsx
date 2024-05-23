@@ -10,8 +10,8 @@ export const ButtonDesign: FunctionComponent<{}> =
       <Typography variant="body1">
         Primary UI component for user interaction. The intended use case is primary clickable buttons
         Used to draw attention to a call to action. This is the action that the user is supposed to take
-        in order to resolve a task or actually do something. This isn't just navigation, it should feel
-        like a decision. For example, use a primary button to "Join" a group but a menu item to navigate
+        in order to resolve a task or actually do something. This isn&apos;t just navigation, it should feel
+        like a decision. For example, use a primary button to &quot;Join&quot; a group but a menu item to navigate
         to the page about what groups might exist.
       </Typography>
       <Example>
@@ -28,7 +28,7 @@ export const ButtonDesign: FunctionComponent<{}> =
         <Typography variant="h4">Links</Typography>
         <Box>
           <Button link="tel:8675309">Call Me</Button>
-          <Button link=".">I'm a Link</Button>
+          <Button link=".">I&apos;m a Link</Button>
         </Box>
 
         <Typography variant="h4">Colors</Typography>

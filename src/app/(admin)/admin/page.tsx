@@ -6,7 +6,7 @@ import { SermonAdmin } from '@/components/admin/SermonAdmin'
 import { Box, Tab, Tabs } from '@mui/material'
 import { FunctionComponent, useState } from 'react'
 
-export const EditorListPage: FunctionComponent<{}> =
+const EditorListPage: FunctionComponent<{}> =
   () => {
     const [ tab, setTab ] = useState(0)
     

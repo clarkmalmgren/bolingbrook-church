@@ -34,7 +34,7 @@ export const DeleteMedia: FunctionComponent<Props> =
           destructive
         >
           <DialogContentText>
-            Are you sure you want to delete "{media.name}"?
+            Are you sure you want to delete &quot;{media.name}&quot;?
             This is a permenant action and cannot be undone. This does not check to see if any orphaned
             references remain for this content and may create rendering issues if not removed elsewhere.
           </DialogContentText>

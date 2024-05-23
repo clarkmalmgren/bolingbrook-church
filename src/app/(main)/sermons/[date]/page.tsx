@@ -6,14 +6,13 @@ import { SermonPlayback } from '@/components/SermonPlayback'
 import { Typography } from '@mui/material'
 import { FunctionComponent } from 'react'
 
-
 type SermonPageProp = {
   params: {
     date: string
   }
 }
 
-export const SermonPage: FunctionComponent<SermonPageProp> =
+const SermonPage: FunctionComponent<SermonPageProp> =
   ({ params: { date } }) => (
     <Section wide>
       <SermonPlayback date={date} />

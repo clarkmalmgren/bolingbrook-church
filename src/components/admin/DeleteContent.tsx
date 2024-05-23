@@ -4,7 +4,7 @@ import { FunctionComponent, useState } from 'react'
 import { deleteContent } from '@/services/ContentService'
 import { Content } from '@/services/models/Content'
 import { Form } from '@/forms/Form'
-import { TypeToName } from "./EditorTypeFields"
+import { TypeToName } from './EditorTypeFields'
 import { TextFormField } from '@/forms/FormField'
 import { deleteStagedContent } from '@/services/StagedContentService'
 
@@ -41,7 +41,7 @@ export const DeleteContent: FunctionComponent<Props> =
           destructive
         >
           <DialogContentText>
-            Are you sure you want to delete "{content.meta.name}" of type "{TypeToName[content.meta.type]}"?
+            Are you sure you want to delete &quot;{content.meta.name}&quot; of type &quot;{TypeToName[content.meta.type]}&quot;?
             This is a permenant action and cannot be undone. This does not check to see if any orphaned
             references remain for this content and may create rendering issues if not removed elsewhere.
           </DialogContentText>
