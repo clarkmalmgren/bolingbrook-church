@@ -1,6 +1,6 @@
 'use client'
 
-import { useFormField } from '@/forms/Form'
+import { nonEmptyArray, useFormField } from '@/forms/useFormField'
 import { useContent, useContents } from '@/services/ContentService'
 import { Remove } from '@mui/icons-material'
 import { Box, FormControl, IconButton, InputLabel, List, ListItem, Typography } from '@mui/material'
@@ -20,14 +20,14 @@ type ChildSelectorProps = {
 
 export const ChildSelector: FunctionComponent<ChildSelectorProps> =
   ({ id, label, required, types }) => {
-    const { value, update } = useFormField<string[] | undefined>(id)
+    const { value, update } = useFormField<string[] | undefined>(id, nonEmptyArray(required))
     const children = useContents(value)
     const router = useRouter()
     const path = usePathname()
 
     const add = (ref: string, action: ActionType) => {
       const next = value ? [ ...value, ref ] : [ ref ]
-      update(next, false)
+      update(next)
       if (action === ActionType.Created) {
         router.push(`${path}/${ref}`)
       }
@@ -36,7 +36,7 @@ export const ChildSelector: FunctionComponent<ChildSelectorProps> =
     const remove = (index: number) => {
       const next = value ? [ ...value ] : []
       next.splice(index, 1)
-      update(next, required && next.length === 0)
+      update(next)
     }
 
     return (
@@ -62,13 +62,13 @@ export const ChildSelector: FunctionComponent<ChildSelectorProps> =
 
 export const SingleChildSelector: FunctionComponent<ChildSelectorProps> =
   ({ id, label, required, types }) => {
-    const { value, update } = useFormField<string | undefined>(id)
+    const { value, update } = useFormField<string | undefined>(id, { required })
     const child = useContent(value)
     const router = useRouter()
     const path = usePathname()
 
     const add = (ref: string, action: ActionType) => {
-      update(ref, false)
+      update(ref)
       if (action === ActionType.Created) {
         router.push(`${path}/${ref}`)
       }
@@ -85,7 +85,7 @@ export const SingleChildSelector: FunctionComponent<ChildSelectorProps> =
               pr: 1
             }}>{label}</InputLabel>
           <List sx={{ border: "1px solid rgba(0, 0, 0, 0.23)", borderRadius: 4, p: 1 }} >
-            { child && <SelectedChildItem path={path} child={child} remove={() => update(undefined, required)} /> }
+            { child && <SelectedChildItem path={path} child={child} remove={() => update(undefined)} /> }
             { !value && <CreateOrSelect types={types} onAdd={add} /> }
           </List>
         </FormControl>

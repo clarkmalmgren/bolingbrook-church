@@ -2,9 +2,10 @@
 
 import { MutationButton } from '@/components/MutationButton'
 import { Random } from '@/services/utils/Random'
-import { Alert, Box, BoxProps, Button, Dialog, DialogActions, DialogContent, DialogTitle, Paper, PaperOwnProps, PaperProps, SxProps, Typography } from '@mui/material'
+import { sxes } from '@/services/utils/sxes'
+import { Alert, Box, BoxProps, Button, Dialog, DialogActions, DialogContent, DialogTitle, Paper, PaperOwnProps, PaperProps, SxProps, Theme, Typography } from '@mui/material'
 import { useRouter } from 'next/navigation'
-import { FormEvent, FunctionComponent, PropsWithChildren, createContext, useContext, useRef, useState } from 'react'
+import { FormEvent, FunctionComponent, PropsWithChildren, createContext, useRef, useState } from 'react'
 
 export type InvalidityTree = {
   [ key: string ]: boolean | InvalidityTree
@@ -25,12 +26,14 @@ export type KeyType = (string | number) | (string | number)[]
 
 export type FormContextData = {
   data: DataState
+  getValid: (key: KeyType) => boolean
   getValue: (key: KeyType) => any
   setValue: (key: KeyType, value: any, invalid?: boolean) => void
 }
 
 export const FormContext = createContext<FormContextData>({
   data: EmptyDataSate,
+  getValid: () => true,
   getValue: () => {},
   setValue: () => {}
 })
@@ -159,15 +162,6 @@ function isInvalid(tree?: InvalidityTree): boolean {
   return false
 }
 
-export function useFormField<T>(key: KeyType): { flat: string, value: T, update: (value: T, invalid?: boolean) => void } {
-  const ctx = useContext(FormContext)
-  return {
-    flat: Array.isArray(key) ? key.join('/') : '' + key,
-    value: ctx.getValue(key),
-    update: (v, i) => ctx.setValue(key, v, i)
-  }
-}
-
 export const Form: FunctionComponent<PropsWithChildren<FormProps>> =
   (props) => {
     const router = useRouter()
@@ -177,6 +171,7 @@ export const Form: FunctionComponent<PropsWithChildren<FormProps>> =
 
     const ctx: FormContextData = {
       data: data.current,
+      getValid: (key: KeyType) => !seek(key, data.current.invalid),
       getValue: (key: KeyType) => seek(key, data.current.state),
       setValue: (key: KeyType, value: any, invalid?: boolean) => {
         const next: DataState =  {
@@ -284,5 +279,15 @@ export const Form: FunctionComponent<PropsWithChildren<FormProps>> =
     }
   }
 
-const Container: FunctionComponent<{ variant: 'paper' | 'box'} & any> =
-  ({ variant, ...rest }) => (variant === 'paper') ? <Paper {...rest} />: <Box {...rest} />
+type ContainerProps = {
+  component?: string
+  sx?: SxProps<Theme>
+  onSubmit: (e: FormEvent<any>) => void
+  variant: 'paper' | 'box'
+}
+
+const Container: FunctionComponent<ContainerProps> =
+  ({ sx, variant, ...rest }) =>
+    (variant === 'paper')
+      ? <Paper {...rest} sx={sxes([{ p: 2 }, sx])} />
+      : <Box {...rest as any} sx={sx} />

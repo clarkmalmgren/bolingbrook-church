@@ -3,7 +3,7 @@ import EditorJS, { OutputData } from '@editorjs/editorjs'
 import Header from '@editorjs/header'
 import { Box, FormControl, InputLabel } from '@mui/material'
 import { FunctionComponent, useEffect, useRef, useState } from 'react'
-import { useFormField } from './Form'
+import { useFormField } from './useFormField'
 import { ChildContent } from '@/services/editorjs/plugins/ChildContent'
 
 type EditorProps = {

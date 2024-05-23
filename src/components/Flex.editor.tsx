@@ -1,6 +1,7 @@
 'use client'
 
-import { Form, useFormField } from '@/forms/Form'
+import { Form } from '@/forms/Form'
+import { useFormField } from '@/forms/useFormField'
 import { FormEditor } from '@/forms/FormEditor'
 import { NumberFormField, TextFormField } from '@/forms/FormField'
 import { FormSelect } from '@/forms/FormSelect'
@@ -40,13 +41,13 @@ export const FormFlex: FunctionComponent<FormFlexProps> =
     const save = (child: FlexChild, index: number) => {
       const next = value ? [ ...value ] : []
       next[index] = child
-      update(next, false)
+      update(next)
     }
 
     const remove = (index: number) => {
       const next = value ? [ ...value ] : []
       next.splice(index, 1)
-      update(next, false)
+      update(next)
     }
 
     const add = (id: string, action: ActionType) => {
@@ -69,7 +70,7 @@ export const FormFlex: FunctionComponent<FormFlexProps> =
       const b = next[index + offset]
       next[index] = b
       next[index + offset] = a
-      update(next, false)
+      update(next)
     }
 
     return (

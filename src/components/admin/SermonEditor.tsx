@@ -1,6 +1,7 @@
 'use client'
 
-import { Form, FormResponse, useFormField } from '@/forms/Form'
+import { Form, FormResponse } from '@/forms/Form'
+import { useFormField } from '@/forms/useFormField'
 import { DateFormField, TextFormField, TimeFormField } from '@/forms/FormField'
 import { saveSermon } from '@/services/SermonService'
 import { Sermon, Service } from '@/services/models/sermon'

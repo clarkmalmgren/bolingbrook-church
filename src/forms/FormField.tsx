@@ -1,6 +1,7 @@
 import { InputLabelProps, TextField } from '@mui/material'
 import { FunctionComponent, ReactElement } from 'react'
-import { KeyType, useFormField } from './Form'
+import { KeyType } from './Form'
+import { useFormField } from './useFormField'
 
 type BaseFieldProps<T> = {
   id: KeyType
@@ -26,12 +27,11 @@ type FormFieldProps<T> = {
 
 function FormField<T>(props: FormFieldProps<T>): ReactElement<any, any> {
   const { id, toValue, isValid, required, type, ...rest } = props
-  const { value, update, flat } = useFormField(id)
+  const { value, update, flat } = useFormField<T>(id, (v) => !required || isValid(v))
 
   const _update = (s: string) => {
     const value = toValue(s)
-    const invalid = required && !isValid(value)
-    update(value, invalid)
+    update(value)
   }
 
   if (['date', 'time'].includes(type || '')) {

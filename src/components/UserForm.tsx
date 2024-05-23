@@ -29,7 +29,6 @@ export const UserForm: FunctionComponent<UserFormProps> =
     return (
       <Form
         variant="paper"
-        sx={{ p: 2 }}
         redirectOnSuccess={() => linkOnSuccess}
         loading={loading}
         submit={(map) => {

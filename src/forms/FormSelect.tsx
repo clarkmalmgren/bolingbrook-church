@@ -1,6 +1,6 @@
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 import { FunctionComponent } from 'react'
-import { useFormField } from './Form'
+import { useFormField } from './useFormField'
 
 export type FormSelectProps = {
   id: string | string[]

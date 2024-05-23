@@ -3,7 +3,7 @@ import { SharedCollectionListenerService, useSharedHook } from '@/services/Fires
 import { firestore as db } from '@/services/utils/Firebase'
 import { deleteDoc, doc, setDoc } from 'firebase/firestore'
 import { useAuthState } from './FirebaseAuthService'
-import { Content, ContentMap } from './models/Content'
+import { Content, ContentMap, clean } from './models/Content'
 import { createContext, useContext } from 'react'
 import { PageProps } from '@/components/Page'
 
@@ -76,7 +76,7 @@ export function useSaveContent(): (id: string, data: Content) => Promise<FormRes
     const ref = doc(db, `cms/${process.env.NODE_ENV}/content/${id}`)
 
     return tryResponse(async () => {
-      await setDoc(ref, data)
+      await setDoc(ref, clean(data))
       return data
     })
   }

@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react'
-import { useFormField } from './Form'
+import { nonEmptyArray, useFormField } from './useFormField'
 import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material'
 
 export type FormOption = string | { value: string, label: string }
@@ -18,7 +18,7 @@ function optionValue(o: FormOption): string {
 
 export const FormCheckboxes: FunctionComponent<FormCheckboxesProps> =
   ({ id, required, label, disabled, options }) => {
-    const { value, update } = useFormField<string[]>(id)
+    const { value, update } = useFormField<string[]>(id, nonEmptyArray(required))
     const checks = options.map(optionValue).map(o => value?.includes(o))
 
     function onChange(index: number, checked: boolean): void {
@@ -26,7 +26,7 @@ export const FormCheckboxes: FunctionComponent<FormCheckboxesProps> =
       nextChecks[index] = checked
 
       const next = options.map(optionValue).filter((v, i) => nextChecks[i])
-      update(next, next.length === 0 && required)
+      update(next)
     }
 
     return (

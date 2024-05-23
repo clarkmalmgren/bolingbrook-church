@@ -1,6 +1,7 @@
 'use client'
 
-import { Form, useFormField } from '@/forms/Form'
+import { Form } from '@/forms/Form'
+import { useFormField } from '@/forms/useFormField'
 import { FormEditor } from '@/forms/FormEditor'
 import { NumberFormField, TextFormField } from '@/forms/FormField'
 import { FormSelect } from '@/forms/FormSelect'
@@ -41,20 +42,20 @@ export const FormUserForm: FunctionComponent<FormUserFormProps> =
     const save = (p: Prompt, index: number) => {
       const next = value ? [ ...value ] : []
       next[index] = p
-      update(next, false)
+      update(next)
     }
 
     const remove = (index: number) => {
       const next = value ? [ ...value ] : []
       next.splice(index, 1)
-      update(next, false)
+      update(next)
     }
 
     const add = () => {
       const index = value?.length || 0
       const next = value ? [ ...value ] : []
       next.push({ type: 'string', key: '' })
-      update(next, false)
+      update(next)
     }
 
     return (

@@ -1,6 +1,7 @@
 'use client'
 
-import { Form, useFormField } from '@/forms/Form'
+import { Form } from '@/forms/Form'
+import { useFormField } from '@/forms/useFormField'
 import { FormEditor } from '@/forms/FormEditor'
 import { NumberFormField, TextFormField } from '@/forms/FormField'
 import { FormSelect } from '@/forms/FormSelect'
@@ -35,7 +36,6 @@ type FormGridProps = {
 
 export const FormGrid: FunctionComponent<FormGridProps> =
   ({ id }) => {
-    const [ open, setOpen ] = useState(false)
     const { value, update } = useFormField<GridChild[] | undefined>(id)
     const router = useRouter()
     const path = usePathname()
@@ -43,13 +43,13 @@ export const FormGrid: FunctionComponent<FormGridProps> =
     const save = (child: GridChild, index: number) => {
       const next = value ? [ ...value ] : []
       next[index] = child
-      update(next, false)
+      update(next)
     }
 
     const remove = (index: number) => {
       const next = value ? [ ...value ] : []
       next.splice(index, 1)
-      update(next, false)
+      update(next)
     }
 
     const add = (id: string, action: ActionType) => {

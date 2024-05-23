@@ -1,6 +1,6 @@
 'use client'
 
-import { useFormField } from '@/forms/Form'
+import { useFormField } from '@/forms/useFormField'
 import { useAllMedia, useMedia } from '@/services/MediaService'
 import { Add } from '@mui/icons-material'
 import { Box, Dialog, DialogActions, DialogContent, FormControl, InputLabel } from '@mui/material'
@@ -18,12 +18,12 @@ type MediaSelectorProps = {
 export const MediaSelector: FunctionComponent<MediaSelectorProps> =
   ({ id, label, required }) => {
     const [ open, setOpen ] = useState(false)
-    const { value, update } = useFormField<string | undefined>(id)
+    const { value, update } = useFormField<string | undefined>(id, { required })
     const all = useAllMedia()
     const selected = useMedia(value)
 
     const save = (ref: string | undefined) => {
-      update(ref, !ref && required)
+      update(ref)
       setOpen(false)
     }
 

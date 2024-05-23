@@ -1,5 +1,5 @@
 import { FunctionComponent, ReactElement } from 'react'
-import { useFormField } from './Form'
+import { useFormField } from './useFormField'
 import { FormControlLabel, Switch } from '@mui/material'
 
 type FormSwitchProps = {
@@ -11,7 +11,7 @@ type FormSwitchProps = {
 
 export const FormSwitch: FunctionComponent<FormSwitchProps> =
   ({ id, label, required, disabled }) => {
-    const { value, update, flat } = useFormField<boolean | undefined>(id)
+    const { value, update } = useFormField<boolean | undefined>(id)
 
     return (
       <FormControlLabel

@@ -4,7 +4,7 @@ import { firestore as db } from '@/services/utils/Firebase'
 import { deleteDoc, doc, setDoc } from 'firebase/firestore'
 import { useEffect, useState } from 'react'
 import { useSaveContent } from './ContentService'
-import { Content, ContentMap } from './models/Content'
+import { Content, ContentMap, clean } from './models/Content'
 import { Random } from './utils/Random'
 
 export const StagedContentService = new class extends SharedCollectionListenerService<Content> {
@@ -47,7 +47,7 @@ export function stageContent(id: string, data: Content): void {
 
   timers[id] = setTimeout(() => {
     const ref = doc(db, `cms/${process.env.NODE_ENV}/staged/${id}`)
-    setDoc(ref, cache[id])
+    setDoc(ref, clean(cache[id]))
     delete timers[id]
     delete cache[id]
   }, DebounceInMillis)
