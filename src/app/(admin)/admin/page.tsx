@@ -3,7 +3,7 @@
 import { ContentList } from '@/components/admin/ContentList'
 import { MediaList } from '@/components/admin/MediaList'
 import { SermonAdmin } from '@/components/admin/SermonAdmin'
-import { Box, Tab, Tabs } from '@mui/material'
+import { Tab, Tabs } from '@mui/material'
 import { FunctionComponent, useState } from 'react'
 
 const EditorListPage: FunctionComponent<{}> =
