@@ -9,7 +9,7 @@ import { PageProps } from '@/components/Page'
 
 export const ContentService = new class extends SharedCollectionListenerService<Content> {
   constructor() {
-    super(db, `cms/${process.env.NODE_ENV}/content`)
+    super(db, `cms/${process.env.NEXT_PUBLIC_ENV}/content`)
   }
 }
 
@@ -73,7 +73,7 @@ export function useSaveContent(): (id: string, data: Content) => Promise<FormRes
     data.meta.updated = new Date().getTime()
     data.meta.updated_by = auth?.name || auth?.email
 
-    const ref = doc(db, `cms/${process.env.NODE_ENV}/content/${id}`)
+    const ref = doc(db, `cms/${process.env.NEXT_PUBLIC_ENV}/content/${id}`)
 
     return tryResponse(async () => {
       await setDoc(ref, clean(data))
@@ -83,7 +83,7 @@ export function useSaveContent(): (id: string, data: Content) => Promise<FormRes
 }
 
 export async function deleteContent(id: string): Promise<FormResponse<{ meta: { id: string } }>> {
-  const ref = doc(db, `cms/${process.env.NODE_ENV}/content/${id}`)
+  const ref = doc(db, `cms/${process.env.NEXT_PUBLIC_ENV}/content/${id}`)
 
   return tryResponse(async () => {
     await deleteDoc(ref)

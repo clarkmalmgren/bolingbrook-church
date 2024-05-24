@@ -9,8 +9,8 @@
     "build:local": "NODE_ENV=development && NEXT_PUBLIC_SIM=true && next build",
     "build:beta": "NODE_ENV=development && next build",
     "build:prod": "next build",
-    "deploy:beta": "firebase use bolingbrook-church-beta && env-cmd -f .env.beta firebase deploy",
-    "deploy:prod": "firebase use bolingbrook-church && firebase deploy",
+    "deploy:beta": "firebase use bolingbrook-church-beta && env-cmd -f .env.beta firebase deploy --only hosting",
+    "deploy:prod": "firebase use bolingbrook-church && firebase deploy --only hosting",
     "emulators": "firebase use bolingbrook-church-beta && firebase emulators:start --import=.firebase_data --export-on-exit .firebase_data",
     "lint": "next lint"
   },

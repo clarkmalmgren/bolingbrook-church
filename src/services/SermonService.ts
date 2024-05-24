@@ -7,7 +7,7 @@ import { FormResponse, tryResponse } from '@/forms/Form'
 
 const SermonService = new class extends SharedCollectionListenerService<Sermon> {
   constructor() {
-    super(db, `cms/${process.env.NODE_ENV}/sermons`)
+    super(db, `cms/${process.env.NEXT_PUBLIC_ENV}/sermons`)
   }
 }
 
@@ -43,7 +43,7 @@ export function useCurrentSermon(): Sermon | undefined {
 }
 
 export async function saveSermon(data: Sermon): Promise<FormResponse<Sermon>> {
-  const ref = doc(db, `cms/${process.env.NODE_ENV}/sermons/${data.date}`)
+  const ref = doc(db, `cms/${process.env.NEXT_PUBLIC_ENV}/sermons/${data.date}`)
 
   return tryResponse(async () => {
     setDoc(ref, data)

@@ -19,7 +19,7 @@ const ImageSizes: ImageSize[] = [ 50, 350, 750, 1500 ]
 
 const MediaService = new class extends SharedCollectionListenerService<MediaRef> {
   constructor() {
-    super(db, `cms/${process.env.NODE_ENV}/media`)
+    super(db, `cms/${process.env.NEXT_PUBLIC_ENV}/media`)
   }
 }
 
@@ -48,8 +48,8 @@ export function useAllMedia(): MediaRef[] | undefined {
 }
 
 export async function uploadMedia(id: string, name: string, description: string | undefined, file: File, video?: boolean): Promise<FormResponse> {
-  const dataRef = doc(db, `cms/${process.env.NODE_ENV}/media/${id}`)
-  const mediaRef = storageRef(storage, `cms/${process.env.NODE_ENV}/media/${id}`)
+  const dataRef = doc(db, `cms/${process.env.NEXT_PUBLIC_ENV}/media/${id}`)
+  const mediaRef = storageRef(storage, `cms/${process.env.NEXT_PUBLIC_ENV}/media/${id}`)
   
   const snap = await uploadBytes(mediaRef, file)
 
@@ -70,7 +70,7 @@ export async function uploadMedia(id: string, name: string, description: string 
 }
 
 export async function deleteMedia(id: string): Promise<FormResponse> {
-  const dataRef = doc(db, `cms/${process.env.NODE_ENV}/media/${id}`)
+  const dataRef = doc(db, `cms/${process.env.NEXT_PUBLIC_ENV}/media/${id}`)
   const snap = await getDoc(dataRef)
   const data = snap.data() as MediaRef
 

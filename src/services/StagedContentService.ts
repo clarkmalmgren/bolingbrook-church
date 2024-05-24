@@ -9,7 +9,7 @@ import { Random } from './utils/Random'
 
 export const StagedContentService = new class extends SharedCollectionListenerService<Content> {
   constructor() {
-    super(db, `cms/${process.env.NODE_ENV}/staged`)
+    super(db, `cms/${process.env.NEXT_PUBLIC_ENV}/staged`)
   }
 }
 
@@ -46,7 +46,7 @@ export function stageContent(id: string, data: Content): void {
   }
 
   timers[id] = setTimeout(() => {
-    const ref = doc(db, `cms/${process.env.NODE_ENV}/staged/${id}`)
+    const ref = doc(db, `cms/${process.env.NEXT_PUBLIC_ENV}/staged/${id}`)
     setDoc(ref, clean(cache[id]))
     delete timers[id]
     delete cache[id]
@@ -63,7 +63,7 @@ export function createNewContent(type: string): string {
 }
 
 export async function deleteStagedContent(id: string): Promise<FormResponse<{ meta: { id: string } }>> {
-  const ref = doc(db, `cms/${process.env.NODE_ENV}/staged/${id}`)
+  const ref = doc(db, `cms/${process.env.NEXT_PUBLIC_ENV}/staged/${id}`)
 
   return tryResponse(async () => {
     delete cache[id]
