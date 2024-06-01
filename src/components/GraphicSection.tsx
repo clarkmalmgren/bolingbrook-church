@@ -2,7 +2,7 @@ import { OutputData } from '@editorjs/editorjs'
 import { Box, ButtonBase, SxProps, Theme } from '@mui/material'
 import Link from 'next/link'
 import { FunctionComponent } from 'react'
-import { BackgroundMediaById, MediaById } from './DynamicComponent'
+import { BackgroundMediaById, MediaById } from './dynamic/MediaById'
 import { RichText } from './RichText'
 
 export type GraphicSectionProps = {

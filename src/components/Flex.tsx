@@ -1,7 +1,8 @@
 import { OutputData } from '@editorjs/editorjs'
 import { Box } from '@mui/material'
 import { CSSProperties, FunctionComponent } from 'react'
-import { ComponentById, MediaById } from './DynamicComponent'
+import { MediaById } from './dynamic/MediaById'
+import { ComponentById } from './dynamic/ComponentById'
 import { RichText } from './RichText'
 
 export type ContentChild = { type: 'content', ref: string  }

@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react'
-import { ComponentById } from './DynamicComponent'
+import { ComponentById } from './dynamic/ComponentById'
 
 export type PageProps = {
   path: string

@@ -11,7 +11,10 @@ export const Section: FunctionComponent<PropsWithChildren<SectionProps>> =
     <Box
       sx={sx}
       width="95%"
-      margin={(t) => `${t.spacing(2)} auto`}
+      mt={2}
+      mb={2}
+      ml="auto"
+      mr="auto"
       maxWidth={ wide ? undefined : '840px'}
     >{children}</Box>
   )

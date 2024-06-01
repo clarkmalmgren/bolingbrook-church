@@ -1,17 +1,23 @@
-'use client'
-
-import { ComponentBySelector } from '@/components/DynamicComponent'
 import { SermonList } from '@/components/SermonList'
-import { FunctionComponent } from 'react'
+import { ComponentBySelector } from '@/components/dynamic/ComponentById'
+import { PrefetchService } from '@/services/PrefetchService'
+import { ServerComponent } from '@/types/ServerComponent'
 
-const SermonsPage: FunctionComponent<{}> =
-  () => (
-    <>
-      <ComponentBySelector
-        selector={(c) => c.meta.type === 'hero' && c.meta.name === 'Sermons'}
-      />
-      <SermonList />
-    </>
-  )
+type SermonsPageProps = {}
+
+const SermonsPage: ServerComponent<SermonsPageProps> = 
+  async () => {
+    const sermons = await PrefetchService.sermons()
+    const media = await PrefetchService.media()
+    const content = await PrefetchService.content()
+
+    return (
+      <>
+        <ComponentBySelector type="hero" name="Sermons" prefetch={{ media, content }} />
+        <SermonList prefetch={sermons}/>
+      </>
+    )
+  }
 
 export default SermonsPage
+export const dynamic = 'auto'

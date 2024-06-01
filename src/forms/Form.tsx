@@ -3,7 +3,7 @@
 import { MutationButton } from '@/components/MutationButton'
 import { Random } from '@/services/utils/Random'
 import { sxes } from '@/services/utils/sxes'
-import { Alert, Box, BoxProps, Button, Dialog, DialogActions, DialogContent, DialogTitle, Paper, PaperOwnProps, PaperProps, SxProps, Theme, Typography } from '@mui/material'
+import { Alert, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Paper, SxProps, Theme, Typography } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import { FormEvent, FunctionComponent, PropsWithChildren, createContext, useRef, useState } from 'react'
 
@@ -289,7 +289,8 @@ type ContainerProps = {
 const DefaultSx: SxProps<Theme> = {
   display: 'flex',
   flexWrap: 'wrap',
-  columnGap: 2
+  columnGap: 2,
+  alignContent: 'flex-start'
 }
 
 const Container: FunctionComponent<PropsWithChildren<ContainerProps>> =

@@ -1,3 +1,5 @@
+'use client'
+
 import { Random } from '@/services/utils/Random'
 import EditorJS, { OutputData } from '@editorjs/editorjs'
 import Header from '@editorjs/header'
@@ -41,7 +43,6 @@ export const FormEditorClient: FunctionComponent<EditorProps> =
 
       return () => {
         editor.current?.destroy?.()
-        editor.current = undefined
       }
     }, [])
     /* eslint-enable react-hooks/exhaustive-deps */

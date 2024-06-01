@@ -1,6 +1,6 @@
 'use client'
 
-import { ComponentById } from '@/components/DynamicComponent'
+import { ComponentById } from '@/components/dynamic/ComponentById'
 import { DropdownAvailableTypes, TypeSpecificFields, TypeToName } from '@/components/admin/EditorTypeFields'
 import { Form } from '@/forms/Form'
 import { TextFormField } from '@/forms/FormField'

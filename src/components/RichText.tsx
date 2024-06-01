@@ -3,7 +3,7 @@ import { OutputBlockData, OutputData } from '@editorjs/editorjs'
 import { Typography } from '@mui/material'
 import { FunctionComponent } from 'react'
 import { MarkedText } from './MarkedText'
-import { ComponentById } from './DynamicComponent'
+import { ComponentById } from './dynamic/ComponentById'
 
 type ParagraphBlock = OutputBlockData<'paragraph', { text: string }>
 type HeaderBlock = OutputBlockData<'header', { text: string, level: number }>

@@ -33,6 +33,16 @@ type DeepPartial<T> = {
   [P in keyof T]?: DeepPartial<T[P]>
 }
 
+export function sermonSort(a: Sermon, b: Sermon): number {
+  if (a.date === b.date) {
+    return 0
+  } else if (a.date < b.date) {
+    return 1
+  } else {
+    return -1
+  }
+}
+
 export type PartialSermon = DeepPartial<Sermon>
 
 export type SermonMap = { [ date: string ]: Sermon }

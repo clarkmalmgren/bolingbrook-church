@@ -1,7 +1,9 @@
+'use client'
+
+import { getImageUrl, Sermon } from '@/services/models/sermon'
 import { Typography } from '@mui/material'
 import moment from 'moment'
 import { FunctionComponent } from 'react'
-import { getImageUrl, Sermon } from '@/services/models/sermon'
 import { Card } from './Card'
 
 export type SermonCardProps = {
@@ -19,7 +21,7 @@ export const SermonCard: FunctionComponent<SermonCardProps> =
         subtitle={dateString}
         image={ getImageUrl(sermon) }
         link={ onClick ? undefined : `/sermons/${sermon.date}` }
-        onClick={ () => onClick?.(sermon) }
+        onClick={ typeof window === 'undefined' ? undefined : () => onClick?.(sermon) }
       >
         <Typography
           sx={{

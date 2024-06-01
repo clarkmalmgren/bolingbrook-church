@@ -1,3 +1,5 @@
+'use client'
+
 import { FunctionComponent, useContext } from 'react'
 import { FormContext } from './Form'
 import ReactMuiFileuploader from 'react-mui-fileuploader'

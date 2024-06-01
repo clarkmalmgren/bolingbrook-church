@@ -1,12 +1,12 @@
 'use client'
 
+import { useMedia, useResizedImageUrl } from '@/services/MediaService'
 import { ContentOf } from '@/services/models/Content'
-import { MediaRef, useMedia, useResizedImageUrl } from '@/services/MediaService'
-import { Box, useTheme } from '@mui/material'
-import { FunctionComponent, PropsWithChildren, useEffect, useRef, useState } from 'react'
-import { DynamicComponent, ComponentById } from './DynamicComponent'
 import { OutputData } from '@editorjs/editorjs'
+import Box from '@mui/material/Box'
+import { FunctionComponent, PropsWithChildren, useEffect, useRef, useState } from 'react'
 import { RichText } from './RichText'
+import { ComponentById } from './dynamic/ComponentById'
 
 export type HeroProps = {
   media?: { url: string, video: boolean }
@@ -20,9 +20,8 @@ export type HeroProps = {
 export const Hero: FunctionComponent<PropsWithChildren<HeroProps>> =
   ({ media, height, shade, justify, shadeColor, children, imagePosition }) => {
     const _height = height || 0.2
-    const [ heightInPx, setHeightInPx ]  = useState((window.innerHeight - 60) * _height)
+    const [ heightInPx, setHeightInPx ]  = useState(800 * _height)
     const ref = useRef<HTMLDivElement>(null)
-    const theme = useTheme()
 
     const updateHeight = () => {
       const top = ref.current?.offsetTop || 60

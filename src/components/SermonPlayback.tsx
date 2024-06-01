@@ -1,17 +1,18 @@
+import { Sermon } from '@/services/models/sermon'
 import { Box, Typography } from '@mui/material'
 import moment from 'moment'
 import { FunctionComponent } from 'react'
-import { useSermon } from '@/services/SermonService'
-import { Youtube }  from './Youtube'
+import { Loading } from './Loading'
+import { Youtube } from './Youtube'
 
-type Props = { date: string }
+type Props = {
+  sermon?: Sermon
+}
 
 export const SermonPlayback: FunctionComponent<Props> =
-  ({ date }) => {
-    const sermon = useSermon(date)
-
-    return sermon ?
-      (
+  ({ sermon }) => {
+    if (sermon) {
+      return (
         <Box display="flex" flexDirection="column" alignItems="center">
           { sermon.services.map((s, i) => <Youtube key={i} id={s.youtube} />) }
           <Box display="flex" flexWrap="wrap" p={2}>
@@ -27,9 +28,8 @@ export const SermonPlayback: FunctionComponent<Props> =
             <Typography>{sermon.description}</Typography>
           </Box>
         </Box>
-      ) : (
-        <Box>
-          <Typography variant="h2">Loading...</Typography>
-        </Box>
       )
+    } else {
+      return <Loading />
+    }
   }

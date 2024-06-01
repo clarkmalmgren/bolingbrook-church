@@ -1,4 +1,6 @@
-import { Form, FormResponse } from '@/forms/Form'
+'use client'
+
+import { Form } from '@/forms/Form'
 import { FormCheckboxes } from '@/forms/FormCheckboxes'
 import { NumberFormField, TextFormField } from '@/forms/FormField'
 import { useFormService } from '@/services/UseFormService'

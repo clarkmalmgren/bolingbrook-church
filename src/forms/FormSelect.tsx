@@ -1,3 +1,5 @@
+'use client'
+
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 import { FunctionComponent } from 'react'
 import { useFormField } from './useFormField'

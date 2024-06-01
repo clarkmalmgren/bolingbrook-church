@@ -1,18 +1,21 @@
+'use client'
+
 import { Box, Divider, Pagination, Paper } from '@mui/material'
 import { FunctionComponent, useState } from 'react'
 import { SermonCard } from './SermonCard'
 import { useSermons } from '@/services/SermonService'
-import { Sermon } from '@/services/models/sermon'
+import { Sermon, SermonMap } from '@/services/models/sermon'
 
 type Props = {
   onClick?: (sermon: Sermon) => void
+  prefetch?: SermonMap
 }
 
-const PAGE_SIZE = 9
+const PAGE_SIZE = 12
 
 export const SermonList: FunctionComponent<Props> =
-  ({ onClick }) => {
-    const sermons = useSermons() || []
+  ({ onClick, prefetch }) => {
+    const sermons = useSermons(prefetch) || []
     const [page, setPage] = useState(1)
 
     const pageCount = sermons ? Math.ceil(sermons.length / PAGE_SIZE) : 0
@@ -28,7 +31,11 @@ export const SermonList: FunctionComponent<Props> =
         sx={{
           display: 'flex',
           flexFlow: 'row wrap',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          alignSelf: 'center',
+          ml: 'auto',
+          mr: 'auto',
+          maxWidth: 1550
         }}
       >
         { visibleSermons.map(s => (<SermonCard sermon={s} key={s.date} onClick={onClick} />)) }

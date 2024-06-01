@@ -1,6 +1,7 @@
 import { Form } from '@/forms/Form'
 import { TextFormField } from '@/forms/FormField'
-import { MediaRef, deleteMedia } from '@/services/MediaService'
+import { deleteMedia } from '@/services/MediaService'
+import { MediaRef } from '@/services/models/MediaRef'
 import { DeleteForever } from '@mui/icons-material'
 import { DialogContentText, IconButton } from '@mui/material'
 import { FunctionComponent, useState } from 'react'

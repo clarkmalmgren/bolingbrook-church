@@ -4,47 +4,40 @@ import { firestore as db, storage } from '@/services/utils/Firebase'
 import { deleteDoc, doc, setDoc, getDoc } from 'firebase/firestore'
 import { ref as storageRef, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
 import { useEffect, useState } from 'react'
-
-export type MediaRef = {
-  id: string
-  name: string
-  description?: string
-  url: string
-  fullPath: string
-  video?: boolean
-}
+import { MediaRef, MediaRefMap } from './models/MediaRef'
+import { bustCache } from '@/actions/bustCache'
 
 export type ImageSize = 50 | 350 | 750 | 1500
 const ImageSizes: ImageSize[] = [ 50, 350, 750, 1500 ]
 
-const MediaService = new class extends SharedCollectionListenerService<MediaRef> {
+
+export const MediaService = new class extends SharedCollectionListenerService<MediaRef> {
   constructor() {
     super(db, `cms/${process.env.NEXT_PUBLIC_ENV}/media`)
   }
 }
 
-export function useMedia(id?: string): MediaRef | undefined {
-  return useSharedHook(
-    MediaService,
-    (data) => id ? data[id] : undefined,
-    [id]
-  )
+/* Keep this reference around for more deeply nested content lookups */
+let _prefetched: MediaRefMap | undefined = undefined
+
+export function useMediaMap(prefetch?: MediaRefMap): MediaRefMap | undefined {
+  _prefetched = prefetch || _prefetched
+  return useSharedHook(MediaService, (data) => data, [], _prefetched)
 }
 
-export function useMedias(ids?: string[]): MediaRef[] | undefined {
-  return useSharedHook(
-    MediaService,
-    (data) => ids ? ids.map(id => data[id]) : undefined,
-    ids
-  )
+export function useMedia(id?: string, prefetch?: MediaRefMap): MediaRef | undefined {
+  const map = useMediaMap(prefetch)
+  return id ? map?.[id] : undefined
 }
 
-export function useAllMedia(): MediaRef[] | undefined {
-  return useSharedHook(
-    MediaService,
-    (data) => Object.values(data).sort((a, b) => a.name?.localeCompare(b.name)),
-    []
-  )
+export function useMedias(ids?: string[], prefetch?: MediaRefMap): MediaRef[] | undefined {
+  const map = useMediaMap(prefetch)
+  return ids && map ? ids.map(id => map[id]) : undefined
+}
+
+export function useAllMedia(prefetch?: MediaRefMap): MediaRef[] | undefined {
+  const map = useMediaMap(prefetch)
+  return map ? Object.values(map).sort((a, b) => a.name?.localeCompare(b.name)) : undefined
 }
 
 export async function uploadMedia(id: string, name: string, description: string | undefined, file: File, video?: boolean): Promise<FormResponse> {
@@ -65,6 +58,7 @@ export async function uploadMedia(id: string, name: string, description: string 
 
   return tryResponse(async () => {
     await setDoc(dataRef, data)
+    await bustCache()
     return data
   })
 }
@@ -89,6 +83,7 @@ export async function deleteMedia(id: string): Promise<FormResponse> {
     const mediaRef = storageRef(storage, data.fullPath)
     await deleteObject(mediaRef)
     await deleteDoc(dataRef)
+    await bustCache()
     return data
   })
 }

@@ -1,4 +1,5 @@
-import { MediaRef, useResizedImageUrl } from '@/services/MediaService'
+import { useResizedImageUrl } from '@/services/MediaService'
+import { MediaRef } from '@/services/models/MediaRef'
 import { Box, Card, CardActions, CardContent, CardHeader, CardMedia, Typography } from '@mui/material'
 import { FunctionComponent, PropsWithChildren } from 'react'
 import { DeleteMedia } from './DeleteMedia'

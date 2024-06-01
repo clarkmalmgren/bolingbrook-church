@@ -1,6 +1,8 @@
+'use client'
+
+import { Checkbox, FormControlLabel, Typography } from '@mui/material'
 import { FunctionComponent } from 'react'
 import { nonEmptyArray, useFormField } from './useFormField'
-import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material'
 
 export type FormOption = string | { value: string, label: string }
 

@@ -1,7 +1,9 @@
+'use client'
+
 import { useContents } from '@/services/ContentService'
 import { Box } from '@mui/material'
 import { FunctionComponent, PropsWithChildren } from 'react'
-import { DynamicComponent } from './DynamicComponent'
+import { DynamicComponent } from './dynamic/DynamicComponent'
 
 export const CardList: FunctionComponent<PropsWithChildren<{}>> =
   ({ children }) => (

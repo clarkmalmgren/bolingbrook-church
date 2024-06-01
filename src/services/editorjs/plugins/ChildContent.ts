@@ -1,15 +1,17 @@
+'use client'
+
 import { TypeToName } from '@/components/admin/EditorTypeFields'
 import { ContentService } from '@/services/ContentService'
 import { StagedContentService } from '@/services/StagedContentService'
-import { API, BlockAPI, BlockTool, BlockToolConstructorOptions, ToolboxConfigEntry } from '@editorjs/editorjs'
+import { BlockAPI, BlockTool, BlockToolConstructorOptions, ToolboxConfigEntry } from '@editorjs/editorjs'
 
 export type ChildContentData = {
   ref?: string
 }
 
 async function appendChildContents(el: HTMLSelectElement, value?: string): Promise<void> {
-  const published = await ContentService.onePromise()
-  const staged = await StagedContentService.onePromise()
+  const published = await ContentService.once()
+  const staged = await StagedContentService.once()
 
   let empty = document.createElement('option')
   el.appendChild(empty)

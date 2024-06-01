@@ -1,6 +1,8 @@
-import { FunctionComponent, ReactElement } from 'react'
-import { useFormField } from './useFormField'
+'use client'
+
 import { FormControlLabel, Switch } from '@mui/material'
+import { FunctionComponent } from 'react'
+import { useFormField } from './useFormField'
 
 type FormSwitchProps = {
   id: string | string[]

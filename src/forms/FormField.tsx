@@ -1,3 +1,5 @@
+'use client'
+
 import { InputLabelProps, TextField } from '@mui/material'
 import { FunctionComponent, ReactElement } from 'react'
 import { KeyType } from './Form'

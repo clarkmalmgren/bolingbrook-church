@@ -22,7 +22,7 @@ export abstract class SharedListenerService<T> {
   private lastValue: T | undefined
   private connectingTimeout: any | undefined
   private disconnectingTimeout: any | undefined
-  protected disconnectDelay: number = 1000
+  private disconnectDelay: number = 1000
 
   protected abstract connect(): void
   protected abstract disconnect(): void
@@ -87,11 +87,13 @@ export abstract class SharedListenerService<T> {
       this.state = State.Disconnected
     } else if (isEmpty && this.state === State.Connected) {
       this.disconnectingTimeout = setTimeout(() => {
-        this.disconnect()
-        this.state = State.Disconnected
-        this.disconnectingTimeout = undefined
-        this.lastValue = undefined
-      })
+        if (this.state === State.Disconnecting) {
+          this.disconnect()
+          this.state = State.Disconnected
+          this.disconnectingTimeout = undefined
+          this.lastValue = undefined
+        }
+      }, this.disconnectDelay)
       this.state = State.Disconnecting
     }
   }
@@ -104,8 +106,13 @@ export abstract class SharedListenerService<T> {
     }
   }
 
-  onePromise(): Promise<T> {
-    return new Promise((resolve) => { this.oneTime((data) => resolve(data)) })
+  once(): Promise<T> {
+    return new Promise((resolve) => {
+      const unsub = this.subscribe((data) => {
+        resolve(data)
+        unsub()
+      })
+    })
   }
 
   get debug(): string {
@@ -150,8 +157,8 @@ export abstract class SharedDocumentListenerService<T> extends SharedListenerSer
   }
 }
 
-export function useSharedHook<T, S>(service: SharedListenerService<T>, selector: (data: T) => S, deps?: any[]): S | undefined {
-  const [ value, setValue ] = useState<S | undefined>()
+export function useSharedHook<T, S>(service: SharedListenerService<T>, selector: (data: T) => S, deps?: any[], initial?: S): S | undefined {
+  const [ value, setValue ] = useState<S | undefined>(initial)
 
   useEffect(
     () => service.subscribe((data) => setValue(selector(data))),
