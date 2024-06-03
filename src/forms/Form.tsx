@@ -125,6 +125,7 @@ function seek(key: KeyType, target: any): any {
   }
 }
 
+// Used to handle doing a spread on either an object or an array based on the key type
 function spread(key: string | number, target: any, value: any): any {
   if (typeof key === 'string') {
     return { ...target, [key]: value }
@@ -142,7 +143,7 @@ function merge(key: KeyType, value: any, target: any): any {
     if (tail.length === 0) {
       return spread(head, target, value)
     } else {
-      return spread(head, target, merge(tail, value, target[head]))
+      return spread(head, target, merge(tail, value, target?.[head]))
     }
   } else if (typeof key === 'string') {
     return spread(key, target, value)

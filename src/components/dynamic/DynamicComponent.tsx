@@ -11,6 +11,7 @@ import { IFrame, IframeProps } from '../Iframe'
 import { Page, PageProps } from '../Page'
 import { RichTextContent, RichTextContentProps } from '../RichText'
 import { UserForm, UserFormProps } from '../UserForm'
+import { SectionContent, SectionContentProps } from '../SectionContent'
 
 type DynamicProvider<T extends {}> = (content: Content<T>) => JSX.Element
 
@@ -35,6 +36,7 @@ export const Providers: { [type: string]: DynamicProvider<any> } = {
   iframe:   (c: Content<IframeProps>)           => <IFrame          {...c.data} />,
   page:     (c: Content<PageProps>)             => <Page            {...c.data} />,
   richtext: (c: Content<RichTextContentProps>)  => <RichTextContent {...c.data} />,
+  section:  (c: Content<SectionContentProps>)   => <SectionContent  {...c.data} />
 }
 
 type DynamicComponentProps = {

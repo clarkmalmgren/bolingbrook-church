@@ -40,10 +40,6 @@ export const FormEditorClient: FunctionComponent<EditorProps> =
         },
         minHeight: 30
       })
-
-      return () => {
-        editor.current?.destroy?.()
-      }
     }, [])
     /* eslint-enable react-hooks/exhaustive-deps */
 
