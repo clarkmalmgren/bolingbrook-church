@@ -1,8 +1,8 @@
 import { firestore as db } from '@/services/utils/Firebase'
 import { collection, getDocs } from 'firebase/firestore'
-import { ContentMap } from './models/Content'
-import { MediaRefMap } from './models/MediaRef'
-import { SermonMap } from './models/sermon'
+import { Content } from './models/Content'
+import { Sermon, SermonMap, SermonPage, extractPage } from './models/sermon'
+import { ContentAndMedia, contentFilter } from './utils/contentFilter'
 
 
 export const PrefetchService = new class {
@@ -14,16 +14,23 @@ export const PrefetchService = new class {
     return data
   }
 
-  content(): Promise<ContentMap> {
-    return this.load(`cms/${process.env.NEXT_PUBLIC_ENV}/content`)
+  async content(selector: (c: Content) => boolean): Promise<ContentAndMedia> {
+    const all: ContentAndMedia = {
+      content: await this.load(`cms/${process.env.NEXT_PUBLIC_ENV}/content`),
+      media: await this.load(`cms/${process.env.NEXT_PUBLIC_ENV}/media`)
+    }
+
+    const found = Object.values(all.content).find(selector)?.meta?.id
+    return contentFilter(all, found)
   }
 
-  sermons(): Promise<SermonMap> {
-    return this.load(`cms/${process.env.NEXT_PUBLIC_ENV}/sermons`)
-  }
+  async sermons(page: number, date?: string): Promise<{ page: SermonPage, date?: SermonMap }> {
+    const map = await this.load<Sermon>(`cms/${process.env.NEXT_PUBLIC_ENV}/sermons`)
 
-  media(): Promise<MediaRefMap> {
-    return this.load(`cms/${process.env.NEXT_PUBLIC_ENV}/media`)
+    return {
+      page: extractPage(map, page),
+      date: date ? { [date]: map[date] } : undefined
+    }
   }
 
 }

@@ -2,7 +2,7 @@ import { FormResponse, tryResponse } from '@/forms/Form'
 import { firestore as db } from '@/services/utils/Firebase'
 import { doc, setDoc } from 'firebase/firestore'
 import { SharedCollectionListenerService, useSharedHook } from './FirestoreSharedHooks'
-import { Sermon, SermonMap, sermonSort } from './models/sermon'
+import { Sermon, SermonMap, SermonPage, extractPage, sermonSort } from './models/sermon'
 import { bustCache } from '@/actions/bustCache'
 
 export const SermonService = new class extends SharedCollectionListenerService<Sermon> {
@@ -11,7 +11,8 @@ export const SermonService = new class extends SharedCollectionListenerService<S
   }
 }
 
-export function useSermonMap(prefetch?: SermonMap): SermonMap | undefined {
+
+function useSermonMap(prefetch?: SermonMap): SermonMap | undefined {
   return useSharedHook(SermonService, (d) => d, [], prefetch)
 }
 
@@ -20,10 +21,15 @@ export function useSermon(date: string, prefetch?: SermonMap): Sermon | undefine
   return map?.[date]
 }
 
-export function useSermons(prefetch?: SermonMap): Sermon[] | undefined {
-  const map = useSermonMap(prefetch)
-  const values = (typeof map === 'undefined') ? undefined : Object.values(map)
-  return values?.sort(sermonSort)
+export function useSermonPage(page: number, prefetch?: SermonPage): SermonPage {
+  const map = useSermonMap()
+  if (!map && prefetch && prefetch.page === page) {
+    return prefetch
+  } else if (typeof map === 'undefined') {
+    return { sermons: [], page, pageCount: 0 }
+  }
+
+  return extractPage(map, page)
 }
 
 export async function saveSermon(data: Sermon): Promise<FormResponse<Sermon>> {

@@ -1,5 +1,6 @@
 import { PageByPath } from '@/components/dynamic/ComponentById'
 import { PrefetchService } from '@/services/PrefetchService'
+import { PageSelector } from '@/services/utils/ContentSelector'
 import { ServerComponent } from '@/types/ServerComponent'
 
 type DynamicPageProps = {
@@ -8,11 +9,8 @@ type DynamicPageProps = {
 
 const DynamicPage: ServerComponent<DynamicPageProps> =
   async ({ params }) => {
-    const media = await PrefetchService.media()
-    const content = await PrefetchService.content()
-    const path = params.path || []
-
-    return <PageByPath path={path} prefetch={{ media, content }} />
+    const prefetch = await PrefetchService.content(PageSelector(params.path))
+    return <PageByPath path={params.path} prefetch={prefetch} />
   }
 
 export default DynamicPage

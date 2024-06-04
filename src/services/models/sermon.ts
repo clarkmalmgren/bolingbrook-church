@@ -46,3 +46,21 @@ export function sermonSort(a: Sermon, b: Sermon): number {
 export type PartialSermon = DeepPartial<Sermon>
 
 export type SermonMap = { [ date: string ]: Sermon }
+
+export type SermonPage = {
+  sermons: Sermon[]
+  page: number
+  pageCount: number
+}
+
+export const PAGE_SIZE = 12
+
+export function extractPage(map: SermonMap, page: number): SermonPage {
+  const list = Object.values(map).sort(sermonSort)
+
+  const pageCount = list ? Math.ceil(list.length / PAGE_SIZE) : 0
+  const start = (page - 1) * PAGE_SIZE
+  const sermons = list.slice(start, start + PAGE_SIZE)
+
+  return { sermons, page, pageCount }
+}

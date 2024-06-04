@@ -13,13 +13,13 @@ type SermonPageProp = {
 
 const SermonPage: ServerComponent<SermonPageProp> =
   async ({ params }) => {
-    const sermons = await PrefetchService.sermons()
+    const { page, date } = await PrefetchService.sermons(1, params.date)
     
     return (
       <Section wide>
-        <DynamicSermonPlayback date={params.date} prefetch={sermons} />
+        <DynamicSermonPlayback date={params.date} prefetch={date} />
         <Typography variant="h1" pt={3} pb={1} maxWidth={1550} ml="auto" mr="auto">More Sermons</Typography>
-        <SermonList prefetch={sermons} />
+        <SermonList prefetch={page} />
       </Section>
     )
   }
