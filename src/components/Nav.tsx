@@ -22,7 +22,7 @@ export const Nav: FunctionComponent<NavProps> =
       return loggedIn ?
         [
           (<Divider key="divider" />),
-          (<Links.EditSermons key="edit" />),
+          (<Links.Admin key="admin" />),
           (<div key="space" style={({flex: '1'})}/>),
           (<Button key="logout" fullWidth color="secondary" onClick={logout} variant="contained">Logout</Button>)
         ] : []
@@ -57,9 +57,9 @@ export const Nav: FunctionComponent<NavProps> =
         
         <Links.Serve />
         <Links.Newsletter />
-        <Links.FriendsFam />
         <Links.ShopBC />
         <Links.Podcast />
+        <Links.StuCo />
 
         { adminLinks() }
       </Drawer>

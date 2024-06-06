@@ -32,7 +32,6 @@ export const Footer: FunctionComponent<{}> =
             <Links.MeetUs />
             <Links.Location />
             <Links.Sermons />
-            <Links.FriendsFam />
           </LinkGroup>
 
           <LinkGroup header="Get Involved">
@@ -41,6 +40,7 @@ export const Footer: FunctionComponent<{}> =
             <Links.Newsletter />
             <Links.Serve />
             <Links.ShopBC />
+            <Links.StuCo />
           </LinkGroup>
 
           <LinkGroup header="Connect">

@@ -9,11 +9,15 @@ export type MarkedTextProps = {
 export const MarkedText: FunctionComponent<MarkedTextProps> =
   ({ text }) => {
     text = text.replaceAll('&nbsp;', '\xA0').replaceAll('&amp;', '&')
-    const start = text.match(/<(b|a|i)( href="(.*?)")?>/)
+    const start = text.match(/<(b|a|i|br)( href="(.*?)")?>/)
     if (!start || typeof start.index == 'undefined') { return text }
     
     const before = text.substring(0, start.index)
     const remaining = text.substring(start.index + start[0].length)
+
+    if (start[1] === 'br') {
+      return [ before, <br key="br" />, <MarkedText key="a" text={remaining} /> ]
+    }
 
     const end = remaining.indexOf(`</${start[1]}>`)
     if (end < 0) { return `Invalid MarkedText: ${text}` }

@@ -41,8 +41,8 @@ export const Location     = () => (<MenuLink link='/location' icon='place'>Locat
 export const Serve        = () => (<MenuLink link='/join-a-team' icon='pan_tool'>Join a Team</MenuLink>)
 export const MeetUs       = () => (<MenuLink link='/meet-us' icon='emoji_people'>Meet Us</MenuLink>)
 export const Newsletter   = () => (<MenuLink link='/newsletter' icon='email'>Newsletter</MenuLink>)
-export const FriendsFam   = () => (<MenuLink link='/friends-and-family' icon='group_add'>Friends &amp; Family</MenuLink>)
 export const ShopBC       = () => (<MenuLink link='/shop-bc' icon='shopping_cart'>Shop BC</MenuLink>)
+export const StuCo        = () => (<MenuLink link='/student-connections' icon='group'>StuCo</MenuLink>)
 
 // Podcasts
 export const Podcast      = () => (<MenuLink link='https://podcasts.bolingbrook.church' icon='headset'>Podcast</MenuLink>)
@@ -56,4 +56,4 @@ export const Facebook   = () => (<MenuLink link='https://www.facebook.com/boling
 export const Youtube    = () => (<MenuLink link='https://www.youtube.com/bolingbrook-church' icon='youtube' socicon>Youtube</MenuLink>)
 
 // Admin Links
-export const EditSermons = () => (<MenuLink link="/admin/sermons" icon="library_add">Edit Sermons</MenuLink>)
+export const Admin = () => (<MenuLink link="/admin" icon="library_add">Admin</MenuLink>)

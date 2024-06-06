@@ -29,7 +29,7 @@ export const HeroEditor: EditorEntry = {
       <TextFormField id={['data', 'imagePosition']} label="Image Position" />
 
       <FormEditor    id={['data', 'body']} label="Body" />
-      <ChildSelector id={['data', 'children']} label="Children" types={[ 'button' ]} />
+      <ChildSelector id={['data', 'children']} label="Children" types={[ 'button', 'flex', 'grid' ]} />
     </>
   )
 }
